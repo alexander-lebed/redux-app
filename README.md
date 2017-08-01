@@ -3,10 +3,7 @@ React Redux ImmutableJS
 
 redux example from https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
 
-To build and run the app:
-1. yarn run build
-2. open index.html in the browser
-
-To run on server
+To run the app:
 1. yarn run start
-3. http://localhost:8080/
+3. http://localhost:9999/
+3. 'yarn run build' in separate terminal

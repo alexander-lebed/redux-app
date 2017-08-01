@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --progress --colors --watch",
-    "start": "webpack-dev-server --watch-poll"
+    "start": "webpack-dev-server --port 9999"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -22,6 +22,7 @@
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.2",
+    "react-router-dom": "^4.1.2",
     "redux": "^3.7.2"
   },
   "devDependencies": {

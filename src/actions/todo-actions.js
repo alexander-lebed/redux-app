@@ -1,5 +1,5 @@
 import {Map} from 'immutable';
-import uid from './helpers/id-generator';
+import uid from '../helpers/id-generator';
 
 export const addTodo  = text => {
     return {

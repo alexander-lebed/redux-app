@@ -1,5 +1,5 @@
 import {List, Map} from 'immutable';
-import uid from './helpers/id-generator';
+import uid from '../helpers/id-generator';
 
 
 const initLocations = List([
