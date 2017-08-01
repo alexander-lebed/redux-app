@@ -1,19 +1,37 @@
+var path = require('path');
+
 module.exports = {
-  entry: './src/app.js',
-  output: {
-    path: __dirname,
-    filename: 'bundle.js'
-  },
-  module: {
-    loaders: [
-        {
-          test: /\.js$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-          query: {
-              presets: ['es2015', 'react']
-          }
+    context: __dirname,
+    entry: {
+        javascript: './src/app.js',
+        html: './index.html'
+    },
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: "[name].js"
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            },
+            {
+                test: /\.html$/,
+                loader: 'file-loader?name=[name].[ext]'
+            }
+        ]
+    },
+    devServer: {
+        historyApiFallback: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
         }
-    ]
-  }
+    }
 };

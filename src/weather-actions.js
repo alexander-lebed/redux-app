@@ -1,20 +1,20 @@
-import uid from './helpers/id-generator';
-
-export const addCity = (city) => {
+export const addLocation = id => {
     return {
-        type: 'ADD_CITY',
-        payload: {
-            id: uid(),
-            city
-        }
+        type: 'ADD_LOCATION',
+        payload: id
     }
 }
 
-// export const updateCity = ()
-
-export const removeCity = id => {
+export const updateLocations = (locations) => {
     return {
-        type: 'REMOVE_CITY',
+        type: 'UPDATE_LOCATIONS',
+        payload: locations
+    }
+}
+
+export const removeLocation = id => {
+    return {
+        type: 'REMOVE_LOCATION',
         payload: id
     }
 }

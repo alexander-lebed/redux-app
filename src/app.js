@@ -3,16 +3,16 @@ import {render} from 'react-dom';
 import {combineReducers, createStore} from 'redux';
 import {Provider} from 'react-redux';
 import todos from './todo-reducer'
-import cities from './weather-reducer'
-import {TodoList} from './containers';
+import locations from './weather-reducer'
+import {TodoList, LocationList} from './containers';
 
-const combined = combineReducers({todos, cities})
+const combined = combineReducers({todos, locations})
 
 const store = createStore(combined);
 
 render(
     <Provider store={store}>
-        <TodoList />
+        <LocationList />
     </Provider>,
     document.getElementById('app')
 )

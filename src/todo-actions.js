@@ -1,13 +1,14 @@
+import {Map} from 'immutable';
 import uid from './helpers/id-generator';
 
 export const addTodo  = text => {
     return {
         type: 'ADD_TODO',
-        payload: {
+        payload: Map({
             id: uid(),
             isDone: false,
             text
-        }
+        })
     };
 };
 

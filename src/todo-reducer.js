@@ -17,7 +17,7 @@ const initTodos = List([
 const reducer = (state = initTodos, action) => {
     switch (action.type) {
         case 'ADD_TODO':
-            return state.set(state.size, Map(action.payload));
+            return state.set(state.size, action.payload);
         case 'TOGGLE_TODO':
             return state.map(todo => {
                 if (todo.get('id') === action.payload) {

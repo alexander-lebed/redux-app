@@ -7,3 +7,6 @@ To build and run the app:
 1. yarn run build
 2. open index.html in the browser
 
+To run on server
+1. yarn run start
+3. http://localhost:8080/
