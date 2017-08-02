@@ -1,6 +1,9 @@
+// @flow
 import React from 'react';
 import $http from 'axios';
 import {connect} from 'react-redux';
+import {Map} from 'immutable';
+import type {State, Dispatch} from '../types';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -9,9 +12,28 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import {addLocation, updateLocations, removeLocation} from '../actions/weather-actions';
 
-const Location = (props) => {
+
+type LocationProps = {
+    location: Map<string, any>,
+    onDelete: (id: string) => void
+}
+
+type WeatherListProps = {
+    locations: State,
+    addLocation: (id: string) => void,
+    updateLocations: (locations: State) => void,
+    removeLocation: (id: string) => void
+}
+
+const Location = (props: LocationProps) => {
     const {location, onDelete} = props;
-    const temperature = location.get('temp') ? `${location.get('temp')} F°` : 'not available';
+    let temperature = '';
+    if (location.get('temp')) {
+        const degreesInCelsius = Math.round((location.get('temp') - 32) / 1.8);
+        temperature = `${degreesInCelsius} °C`;
+    } else {
+        temperature = 'not available';
+    }
     return (
         <Row>
             <Col xs={6}>{location.get('city')}</Col>
@@ -20,6 +42,7 @@ const Location = (props) => {
                 <Glyphicon
                     glyph="remove"
                     className="pull-right"
+                    style={{marginRight: 10}}
                     title="Remove Location"
                     onClick={onDelete}
                 />
@@ -28,7 +51,7 @@ const Location = (props) => {
     );
 };
 
-class WeatherList extends React.Component {
+class WeatherList extends React.Component<void, WeatherListProps, void> {
 
     componentDidMount () {
         this.updateWeather();
@@ -36,7 +59,7 @@ class WeatherList extends React.Component {
 
     updateWeather () {
         const {locations, updateLocations} = this.props;
-        const getWeatherUrl = (location) => {
+        const getWeatherUrl = (location): string => {
             return `
             https://query.yahooapis.com/v1/public/yql?q=
             select * from weather.forecast
@@ -52,13 +75,13 @@ class WeatherList extends React.Component {
                 const results = response[index].data.query.results
                 return l.set('temp', results ? results.channel.item.condition.temp : 0);
             })
-            updateLocations(data)
+            updateLocations(data);
         })
     }
 
     render () {
         const {locations, addLocation, removeLocation} = this.props;
-        const onDelete = id => event => removeLocation(id);
+        const onDelete = (id: string) => event => removeLocation(id);
         const onAddLocation = (location) => {
             addLocation(location.get('id'));
             setTimeout(this.updateWeather.bind(this), 0);
@@ -106,7 +129,7 @@ export default connect(
             locations: state.locations
         }
     },
-    (dispatch) => {
+    (dispatch: Dispatch) => {
         return {
             addLocation: id => dispatch(addLocation(id)),
             updateLocations: locations => dispatch(updateLocations(locations)),

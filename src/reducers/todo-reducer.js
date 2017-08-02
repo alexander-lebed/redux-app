@@ -1,5 +1,8 @@
+// @flow
 import {List, Map} from 'immutable';
+import type {Action, State} from '../types';
 import uid from '../helpers/id-generator';
+
 
 const initTodos = List([
     Map({id: uid(), isDone: true, text: 'use Redux', isDeleted: false}),
@@ -8,13 +11,13 @@ const initTodos = List([
     Map({id: uid(), isDone: true, text: 'use react-bootstrap', isDeleted: false}),
     Map({id: uid(), isDone: true,  text: 'push to Github', isDeleted: false}),
     Map({id: uid(), isDone: true,  text: 'add Router', isDeleted: false}),
-    Map({id: uid(), isDone: false, text: 'add type checking with Flow', isDeleted: false}),
+    Map({id: uid(), isDone: true, text: 'type checking with Flow', isDeleted: false}),
     Map({id: uid(), isDone: false, text: 'test with Jest', isDeleted: false}),
-    Map({id: uid(), isDone: false, text: 'add linting with ESLint', isDeleted: false})
+    Map({id: uid(), isDone: false, text: 'linting with ESLint', isDeleted: false})
 ]);
 
 
-const reducer = (state = initTodos, action) => {
+const reducer = (state: State = initTodos, action: Action): State => {
     switch (action.type) {
         case 'ADD_TODO':
             return state.set(state.size, action.payload);

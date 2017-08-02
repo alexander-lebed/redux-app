@@ -8,7 +8,7 @@ const Navigation = () => {
         <Navbar>
             <Navbar.Header>
                 <Navbar.Brand>
-                    <a href="/"></a>
+                    <a href="/">Home</a>
                 </Navbar.Brand>
             </Navbar.Header>
             <Nav>

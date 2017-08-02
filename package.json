@@ -1,13 +1,14 @@
 {
   "name": "redux-todo",
   "version": "1.0.0",
-  "description": "todo app using React and Redux",
+  "description": "todo and weather app using React and Redux",
   "main": "index.js",
   "author": "alebed",
   "license": "MIT",
   "scripts": {
     "build": "webpack --progress --colors --watch",
-    "start": "webpack-dev-server --port 9999"
+    "start": "webpack-dev-server --port 9999",
+    "flow": "flow"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -28,7 +29,9 @@
   "devDependencies": {
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
+    "flow-bin": "^0.51.1",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.6.1"
   }

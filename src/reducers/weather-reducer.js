@@ -1,4 +1,6 @@
+// @flow
 import {List, Map} from 'immutable';
+import type {Action, State} from '../types';
 import uid from '../helpers/id-generator';
 
 
@@ -10,7 +12,7 @@ const initLocations = List([
     Map({id: uid(), city: 'San Francisco', country: "United States", temp: 0, isDeleted: true})
 ])
 
-const reducer = (state = initLocations, action) => {
+const reducer = (state: State = initLocations, action: Action): State => {
     const findLocationIndexById = id => state.findIndex(t => t.get('id') === action.payload);
     switch(action.type) {
         case 'ADD_LOCATION': {

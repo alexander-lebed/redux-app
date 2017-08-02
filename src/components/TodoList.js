@@ -1,12 +1,42 @@
+// @flow
 import React from 'react';
 import {connect} from 'react-redux';
+import {Map} from 'immutable';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import type {State, Dispatch} from '../types';
 import {addTodo, toggleTodo, removeTodo} from '../actions/todo-actions';
 
 
-const TodoList = (props) => {
+type TodoProps = {
+    todo: Map<string, any>,
+    onDelete: (id: string) => void
+}
+
+type TodoListProps = {
+    todos: State,
+    addTodo: (text: string) => void,
+    toggleTodo: (id: string) => void,
+    removeTodo: (id: string) => void
+}
+
+const Todo = (props: TodoProps) => {
+    const {todo, onDelete} = props;
+    return (
+        <div>
+            {todo.get('isDone') ? <strike>{todo.get('text')}</strike> : <span>{todo.get('text')}</span>}
+            <Glyphicon
+                glyph="remove"
+                className="pull-right"
+                style={{marginRight: 10}}
+                onClick={onDelete}
+            />
+        </div>
+    )
+};
+
+const TodoList = (props: TodoListProps) => {
     const {todos, addTodo, toggleTodo, removeTodo} = props;
 
     const onSubmit = (event) => {
@@ -50,18 +80,6 @@ const TodoList = (props) => {
     );
 };
 
-const Todo = (props) => {
-    const {todo, onDelete} = props;
-    return <div>
-        {todo.get('isDone') ? <strike>{todo.get('text')}</strike> : <span>{todo.get('text')}</span>}
-        <Glyphicon
-            glyph="remove"
-            className="pull-right"
-            onClick={onDelete}
-        />
-    </div>
-};
-
 export default connect(
     // mapStateToProps
     (state) => {
@@ -70,7 +88,7 @@ export default connect(
         }
     },
     // mapDispatchToProps
-    (dispatch) => {
+    (dispatch: Dispatch) => {
         return {
             addTodo: text => dispatch(addTodo(text)),
             toggleTodo: id => dispatch(toggleTodo(id)),
