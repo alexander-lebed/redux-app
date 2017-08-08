@@ -13,17 +13,17 @@ const initLocations = List([
 ])
 
 const reducer = (state: State = initLocations, action: Action): State => {
-    const findLocationIndexById = id => state.findIndex(t => t.get('id') === action.payload);
+    const findIndexById = id => state.findIndex(t => t.get('id') === id);
     switch(action.type) {
         case 'ADD_LOCATION': {
-            const index = findLocationIndexById(action.payload);
+            const index = findIndexById(action.payload);
             return index !== -1 ? state.update(index, t => t.set('isDeleted', false)) : state;
         }
         case 'UPDATE_LOCATIONS': {
             return action.payload;
         }
         case 'REMOVE_LOCATION': {
-            const index = findLocationIndexById(action.payload);
+            const index = findIndexById(action.payload);
             return index !== -1 ? state.update(index, t => t.set('isDeleted', true)) : state;
         }
         default:

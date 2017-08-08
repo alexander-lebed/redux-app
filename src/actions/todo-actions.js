@@ -15,6 +15,13 @@ export const addTodo  = (text: string): Action => {
     };
 };
 
+export const updateTodo = (id: string, text: string) => {
+    return {
+        type: 'UPDATE_TODO',
+        payload: {id, text}
+    }
+}
+
 export const toggleTodo = (id: string): Action => {
     return {
         type: 'TOGGLE_TODO',

@@ -2,56 +2,25 @@
 import React from 'react';
 import $http from 'axios';
 import {connect} from 'react-redux';
-import {Map} from 'immutable';
+import {bindActionCreators} from 'redux';
 import type {State, Dispatch} from '../types';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import {addLocation, updateLocations, removeLocation} from '../actions/weather-actions';
+import Location from '../components/Location';
 
 
-type LocationProps = {
-    location: Map<string, any>,
-    onDelete: (id: string) => void
-}
-
-type WeatherListProps = {
+type Props = {
     locations: State,
     addLocation: (id: string) => void,
     updateLocations: (locations: State) => void,
     removeLocation: (id: string) => void
 }
 
-const Location = (props: LocationProps) => {
-    const {location, onDelete} = props;
-    let temperature = '';
-    if (location.get('temp')) {
-        const degreesInCelsius = Math.round((location.get('temp') - 32) / 1.8);
-        temperature = `${degreesInCelsius} °C`;
-    } else {
-        temperature = 'not available';
-    }
-    return (
-        <Row>
-            <Col xs={6}>{location.get('city')}</Col>
-            <Col xs={3}>{temperature}</Col>
-            <Col xs={3}>
-                <Glyphicon
-                    glyph="remove"
-                    className="pull-right"
-                    style={{marginRight: 10}}
-                    title="Remove Location"
-                    onClick={onDelete}
-                />
-            </Col>
-        </Row>
-    );
-};
-
-class WeatherList extends React.Component<void, WeatherListProps, void> {
+class WeatherList extends React.Component<void, Props, void> {
 
     componentDidMount () {
         this.updateWeather();
@@ -81,10 +50,9 @@ class WeatherList extends React.Component<void, WeatherListProps, void> {
 
     render () {
         const {locations, addLocation, removeLocation} = this.props;
-        const onDelete = (id: string) => event => removeLocation(id);
         const onAddLocation = (location) => {
             addLocation(location.get('id'));
-            setTimeout(this.updateWeather.bind(this), 0);
+            setTimeout(this.updateWeather.bind(this), 50);
         }
         const deletedLocations = locations.filter(l => l.get('isDeleted'))
         return (
@@ -96,7 +64,7 @@ class WeatherList extends React.Component<void, WeatherListProps, void> {
                             {locations.filter(l => !l.get('isDeleted'))
                                 .map(l => (
                                     <li key={l.get('id')} className="todo__item">
-                                        <Location location={l} onDelete={onDelete(l.get('id'))} />
+                                        <Location location={l} onDelete={() => removeLocation(l.get('id'))} />
                                     </li>
                                 ))
                             }
@@ -106,7 +74,7 @@ class WeatherList extends React.Component<void, WeatherListProps, void> {
                                 id="add-location"
                                 title="Add Location"
                                 disabled={deletedLocations.size === 0}
-                                onSelect={(evt) => onAddLocation(evt)}
+                                onSelect={(l) => onAddLocation(l)}
                             >
                                 {deletedLocations.map(l => (
                                     <MenuItem key={l.get('id')} eventKey={l}>
@@ -124,16 +92,8 @@ class WeatherList extends React.Component<void, WeatherListProps, void> {
 }
 
 export default connect(
-    (state) => {
-        return {
-            locations: state.locations
-        }
-    },
+    (state) => ({locations: state.locations}),
     (dispatch: Dispatch) => {
-        return {
-            addLocation: id => dispatch(addLocation(id)),
-            updateLocations: locations => dispatch(updateLocations(locations)),
-            removeLocation: id => dispatch(removeLocation(id))
-        }
+        return bindActionCreators({addLocation, updateLocations, removeLocation}, dispatch)
     }
 )(WeatherList)
