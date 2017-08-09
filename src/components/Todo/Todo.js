@@ -55,16 +55,14 @@ export default class Todo extends React.Component<void, Props, State> {
                         />
                     </Modal.Body>
                     <Modal.Footer>
-                        <ButtonToolbar className='pull-right'>
-                            <Button
-                                id='confirm-btn'
-                                bsStyle='primary'
-                                disabled={false}
-                                onClick={() => this.editTodo(todoToEdit)}
-                            >
-                                Edit
-                            </Button>
-                        </ButtonToolbar>
+                        <Button
+                            id='confirm-btn'
+                            className='pull-right'
+                            disabled={false}
+                            onClick={() => this.editTodo(todoToEdit)}
+                        >
+                            EDIT
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             );
@@ -80,13 +78,15 @@ export default class Todo extends React.Component<void, Props, State> {
                 }
                 <ButtonToolbar className="pull-right">
                     <Glyphicon
+                        id="edit-todo"
                         glyph="pencil"
                         style={{marginRight: 15}}
                         onClick={() => stateSetter({todoToEdit: todo})}
                     />
                     <Glyphicon
+                        id="remove-todo"
                         glyph="remove"
-                        style={{marginRight: 15}}
+                        style={{marginRight: 5}}
                         onClick={onDelete}
                     />
                 </ButtonToolbar>

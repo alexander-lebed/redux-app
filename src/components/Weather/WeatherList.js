@@ -3,14 +3,14 @@ import React from 'react';
 import $http from 'axios';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import type {State, Dispatch} from '../types';
+import type {State, Dispatch} from '../../redux/types';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import {addLocation, updateLocations, removeLocation} from '../actions/weather-actions';
-import Location from '../components/Location';
+import {addLocation, updateLocations, removeLocation} from '../../redux/actions/weather-actions';
+import Location from './Location';
 
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
     removeLocation: (id: string) => void
 }
 
-class WeatherList extends React.Component<void, Props, void> {
+export class WeatherList extends React.Component<void, Props, void> {
 
     componentDidMount () {
         this.updateWeather();
@@ -43,7 +43,7 @@ class WeatherList extends React.Component<void, Props, void> {
             const data = locations.map((l, index) => {
                 const results = response[index].data.query.results
                 return l.set('temp', results ? results.channel.item.condition.temp : 0);
-            })
+            });
             updateLocations(data);
         })
     }
@@ -54,7 +54,7 @@ class WeatherList extends React.Component<void, Props, void> {
             addLocation(location.get('id'));
             setTimeout(this.updateWeather.bind(this), 50);
         }
-        const deletedLocations = locations.filter(l => l.get('isDeleted'))
+        const deletedLocations = locations.filter(l => l.get('isDeleted'));
         return (
             <div className="todo">
                 <Row>

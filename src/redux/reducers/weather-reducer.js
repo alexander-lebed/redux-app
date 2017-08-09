@@ -1,7 +1,7 @@
 // @flow
 import {List, Map} from 'immutable';
 import type {Action, State} from '../types';
-import uid from '../helpers/id-generator';
+import uid from '../../helpers/id-generator';
 
 
 const initLocations = List([

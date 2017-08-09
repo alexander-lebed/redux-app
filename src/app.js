@@ -1,17 +1,12 @@
+// @flow
 import React from 'react';
 import {render} from 'react-dom';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import {combineReducers, createStore} from 'redux';
+import store from './redux/store';
 import {Provider} from 'react-redux';
-import todos from './reducers/todo-reducer'
-import locations from './reducers/weather-reducer'
 import Navigation from './components/NavigationBar';
-import TodoList from './components/TodoList'
-import WeatherList from './components/WeatherList'
-
-
-const combined = combineReducers({todos, locations});
-const store = createStore(combined);
+import TodoList from './components/Todo/TodoList'
+import WeatherList from './components/Weather/WeatherList'
 
 const Content = () => {
     return (

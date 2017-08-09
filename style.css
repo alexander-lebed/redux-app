@@ -10,7 +10,7 @@ html, body, input, button {
 }
 
 .todo__item {
-    padding: .5em .25em;
+    padding: 0.25em;
     border-bottom: solid 1px #eee;
 }
 

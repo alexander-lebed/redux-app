@@ -1,7 +1,7 @@
 // @flow
 import {List, Map} from 'immutable';
 import type {Action, State} from '../types';
-import uid from '../helpers/id-generator';
+import uid from '../../helpers/id-generator';
 
 
 const initTodos = List([
@@ -12,7 +12,7 @@ const initTodos = List([
     Map({id: uid(), isDone: true, text: 'push to Github', isDeleted: false}),
     Map({id: uid(), isDone: true, text: 'add Router', isDeleted: false}),
     Map({id: uid(), isDone: true, text: 'type checking with Flow', isDeleted: false}),
-    Map({id: uid(), isDone: false, text: 'fix bug with edit todo', isDeleted: false}),
+    Map({id: uid(), isDone: false, text: 'fix bug with state on tab change', isDeleted: false}),
     Map({id: uid(), isDone: false, text: 'test with Jest', isDeleted: false}),
     Map({id: uid(), isDone: false, text: 'linting with ESLint', isDeleted: false}),
     Map({id: uid(), isDone: false, text: 'log in page', isDeleted: false}),

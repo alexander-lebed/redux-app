@@ -4,9 +4,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import type {State, Dispatch} from '../types';
-import {addTodo, updateTodo, toggleTodo, removeTodo} from '../actions/todo-actions';
-import Todo from '../components/Todo';
+import type {State, Dispatch} from '../../redux/types';
+import {addTodo, updateTodo, toggleTodo, removeTodo} from '../../redux/actions/todo-actions';
+import Todo from './Todo';
 
 
 type Props = {
@@ -17,9 +17,9 @@ type Props = {
     removeTodo: (id: string) => void
 }
 
-class TodoList extends React.Component<void, Props, void> {
+export class TodoList extends React.Component<void, Props, void> {
 
-    onSubmit(event) {
+    onSubmit(event: Object) {
         let text = event.target.value;
         const isEnterKey = event.which === 13;
         if (isEnterKey && text.length > 0) {
@@ -49,7 +49,11 @@ class TodoList extends React.Component<void, Props, void> {
                                     className="todo__item"
                                     onClick={() => toggleTodo(t.get('id'))}
                                 >
-                                    <Todo todo={t} onEdit={(id, text) => updateTodo(id, text)} onDelete={() => removeTodo(t.get('id'))} />
+                                    <Todo
+                                        todo={t}
+                                        onEdit={(id, text) => updateTodo(id, text)}
+                                        onDelete={() => removeTodo(t.get('id'))}
+                                    />
                                 </li>
                             ))}
                         </ul>

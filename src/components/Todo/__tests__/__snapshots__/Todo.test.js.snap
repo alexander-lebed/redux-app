@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Todo/> should render Todo 1`] = `
+<div>
+  <span>
+    some text
+  </span>
+  <div
+    className="pull-right btn-toolbar"
+    role="toolbar"
+  >
+    <span
+      className="glyphicon glyphicon-pencil"
+      id="edit-todo"
+      onClick={[Function]}
+      style={
+        Object {
+          "marginRight": 15,
+        }
+      }
+    />
+    <span
+      className="glyphicon glyphicon-remove"
+      id="remove-todo"
+      onClick={[Function]}
+      style={
+        Object {
+          "marginRight": 5,
+        }
+      }
+    />
+  </div>
+</div>
+`;

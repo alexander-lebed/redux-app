@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TodoList/> should render TodoList 1`] = `
+<div
+  className="todo"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-xs-3"
+    />
+    <div
+      className="col-xs-6"
+    >
+      <input
+        className="todo__entry"
+        onKeyDown={[Function]}
+        placeholder="Add todo"
+        type="text"
+      />
+      <ul
+        className="todo__list"
+      >
+        <li
+          className="todo__item"
+          onClick={[Function]}
+        >
+          <div>
+            <span>
+              todo 1
+            </span>
+            <div
+              className="pull-right btn-toolbar"
+              role="toolbar"
+            >
+              <span
+                className="glyphicon glyphicon-pencil"
+                id="edit-todo"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "marginRight": 15,
+                  }
+                }
+              />
+              <span
+                className="glyphicon glyphicon-remove"
+                id="remove-todo"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "marginRight": 5,
+                  }
+                }
+              />
+            </div>
+          </div>
+        </li>
+        <li
+          className="todo__item"
+          onClick={[Function]}
+        >
+          <div>
+            <span>
+              todo 2
+            </span>
+            <div
+              className="pull-right btn-toolbar"
+              role="toolbar"
+            >
+              <span
+                className="glyphicon glyphicon-pencil"
+                id="edit-todo"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "marginRight": 15,
+                  }
+                }
+              />
+              <span
+                className="glyphicon glyphicon-remove"
+                id="remove-todo"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "marginRight": 5,
+                  }
+                }
+              />
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="col-xs-3"
+    />
+  </div>
+</div>
+`;

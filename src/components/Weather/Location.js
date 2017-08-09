@@ -5,11 +5,11 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
+
 type Props = {
     location: Map<string, any>,
     onDelete: (id: string) => void
 }
-
 
 const Location = (props: Props) => {
     const {location, onDelete} = props;

@@ -1,7 +1,7 @@
 // @flow
 import {Map} from 'immutable';
 import type {Action} from '../types';
-import uid from '../helpers/id-generator';
+import uid from '../../helpers/id-generator';
 
 
 export const addTodo  = (text: string): Action => {
@@ -10,6 +10,7 @@ export const addTodo  = (text: string): Action => {
         payload: Map({
             id: uid(),
             isDone: false,
+            isDeleted: false,
             text
         })
     };
