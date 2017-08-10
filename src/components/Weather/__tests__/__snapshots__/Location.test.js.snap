@@ -1,36 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Location/> should render Location (2) 1`] = `
-<div
-  className="row"
->
-  <div
-    className="col-xs-6"
-  >
-    Odessa
-  </div>
-  <div
-    className="col-xs-3"
-  >
-    not available
-  </div>
-  <div
-    className="col-xs-3"
-  >
-    <span
-      className="pull-right glyphicon glyphicon-remove"
-      onClick={[Function]}
-      style={
-        Object {
-          "marginRight": 10,
-        }
-      }
-      title="Remove Location"
-    />
-  </div>
-</div>
-`;
-
 exports[`<Location/> should render Location 1`] = `
 <div
   className="row"

@@ -21,6 +21,11 @@ module.exports = {
                 }
             },
             {
+                test: /\.js$/,
+                loaders: ['babel-loader', 'eslint-loader'],
+                exclude: /node_modules/
+            },
+            {
                 test: /\.html$/,
                 loader: 'file-loader?name=[name].[ext]'
             }
