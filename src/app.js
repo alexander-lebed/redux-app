@@ -9,21 +9,21 @@ import TodoList from './components/Todo/TodoList';
 import WeatherList from './components/Weather/WeatherList';
 
 const Content = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/" component={TodoList} />
-      <Route exact path="/todo" component={TodoList} />
-      <Route path="/weather" component={WeatherList} />
-    </Switch>
-  </Router>
+    <Router>
+        <Switch>
+            <Route exact path="/" component={TodoList} />
+            <Route exact path="/todo" component={TodoList} />
+            <Route path="/weather" component={WeatherList} />
+        </Switch>
+    </Router>
 );
 
 render(
-  <Provider store={store}>
-    <div>
-      <Navigation />
-      <Content />
-    </div>
-  </Provider>,
-  document.getElementById('app')
+    <Provider store={store}>
+        <div>
+            <Navigation />
+            <Content />
+        </div>
+    </Provider>,
+    document.getElementById('app')
 );

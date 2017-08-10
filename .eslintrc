@@ -18,7 +18,9 @@
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "import/no-named-as-default": "off",
-    "comma-dangle": ["error", "never"]
+    "padded-blocks": "off",
+    "comma-dangle": ["error", "never"],
+    "indent": [2, 4]
   },
   "extends": ["airbnb-base"]
 }
