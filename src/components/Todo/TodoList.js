@@ -1,5 +1,5 @@
 // @flow
-/* eslint-disable no-shadow */
+/* eslint-disable no-shadow, no-param-reassign */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -25,6 +25,7 @@ export class TodoList extends React.Component<void, Props, void> {
         const isEnterKey = event.which === 13;
         if (isEnterKey && text.length > 0) {
             this.props.addTodo(text);
+            event.target.value = '';
         }
     }
 

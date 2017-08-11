@@ -1,18 +1,17 @@
 // @flow
-import { List, Map } from 'immutable';
+import * as Immutable from 'immutable';
 import type { Action, State } from '../types';
-import uid from '../../helpers/id-generator';
 
 
-const initLocations = List([
-    Map({ id: uid(), city: 'Odessa', country: 'Ukraine', temp: 0, isDeleted: false }),
-    Map({ id: uid(), city: 'New York', country: 'United States', temp: 0, isDeleted: false }),
-    Map({ id: uid(), city: 'Valencia', country: 'Spain', temp: 0, isDeleted: true }),
-    Map({ id: uid(), city: 'London', country: 'Great Britain', temp: 0, isDeleted: true }),
-    Map({ id: uid(), city: 'San Francisco', country: 'United States', temp: 0, isDeleted: true })
+const initialState = Immutable.List([
+    Immutable.Map({ id: '9hrptuontk1', city: 'Odessa', country: 'Ukraine', temp: 0, isDeleted: false }),
+    Immutable.Map({ id: 't4t6hhe6bf2', city: 'New York', country: 'United States', temp: 0, isDeleted: false }),
+    Immutable.Map({ id: 'mwev5gwa8p3', city: 'Valencia', country: 'Spain', temp: 0, isDeleted: true }),
+    Immutable.Map({ id: 'od7bvnqj6x4', city: 'London', country: 'Great Britain', temp: 0, isDeleted: true }),
+    Immutable.Map({ id: '6237op5obl5', city: 'San Francisco', country: 'United States', temp: 0, isDeleted: true })
 ]);
 
-const reducer = (state: State = initLocations, action: Action): State => {
+const reducer = (state: State = initialState, action: Action): State => {
     const findIndexById = id => state.findIndex(t => t.get('id') === id);
     switch (action.type) {
     case 'ADD_LOCATION': {

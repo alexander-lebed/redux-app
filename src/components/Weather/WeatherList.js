@@ -22,7 +22,9 @@ type Props = {
 }
 
 export class WeatherList extends React.Component<void, Props, void> {
+
     componentDidMount() {
+        // todo: fix bug with rehydration state
         this.updateWeather();
     }
 
