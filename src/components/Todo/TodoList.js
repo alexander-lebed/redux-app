@@ -11,7 +11,7 @@ import Todo from './Todo';
 
 
 type Props = {
-    todos: State,
+    currentData: State,
     addTodo: (text: string) => void,
     updateTodo: (id: string, text: string) => void,
     toggleTodo: (id: string) => void,
@@ -30,7 +30,8 @@ export class TodoList extends React.Component<void, Props, void> {
     }
 
     render() {
-        const { todos, updateTodo, toggleTodo, removeTodo } = this.props;
+        const { currentData, updateTodo, toggleTodo, removeTodo } = this.props;
+        const todos = currentData.get('todos');
         return (
             <div className="todo">
                 <Row>
@@ -67,7 +68,7 @@ export class TodoList extends React.Component<void, Props, void> {
 
 export default connect(
     // mapStateToProps
-    state => ({ todos: state.todos }),
+    state => ({ currentData: state.todoData }),
     // mapDispatchToProps
     (dispatch: Dispatch) =>
         bindActionCreators({ addTodo, updateTodo, toggleTodo, removeTodo }, dispatch)

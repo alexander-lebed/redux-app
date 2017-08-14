@@ -7,9 +7,9 @@ export const addLocation = (id: string): Action => ({
     payload: id
 });
 
-export const updateLocations = (locations: State): Action => ({
-    type: 'UPDATE_LOCATIONS',
-    payload: locations
+export const updateData = (state: State): Action => ({
+    type: 'UPDATE_DATA',
+    payload: state
 });
 
 export const removeLocation = (id: string): Action => ({

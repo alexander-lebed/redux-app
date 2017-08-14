@@ -33,6 +33,11 @@ exports[`<TodoList/> should render TodoList 1`] = `
             <div
               className="pull-right btn-toolbar"
               role="toolbar"
+              style={
+                Object {
+                  "marginTop": 3,
+                }
+              }
             >
               <span
                 className="glyphicon glyphicon-pencil"
@@ -40,6 +45,7 @@ exports[`<TodoList/> should render TodoList 1`] = `
                 onClick={[Function]}
                 style={
                   Object {
+                    "color": "grey",
                     "marginRight": 15,
                   }
                 }
@@ -50,7 +56,7 @@ exports[`<TodoList/> should render TodoList 1`] = `
                 onClick={[Function]}
                 style={
                   Object {
-                    "marginRight": 5,
+                    "color": "grey",
                   }
                 }
               />
@@ -68,6 +74,11 @@ exports[`<TodoList/> should render TodoList 1`] = `
             <div
               className="pull-right btn-toolbar"
               role="toolbar"
+              style={
+                Object {
+                  "marginTop": 3,
+                }
+              }
             >
               <span
                 className="glyphicon glyphicon-pencil"
@@ -75,6 +86,7 @@ exports[`<TodoList/> should render TodoList 1`] = `
                 onClick={[Function]}
                 style={
                   Object {
+                    "color": "grey",
                     "marginRight": 15,
                   }
                 }
@@ -85,7 +97,7 @@ exports[`<TodoList/> should render TodoList 1`] = `
                 onClick={[Function]}
                 style={
                   Object {
-                    "marginRight": 5,
+                    "color": "grey",
                   }
                 }
               />

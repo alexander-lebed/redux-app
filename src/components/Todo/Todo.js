@@ -32,6 +32,13 @@ export default class Todo extends React.Component<void, Props, State> {
         this.setState({ todoToEdit: null });
     }
 
+    onSubmit(event: Object) {
+        const isEnterKey = event.which === 13;
+        if (isEnterKey && this.state.todoToEdit) {
+            this.editTodo(this.state.todoToEdit);
+        }
+    }
+
     render() {
         const { todo, onDelete } = this.props;
         const { todoToEdit } = this.state;
@@ -51,6 +58,7 @@ export default class Todo extends React.Component<void, Props, State> {
                             className='todo__entry'
                             value={todoToEdit.get('text')}
                             onChange={e => stateSetter({ todoToEdit: todoToEdit.set('text', e.target.value) })}
+                            onKeyDown={e => this.onSubmit(e)}
                         />
                     </Modal.Body>
                     <Modal.Footer>

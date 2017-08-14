@@ -10,26 +10,26 @@ import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import type { State, Dispatch } from '../../redux/types';
-import { addLocation, updateLocations, removeLocation } from '../../redux/actions/weather-actions';
+import { addLocation, updateData, removeLocation } from '../../redux/actions/weather-actions';
 import Location from './Location';
 
 
 type Props = {
-    locations: State,
+    currentData: State,
     addLocation: (id: string) => void,
-    updateLocations: (locations: State) => void,
+    updateData: (data: State) => void,
     removeLocation: (id: string) => void
 }
 
 export class WeatherList extends React.Component<void, Props, void> {
 
     componentDidMount() {
-        // todo: fix bug with rehydration state
         this.updateWeather();
     }
 
     updateWeather() {
-        const { locations, updateLocations } = this.props;
+        const { currentData, updateData } = this.props;
+        const locations = currentData.get('locations');
         const getWeatherUrl = (location): string => `
             https://query.yahooapis.com/v1/public/yql?q=
             select * from weather.forecast
@@ -44,12 +44,13 @@ export class WeatherList extends React.Component<void, Props, void> {
                 const results = response[index].data.query.results;
                 return l.set('temp', results ? results.channel.item.condition.temp : 0);
             });
-            updateLocations(data);
+            updateData(currentData.set('locations', data));
         });
     }
 
     render() {
-        const { locations, addLocation, removeLocation } = this.props;
+        const { currentData, addLocation, removeLocation } = this.props;
+        const locations = currentData.get('locations');
         const onAddLocation = (location) => {
             addLocation(location.get('id'));
             setTimeout(this.updateWeather.bind(this), 50);
@@ -92,7 +93,7 @@ export class WeatherList extends React.Component<void, Props, void> {
 }
 
 export default connect(
-    state => ({ locations: state.locations }),
+    state => ({ currentData: state.weatherData }),
     (dispatch: Dispatch) =>
-        bindActionCreators({ addLocation, updateLocations, removeLocation }, dispatch)
+        bindActionCreators({ addLocation, updateData, removeLocation }, dispatch)
 )(WeatherList);

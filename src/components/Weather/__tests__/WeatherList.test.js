@@ -7,15 +7,18 @@ import { WeatherList } from '../WeatherList';
 
 describe('<WeatherList/>', () => {
     test('should render WeatherList', () => {
-        const locs = List([
-            Map({ id: 1, city: 'Odessa', country: 'Ukraine', temp: 0, isDeleted: false }),
-            Map({ id: 2, city: 'New York', country: 'United States', temp: 0, isDeleted: false })
-        ]);
+        const data = Map({
+            locations: List([
+                Map({ id: 1, city: 'Odessa', country: 'Ukraine', temp: 0, isDeleted: false }),
+                Map({ id: 2, city: 'New York', country: 'United States', temp: 0, isDeleted: false })
+            ]),
+            rehydrated: false
+        })
         const wrapper = renderer.create(
             <WeatherList
-                locations={locs}
+                currentData={data}
                 addLocation={jest.fn()}
-                updateLocations={jest.fn()}
+                updateData={jest.fn()}
                 removeLocation={jest.fn()}
             />
         );
