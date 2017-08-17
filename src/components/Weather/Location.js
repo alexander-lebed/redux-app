@@ -13,17 +13,17 @@ type Props = {
 
 const Location = (props: Props) => {
     const { location, onDelete } = props;
-    let temperature = '';
+    let tempInfo = '';
     if (location.get('temp')) {
         const degreesInCelsius = Math.round((location.get('temp') - 32) / 1.8);
-        temperature = `${degreesInCelsius} °C`;
+        tempInfo = `${degreesInCelsius} °C`;
     } else {
-        temperature = 'not available';
+        tempInfo = 'not available';
     }
     return (
         <Row>
             <Col xs={6}>{location.get('city')}</Col>
-            <Col xs={3}>{temperature}</Col>
+            <Col xs={3}>{tempInfo}</Col>
             <Col xs={3}>
                 <Glyphicon
                     glyph="remove"

@@ -1,6 +1,7 @@
 // @flow
 import * as Immutable from 'immutable';
 import type { Action, State } from '../types';
+import { ADD_LOCATION, UPDATE_DATA, REMOVE_LOCATION } from '../actions/weather-actions';
 
 const initialState = Immutable.Map({
     locations: Immutable.List([
@@ -15,7 +16,7 @@ const initialState = Immutable.Map({
 const reducer = (state: State = initialState, action: Action): State => {
     const findIndexById = id => state.get('locations').findIndex(t => t.get('id') === id);
     switch (action.type) {
-    case 'ADD_LOCATION': {
+    case ADD_LOCATION: {
         const index = findIndexById(action.payload);
         if (index !== -1) {
             const locations = state.get('locations').update(index, t => t.set('isDeleted', false));
@@ -23,10 +24,10 @@ const reducer = (state: State = initialState, action: Action): State => {
         }
         return state;
     }
-    case 'UPDATE_DATA': {
+    case UPDATE_DATA: {
         return state.merge(action.payload);
     }
-    case 'REMOVE_LOCATION': {
+    case REMOVE_LOCATION: {
         const index = findIndexById(action.payload);
         if (index !== -1) {
             const locations = state.get('locations').update(index, t => t.set('isDeleted', true));

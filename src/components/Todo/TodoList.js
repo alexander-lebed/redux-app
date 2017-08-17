@@ -20,7 +20,7 @@ type Props = {
 
 export class TodoList extends React.Component<void, Props, void> {
 
-    onSubmit(event: Object) {
+    onSubmit = (event: Object) => {
         const text = event.target.value;
         const isEnterKey = event.which === 13;
         if (isEnterKey && text.length > 0) {
@@ -41,7 +41,7 @@ export class TodoList extends React.Component<void, Props, void> {
                             type="text"
                             className='todo__entry'
                             placeholder="Add todo"
-                            onKeyDown={e => this.onSubmit(e)}
+                            onKeyDown={this.onSubmit}
                         />
                         <ul className="todo__list">
                             {todos.filter(t => !t.get('isDeleted')).map(t => (

@@ -1,6 +1,7 @@
 // @flow
 import { List, Map } from 'immutable';
 import type { Action, State } from '../types';
+import { ADD_TODO, UPDATE_TODO, TOGGLE_TODO, REMOVE_TODO } from '../actions/todo-actions';
 
 
 const initialState = Map({
@@ -17,27 +18,26 @@ const initialState = Map({
         Map({ id: '1ds4faoef', isDone: true, text: 'test with Jest', isDeleted: false }),
         Map({ id: 'jkf9fdlr2', isDone: true, text: 'linting with ESLint', isDeleted: false }),
         Map({ id: 'jdf7lp11f', isDone: true, text: 'fix bug with rehydration weather state', isDeleted: false }),
-        Map({ id: 'fdf3aef3f', isDone: false, text: 'log in page', isDeleted: false }),
-        Map({ id: '45frdbe2a', isDone: false, text: 'admin page with reset store', isDeleted: false })
+        Map({ id: 'fdf3aef3f', isDone: false, text: 'log in page', isDeleted: false })
     ])
 });
 
 const reducer = (state: State = initialState, action: Action): State => {
     const findIndexById = (id: string) => state.get('todos').findIndex(t => t.get('id') === id);
     switch (action.type) {
-    case 'ADD_TODO': {
+    case ADD_TODO: {
         const todos = state.get('todos').set(state.get('todos').size, action.payload);
         return state.set('todos', todos);
     }
-    case 'UPDATE_TODO': {
+    case UPDATE_TODO: {
         const index = findIndexById(action.payload.id);
         if (index !== -1) {
-            const todos = state.get('todos').update(index, t => t.set('text', action.payload.text));
+            const todos = state.get('todos').update(index, t => t.set('text', action.payload.text.trim()));
             return state.set('todos', todos);
         }
         return state;
     }
-    case 'TOGGLE_TODO': {
+    case TOGGLE_TODO: {
         const index = findIndexById(action.payload);
         if (index !== -1) {
             const todos = state.get('todos').update(index, t => t.update('isDone', isDone => !isDone));
@@ -45,7 +45,7 @@ const reducer = (state: State = initialState, action: Action): State => {
         }
         return state;
     }
-    case 'REMOVE_TODO': {
+    case REMOVE_TODO: {
         const index = findIndexById(action.payload);
         if (index !== -1) {
             const todos = state.get('todos').update(index, t => t.set('isDeleted', true));

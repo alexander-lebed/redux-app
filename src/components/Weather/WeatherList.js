@@ -27,7 +27,7 @@ export class WeatherList extends React.Component<void, Props, void> {
         this.updateWeather();
     }
 
-    updateWeather() {
+    updateWeather = () => {
         const { currentData, updateData } = this.props;
         const locations = currentData.get('locations');
         const getWeatherUrl = (location): string => `
@@ -53,7 +53,7 @@ export class WeatherList extends React.Component<void, Props, void> {
         const locations = currentData.get('locations');
         const onAddLocation = (location) => {
             addLocation(location.get('id'));
-            setTimeout(this.updateWeather.bind(this), 50);
+            setTimeout(this.updateWeather, 50);
         };
         const deletedLocations = locations.filter(l => l.get('isDeleted'));
         return (

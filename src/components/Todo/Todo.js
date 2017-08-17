@@ -18,21 +18,26 @@ type State = {
 }
 
 export default class Todo extends React.Component<void, Props, State> {
-    state: State;
+    state: State = {
+        todoToEdit: null
+    };
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            todoToEdit: null
-        };
+    onEdit = (event: Object) => {
+        if (event) {
+            // stop the click event from bubbling up
+            event.stopPropagation();
+        }
+        this.setState({
+            todoToEdit: this.props.todo
+        });
     }
 
-    editTodo(todo: Map<string, any>) {
+    editTodo = (todo: Map<string, any>) => {
         this.props.onEdit(todo.get('id'), todo.get('text'));
         this.setState({ todoToEdit: null });
     }
 
-    onSubmit(event: Object) {
+    onSubmit = (event: Object) => {
         const isEnterKey = event.which === 13;
         if (isEnterKey && this.state.todoToEdit) {
             this.editTodo(this.state.todoToEdit);
@@ -58,7 +63,7 @@ export default class Todo extends React.Component<void, Props, State> {
                             className='todo__entry'
                             value={todoToEdit.get('text')}
                             onChange={e => stateSetter({ todoToEdit: todoToEdit.set('text', e.target.value) })}
-                            onKeyDown={e => this.onSubmit(e)}
+                            onKeyDown={this.onSubmit}
                         />
                     </Modal.Body>
                     <Modal.Footer>
@@ -88,7 +93,7 @@ export default class Todo extends React.Component<void, Props, State> {
                         id="edit-todo"
                         glyph="pencil"
                         style={{ marginRight: 15, color: 'grey' }}
-                        onClick={() => stateSetter({ todoToEdit: todo })}
+                        onClick={e => this.onEdit(e)}
                     />
                     <Glyphicon
                         id="remove-todo"
