@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
+import Modal from 'react-bootstrap/lib/Modal';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import { Map } from 'immutable';
 import Todo from '../Todo';
-import Modal from 'react-bootstrap/lib/Modal';
 
 
 describe('<Todo/>', () => {

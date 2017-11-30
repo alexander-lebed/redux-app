@@ -3,8 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
+import { Row, Col } from 'react-bootstrap';
 import type { State, Dispatch } from '../../redux/types';
 import { addTodo, updateTodo, toggleTodo, removeTodo } from '../../redux/actions/todo-actions';
 import Todo from './Todo';
@@ -27,7 +26,7 @@ export class TodoList extends React.Component<void, Props, void> {
             this.props.addTodo(text);
             event.target.value = '';
         }
-    }
+    };
 
     render() {
         const { currentData, updateTodo, toggleTodo, removeTodo } = this.props;

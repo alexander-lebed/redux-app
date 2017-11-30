@@ -13,7 +13,7 @@ describe('<WeatherList/>', () => {
                 Map({ id: 2, city: 'New York', country: 'United States', temp: 0, isDeleted: false })
             ]),
             rehydrated: false
-        })
+        });
         const wrapper = renderer.create(
             <WeatherList
                 currentData={data}
