@@ -1,11 +1,12 @@
 // @flow
-/* eslint-disable no-underscore-dangle */
 import { compose, applyMiddleware, combineReducers, createStore } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
 import thunkMiddleware from 'redux-thunk';
-import todoReducer from './reducers/todo-reducer';
-import weatherReducer from './reducers/weather-reducer';
+import todo from './reducers/todo-reducer';
+import weather from './reducers/weather-reducer';
+import authentication from './reducers/authentication';
+import users from './reducers/users';
 
 
 export default function configureStore() {
@@ -13,8 +14,10 @@ export default function configureStore() {
     return new Promise((resolve, reject) => {
         try {
             const reducers = combineReducers({
-                todoData: todoReducer,
-                weatherData: weatherReducer
+                authentication,
+                users,
+                todo,
+                weather
             });
             const store = createStore(
                 reducers,

@@ -1,19 +1,23 @@
 // @flow
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import history from './helpers/history';
+import PrivateRoute from './components/PrivateRoute';
 import configureStore from './redux/configureStore';
 import Navigation from './components/NavigationBar';
+import Login from './components/Login/Login';
 import TodoList from './components/Todo/TodoList';
 import WeatherList from './components/Weather/WeatherList';
 
 const Content = () => (
-    <Router>
+    <Router history={history}>
         <Switch>
-            <Route exact path="/" component={TodoList} />
-            <Route exact path="/todo" component={TodoList} />
-            <Route path="/weather" component={WeatherList} />
+            <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path="/" component={TodoList} />
+            <PrivateRoute exact path="/todo" component={TodoList} />
+            <PrivateRoute path="/weather" component={WeatherList} />
         </Switch>
     </Router>
 );

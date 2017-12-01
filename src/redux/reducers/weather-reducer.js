@@ -16,27 +16,27 @@ const initialState = Immutable.Map({
 const reducer = (state: State = initialState, action: Action): State => {
     const findIndexById = id => state.get('locations').findIndex(t => t.get('id') === id);
     switch (action.type) {
-    case ADD_LOCATION: {
-        const index = findIndexById(action.payload);
-        if (index !== -1) {
-            const locations = state.get('locations').update(index, t => t.set('isDeleted', false));
-            return state.set('locations', locations);
+        case ADD_LOCATION: {
+            const index = findIndexById(action.payload);
+            if (index !== -1) {
+                const locations = state.get('locations').update(index, t => t.set('isDeleted', false));
+                return state.set('locations', locations);
+            }
+            return state;
         }
-        return state;
-    }
-    case UPDATE_DATA: {
-        return state.merge(action.payload);
-    }
-    case REMOVE_LOCATION: {
-        const index = findIndexById(action.payload);
-        if (index !== -1) {
-            const locations = state.get('locations').update(index, t => t.set('isDeleted', true));
-            return state.set('locations', locations);
+        case UPDATE_DATA: {
+            return state.merge(action.payload);
         }
-        return state;
-    }
-    default:
-        return state;
+        case REMOVE_LOCATION: {
+            const index = findIndexById(action.payload);
+            if (index !== -1) {
+                const locations = state.get('locations').update(index, t => t.set('isDeleted', true));
+                return state.set('locations', locations);
+            }
+            return state;
+        }
+        default:
+            return state;
     }
 };
 

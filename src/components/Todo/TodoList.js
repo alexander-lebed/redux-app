@@ -1,10 +1,8 @@
 // @flow
-/* eslint-disable no-shadow, no-param-reassign */
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Row, Col } from 'react-bootstrap';
-import type { State, Dispatch } from '../../redux/types';
+import type { State } from '../../redux/types';
 import { addTodo, updateTodo, toggleTodo, removeTodo } from '../../redux/actions/todo-actions';
 import Todo from './Todo';
 
@@ -66,15 +64,6 @@ export class TodoList extends React.Component<void, Props, void> {
 }
 
 export default connect(
-    // mapStateToProps
-    state => ({ currentData: state.todoData }),
-    // mapDispatchToProps
-    (dispatch: Dispatch) =>
-        bindActionCreators({ addTodo, updateTodo, toggleTodo, removeTodo }, dispatch)
-        // return {
-        //     addTodo: text => dispatch(addTodo(text)),
-        //     toggleTodo: id => dispatch(toggleTodo(id)),
-        //     removeTodo: id => dispatch(removeTodo(id))
-        // };
-
+    state => ({ currentData: state.todo }),
+    { addTodo, updateTodo, toggleTodo, removeTodo }
 )(TodoList);

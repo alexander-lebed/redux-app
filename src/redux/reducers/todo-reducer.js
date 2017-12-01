@@ -26,36 +26,36 @@ const initialState = Map({
 const reducer = (state: State = initialState, action: Action): State => {
     const findIndexById = (id: string) => state.get('todos').findIndex(t => t.get('id') === id);
     switch (action.type) {
-    case ADD_TODO: {
-        const todos = state.get('todos').set(state.get('todos').size, action.payload);
-        return state.set('todos', todos);
-    }
-    case UPDATE_TODO: {
-        const index = findIndexById(action.payload.id);
-        if (index !== -1) {
-            const todos = state.get('todos').update(index, t => t.set('text', action.payload.text.trim()));
+        case ADD_TODO: {
+            const todos = state.get('todos').set(state.get('todos').size, action.payload);
             return state.set('todos', todos);
         }
-        return state;
-    }
-    case TOGGLE_TODO: {
-        const index = findIndexById(action.payload);
-        if (index !== -1) {
-            const todos = state.get('todos').update(index, t => t.update('isDone', isDone => !isDone));
-            return state.set('todos', todos);
+        case UPDATE_TODO: {
+            const index = findIndexById(action.payload.id);
+            if (index !== -1) {
+                const todos = state.get('todos').update(index, t => t.set('text', action.payload.text.trim()));
+                return state.set('todos', todos);
+            }
+            return state;
         }
-        return state;
-    }
-    case REMOVE_TODO: {
-        const index = findIndexById(action.payload);
-        if (index !== -1) {
-            const todos = state.get('todos').update(index, t => t.set('isDeleted', true));
-            return state.set('todos', todos);
+        case TOGGLE_TODO: {
+            const index = findIndexById(action.payload);
+            if (index !== -1) {
+                const todos = state.get('todos').update(index, t => t.update('isDone', isDone => !isDone));
+                return state.set('todos', todos);
+            }
+            return state;
         }
-        return state;
-    }
-    default:
-        return state;
+        case REMOVE_TODO: {
+            const index = findIndexById(action.payload);
+            if (index !== -1) {
+                const todos = state.get('todos').update(index, t => t.set('isDeleted', true));
+                return state.set('todos', todos);
+            }
+            return state;
+        }
+        default:
+            return state;
     }
 };
 

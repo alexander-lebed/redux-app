@@ -1,17 +1,11 @@
 // @flow
-/* eslint-disable no-shadow */
 import React from 'react';
 import $http from 'axios';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
-import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import type { State, Dispatch } from '../../redux/types';
+import { Row, Col, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 import { addLocation, updateData, removeLocation } from '../../redux/actions/weather-actions';
 import Location from './Location';
+import type { State } from '../../redux/types';
 
 
 type Props = {
@@ -93,7 +87,6 @@ export class WeatherList extends React.Component<void, Props, void> {
 }
 
 export default connect(
-    state => ({ currentData: state.weatherData }),
-    (dispatch: Dispatch) =>
-        bindActionCreators({ addLocation, updateData, removeLocation }, dispatch)
+    state => ({ currentData: state.weather }),
+    { addLocation, updateData, removeLocation }
 )(WeatherList);
