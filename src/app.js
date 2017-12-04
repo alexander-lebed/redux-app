@@ -7,7 +7,8 @@ import history from './helpers/history';
 import PrivateRoute from './components/PrivateRoute';
 import configureStore from './redux/configureStore';
 import Navigation from './components/NavigationBar';
-import Login from './components/Login/Login';
+import Login from './components/Auth/Login';
+import Registration from './components/Auth/Registration';
 import TodoList from './components/Todo/TodoList';
 import WeatherList from './components/Weather/WeatherList';
 
@@ -15,6 +16,7 @@ const Content = () => (
     <Router history={history}>
         <Switch>
             <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Registration} />
             <PrivateRoute exact path="/" component={TodoList} />
             <PrivateRoute exact path="/todo" component={TodoList} />
             <PrivateRoute path="/weather" component={WeatherList} />

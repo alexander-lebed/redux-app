@@ -1,7 +1,7 @@
 // @flow
 import { List, Map } from 'immutable';
 import uid from '../../../helpers/id-generator';
-import reducer from '../todo-reducer';
+import reducer from '../todo';
 import { addTodo, updateTodo, toggleTodo, removeTodo } from '../../actions/todo-actions';
 
 

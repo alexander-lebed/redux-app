@@ -8,5 +8,6 @@ export type Dispatch = (action: Action) => void;
 
 export type User = {
     username: string,
+    email: string,
     password: string
 }

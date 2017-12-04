@@ -22,10 +22,10 @@ export default combineReducers({
 });
 
 
-export function login(username: string, password: string) {
+export function login(email: string, password: string) {
     return (dispatch: Dispatch, getState: Function) => {
         const users = getState().users.users;
-        const user = users.find(e => e.username === username && e.password === password);
+        const user = users.find(e => e.email === email && e.password === password);
         if (user) {
             dispatch({
                 type: actions.SET_USER,
@@ -33,7 +33,7 @@ export function login(username: string, password: string) {
             });
             history.push('/');
         } else {
-            alert('Username or password is incorrect');
+            alert('Email or password is incorrect');
         }
     }
 }

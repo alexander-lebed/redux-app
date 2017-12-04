@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import Modal from 'react-bootstrap/lib/Modal';
+import { Modal } from 'react-bootstrap';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import { Map } from 'immutable';

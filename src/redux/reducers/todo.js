@@ -19,7 +19,8 @@ const initialState = Map({
         Map({ id: 'jkf9fdlr2', isDone: true, text: 'linting with ESLint', isDeleted: false }),
         Map({ id: 'jdf7lp11f', isDone: true, text: 'fix bug with rehydration weather state', isDeleted: false }),
         Map({ id: 'fdf3aef3f', isDone: false, text: 'log in page', isDeleted: false }),
-        Map({ id: 'abs3ae2fq', isDone: false, text: 'messager', isDeleted: false })
+        Map({ id: 'abs3ae2fq', isDone: false, text: 'messanger', isDeleted: false }),
+        Map({ id: 'klhjh3rr2', isDone: false, text: 'nice notifications', isDeleted: false })
     ])
 });
 

@@ -1,7 +1,7 @@
 // @flow
 import { List, Map } from 'immutable';
 import uid from '../../../helpers/id-generator';
-import reducer from '../weather-reducer';
+import reducer from '../weather';
 import { addLocation, updateData, removeLocation } from '../../actions/weather-actions';
 
 

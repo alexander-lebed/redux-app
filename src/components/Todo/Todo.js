@@ -1,10 +1,7 @@
 // @flow
 import React from 'react';
 import { Map } from 'immutable';
-import Modal from 'react-bootstrap/lib/Modal';
-import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import { Modal, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 
 
 type Props = {
@@ -30,19 +27,19 @@ export default class Todo extends React.Component<void, Props, State> {
         this.setState({
             todoToEdit: this.props.todo
         });
-    }
+    };
 
     editTodo = (todo: Map<string, any>) => {
         this.props.onEdit(todo.get('id'), todo.get('text'));
         this.setState({ todoToEdit: null });
-    }
+    };
 
     onSubmit = (event: Object) => {
         const isEnterKey = event.which === 13;
         if (isEnterKey && this.state.todoToEdit) {
             this.editTodo(this.state.todoToEdit);
         }
-    }
+    };
 
     render() {
         const { todo, onDelete } = this.props;
@@ -85,7 +82,7 @@ export default class Todo extends React.Component<void, Props, State> {
         return (
             <div>
                 {todo.get('isDone') ?
-                    <strike>{todo.get('text')}</strike> :
+                    <del>{todo.get('text')}</del> :
                     <span>{todo.get('text')}</span>
                 }
                 <ButtonToolbar className="pull-right" style={{ marginTop: 3 }}>
