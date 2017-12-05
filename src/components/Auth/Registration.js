@@ -14,6 +14,7 @@ type State = {
     password: string
 };
 
+// todo: input 'Confirm Password'
 class Login extends React.Component<void, Props, State> {
 
     state = {
