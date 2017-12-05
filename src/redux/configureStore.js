@@ -26,7 +26,7 @@ export default function configureStore() {
                 compose(
                     applyMiddleware(...middleware),
                     autoRehydrate(),
-                    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+                    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
                 )
             );
             // periodically persist the store
@@ -35,7 +35,7 @@ export default function configureStore() {
                 store,
                 { transforms: [immutableTransform()] },
                 () => resolve(store)
-            ).purge(); // .purge();
+            ); // .purge();
         } catch (e) {
             reject(e);
         }

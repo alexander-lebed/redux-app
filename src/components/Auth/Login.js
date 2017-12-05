@@ -42,7 +42,7 @@ class Login extends React.Component<void, Props, State> {
                         </Col>
                     </Row>
 
-                    <Form horizontal>
+                    <Form horizontal onSubmit={this.login}>
                         <FormGroup controlId="formHorizontalEmail">
                             <Col componentClass={ControlLabel} xs={2}>
                                 Email
@@ -77,8 +77,8 @@ class Login extends React.Component<void, Props, State> {
                             <Col xsOffset={2} xs={10}>
                                 <ButtonToolbar>
                                     <Button
+                                        type="submit"
                                         bsStyle='primary'
-                                        onClick={this.login}
                                     >
                                         Log in
                                     </Button>

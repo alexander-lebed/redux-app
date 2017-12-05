@@ -44,7 +44,7 @@ class Login extends React.Component<void, Props, State> {
                         </Col>
                     </Row>
 
-                    <Form horizontal>
+                    <Form horizontal onSubmit={this.register}>
                         <FormGroup controlId="formHorizontalUsername">
                             <Col componentClass={ControlLabel} xs={2}>
                                 Username
@@ -92,8 +92,8 @@ class Login extends React.Component<void, Props, State> {
                         <FormGroup>
                             <Col xsOffset={2} xs={10}>
                                 <Button
+                                    type="submit"
                                     bsStyle='primary'
-                                    onClick={this.register}
                                 >
                                     Register
                                 </Button>
