@@ -1,6 +1,6 @@
 // @flow
 import { List, Map } from 'immutable';
-import type { Action, State } from '../types';
+import type { Action, State } from '../../types';
 import { ADD_TODO, UPDATE_TODO, TOGGLE_TODO, REMOVE_TODO } from '../actions/todo-actions';
 
 

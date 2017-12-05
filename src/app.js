@@ -11,6 +11,7 @@ import Login from './components/Auth/Login';
 import Registration from './components/Auth/Registration';
 import TodoList from './components/Todo/TodoList';
 import WeatherList from './components/Weather/WeatherList';
+import Alerts from './components/Alerts';
 
 const Content = () => (
     <Router history={history}>
@@ -29,6 +30,7 @@ async function init() {
     render(
         <Provider store={store}>
             <div>
+                <Alerts />
                 <Navigation />
                 <Content />
             </div>

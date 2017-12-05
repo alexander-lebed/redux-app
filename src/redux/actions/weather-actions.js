@@ -1,5 +1,5 @@
 // @flow
-import type { Action, State } from '../types';
+import type { Action, State } from '../../types';
 
 
 export const ADD_LOCATION = 'ADD_LOCATION';

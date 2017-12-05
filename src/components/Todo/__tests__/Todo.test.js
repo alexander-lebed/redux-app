@@ -22,7 +22,7 @@ describe('<Todo/>', () => {
         const wrapper = shallow(
             <Todo todo={todo} onEdit={jest.fn()} onDelete={jest.fn()} />
         );
-        expect(wrapper.find('strike').length).toEqual(1);
+        expect(wrapper.find('del').length).toEqual(1);
     });
 
     test('should render edit modal on pencil click', () => {

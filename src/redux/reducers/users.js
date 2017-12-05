@@ -1,18 +1,18 @@
 // @flow
 import {combineReducers} from 'redux';
 import { Map } from 'immutable';
-import type {Action, Dispatch, User} from '../types';
+import type {Action, Dispatch, User} from '../../types';
 import history from "../../helpers/history";
+import { Alert } from './alerts';
 
 const actions = {
     ADD_USER: 'ADD_USER'
 };
 
-
-const initUsers: Map<string, User> = Map(
-    {'alan@mail': {username: 'Alan', email: 'alan@mail', password: 'Alan'}}
-);
-
+const initUsers: Map<string, User> = Map({
+    'alan@mail': {username: 'Alan', email: 'alan@mail', password: 'Alan'},
+    'lebed.alexander90@gmail.com': {username: 'gorodovoy', email: 'lebed.alexander90@gmail.com', password: 'WinterF3ll'}
+});
 const users = (state = initUsers, action: Action) => {
     switch (action.type) {
         case actions.ADD_USER: {
@@ -42,7 +42,7 @@ export function register(username: string, email: string, password: string) {
             });
             history.push('/');
         } else {
-            alert(`User with ${email} email already exist`);
+            dispatch(Alert.error(`User with ${email} email already exist`));
         }
     }
 }

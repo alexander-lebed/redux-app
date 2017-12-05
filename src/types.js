@@ -1,4 +1,5 @@
 // @flow
+import type { Element } from 'react';
 import { Map } from 'immutable';
 
 
@@ -10,4 +11,11 @@ export type User = {
     username: string,
     email: string,
     password: string
+}
+
+export type Alert = {
+    uid: string,
+    message: string | Element<any>,
+    type: 'success' | 'info' | 'danger' | 'warning' | 'dialog',
+    timeout?: number
 }

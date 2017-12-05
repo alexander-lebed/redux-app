@@ -1,6 +1,6 @@
 // @flow
 import * as Immutable from 'immutable';
-import type { Action, State } from '../types';
+import type { Action, State } from '../../types';
 import { ADD_LOCATION, UPDATE_DATA, REMOVE_LOCATION } from '../actions/weather-actions';
 
 const initialState = Immutable.Map({

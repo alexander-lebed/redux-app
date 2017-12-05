@@ -1,6 +1,6 @@
 // @flow
 import { Map } from 'immutable';
-import type { Action } from '../types';
+import type { Action } from '../../types';
 import uid from '../../helpers/id-generator';
 
 

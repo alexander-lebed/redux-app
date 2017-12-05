@@ -1,7 +1,8 @@
 // @flow
 import {combineReducers} from 'redux';
 import history from  '../../helpers/history';
-import type { Action, Dispatch } from '../types';
+import { Alert } from './alerts';
+import type { Action, Dispatch } from '../../types';
 
 const actions = {
     SET_USER: 'SET_USER'
@@ -33,7 +34,7 @@ export function login(email: string, password: string) {
             });
             history.push('/');
         } else {
-            alert('Email or password is incorrect');
+            dispatch(Alert.error('Email or password is incorrect'));
         }
     }
 }

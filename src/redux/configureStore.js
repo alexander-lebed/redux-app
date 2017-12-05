@@ -7,6 +7,7 @@ import todo from './reducers/todo';
 import weather from './reducers/weather';
 import authentication from './reducers/authentication';
 import users from './reducers/users';
+import alerts from './reducers/alerts';
 
 
 export default function configureStore() {
@@ -17,7 +18,8 @@ export default function configureStore() {
                 authentication,
                 users,
                 todo,
-                weather
+                weather,
+                alerts
             });
             const store = createStore(
                 reducers,
@@ -33,7 +35,7 @@ export default function configureStore() {
                 store,
                 { transforms: [immutableTransform()] },
                 () => resolve(store)
-            ); // .purge();
+            ).purge(); // .purge();
         } catch (e) {
             reject(e);
         }

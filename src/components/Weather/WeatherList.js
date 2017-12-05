@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Row, Col, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
 import { addLocation, updateData, removeLocation } from '../../redux/actions/weather-actions';
 import Location from './Location';
-import type { State } from '../../redux/types';
+import type { State } from '../../types';
 
 
 type Props = {
@@ -40,7 +40,7 @@ export class WeatherList extends React.Component<void, Props, void> {
             });
             updateData(currentData.set('locations', data));
         });
-    }
+    };
 
     render() {
         const { currentData, addLocation, removeLocation } = this.props;

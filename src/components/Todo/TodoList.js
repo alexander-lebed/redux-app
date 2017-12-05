@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
-import type { State } from '../../redux/types';
+import type { State } from '../../types';
 import { addTodo, updateTodo, toggleTodo, removeTodo } from '../../redux/actions/todo-actions';
 import Todo from './Todo';
 

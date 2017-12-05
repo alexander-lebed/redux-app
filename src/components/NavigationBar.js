@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Glyphicon } from 'react-bootstrap';
 import { Map } from 'immutable';
 import { logout } from '../redux/reducers/authentication';
-import type { User } from '../redux/types';
+import type { User } from '../types';
 
 type Props = {
     user: User,
