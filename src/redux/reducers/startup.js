@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 import type { Action, Dispatch } from '../../types';
 import { getUsers } from './users';
-// import { login } from './authentication';
+import { login } from './authentication';
+import { Alert } from './alerts';
 
 const actions = {
     START_INIT: 'START_INIT',
@@ -25,18 +26,22 @@ export default combineReducers({
 
 
 export function initApp() {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch, getState: Function) => {
         dispatch({
             type: actions.START_INIT
         });
         Promise.resolve()
             .then(() => dispatch(getUsers()))
-            // .then(() => { // todo: auth current user
-            //     const currentUser = getState().authentication.user;
-            //     if (currentUser) {
-            //         dispatch(login(currentUser.email, currentUser.password))
-            //     }
-            // })
+            .then(() => {
+                const currentUser = getState().authentication.user;
+                if (currentUser) {
+                    return dispatch(login(currentUser.email, currentUser.password)).then(isLoggedIn => {
+                        if (!isLoggedIn) {
+                            dispatch(Alert.error('Please re-login'));
+                        }
+                    })
+                }
+            })
             .then(() => {
                 dispatch({
                     type: actions.END_INIT

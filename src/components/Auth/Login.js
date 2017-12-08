@@ -3,9 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from 'react-bootstrap';
 import { login } from '../../redux/reducers/authentication';
+import { success, error } from "../../redux/reducers/alerts";
+import history from "../../helpers/history";
 
 type Props = {
-    login: Function
+    login: Function,
+    success: Function,
+    error: Function
 };
 
 type State = {
@@ -27,7 +31,13 @@ class Login extends React.Component<void, Props, State> {
 
     login = () => {
         const {email, password} = this.state;
-        this.props.login(email, password)
+        this.props.login(email, password).then(isLoggedIn => {
+            if (isLoggedIn) {
+                history.push('/');
+            } else {
+                this.props.error('Email or password is incorrect');
+            }
+        })
     };
 
     render() {
@@ -101,6 +111,6 @@ class Login extends React.Component<void, Props, State> {
 export default connect(
     () => ({}),
     {
-        login
+        login, success, error
     }
 )(Login)
