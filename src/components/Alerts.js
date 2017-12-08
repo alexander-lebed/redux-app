@@ -41,6 +41,7 @@ export class Alert extends React.Component<void, AlertProps, void> {
                 <Button
                     onClick={this.hideNotification}
                     bsStyle='link'
+                    style={styles.closeBtn}
                     className='pull-right close'
                 >
                     <Glyphicon glyph='remove' />
@@ -82,7 +83,12 @@ export default connect(
 
 const styles = {
     alert: {
-        margin: '5px 0 0 0 !important'
+        position: 'relative'
+    },
+    closeBtn: {
+        position: 'absolute',
+        top: 10,
+        right: 10
     },
     alerts: {
         position: 'fixed',

@@ -4,10 +4,16 @@ React Redux ImmutableJS
 redux example from https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
 
 # To run the app:
-1. 'yarn build' in separate terminal
-2. yarn start
+1. 'yarn build' in one terminal
+2. 'start-all' in separate terminal
 3. http://localhost:9999/
 
+# Up and run mongodb
+mongod --dbpath F:/STUFF/CRAP/mongodb/db
+
+# create database (if there is no any)
+mongo
+use gorodovoydb
 
 # To upgrade all dependencies
 npm i -g npm-check-updates

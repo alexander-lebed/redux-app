@@ -3,6 +3,7 @@ import { compose, applyMiddleware, combineReducers, createStore } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
 import thunkMiddleware from 'redux-thunk';
+import startup from './reducers/startup';
 import todo from './reducers/todo';
 import weather from './reducers/weather';
 import authentication from './reducers/authentication';
@@ -15,6 +16,7 @@ export default function configureStore() {
     return new Promise((resolve, reject) => {
         try {
             const reducers = combineReducers({
+                startup,
                 authentication,
                 users,
                 todo,

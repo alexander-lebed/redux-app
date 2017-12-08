@@ -34,6 +34,10 @@ export function login(email: string, password: string) {
             });
             history.push('/');
         } else {
+            dispatch({
+                type: actions.SET_USER,
+                payload: null
+            });
             dispatch(Alert.error('Email or password is incorrect'));
         }
     }

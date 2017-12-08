@@ -8,6 +8,7 @@ export type State = Map<string, any>;
 export type Dispatch = (action: Action) => void;
 
 export type User = {
+    _id: string,
     username: string,
     email: string,
     password: string
