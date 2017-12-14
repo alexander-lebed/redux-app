@@ -4,19 +4,16 @@ import { combineReducers } from 'redux';
 import $http from 'axios';
 import _ from 'lodash';
 import { Map } from 'immutable';
-import type { Action, Dispatch, User } from '../../types';
 import history from "../../helpers/history";
+import { USERS_URL } from '../../urls';
 import { Alert } from './alerts';
+import type { Action, Dispatch, User } from '../../types';
 
 const actions = {
     ADD_USER: 'ADD_USER',
     SET_USERS: 'SET_USERS'
 };
 
-// const initUsers: Map<string, User> = Map({
-//     'alan@mail': {_id: 'lalala1', username: 'Alan', email: 'alan@mail', password: 'Alan'},
-//     'lebed.alexander90@gmail.com': {_id: 'lalala2', username: 'gorodovoy', email: 'lebed.alexander90@gmail.com', password: 'WinterF3ll'}
-// });
 const initUsers: Map<string, User> = Map({});
 const users = (state = initUsers, action: Action) => {
     switch (action.type) {
@@ -37,18 +34,27 @@ export default combineReducers({
 
 export function register(username: string, email: string, password: string) {
     return (dispatch: Dispatch, getState: Function) => {
+
         const users = getState().users.users;
-        const user = users.get(email);
-        if (!user) {
-            dispatch({
-                type: actions.ADD_USER,
-                payload: {
-                    username,
-                    email,
-                    password
-                }
-            });
-            history.push('/');
+        const registeredUser = users.get(email);
+
+        if (!registeredUser) {
+            const payload = {
+                username,
+                email,
+                password
+            };
+            return $http.post(USERS_URL, payload)
+                .then(response => {
+                    dispatch({
+                        type: actions.ADD_USER,
+                        payload: response.data
+                    });
+                    history.push('/');
+                })
+                .catch(e => {
+                    dispatch(Alert.error(`Error on register user: ${e.toString()}`));
+                })
         } else {
             dispatch(Alert.error(`User with ${email} email already exist`));
         }
@@ -57,9 +63,9 @@ export function register(username: string, email: string, password: string) {
 
 export function getUsers() {
     return (dispatch: Dispatch) => {
-        $http.get('http://localhost:3001/api/users')
+        $http.get(USERS_URL)
             .then(response => {
-                const dataObj = _.keyBy(response.data, '_id');
+                const dataObj = _.keyBy(response.data, 'email');
                 const payload = Map(dataObj);
                 dispatch({
                     type: actions.SET_USERS, payload

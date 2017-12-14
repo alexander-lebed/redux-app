@@ -22,7 +22,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                loaders: ['babel-loader', 'eslint-loader'],
+                loaders: ['babel-loader'], // add 'eslint-loader' to lint on build
                 exclude: /node_modules/
             },
             {
