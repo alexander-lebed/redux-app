@@ -29,6 +29,12 @@ class NavigationBar extends React.Component<void, Props, void> {
                     <LinkContainer key='weather' to='/weather'>
                         <NavItem eventKey={2}>Weather</NavItem>
                     </LinkContainer>
+                    <LinkContainer key='conversations' to='/conversations'>
+                        <NavItem eventKey={3}>Messages</NavItem>
+                    </LinkContainer>
+                    <LinkContainer key='people' to='/people'>
+                        <NavItem eventKey={4}>People</NavItem>
+                    </LinkContainer>
                 </Nav>
                 <Nav pullRight>
                     <NavItem eventKey={1}>

@@ -8,10 +8,11 @@ const initialState = Map({
     todos: List([
         Map({id: 'klhjh3rr2', isDone: true, text: 'nice notifications', isDeleted: false}),
         Map({id: 'fdf3aef3f', isDone: true, text: 'Log in page', isDeleted: false}),
-        Map({id: 'ldfwswe3e', isDone: false, text: 'implement Back-End with some Database', isDeleted: false}),
+        Map({id: 'ldfwswe3e', isDone: true, text: 'implement Back-End with some Database', isDeleted: false}),
         Map({id: 'abs3ae2fq', isDone: false, text: 'Messenger', isDeleted: false }),
         Map({id: 'ks3324fdu', isDone: false, text: 'UX/UI', isDeleted: false}),
         Map({id: '0e1wewm10', isDone: false, text: 'get rid from ImmutableJS ?', isDeleted: false}),
+        Map({id: 'jh465gf4s', isDone: false, text: 'Admin page for manage Users', isDeleted: false}),
         Map({id: '3re90gftt', isDone: false, text: 'deploy the app to AWS or Heroku', isDeleted: false})
     ])
 });

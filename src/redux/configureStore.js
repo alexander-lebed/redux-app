@@ -4,10 +4,11 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
 import thunkMiddleware from 'redux-thunk';
 import startup from './reducers/startup';
-import todo from './reducers/todo';
-import weather from './reducers/weather';
 import authentication from './reducers/authentication';
 import users from './reducers/users';
+import conversations from './reducers/conversations'
+import todo from './reducers/todo';
+import weather from './reducers/weather';
 import alerts from './reducers/alerts';
 
 
@@ -19,6 +20,7 @@ export default function configureStore() {
                 startup,
                 authentication,
                 users,
+                conversations,
                 todo,
                 weather,
                 alerts
