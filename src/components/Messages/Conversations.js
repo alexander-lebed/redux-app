@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
 import moment from 'moment';
 import { Row, Col, Table } from 'react-bootstrap';
 import history from "../../helpers/history";
@@ -10,7 +9,6 @@ import type { User } from '../../types';
 
 type Props = {
     user: User,
-    users: Map<string, User>,
     conversations: Array<Object>,
     getConversationsByUser: Function
 }
@@ -26,37 +24,32 @@ class Conversations extends React.Component<void, Props, void> {
     };
 
     render() {
-        const {user, users, conversations} = this.props;
+        const {user, conversations} = this.props;
+        const tableBody = conversations.map(conv => {
+            const senders = conv.users.filter(u => u._id !== user._id).map(u => u.username).join(', ');
+            return (
+                <tr key={conv._id} onClick={() => this.goToConversation(conv._id)}>
+                    <td>{conv.name}</td>
+                    <td>{senders}</td>
+                    <td>{moment(conv.timestamp).format("HH:mm, DD MMM 'YY")}</td>
+                </tr>
+            )
+        });
         return (
             <div>
                 <Row>
                     <Col xsOffset={2} xs={8}>
+                        <h2 className='text-center'>Conversations</h2>
                         <Table responsive>
                             <thead>
-                                <tr>
-                                    <th>#</th>
+                                <tr style={{cursor: 'pointer'}}>
+                                    <th>ID</th>
                                     <th>From</th>
                                     <th style={{width: 170}}>When</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {conversations.map(conv => {
-                                    const usersArr = users.toArray();
-                                    const title = conv.users.filter(userId => userId !== user._id)
-                                        .map(userId => {
-                                            // get username by id
-                                            const user = usersArr.filter(user => user._id === userId)[0];
-                                            return user ? user.username : '';
-                                        })
-                                        .join(', ');
-                                    return (
-                                        <tr key={conv._id} onClick={() => this.goToConversation(conv._id)}>
-                                            <td>{conv.name}</td>
-                                            <td>{title}</td>
-                                            <td>{moment(conv.time).format("HH:mm, DD MMM 'YY")}</td>
-                                        </tr>
-                                    )
-                                })}
+                                {tableBody}
                             </tbody>
                         </Table>
                     </Col>
@@ -69,7 +62,6 @@ class Conversations extends React.Component<void, Props, void> {
 export default connect(
     state => ({
         user: state.authentication.user,
-        users: state.users.users,
         conversations: state.conversations.conversations
     }),
     { getConversationsByUser }
