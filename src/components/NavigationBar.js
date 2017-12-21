@@ -1,20 +1,25 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, Glyphicon } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Glyphicon, Badge } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 import { logout } from '../redux/reducers/authentication';
 import type { User } from '../types';
 
 type Props = {
     user: User,
-    logout: Function
+    logout: Function,
+    conversations: Array<Object>
 }
 
 class NavigationBar extends React.Component<void, Props, void> {
 
     render() {
-        const {user, logout} = this.props;
+        const {user, conversations, logout} = this.props;
+        const unreadConversations = conversations ? conversations.filter(c => c.messages.some(m => !m.read)) : [];
+        const newMessages = unreadConversations.length > 0 && (
+            <Badge>{unreadConversations.length}</Badge>
+        );
         return (
             <Navbar>
                 <Navbar.Header>
@@ -30,7 +35,9 @@ class NavigationBar extends React.Component<void, Props, void> {
                         <NavItem eventKey={2}>Weather</NavItem>
                     </LinkContainer>
                     <LinkContainer key='conversations' to='/conversations'>
-                        <NavItem eventKey={3}>Conversations</NavItem>
+                        <NavItem eventKey={3}>
+                            Conversations {newMessages}
+                        </NavItem>
                     </LinkContainer>
                     <LinkContainer key='people' to='/people'>
                         <NavItem eventKey={4}>People</NavItem>
@@ -56,7 +63,8 @@ class NavigationBar extends React.Component<void, Props, void> {
 
 export default connect(
     (state) => ({
-        user: state.authentication.user
+        user: state.authentication.user,
+        conversations: state.conversations.conversations
     }),
     {logout}, null, {pure: false}
 )(NavigationBar);

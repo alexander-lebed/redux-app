@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import type { Action, Dispatch } from '../../types';
 import { getUsers } from './users';
 import { login } from './authentication';
+import { getConversationsByUser } from './conversations';
 import { Alert } from './alerts';
 
 const actions = {
@@ -32,6 +33,15 @@ export function initApp() {
         });
         Promise.resolve()
             .then(() => dispatch(getUsers()))
+            .then(() => {
+                const refreshConversations = () => {
+                    const currentUser = getState().authentication.user;
+                    if (currentUser) {
+                        dispatch(getConversationsByUser(currentUser._id))
+                    }
+                };
+                setInterval(refreshConversations, 5000);
+            })
             .then(() => {
                 const currentUser = getState().authentication.user;
                 if (currentUser) {

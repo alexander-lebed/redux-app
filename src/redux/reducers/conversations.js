@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import _ from 'lodash';
+import uid from '../../helpers/id-generator';
 import type { Action, Dispatch } from '../../types';
 
 const actions = {
     ADD_CONVERSATION: 'ADD_CONVERSATION',
-    SET_CONVERSATIONS: 'SET_CONVERSATION',
-    ADD_MESSAGE: 'ADD_MESSAGE',
-    SET_MESSAGES: 'SET_MESSAGES'
+    SET_CONVERSATIONS: 'SET_CONVERSATIONS',
+    SET_CONVERSATION: 'SET_CONVERSATION'
 };
 
 /*
@@ -22,21 +22,19 @@ const initConvs = [
         _id: 'c1',
         name: 'C1',
         users: [
-            {_id:"5a29085f902c142d442f7ebc",password:"USER_1",email:"USER_1@mail",username:"USER_1"},
-            {_id:"5a2909301d4700398859e72f",password:"USER_2",email:"USER_2@mail",username:"USER_2"}
+            {_id:"5a29085f902c142d442f7ebc",username:"USER_1"},
+            {_id:"5a2909301d4700398859e72f",username:"USER_2"}
         ],
         messages: [
             {
-                _id: 'm1',
-                from: {_id:"5a29085f902c142d442f7ebc",password:"USER_1",email:"USER_1@mail",username:"USER_1"},
+                from: {_id:"5a29085f902c142d442f7ebc",username:"USER_1"},
                 text: 'M1',
                 timestamp: 1513068476000, // 12 Dec
                 read: true,
                 deleted: false
             },
             {
-                _id: 'm2',
-                from: {_id:"5a2909301d4700398859e72f",password:"USER_2",email:"USER_2@mail",username:"USER_2"},
+                from: {_id:"5a2909301d4700398859e72f",username:"USER_2"},
                 text: 'M2',
                 timestamp: 1513327676000, // 15 Dec
                 read: false,
@@ -51,13 +49,12 @@ const initConvs = [
         _id: 'c2',
         name: 'C2',
         users: [
-            {_id:"5a29085f902c142d442f7ebc",password:"USER_1",email:"USER_1@mail",username:"USER_1"},
-            {_id:"5a29110972b7713a540696d1",password:"USER_3",email:"USER_3@mail",username:"USER_3"}
+            {_id:"5a29085f902c142d442f7ebc",username:"USER_1"},
+            {_id:"5a29110972b7713a540696d1",username:"USER_3"}
         ],
         messages: [
             {
-                _id: 'm3',
-                from: {_id:"5a29085f902c142d442f7ebc",password:"USER_1",email:"USER_1@mail",username:"USER_1"},
+                from: {_id:"5a29085f902c142d442f7ebc",username:"USER_1"},
                 text: 'M3',
                 timestamp: 1513239956000, // 14 Dec
                 read: true,
@@ -72,21 +69,19 @@ const initConvs = [
         _id: 'c3',
         name: 'C3',
         users: [
-            {_id:"5a2909301d4700398859e72f",password:"USER_2",email:"USER_2@mail",username:"USER_2"},
-            {_id:"5a29110972b7713a540696d1",password:"USER_3",email:"USER_3@mail",username:"USER_3"}
+            {_id:"5a2909301d4700398859e72f",username:"USER_2"},
+            {_id:"5a29110972b7713a540696d1",username:"USER_3"}
         ],
         messages: [
             {
-                _id: 'm4',
-                from: {_id:"5a2909301d4700398859e72f",password:"USER_2",email:"USER_2@mail",username:"USER_2"},
+                from: {_id:"5a2909301d4700398859e72f",username:"USER_2"},
                 text: 'M4',
                 timestamp: 1513330256000, // 15 Dec
                 read: false,
                 deleted: false
             },
             {
-                _id: 'm5',
-                from: {_id:"5a29110972b7713a540696d1",password:"USER_3",email:"USER_3@mail",username:"USER_3"},
+                from: {_id:"5a29110972b7713a540696d1",username:"USER_3"},
                 text: 'M5',
                 timestamp: 1513334456000, // 15 Dec
                 read: false,
@@ -112,12 +107,9 @@ const conversations = (state = initConvs, action: Action) => {
     }
 };
 
-const messages = (state = [], action: Action) => {
+const conversation = (state = {}, action: Action) => {
     switch (action.type) {
-        case actions.ADD_MESSAGE: {
-            return state.concat(action.payload);
-        }
-        case actions.SET_MESSAGES: {
+        case actions.SET_CONVERSATION: {
             return action.payload;
         }
         default:
@@ -127,13 +119,13 @@ const messages = (state = [], action: Action) => {
 
 export default combineReducers({
     conversations,
-    messages
+    conversation
 });
 
 
 export function getConversationsByUser(userId: string) {
     return (dispatch: Dispatch, getState: Function) => {
-        // todo: service call
+        // todo: service call: GET
         const conversations = getState().conversations.conversations;
         const userConversations = conversations.filter(c => c.users.map(u => u._id).includes(userId));
         dispatch({
@@ -143,14 +135,66 @@ export function getConversationsByUser(userId: string) {
     }
 }
 
-export function getMessagesByConversation(convId: string) {
+export function getConversation(convId: string) {
     return (dispatch: Dispatch, getState: Function) => {
         // todo: service call
-        const conversation = getState().conversations.conversations.filter(e => e._id === convId);
-        const messages = conversation.length > 0 ? conversation[0].messages : [];
+        const conversation = getState().conversations.conversations.find(e => e._id === convId);
         dispatch({
-            type: actions.SET_MESSAGES,
-            payload: _.orderBy(messages, 'timestamp', 'desc')
+            type: actions.SET_CONVERSATION,
+            payload: conversation
+        })
+    }
+}
+
+/**
+ * Note: Creates new conversation for userIds if there is no existing one
+ */
+export function getConversationWithUsers(userIds: Array<string>) {
+    return (dispatch: Dispatch, getState: Function) => {
+        // todo: service call: GET
+        const findWithUser = (conversation: Object) => {
+            const matchQuantity = conversation.users.length === userIds.length;
+            const convUsers = conversation.users.map(u => u._id).sort();
+            const matchIds = _.isEqual(convUsers, userIds.sort());
+            return matchQuantity && matchIds;
+        };
+
+        let conversation = getState().conversations.conversations.find(findWithUser);
+        if (!conversation) {
+            // create new
+
+            const allUsers = getState().users.users;
+            const convUsers = allUsers.toArray().filter(u => userIds.includes(u._id)).map(u => ({_id: u._id, username: u.username}));
+            const id = uid();
+            conversation = {
+                _id: id,
+                name: id.substring(Math.round(id.length / 2)).toUpperCase(),
+                users: convUsers,
+                messages: [],
+                timestamp: Date.now(),
+                read: false,
+                deleted: false
+            };
+            // todo: service call: POST new conversation
+            dispatch({
+                type: actions.ADD_CONVERSATION,
+                payload: conversation
+            });
+        }
+
+        dispatch({
+            type: actions.SET_CONVERSATION,
+            payload: conversation || {}
+        })
+    }
+}
+
+export function saveConversation(conversation: Object) {
+    return (dispatch: Dispatch) => {
+        // todo: service call: PUT existing conversation
+        dispatch({
+            type: actions.SET_CONVERSATION,
+            payload: conversation
         })
     }
 }

@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
+import queryString from 'query-string';
 import { Row, Col, Table, Button } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 import type { User } from '../../types';
@@ -16,34 +17,35 @@ class People extends React.Component<void, Props, void> {
     render() {
         const {users} = this.props;
         return (
-            <div>
-                <Row>
-                    <Col xsOffset={3} xs={6}>
-                        <Table responsive>
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th />
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {users.toArray().map(user => (
+            <Row>
+                <Col xsOffset={3} xs={6}>
+                    <Table responsive>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th />
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.toArray().map(user => {
+                                const query = queryString.stringify({userId: user._id});
+                                return (
                                     <tr key={user._id}>
                                         <td>{user.username}</td>
                                         <td>
-                                            <LinkContainer to='/conversation'>
+                                            <LinkContainer to={`/conversation?${query}`}>
                                                 <Button>
-                                                    Message
+                                                    Write a message
                                                 </Button>
                                             </LinkContainer>
                                         </td>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                    </Col>
-                </Row>
-            </div>
+                                )
+                            })}
+                        </tbody>
+                    </Table>
+                </Col>
+            </Row>
         )
     }
 }

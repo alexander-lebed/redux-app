@@ -31,7 +31,7 @@ async function init() {
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/register" component={Registration} />
                             <PrivateRoute exact path="/conversations" component={Conversations} />
-                            <PrivateRoute path="/conversation" component={Conversation} />
+                            <PrivateRoute path="/conversation" component={Conversation} /> {/* query: convId or userId */}
                             <PrivateRoute exact path="/people" component={People} />
                             <PrivateRoute exact path="/" component={TodoList} />
                             <PrivateRoute exact path="/todo" component={TodoList} />

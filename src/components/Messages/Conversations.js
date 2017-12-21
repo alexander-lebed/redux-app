@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import queryString from 'query-string';
 import { Row, Col, Table } from 'react-bootstrap';
 import history from "../../helpers/history";
 import { getConversationsByUser } from '../../redux/reducers/conversations';
@@ -20,15 +21,20 @@ class Conversations extends React.Component<void, Props, void> {
     }
 
     goToConversation = (convId: string) => {
-        history.push(`/conversation?${convId}`);
+        history.push(`/conversation?${queryString.stringify({convId})}`);
     };
 
     render() {
         const {user, conversations} = this.props;
         const tableBody = conversations.map(conv => {
             const senders = conv.users.filter(u => u._id !== user._id).map(u => u.username).join(', ');
+            const hasNewMessage = conv.messages.some(m => !m.read);
             return (
-                <tr key={conv._id} onClick={() => this.goToConversation(conv._id)}>
+                <tr
+                    key={conv._id}
+                    style={hasNewMessage ? {backgroundColor: '#e6fff2'} : {}}
+                    onClick={() => this.goToConversation(conv._id)}
+                >
                     <td>{conv.name}</td>
                     <td>{senders}</td>
                     <td>{moment(conv.timestamp).format("HH:mm, DD MMM 'YY")}</td>

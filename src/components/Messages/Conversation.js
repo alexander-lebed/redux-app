@@ -1,47 +1,91 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import moment from 'moment';
-import { Row, Col, Table } from 'react-bootstrap';
-import { getMessagesByConversation } from '../../redux/reducers/conversations';
+import queryString from 'query-string';
+import { Row, Col, Table, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
+import { LinkContainer } from "react-router-bootstrap";
+import { getConversation, getConversationWithUsers, saveConversation } from '../../redux/reducers/conversations';
 import type { User } from '../../types';
 
 type Props = {
     user: User,
-    messages: Array<Object>,
+    conversation: Object,
     location: Object,
-    getMessagesByConversation: Function
+    getConversation: Function,
+    getConversationWithUsers: Function,
+    saveConversation: Function
 }
 
-class Conversation extends React.Component<void, Props, void> {
+type State = {
+    messageText: string
+};
+
+class Conversation extends React.Component<void, Props, State> {
+
+    state = {
+        messageText: ''
+    };
 
     componentDidMount() {
-        const conversationId = this.props.location.search.substring(1);
-        this.props.getMessagesByConversation(conversationId);
+        const query = queryString.parse(this.props.location.search);
+        const {convId, userId} = query;
+        if (convId) {
+            this.props.getConversation(convId);
+        } else if (userId) {
+            this.props.getConversationWithUsers([this.props.user._id, userId]);
+        }
     }
 
+    handleKeyPress = (evt) => {
+        const {user, conversation} = this.props;
+
+        if (evt.key === "Enter" && !evt.shiftKey) {
+            evt.preventDefault();
+
+            const message = {
+                from: {_id: user._id, username: user.username},
+                text: this.state.messageText,
+                timestamp: Date.now(),
+                read: false,
+                deleted: false
+            };
+            conversation.messages.push(message);
+            this.props.saveConversation(conversation);
+            this.setState({
+                messageText: ''}
+            )
+        }
+    };
+
     render() {
-        const {user, messages} = this.props;
+        const {user, conversation} = this.props;
         return (
             <div>
                 <Row>
-                    <Col xsOffset={2} xs={8}>
+                    <Col xs={2}>
+                        <LinkContainer to='/conversations'>
+                            <Button bsStyle='link'>
+                                <Glyphicon glyph="arrow-left" /> Back
+                            </Button>
+                        </LinkContainer>
+                    </Col>
+                    <Col xs={8}>
                         <h2 className='text-center'>Messages</h2>
                         <Table responsive>
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>From</th>
                                     <th>Text</th>
                                     <th style={{width: 170}}>When</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {messages.map(message => {
+                                {_.orderBy(conversation.messages, 'timestamp').map((message, index) => {
                                     const from = message.from._id === user._id ? 'Me' : message.from.username;
                                     return (
-                                        <tr key={message._id}>
-                                            <td>{message._id}</td>
+                                        <tr key={index}>
                                             <td>{from}</td>
                                             <td>{message.text}</td>
                                             <td>{moment(message.timestamp).format("HH:mm, DD MMM 'YY")}</td>
@@ -50,6 +94,19 @@ class Conversation extends React.Component<void, Props, void> {
                                 })}
                             </tbody>
                         </Table>
+
+                        <form>
+                            <FormGroup controlId="message">
+                                <FormControl
+                                    componentClass="textarea"
+                                    placeholder="Write a message..."
+                                    value={this.state.messageText}
+                                    onKeyPress={this.handleKeyPress}
+                                    onChange={e => this.setState({messageText: e.target.value})}
+                                />
+                            </FormGroup>
+                        </form>
+
                     </Col>
                 </Row>
             </div>
@@ -60,7 +117,7 @@ class Conversation extends React.Component<void, Props, void> {
 export default connect(
     state => ({
         user: state.authentication.user,
-        messages: state.conversations.messages
+        conversation: state.conversations.conversation
     }),
-    { getMessagesByConversation }
+    { getConversation, getConversationWithUsers, saveConversation }
 )(Conversation);
