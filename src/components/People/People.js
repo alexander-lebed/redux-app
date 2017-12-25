@@ -18,7 +18,7 @@ class People extends React.Component<void, Props, void> {
         const {users} = this.props;
         return (
             <Row>
-                <Col xsOffset={3} xs={6}>
+                <Col xsOffset={4} xs={4}>
                     <Table responsive>
                         <thead>
                             <tr>
@@ -32,7 +32,7 @@ class People extends React.Component<void, Props, void> {
                                 return (
                                     <tr key={user._id}>
                                         <td>{user.username}</td>
-                                        <td>
+                                        <td className='text-right'>
                                             <LinkContainer to={`/conversation?${query}`}>
                                                 <Button>
                                                     Write a message

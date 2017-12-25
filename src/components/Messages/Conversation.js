@@ -6,7 +6,7 @@ import moment from 'moment';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
-import { getConversation, getConversationWithUsers, saveConversation } from '../../redux/reducers/conversations';
+import { getConversation, getConversationWithUsers, markAsRead, saveConversation } from '../../redux/reducers/conversations';
 import type { User } from '../../types';
 
 type Props = {
@@ -15,6 +15,7 @@ type Props = {
     location: Object,
     getConversation: Function,
     getConversationWithUsers: Function,
+    markAsRead: Function,
     saveConversation: Function
 }
 
@@ -36,22 +37,24 @@ class Conversation extends React.Component<void, Props, State> {
         } else if (userId) {
             this.props.getConversationWithUsers([this.props.user._id, userId]);
         }
+        setTimeout(this.props.markAsRead, 1000);
     }
 
     handleKeyPress = (evt) => {
-        const {user, conversation} = this.props;
-
         if (evt.key === "Enter" && !evt.shiftKey) {
             evt.preventDefault();
+            const {user, conversation} = this.props;
 
+            const currentTime = Date.now();
             const message = {
                 from: {_id: user._id, username: user.username},
                 text: this.state.messageText,
-                timestamp: Date.now(),
+                timestamp: currentTime,
                 read: false,
                 deleted: false
             };
             conversation.messages.push(message);
+            conversation.timestamp = currentTime;
             this.props.saveConversation(conversation);
             this.setState({
                 messageText: ''}
@@ -76,7 +79,7 @@ class Conversation extends React.Component<void, Props, State> {
                         <Table responsive>
                             <thead>
                                 <tr>
-                                    <th>From</th>
+                                    <th style={{width: 150}}>From</th>
                                     <th>Text</th>
                                     <th style={{width: 170}}>When</th>
                                 </tr>
@@ -85,7 +88,7 @@ class Conversation extends React.Component<void, Props, State> {
                                 {_.orderBy(conversation.messages, 'timestamp').map((message, index) => {
                                     const from = message.from._id === user._id ? 'Me' : message.from.username;
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index} style={!message.read ? {backgroundColor: '#e6fff2'} : {}}>
                                             <td>{from}</td>
                                             <td>{message.text}</td>
                                             <td>{moment(message.timestamp).format("HH:mm, DD MMM 'YY")}</td>
@@ -119,5 +122,5 @@ export default connect(
         user: state.authentication.user,
         conversation: state.conversations.conversation
     }),
-    { getConversation, getConversationWithUsers, saveConversation }
+    { getConversation, getConversationWithUsers, markAsRead, saveConversation }
 )(Conversation);

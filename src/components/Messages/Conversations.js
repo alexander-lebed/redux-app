@@ -1,9 +1,10 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
-import { Row, Col, Table } from 'react-bootstrap';
+import { Row, Col, Table, Badge } from 'react-bootstrap';
 import history from "../../helpers/history";
 import { getConversationsByUser } from '../../redux/reducers/conversations';
 import type { User } from '../../types';
@@ -28,15 +29,19 @@ class Conversations extends React.Component<void, Props, void> {
         const {user, conversations} = this.props;
         const tableBody = conversations.map(conv => {
             const senders = conv.users.filter(u => u._id !== user._id).map(u => u.username).join(', ');
-            const hasNewMessage = conv.messages.some(m => !m.read);
+            const newMessages = conv.messages.filter(m => !m.read && m.from._id !== user._id);
+            let newMessagesNum = newMessages.length > 0 && (
+                <Badge className='pull-right'>{newMessages.length}</Badge>
+            );
             return (
                 <tr
                     key={conv._id}
-                    style={hasNewMessage ? {backgroundColor: '#e6fff2'} : {}}
+                    style={newMessages.length > 0 ? {backgroundColor: '#e6fff2'} : {}}
+                    className='cursor'
                     onClick={() => this.goToConversation(conv._id)}
                 >
                     <td>{conv.name}</td>
-                    <td>{senders}</td>
+                    <td>{senders} {newMessagesNum}</td>
                     <td>{moment(conv.timestamp).format("HH:mm, DD MMM 'YY")}</td>
                 </tr>
             )
@@ -48,8 +53,8 @@ class Conversations extends React.Component<void, Props, void> {
                         <h2 className='text-center'>Conversations</h2>
                         <Table responsive>
                             <thead>
-                                <tr style={{cursor: 'pointer'}}>
-                                    <th>ID</th>
+                                <tr>
+                                    <th style={{width: 150}}>ID</th>
                                     <th>From</th>
                                     <th style={{width: 170}}>When</th>
                                 </tr>

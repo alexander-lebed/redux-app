@@ -21,7 +21,7 @@ const users = (state = initUsers, action: Action) => {
             return state.set(action.payload.email, action.payload);
         }
         case actions.SET_USERS: {
-            return action.payload;
+            return _.clone(action.payload);
         }
         default:
             return state;

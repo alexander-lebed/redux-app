@@ -1,7 +1,6 @@
 // @flow
 import {combineReducers} from 'redux';
-// import history from  '../../helpers/history';
-// import { Alert } from './alerts';
+import _ from 'lodash';
 import type { Action, Dispatch } from '../../types';
 
 const actions = {
@@ -11,7 +10,7 @@ const actions = {
 const user = (state =  null, action: Action) => {
     switch (action.type) {
         case actions.SET_USER: {
-            return action.payload;
+            return _.clone(action.payload);
         }
         default:
             return state;

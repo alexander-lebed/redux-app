@@ -15,11 +15,14 @@ type Props = {
 class NavigationBar extends React.Component<void, Props, void> {
 
     render() {
-        const {user, conversations, logout} = this.props;
-        const unreadConversations = conversations ? conversations.filter(c => c.messages.some(m => !m.read)) : [];
-        const newMessages = unreadConversations.length > 0 && (
-            <Badge>{unreadConversations.length}</Badge>
-        );
+        const {user, conversations = [], logout} = this.props;
+        let newMessages = null;
+        if (user) {
+            const unreadConversations = conversations.filter(c => c.messages.some(m => !m.read && m.from._id !== user._id));
+            newMessages = unreadConversations.length > 0 && (
+                <Badge>{unreadConversations.length}</Badge>
+            );
+        }
         return (
             <Navbar>
                 <Navbar.Header>

@@ -39,11 +39,16 @@ const initConvs = [
                 timestamp: 1513327676000, // 15 Dec
                 read: false,
                 deleted: false
+            },
+            {
+                from: {_id:"5a2909301d4700398859e72f",username:"USER_2"},
+                text: 'Sodfg dfgdfg!',
+                timestamp: 1513327676000, // 15 Dec
+                read: false,
+                deleted: false
             }
         ],
-        timestamp: 1513338697514, // 15 Dec
-        read: false,
-        deleted: false
+        timestamp: 1513338697514 // 15 Dec
     },
     {
         _id: 'c2',
@@ -57,13 +62,11 @@ const initConvs = [
                 from: {_id:"5a29085f902c142d442f7ebc",username:"USER_1"},
                 text: 'M3',
                 timestamp: 1513239956000, // 14 Dec
-                read: true,
+                read: false,
                 deleted: false
             }
         ],
-        timestamp: 1513245060000, // 14 Dec
-        read: false,
-        deleted: false
+        timestamp: 1513245060000 // 14 Dec
     },
     {
         _id: 'c3',
@@ -88,9 +91,7 @@ const initConvs = [
                 deleted: false
             }
         ],
-        timestamp: 1513064100000, // 12 Dec
-        read: false,
-        deleted: false
+        timestamp: 1513334456000 // 15 Dec
     }
 ];
 
@@ -100,7 +101,7 @@ const conversations = (state = initConvs, action: Action) => {
             return state.concat(action.payload);
         }
         case actions.SET_CONVERSATIONS: {
-            return action.payload;
+            return _.clone(action.payload);
         }
         default:
             return state;
@@ -110,7 +111,7 @@ const conversations = (state = initConvs, action: Action) => {
 const conversation = (state = {}, action: Action) => {
     switch (action.type) {
         case actions.SET_CONVERSATION: {
-            return action.payload;
+            return _.clone(action.payload);
         }
         default:
             return state;
@@ -147,7 +148,8 @@ export function getConversation(convId: string) {
 }
 
 /**
- * Note: Creates new conversation for userIds if there is no existing one
+ * Note:
+ * If there is no conversation with specified users, it creates a new one.
  */
 export function getConversationWithUsers(userIds: Array<string>) {
     return (dispatch: Dispatch, getState: Function) => {
@@ -189,12 +191,36 @@ export function getConversationWithUsers(userIds: Array<string>) {
     }
 }
 
+export function markAsRead() {
+    return (dispatch: Dispatch, getState: Function) => {
+        const currentUser = getState().authentication.user;
+        const conversation = getState().conversations.conversation;
+        conversation.messages.forEach(m => {
+            if (m.from._id !== currentUser._id) {
+                m.read = true;
+            }
+        });
+        dispatch(saveConversation(conversation))
+    }
+}
+
 export function saveConversation(conversation: Object) {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch, getState: Function) => {
+        const conversations = getState().conversations.conversations;
         // todo: service call: PUT existing conversation
         dispatch({
             type: actions.SET_CONVERSATION,
             payload: conversation
+        });
+        conversations.forEach(c => {
+            if (c._id === conversation._id) {
+                c = conversation;
+            }
+        });
+        // todo: service call: PUT replace only USER's conversations!
+        dispatch({
+            type: actions.SET_CONVERSATIONS,
+            payload: conversations
         })
     }
 }
