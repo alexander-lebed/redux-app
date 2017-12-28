@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import moment from 'moment';
 import queryString from 'query-string';
 import { Row, Col, Table, Badge } from 'react-bootstrap';

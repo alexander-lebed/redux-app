@@ -3,8 +3,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, Button } from 'react-bootstrap';
+import { Row, Col, Table, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
+import moment from "moment";
 import type { User } from '../../types';
 
 type Props = {
@@ -18,11 +19,13 @@ class People extends React.Component<void, Props, void> {
         const {users} = this.props;
         return (
             <Row>
-                <Col xsOffset={4} xs={4}>
+                <Col xsOffset={2} xs={6}>
                     <Table responsive>
                         <thead>
                             <tr>
                                 <th>Username</th>
+                                <th />
+                                <th />
                                 <th />
                             </tr>
                         </thead>
@@ -32,6 +35,10 @@ class People extends React.Component<void, Props, void> {
                                 return (
                                     <tr key={user._id}>
                                         <td>{user.username}</td>
+                                        <td>
+                                            <Glyphicon glyph="asterisk" style={{color: user.online ? 'green' : 'red'}} />
+                                        </td>
+                                        <td>{moment(user.lastTime).format("HH:mm, DD MMM 'YY")}</td>
                                         <td className='text-right'>
                                             <LinkContainer to={`/conversation?${query}`}>
                                                 <Button>

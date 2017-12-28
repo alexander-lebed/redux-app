@@ -26,25 +26,27 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-    const {username, email, password} = req.body;
+    const payload = req.body;
 
     const user = new User();
-    (username) ? user.username = username : null;
-    (email) ? user.email = email : null;
-    (password) ? user.password = password : null;
+    user.username = payload.username;
+    user.email = payload.email;
+    user.password = payload.password;
+    user.online = payload.online;
+    user.lastTime = payload.lastTime;
 
     console.log(`POST user ${JSON.stringify(user.toObject())}`);
 
-    user.save(function(err) {
+    user.save(function(err, data) {
         if (err)
             res.send(err);
-        res.json(user);
+        res.json(data);
     });
 });
 
 router.put('/:id', function(req, res) {
     const query = {_id : req.params.id};
-    const options = {upsert: true};
+    const options = {upsert: false};
     User.findOneAndUpdate(query, req.body, options, function(err, result) {
         if (err)
             res.send(err);

@@ -11,7 +11,9 @@ export type User = {
     _id: string,
     username: string,
     email: string,
-    password: string
+    password: string,
+    online: boolean,
+    lastTime: number
 }
 
 export type Alert = {

@@ -1,6 +1,8 @@
 // @flow
 import {combineReducers} from 'redux';
 import _ from 'lodash';
+import $http from 'axios';
+import { USERS_URL } from "../../urls";
 import type { Action, Dispatch } from '../../types';
 
 const actions = {
@@ -27,7 +29,12 @@ export function login(email: string, password: string) {
         return new Promise(function(resolve) {
             const users = getState().users.users;
             const user = users.find(e => e.email === email && e.password === password);
+
             if (user) {
+                user.online = true;
+                user.lastTime = Date.now();
+                $http.put(`${USERS_URL}/${user._id}`, user);
+
                 dispatch({
                     type: actions.SET_USER,
                     payload: user
@@ -45,7 +52,15 @@ export function login(email: string, password: string) {
 }
 
 export function logout() {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch, getState: Function) => {
+
+        const user = getState().authentication.user;
+        if (user) {
+            user.online = false;
+            user.lastTime = Date.now();
+            $http.put(`${USERS_URL}/${user._id}`, user);
+        }
+
         dispatch({
             type: actions.SET_USER,
             payload: null

@@ -42,7 +42,9 @@ export function register(username: string, email: string, password: string) {
             const payload = {
                 username,
                 email,
-                password
+                password,
+                online: false,
+                lastTime: null
             };
             return $http.post(USERS_URL, payload)
                 .then(response => {

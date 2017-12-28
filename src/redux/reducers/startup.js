@@ -34,13 +34,19 @@ export function initApp() {
         Promise.resolve()
             .then(() => dispatch(getUsers()))
             .then(() => {
-                const refreshConversations = () => {
+                // todo: stop requesting data after ...
+
+                const refreshUsers = () => {
+                    dispatch(getUsers());
+                };
+                const refreshUserConversations = () => {
                     const currentUser = getState().authentication.user;
                     if (currentUser) {
                         dispatch(getConversationsByUser(currentUser._id))
                     }
                 };
-                setInterval(refreshConversations, 5000);
+                setInterval(refreshUsers, 10000);
+                setInterval(refreshUserConversations, 5000);
             })
             .then(() => {
                 const currentUser = getState().authentication.user;
