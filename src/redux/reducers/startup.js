@@ -34,21 +34,6 @@ export function initApp() {
         Promise.resolve()
             .then(() => dispatch(getUsers()))
             .then(() => {
-                // todo: stop requesting data after ...
-
-                const refreshUsers = () => {
-                    dispatch(getUsers());
-                };
-                const refreshUserConversations = () => {
-                    const currentUser = getState().authentication.user;
-                    if (currentUser) {
-                        dispatch(getConversationsByUser(currentUser._id))
-                    }
-                };
-                setInterval(refreshUsers, 10000);
-                setInterval(refreshUserConversations, 5000);
-            })
-            .then(() => {
                 const currentUser = getState().authentication.user;
                 if (currentUser) {
                     return dispatch(login(currentUser.email, currentUser.password)).then(isLoggedIn => {
@@ -63,5 +48,17 @@ export function initApp() {
                     type: actions.END_INIT
                 });
             });
+    }
+}
+
+export function updateData() {
+    return (dispatch: Dispatch, getState: Function) => {
+        // refresh users
+        dispatch(getUsers());
+        // refresh user messages
+        const currentUser = getState().authentication.user;
+        if (currentUser) {
+            dispatch(getConversationsByUser(currentUser._id))
+        }
     }
 }
