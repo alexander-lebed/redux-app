@@ -8,7 +8,7 @@
   "scripts": {
     "build": "webpack --progress --colors --watch",
     "test": "jest --coverage",
-    "start-ui": "webpack-dev-server --hot --inline --open",
+    "start-ui": "webpack-dev-server --open",
     "start-api": "node server.js",
     "start-all": "nf start",
     "lint": "eslint src",

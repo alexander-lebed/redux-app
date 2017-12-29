@@ -1,2 +1,2 @@
-web: webpack-dev-server --hot --inline --open
+web: webpack-dev-server --open
 api: nodemon server.js
