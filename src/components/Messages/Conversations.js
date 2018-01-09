@@ -6,11 +6,11 @@ import queryString from 'query-string';
 import { Row, Col, Table, Badge } from 'react-bootstrap';
 import history from "../../helpers/history";
 import { getConversationsByUser } from '../../redux/reducers/conversations';
-import type { User } from '../../types';
+import type { User, Conversation as ConversationType } from '../../types';
 
 type Props = {
     user: User,
-    conversations: Array<Object>,
+    conversations: Array<ConversationType>,
     getConversationsByUser: Function
 }
 
@@ -39,7 +39,7 @@ class Conversations extends React.Component<void, Props, void> {
                     className='cursor'
                     onClick={() => this.goToConversation(conv._id)}
                 >
-                    <td>{conv.name}</td>
+                    <td>{conv._id}</td>
                     <td>{senders} {newMessagesNum}</td>
                     <td>{moment(conv.timestamp).format("HH:mm, DD MMM 'YY")}</td>
                 </tr>

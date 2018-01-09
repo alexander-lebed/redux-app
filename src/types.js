@@ -22,3 +22,18 @@ export type Alert = {
     type: 'success' | 'info' | 'danger' | 'warning' | 'dialog',
     timeout?: number
 }
+
+export type Message = {
+    from: {_id: string, username: string},
+    text: string,
+    timestamp: number,
+    read: boolean,
+    deleted: boolean
+}
+
+export type Conversation = {
+    _id: string,
+    users: Array<{_id: string, username: string}>,
+    messages: Array<Message>,
+    timestamp: number
+}

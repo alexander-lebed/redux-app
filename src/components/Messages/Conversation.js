@@ -7,11 +7,11 @@ import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 import { getConversation, getConversationWithUsers, markAsRead, saveConversation } from '../../redux/reducers/conversations';
-import type { User } from '../../types';
+import type { User, Conversation as ConversationType, Message } from '../../types';
 
 type Props = {
     user: User,
-    conversation: Object,
+    conversation: ConversationType,
     location: Object,
     getConversation: Function,
     getConversationWithUsers: Function,
@@ -46,12 +46,13 @@ class Conversation extends React.Component<void, Props, State> {
             const {user, conversation} = this.props;
 
             const currentTime = Date.now();
-            const message = {
+            const message: Message = {
                 from: {_id: user._id, username: user.username},
                 text: this.state.messageText,
                 timestamp: currentTime,
                 read: false,
-                deleted: false
+                deleted: false,
+                likes: true
             };
             conversation.messages.push(message);
             conversation.timestamp = currentTime;
