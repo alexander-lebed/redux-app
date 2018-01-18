@@ -39,7 +39,7 @@ const alerts = (state = [], action: Action = {}): State => {
 export default alerts;
 
 
-export const success = (message: string, timeout: number = 5000) => {
+export const success = (message: string, timeout: number = 3000) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: actionTypes.SHOW_SUCCESS,

@@ -1,6 +1,9 @@
+import React from 'react';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
-import uid from '../../helpers/id-generator';
+import $http from 'axios';
+import { Alert } from "./alerts";
+import { CONVERSATIONS_URL } from "../../urls";
 import type { Action, Dispatch } from '../../types';
 
 const actions = {
@@ -15,7 +18,6 @@ const users = [
     {_id:"5a44deee722dac719019e7be",password:"USER_2",email:"USER_2@mail",username:"USER_2"}   ,
     {_id:"5a29110972b7713a540696d1",password:"USER_3",email:"USER_3@mail",username:"USER_3"}
 ];
-*/
 
 const initConvs = [
     {
@@ -53,7 +55,7 @@ const initConvs = [
         _id: 'c2',
         users: [
             {_id:"5a41105fb392155d94051100",username:"USER_1"},
-            {_id:"5a29110972b7713a540696d1",username:"USER_3"}
+            {_id:"5a5e048fefa6b82958c08dfa",username:"USER_3"}
         ],
         messages: [
             {
@@ -70,7 +72,7 @@ const initConvs = [
         _id: 'c3',
         users: [
             {_id:"5a44deee722dac719019e7be",username:"USER_2"},
-            {_id:"5a29110972b7713a540696d1",username:"USER_3"}
+            {_id:"5a5e048fefa6b82958c08dfa",username:"USER_3"}
         ],
         messages: [
             {
@@ -81,7 +83,7 @@ const initConvs = [
                 deleted: false
             },
             {
-                from: {_id:"5a29110972b7713a540696d1",username:"USER_3"},
+                from: {_id:"5a5e048fefa6b82958c08dfa",username:"USER_3"},
                 text: 'M5',
                 timestamp: 1513334456000, // 15 Dec
                 read: false,
@@ -91,8 +93,9 @@ const initConvs = [
         timestamp: 1513334456000 // 15 Dec
     }
 ];
+*/
 
-const conversations = (state = initConvs, action: Action) => {
+const conversations = (state = [], action: Action) => {
     switch (action.type) {
         case actions.ADD_CONVERSATION: {
             return state.concat(action.payload);
@@ -122,25 +125,45 @@ export default combineReducers({
 
 
 export function getConversationsByUser(userId: string) {
-    return (dispatch: Dispatch, getState: Function) => {
-        // todo: service call: GET
-        const conversations = getState().conversations.conversations;
-        const userConversations = conversations.filter(c => c.users.map(u => u._id).includes(userId));
-        dispatch({
-            type: actions.SET_CONVERSATIONS,
-            payload: _.orderBy(userConversations, 'timestamp', 'desc')
-        })
+    return (dispatch: Dispatch) => {
+        $http.get(`${CONVERSATIONS_URL}?userId=${userId}`)
+            .then(response => {
+                dispatch({
+                    type: actions.SET_CONVERSATIONS,
+                    payload: _.orderBy(response.data, 'timestamp', 'desc')
+                });
+            })
+            .catch(err => {
+                const error = (
+                    <div>
+                        <strong>Error on fetch conversations:</strong>
+                        <div>{err.response.statusText}</div>
+                    </div>
+                );
+                dispatch(Alert.error(error));
+            });
     }
 }
 
 export function getConversation(convId: string) {
-    return (dispatch: Dispatch, getState: Function) => {
-        // todo: service call
-        const conversation = getState().conversations.conversations.find(e => e._id === convId);
-        dispatch({
-            type: actions.SET_CONVERSATION,
-            payload: conversation
-        })
+    return (dispatch: Dispatch) => {
+        $http.get(`${CONVERSATIONS_URL}?convId=${convId}`)
+            .then(response => {
+                const conversation = response.data[0];
+                dispatch({
+                    type: actions.SET_CONVERSATION,
+                    payload: conversation
+                })
+            })
+            .catch(err => {
+                const error = (
+                    <div>
+                        <strong>Error on fetch conversation:</strong>
+                        <div>{err.response.statusText}</div>
+                    </div>
+                );
+                dispatch(Alert.error(error));
+            });
     }
 }
 
@@ -150,41 +173,48 @@ export function getConversation(convId: string) {
  */
 export function getConversationWithUsers(userIds: Array<string>) {
     return (dispatch: Dispatch, getState: Function) => {
-        // todo: service call: GET
-        const findWithUser = (conversation: Object) => {
-            const matchQuantity = conversation.users.length === userIds.length;
-            const convUsers = conversation.users.map(u => u._id).sort();
-            const matchIds = _.isEqual(convUsers, userIds.sort());
-            return matchQuantity && matchIds;
-        };
 
-        let conversation = getState().conversations.conversations.find(findWithUser);
-        if (!conversation) {
-            // create new
+        $http.get(`${CONVERSATIONS_URL}?userIds=${userIds.join(',')}`)
+            .then(response => {
+                let conversation = response.data[0];
 
-            const allUsers = getState().users.users;
-            const convUsers = allUsers.toArray().filter(u => userIds.includes(u._id)).map(u => ({_id: u._id, username: u.username}));
-            const id = uid();
-            conversation = {
-                _id: id,
-                name: id.substring(Math.round(id.length / 2)).toUpperCase(),
-                users: convUsers,
-                messages: [],
-                timestamp: Date.now(),
-                read: false,
-                deleted: false
-            };
-            // todo: service call: POST new conversation
-            dispatch({
-                type: actions.ADD_CONVERSATION,
-                payload: conversation
+                if (conversation) {
+                    dispatch({
+                        type: actions.SET_CONVERSATION,
+                        payload: conversation || {}
+                    })
+                } else {
+                    // create new
+
+                    const allUsers = getState().users.users;
+                    const convUsers = allUsers.toArray().filter(u => userIds.includes(u._id)).map(u => ({_id: u._id, username: u.username}));
+                    conversation = {
+                        users: convUsers,
+                        messages: [],
+                        timestamp: Date.now()
+                    };
+
+                    $http.put(CONVERSATIONS_URL, conversation)
+                        .then(response => {
+                            dispatch({
+                                type: actions.ADD_CONVERSATION,
+                                payload: response.data
+                            });
+                            dispatch({
+                                type: actions.SET_CONVERSATION,
+                                payload: response.data
+                            })
+                        })
+                }
+            }).catch(err => {
+                const error = (
+                    <div>
+                        <strong>Error on fetch conversation:</strong>
+                        <div>{err.response.statusText}</div>
+                    </div>
+                );
+                dispatch(Alert.error(error));
             });
-        }
-
-        dispatch({
-            type: actions.SET_CONVERSATION,
-            payload: conversation || {}
-        })
     }
 }
 
@@ -203,21 +233,49 @@ export function markAsRead() {
 
 export function saveConversation(conversation: Object) {
     return (dispatch: Dispatch, getState: Function) => {
-        const conversations = getState().conversations.conversations;
-        // todo: service call: PUT existing conversation
-        dispatch({
-            type: actions.SET_CONVERSATION,
-            payload: conversation
-        });
-        conversations.forEach((c, index) => {
-            if (c._id === conversation._id) {
-                conversations[index] = conversation;
-            }
-        });
-        // todo: service call: PUT replace only USER's conversations!
-        dispatch({
-            type: actions.SET_CONVERSATIONS,
-            payload: conversations
-        })
+
+        $http.put(CONVERSATIONS_URL, conversation)
+            .then(response => {
+                dispatch({
+                    type: actions.SET_CONVERSATION,
+                    payload: response.data
+                });
+                // update conversations state
+                const currentUser = getState().authentication.user;
+                if (currentUser) {
+                    dispatch(getConversationsByUser(currentUser._id))
+                }
+            })
+            .catch(err => {
+                const error = (
+                    <div>
+                        <strong>Error on save conversation:</strong>
+                        <div>{err.response.statusText}</div>
+                    </div>
+                );
+                dispatch(Alert.error(error));
+            });
+    }
+}
+
+export function deleteConversation(convId: string) {
+    return (dispatch: Dispatch, getState: Function) => {
+        $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`)
+            .then(() => {
+                dispatch(Alert.success('Conversation has been deleted.'));
+                // update conversations state
+                const currentUser = getState().authentication.user;
+                if (currentUser) {
+                    dispatch(getConversationsByUser(currentUser._id))
+                }
+            }).catch(err => {
+                const error = (
+                    <div>
+                        <strong>Error on delete conversation:</strong>
+                        <div>{err.response.statusText}</div>
+                    </div>
+                );
+                dispatch(Alert.error(error));
+            })
     }
 }

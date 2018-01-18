@@ -3,15 +3,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import queryString from 'query-string';
-import { Row, Col, Table, Badge } from 'react-bootstrap';
+import { Row, Col, Table, Badge, Glyphicon } from 'react-bootstrap';
 import history from "../../helpers/history";
-import { getConversationsByUser } from '../../redux/reducers/conversations';
+import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType } from '../../types';
 
 type Props = {
     user: User,
     conversations: Array<ConversationType>,
-    getConversationsByUser: Function
+    getConversationsByUser: Function,
+    deleteConversation: Function
 }
 
 class Conversations extends React.Component<void, Props, void> {
@@ -22,6 +23,12 @@ class Conversations extends React.Component<void, Props, void> {
 
     goToConversation = (convId: string) => {
         history.push(`/conversation?${queryString.stringify({convId})}`);
+    };
+
+    deleteConfirmation = (convId: string) => {
+        if (confirm('Are you sure you want to delete this confirmation?')) {
+            this.props.deleteConversation(convId);
+        }
     };
 
     render() {
@@ -36,12 +43,25 @@ class Conversations extends React.Component<void, Props, void> {
                 <tr
                     key={conv._id}
                     style={newMessages.length > 0 ? {backgroundColor: '#e6fff2'} : {}}
-                    className='cursor'
-                    onClick={() => this.goToConversation(conv._id)}
                 >
-                    <td>{conv._id}</td>
-                    <td>{senders} {newMessagesNum}</td>
-                    <td>{moment(conv.timestamp).format("HH:mm, DD MMM 'YY")}</td>
+                    <td className='cursor' onClick={() => this.goToConversation(conv._id)}>
+                        {conv._id}
+                    </td>
+                    <td className='cursor' onClick={() => this.goToConversation(conv._id)}>
+                        {senders} {newMessagesNum}
+                    </td>
+                    <td className='cursor' onClick={() => this.goToConversation(conv._id)}>
+                        {moment(conv.timestamp).format("HH:mm, DD MMM 'YY")}
+                    </td>
+                    <td>
+                        <Glyphicon
+                            id="remove-todo"
+                            glyph="remove"
+                            style={{color: 'grey'}}
+                            className='cursor'
+                            onClick={() => this.deleteConfirmation(conv._id)}
+                        />
+                    </td>
                 </tr>
             )
         });
@@ -56,6 +76,7 @@ class Conversations extends React.Component<void, Props, void> {
                                     <th style={{width: 150}}>ID</th>
                                     <th>From</th>
                                     <th style={{width: 170}}>When</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,5 +95,5 @@ export default connect(
         user: state.authentication.user,
         conversations: state.conversations.conversations
     }),
-    { getConversationsByUser }
+    { getConversationsByUser, deleteConversation }
 )(Conversations);

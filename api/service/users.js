@@ -35,8 +35,6 @@ router.post('/', function(req, res) {
     user.online = payload.online;
     user.lastTime = payload.lastTime;
 
-    console.log(`POST user ${JSON.stringify(user.toObject())}`);
-
     user.save(function(err, data) {
         if (err)
             res.send(err);

@@ -29,6 +29,7 @@ class Conversation extends React.Component<void, Props, State> {
         messageText: ''
     };
 
+    // todo: make interVal request for conv. messages
     componentDidMount() {
         const query = queryString.parse(this.props.location.search);
         const {convId, userId} = query;
@@ -39,6 +40,8 @@ class Conversation extends React.Component<void, Props, State> {
         }
         setTimeout(this.props.markAsRead, 1000);
     }
+
+    // todo: componentWillUnmount => close interVal request for conv. messages
 
     handleKeyPress = (evt) => {
         if (evt.key === "Enter" && !evt.shiftKey) {
@@ -51,8 +54,7 @@ class Conversation extends React.Component<void, Props, State> {
                 text: this.state.messageText,
                 timestamp: currentTime,
                 read: false,
-                deleted: false,
-                likes: true
+                deleted: false
             };
             conversation.messages.push(message);
             conversation.timestamp = currentTime;

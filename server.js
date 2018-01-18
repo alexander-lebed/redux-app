@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const users = require('./api/service/users');
+const conversations = require('./api/service/conversations');
 
 const app = express();
 const router = express.Router();
@@ -35,6 +36,7 @@ router.get('/', function(req, res) {
 });
 
 router.use('/users', users);
+router.use('/conversations', conversations);
 
 // use our router configuration when we call /api
 app.use('/api', router);
