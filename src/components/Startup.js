@@ -7,8 +7,7 @@ type Props = {
     loading: boolean,
     children?: React.Node,
     initApp: Function,
-    updateData: Function,
-    destroyApp: Function
+    updateData: Function
 }
 
 class Startup extends React.Component<void, Props, void> {

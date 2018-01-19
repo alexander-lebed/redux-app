@@ -25,12 +25,29 @@ type State = {
 
 class Conversation extends React.Component<void, Props, State> {
 
-    state = {
-        messageText: ''
-    };
+    interval: number;
+    state: State;
 
-    // todo: make interVal request for conv. messages
+    constructor(params: any) {
+        super(params);
+        this.interval = 0;
+        this.state = {
+            messageText: ''
+        };
+    }
+
     componentDidMount() {
+        this.getConversation();
+        setTimeout(this.props.markAsRead, 500);
+        // periodically updated conversation info
+        this.interval = setInterval(() => this.getConversation(), 2000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    getConversation = () => {
         const query = queryString.parse(this.props.location.search);
         const {convId, userId} = query;
         if (convId) {
@@ -38,10 +55,7 @@ class Conversation extends React.Component<void, Props, State> {
         } else if (userId) {
             this.props.getConversationWithUsers([this.props.user._id, userId]);
         }
-        setTimeout(this.props.markAsRead, 1000);
-    }
-
-    // todo: componentWillUnmount => close interVal request for conv. messages
+    };
 
     handleKeyPress = (evt) => {
         if (evt.key === "Enter" && !evt.shiftKey) {
