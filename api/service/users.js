@@ -8,24 +8,24 @@ const User = require('../model/users');
 // PUT user         http://localhost:3001/api/users/{id}  +  payload
 // DELETE user      http://localhost:3001/api/users/{id}
 
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
     if (req.query.userId) {
         const query = User.where('_id', req.query.userId);
         query.find(function (err, user) {
             if (err)
-                res.send(err);
+                return next(err);
             res.json(user)
         })
     }
 
     User.find(function(err, comments) {
         if (err)
-            res.send(err);
+            return next(err);
         res.json(comments)
     });
 });
 
-router.post('/', function(req, res) {
+router.post('/', function(req, res, next) {
     const payload = req.body;
 
     const user = new User();
@@ -37,26 +37,26 @@ router.post('/', function(req, res) {
 
     user.save(function(err, data) {
         if (err)
-            res.send(err);
+            return next(err); //res.send(err);
         res.json(data);
     });
 });
 
-router.put('/:id', function(req, res) {
+router.put('/:id', function(req, res, next) {
     const query = {_id : req.params.id};
     const options = {upsert: false};
-    User.findOneAndUpdate(query, req.body, options, function(err, result) {
+    User.findOneAndUpdate(query, req.body, options, function(err) {
         if (err)
-            res.send(err);
-        res.json(result);
+            return next(err);
+        res.json(req.body);
     });
 });
 
-router.delete('/:id', function(req, res) {
+router.delete('/:id', function(req, res, next) {
     const query = {_id : req.params.id};
     User.find(query).remove(function(err, result) {
         if (err)
-            res.send(err);
+            return next(err);
         res.json(result);
     });
 });

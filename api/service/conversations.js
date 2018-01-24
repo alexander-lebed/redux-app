@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 
         Conversation.find({'_id': req.query.convId}, function (err, data) {
             if (err)
-                return next(err); //res.send(err);
+                return next(err);
             res.json(data)
         })
 
@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
 
         Conversation.find(function(err, data) {
             if (err)
-                return next(err); //res.send(err);
+                return next(err);
             const conversations = data.filter(c => c.users.map(u => u._id).includes(req.query.userId));
             res.json(conversations)
         });
@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
         };
         Conversation.find(function(err, data) {
             if (err)
-                return next(err); //res.send(err);
+                return next(err);
             const conversations = data.filter(findByUsers);
             res.json(conversations)
         });
@@ -53,7 +53,7 @@ router.get('/', function(req, res, next) {
 
         Conversation.find(function(err, data) {
             if (err)
-                return next(err); //res.send(err);
+                return next(err);
             res.json(data)
         });
     }
@@ -83,7 +83,7 @@ router.delete('/', function(req, res, next) {
     // todo: just mark as deleted!
     Conversation.find(query).remove(function(err, data) {
         if (err)
-            return next(err); //res.send(err);
+            return next(err);
         res.json(data);
     });
 });

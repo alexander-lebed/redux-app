@@ -1,21 +1,22 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, Glyphicon, Badge } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Button, Glyphicon, Badge } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
-import { logout } from '../redux/reducers/authentication';
+import { logout, online } from '../redux/reducers/authentication';
 import type { User } from '../types';
 
 type Props = {
     user: User,
+    conversations: Array<Object>,
     logout: Function,
-    conversations: Array<Object>
+    online: Function
 }
 
 class NavigationBar extends React.Component<void, Props, void> {
 
     render() {
-        const {user, conversations = [], logout} = this.props;
+        const {user, conversations = [], logout, online} = this.props;
         let newMessages = null;
         if (user) {
             const unreadConversations = conversations.filter(c => c.messages.some(m => !m.read && m.from._id !== user._id));
@@ -48,15 +49,24 @@ class NavigationBar extends React.Component<void, Props, void> {
                 </Nav>
                 <Nav pullRight>
                     <NavItem eventKey={1}>
-                        <div style={{color: 'red'}}>
-                            {user && user.username}
+                        {user &&
+                        <div>
+                            {user.username}
+                            {' '}
+                            <Button
+                                bsStyle={user.online ? 'success' : 'danger'}
+                                onClick={() => online(!user.online)}
+                            >
+                                {user.online ? 'ONLINE' : 'OFFLINE'}
+                            </Button>
                         </div>
+                        }
                     </NavItem>
                     <LinkContainer key='login' to='/login'>
-                        <NavItem><Glyphicon glyph="log-in" /></NavItem>
+                        <NavItem><Glyphicon glyph="log-in" /> Log In</NavItem>
                     </LinkContainer>
                     <NavItem eventKey={3} onSelect={logout}>
-                        <Glyphicon glyph="log-out" />
+                        <Glyphicon glyph="log-out" /> Log Out
                     </NavItem>
                 </Nav>
             </Navbar>
@@ -69,5 +79,5 @@ export default connect(
         user: state.authentication.user,
         conversations: state.conversations.conversations
     }),
-    {logout}, null, {pure: false}
+    { logout, online }, null, {pure: false}
 )(NavigationBar);

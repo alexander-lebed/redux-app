@@ -4,6 +4,7 @@ import _ from 'lodash';
 import $http from 'axios';
 import { USERS_URL } from "../../urls";
 import type { Action, Dispatch } from '../../types';
+import { getUsers } from "./users";
 
 const actions = {
     SET_USER: 'SET_USER'
@@ -58,15 +59,33 @@ export function logout() {
         if (user) {
             user.online = false;
             user.lastTime = Date.now();
-            $http.put(`${USERS_URL}/${user._id}`, user);
+            $http.put(`${USERS_URL}/${user._id}`, user).then(() => {
+                dispatch({
+                    type: actions.SET_USER,
+                    payload: null
+                });
+            });
         }
-
-        dispatch({
-            type: actions.SET_USER,
-            payload: null
-        });
     }
 }
 
+export function online(isOnline: boolean) {
+    return (dispatch: Dispatch, getState: Function) => {
+
+        const user = getState().authentication.user;
+        if (user) {
+            user.online = isOnline;
+            user.lastTime = Date.now();
+            $http.put(`${USERS_URL}/${user._id}`, user)
+                .then((response) => {
+                    dispatch({
+                        type: actions.SET_USER,
+                        payload: response.data
+                    });
+                })
+                .then(() => dispatch(getUsers()));
+        }
+    }
+}
 
 

@@ -10,6 +10,10 @@ type Props = {
     updateData: Function
 }
 
+/*
+todo: go user offline when he close browser/tab
+    window.beforeunload event: https://stackoverflow.com/questions/36355093/reactjs-browser-tab-close-event
+*/
 class Startup extends React.Component<void, Props, void> {
 
     interval: number;

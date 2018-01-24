@@ -36,7 +36,7 @@ class People extends React.Component<void, Props, void> {
                                     <tr key={user._id}>
                                         <td>{user.username}</td>
                                         <td>
-                                            <Glyphicon glyph="asterisk" style={{color: user.online ? 'green' : 'red'}} />
+                                            <Glyphicon glyph='user' style={{color: user.online ? 'green' : 'red'}} />
                                         </td>
                                         <td>{moment(user.lastTime).format("HH:mm, DD MMM 'YY")}</td>
                                         <td className='text-right'>
