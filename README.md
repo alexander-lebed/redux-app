@@ -3,31 +3,32 @@
 MERN (MongoDB, Express, React, Node.js) + react-redux, react-router
 
 
-###To run the app
+
+### To run the app
 
 **1. Up and run mongodb:**
 ```
 mongod --dbpath F:/STUFF/CRAP/mongodb/db
 ```
 **2. Start app:**
+install project dependencies
 ```
 yarn install
 ```
-to install project dependencies
 
-
+(optional, in separate terminal)  watch your code changes
 ```
 yarn build
 ```
-(optional) in one terminal to watch your code changes
 
-
+(in separate terminal) up and run server and UI
 ```
 yarn start-all`
 ```
-in separate terminal to up and run service and UI
 
-**3. browser opens with App tab**
+
+**3. browser opens new tab with the App**
+
 
 
 #### Create or use database in console
