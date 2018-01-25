@@ -33,13 +33,16 @@ export class WeatherList extends React.Component<void, Props, void> {
             )
             &format=json`;
         const promises = locations.map(l => $http.get(getWeatherUrl(l)));
-        Promise.all(promises).then(([...response]) => {
-            const data = locations.map((l, index) => {
-                const results = response[index].data.query.results;
-                return l.set('temp', results ? results.channel.item.condition.temp : 0);
+        Promise.all(promises)
+            .then(([...response]) => {
+                const data = locations.map((l, index) => {
+                    const results = response[index].data.query.results;
+                    return l.set('temp', results ? results.channel.item.condition.temp : 0);
+                });
+                updateData(currentData.set('locations', data));
+            }).catch(err => {
+                console.log(err);
             });
-            updateData(currentData.set('locations', data));
-        });
     };
 
     render() {

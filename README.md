@@ -1,6 +1,6 @@
-**React Redux ImmutableJS**
+**Web Messenger**
 
-redux example from https://www.sitepoint.com/how-to-build-a-todo-app-using-react-redux-and-immutable-js/
+MERN (MongoDB, Express, React, Node.js) + react-redux, react-router
 
 
 **To run the app**
@@ -9,24 +9,34 @@ redux example from https://www.sitepoint.com/how-to-build-a-todo-app-using-react
 mongod --dbpath F:/STUFF/CRAP/mongodb/db
 `
 2. Start app:
-`yarn install`      to install project dependencies
-`yarn build`        in one terminal to watch your code changes (optional)
-`yarn start-all`    in separate terminal to up and run service and UI
+`
+yarn install`      to install project dependencies
+`
+yarn build`        in one terminal to watch your code changes (optional)
+`
+yarn start-all`    in separate terminal to up and run service and UI
 
 3. browser opens with App tab
 
 
-**create or use database in console**
+**Create or use database in console**
 `
 mongo
 use gorodovoydb
 `
 
-**To upgrade all dependencies with flow types**
+**To upgrade all package dependencies**
 `
 npm i -g npm-check-updates
 npm-check-updates -u
 yarn install
+`
+
+**To update flow types for package dependencies**
+`
+yarn global add flow-typed
+yarn install
+flow-typed install
 `
 
 **To kill listening port (Windiows)**

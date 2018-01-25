@@ -9,8 +9,8 @@ describe('<WeatherList/>', () => {
     test('should render WeatherList', () => {
         const data = Map({
             locations: List([
-                Map({ id: 1, city: 'Odessa', country: 'Ukraine', temp: 0, isDeleted: false }),
-                Map({ id: 2, city: 'New York', country: 'United States', temp: 0, isDeleted: false })
+                Map({ id: '9hrptuontk1', city: 'Odessa', country: 'Ukraine', temp: 0, isDeleted: false }),
+                Map({ id: 't4t6hhe6bf2', city: 'New York', country: 'United States', temp: 0, isDeleted: false })
             ]),
             rehydrated: false
         });
