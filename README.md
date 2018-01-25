@@ -6,7 +6,7 @@ MERN (MongoDB, Express, React, Node.js) + react-redux, react-router
 
 ### To run the app:
 
-**1. Up and run mongodb**
+**1. Up and run mongodb:**
 ```
 mongod --dbpath F:/STUFF/CRAP/mongodb/db
 ```
@@ -17,7 +17,7 @@ install project dependencies:
 yarn install
 ```
 
-(optional, in separate terminal)  watch your code changes"
+(optional, in separate terminal)  watch your code changes:
 ```
 yarn build
 ```
@@ -62,9 +62,11 @@ taskkill /F /PID {task_id}
 #### Some notes
 remove user:
 ```
+mongo
 db.users.remove({"_id": ObjectId("5a328992942d94221c3e7694")})
 ```
 remove all users:
 ```
+mongo
 db.users.remove({})
 ```
