@@ -13,7 +13,6 @@ import Registration from './components/Auth/Registration';
 import Conversations from './components/Messages/Conversations';
 import Conversation from './components/Messages/Conversation';
 import People from './components/People/People';
-import TodoList from './components/Todo/TodoList';
 import WeatherList from './components/Weather/WeatherList';
 import Alerts from './components/Alerts';
 
@@ -30,11 +29,10 @@ async function init() {
                         <Switch>
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/register" component={Registration} />
+                            <PrivateRoute exact path="/" component={Conversations} />
                             <PrivateRoute exact path="/conversations" component={Conversations} />
                             <PrivateRoute path="/conversation" component={Conversation} /> {/* query: convId or userId */}
                             <PrivateRoute exact path="/people" component={People} />
-                            <PrivateRoute exact path="/" component={TodoList} />
-                            <PrivateRoute exact path="/todo" component={TodoList} />
                             <PrivateRoute path="/weather" component={WeatherList} />
                         </Switch>
                     </div>

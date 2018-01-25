@@ -26,7 +26,7 @@ class Conversations extends React.Component<void, Props, void> {
     };
 
     deleteConfirmation = (convId: string) => {
-        if (confirm('Are you sure you want to delete this confirmation?')) {
+        if (confirm('Are you sure you want to delete this conversation?')) {
             this.props.deleteConversation(convId);
         }
     };

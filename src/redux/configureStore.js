@@ -7,7 +7,6 @@ import startup from './reducers/startup';
 import authentication from './reducers/authentication';
 import users from './reducers/users';
 import conversations from './reducers/conversations'
-import todo from './reducers/todo';
 import weather from './reducers/weather';
 import alerts from './reducers/alerts';
 
@@ -21,7 +20,6 @@ export default function configureStore() {
                 authentication,
                 users,
                 conversations,
-                todo,
                 weather,
                 alerts
             });

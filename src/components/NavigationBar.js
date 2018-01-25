@@ -32,19 +32,16 @@ class NavigationBar extends React.Component<void, Props, void> {
                     </Navbar.Brand>
                 </Navbar.Header>
                 <Nav>
-                    <LinkContainer key='todo' to='/todo'>
-                        <NavItem eventKey={1}>Todo</NavItem>
-                    </LinkContainer>
-                    <LinkContainer key='weather' to='/weather'>
-                        <NavItem eventKey={2}>Weather</NavItem>
-                    </LinkContainer>
                     <LinkContainer key='conversations' to='/conversations'>
-                        <NavItem eventKey={3}>
+                        <NavItem eventKey={1}>
                             Conversations {newMessages}
                         </NavItem>
                     </LinkContainer>
                     <LinkContainer key='people' to='/people'>
-                        <NavItem eventKey={4}>People</NavItem>
+                        <NavItem eventKey={2}>People</NavItem>
+                    </LinkContainer>
+                    <LinkContainer key='weather' to='/weather'>
+                        <NavItem eventKey={3}>Weather</NavItem>
                     </LinkContainer>
                 </Nav>
                 <Nav pullRight>
