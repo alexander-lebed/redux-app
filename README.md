@@ -4,34 +4,35 @@ MERN (MongoDB, Express, React, Node.js) + react-redux, react-router
 
 
 
-### To run the app
+### To run the app:
 
-**1. Up and run mongodb:**
+**1. Up and run mongodb**
 ```
 mongod --dbpath F:/STUFF/CRAP/mongodb/db
 ```
-**2. Start app:**
-install project dependencies
+**2. Start app**
+
+install project dependencies:
 ```
 yarn install
 ```
 
-(optional, in separate terminal)  watch your code changes
+(optional, in separate terminal)  watch your code changes"
 ```
 yarn build
 ```
 
-(in separate terminal) up and run server and UI
+(in separate terminal) up and run server and UI:
 ```
 yarn start-all`
 ```
-
 
 **3. browser opens new tab with the App**
 
 
 
-#### Create or use database in console
+
+#### Create or use database in console:
 ```
 mongo
 use gorodovoydb
@@ -51,7 +52,7 @@ yarn install
 flow-typed install
 ```
 
-#### To kill listening port (Windiows)
+#### To kill listening port (Windiows):
 ```
 netstat -a -o -n
 taskkill /F /PID {task_id}
@@ -59,11 +60,11 @@ taskkill /F /PID {task_id}
 
 
 #### Some notes
-Remove user
+remove user:
 ```
 db.users.remove({"_id": ObjectId("5a328992942d94221c3e7694")})
 ```
-Remove all users
+remove all users:
 ```
 db.users.remove({})
 ```
