@@ -38,7 +38,7 @@ class Conversation extends React.Component<void, Props, State> {
 
     componentDidMount() {
         this.getConversation();
-        setTimeout(this.props.markAsRead, 500);
+
         // periodically updated conversation info
         this.interval = setInterval(() => this.getConversation(), 2000);
     }
@@ -53,8 +53,15 @@ class Conversation extends React.Component<void, Props, State> {
         if (convId) {
             this.props.getConversation(convId);
         } else if (userId) {
-            this.props.getConversationWithUsers([this.props.user._id, userId]);
+            let usersIds = [];
+            if (this.props.user._id === userId) { // conversation with oneself
+                usersIds = [userId];
+            } else {
+                usersIds = [this.props.user._id, userId]
+            }
+            this.props.getConversationWithUsers(usersIds);
         }
+        setTimeout(this.props.markAsRead, 500);
     };
 
     handleKeyPress = (evt) => {

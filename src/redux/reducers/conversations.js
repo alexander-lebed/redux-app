@@ -222,12 +222,17 @@ export function markAsRead() {
     return (dispatch: Dispatch, getState: Function) => {
         const currentUser = getState().authentication.user;
         const conversation = getState().conversations.conversation;
-        conversation.messages.forEach(m => {
-            if (m.from._id !== currentUser._id) {
-                m.read = true;
-            }
-        });
-        dispatch(saveConversation(conversation))
+        const hasUnread = conversation.messages.some(e => !e.read);
+        if (hasUnread) {
+            const convWithOneself = conversation.users.length === 1;
+            conversation.messages.forEach(m => {
+                const notFromCurrentUser = m.from._id !== currentUser._id;
+                if (notFromCurrentUser || convWithOneself) {
+                    m.read = true;
+                }
+            });
+            dispatch(saveConversation(conversation))
+        }
     }
 }
 

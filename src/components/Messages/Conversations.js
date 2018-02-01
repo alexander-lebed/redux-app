@@ -34,7 +34,9 @@ class Conversations extends React.Component<void, Props, void> {
     render() {
         const {user, conversations} = this.props;
         const tableBody = conversations.map(conv => {
-            const senders = conv.users.filter(u => u._id !== user._id).map(u => u.username).join(', ');
+            const senders = conv.users.length === 1 ?
+                conv.users[0].username : // conversation with oneself
+                conv.users.filter(u => u._id !== user._id).map(u => u.username).join(', ');
             const newMessages = conv.messages.filter(m => !m.read && m.from._id !== user._id);
             let newMessagesNum = newMessages.length > 0 && (
                 <Badge className='pull-right'>{newMessages.length}</Badge>
