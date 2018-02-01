@@ -34,7 +34,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                 <Nav>
                     <LinkContainer key='conversations' to='/conversations'>
                         <NavItem eventKey={1}>
-                            Conversations {newMessages}
+                            Messages {newMessages}
                         </NavItem>
                     </LinkContainer>
                     <LinkContainer key='people' to='/people'>
@@ -47,23 +47,26 @@ class NavigationBar extends React.Component<void, Props, void> {
                 <Nav pullRight>
                     <NavItem eventKey={1}>
                         {user &&
-                        <div>
-                            {user.username}
-                            {' '}
-                            <Button
-                                bsStyle={user.online ? 'success' : 'danger'}
-                                onClick={() => online(!user.online)}
-                            >
-                                {user.online ? 'ONLINE' : 'OFFLINE'}
-                            </Button>
-                        </div>
+                        <Button
+                            bsSize='small'
+                            bsStyle={user.online ? 'success' : 'danger'}
+                            onClick={() => online(!user.online)}
+                        >
+                            <Glyphicon glyph='user' /> {user.username} {user.online ? '(online)' : '(offline)'}
+                        </Button>
                         }
                     </NavItem>
                     <LinkContainer key='login' to='/login'>
-                        <NavItem><Glyphicon glyph="log-in" /> Log In</NavItem>
+                        <NavItem>
+                            <Button bsSize='small'>
+                                <Glyphicon glyph="log-in" style={{marginRight: 10}} /> Log In
+                            </Button>
+                        </NavItem>
                     </LinkContainer>
                     <NavItem eventKey={3} onSelect={logout}>
-                        <Glyphicon glyph="log-out" /> Log Out
+                        <Button bsSize='small'>
+                            <Glyphicon glyph="log-out" style={{marginRight: 10}} /> Log Out
+                        </Button>
                     </NavItem>
                 </Nav>
             </Navbar>

@@ -25,27 +25,37 @@ type State = {
 
 class Conversation extends React.Component<void, Props, State> {
 
-    interval: number;
     state: State;
+    interval: number;
+    scrollableTable: Object;
 
     constructor(params: any) {
         super(params);
-        this.interval = 0;
         this.state = {
             messageText: ''
         };
+        this.interval = 0;
+        this.scrollableTable = {};
     }
 
     componentDidMount() {
         this.getConversation();
-
         // periodically updated conversation info
         this.interval = setInterval(() => this.getConversation(), 2000);
+        this.scrollConversationToBottom();
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
     }
+
+    scrollConversationToBottom = () => {
+        const el = this.scrollableTable;
+        const isScrolledToBottom = el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
+        if (!isScrolledToBottom) {
+            el.scrollTop = el.scrollHeight - el.clientHeight;
+        }
+    };
 
     getConversation = () => {
         const query = queryString.parse(this.props.location.search);
@@ -100,8 +110,8 @@ class Conversation extends React.Component<void, Props, State> {
                     </Col>
                     <Col xs={8}>
                         <h2 className='text-center'>Messages</h2>
-                        <div style={style.scrollableTable}>
-                            <Table responsive >
+                        <div style={style.scrollableTable} ref={(e) => {this.scrollableTable = e}}>
+                            <Table responsive>
                                 <thead>
                                     <tr>
                                         <th style={{width: 150}}>From</th>

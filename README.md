@@ -24,7 +24,7 @@ yarn build
 
 (in separate terminal) up and run server and UI:
 ```
-yarn start-all`
+yarn start-all
 ```
 
 **3. browser opens new tab with the App**
