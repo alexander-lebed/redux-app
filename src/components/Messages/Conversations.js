@@ -72,7 +72,7 @@ class Conversations extends React.Component<void, Props, void> {
                 <Row>
                     <Col xsOffset={2} xs={8}>
                         <h2 className='text-center'>Conversations</h2>
-                        <Table responsive>
+                        <Table responsive hover>
                             <thead>
                                 <tr>
                                     <th style={{width: 150}}>ID</th>

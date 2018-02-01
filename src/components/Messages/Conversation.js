@@ -100,27 +100,29 @@ class Conversation extends React.Component<void, Props, State> {
                     </Col>
                     <Col xs={8}>
                         <h2 className='text-center'>Messages</h2>
-                        <Table responsive>
-                            <thead>
-                                <tr>
-                                    <th style={{width: 150}}>From</th>
-                                    <th>Text</th>
-                                    <th style={{width: 170}}>When</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {_.orderBy(conversation.messages, 'timestamp').map((message, index) => {
-                                    const from = message.from._id === user._id ? 'Me' : message.from.username;
-                                    return (
-                                        <tr key={index} style={!message.read ? {backgroundColor: '#e6fff2'} : {}}>
-                                            <td>{from}</td>
-                                            <td>{message.text}</td>
-                                            <td>{moment(message.timestamp).format("HH:mm, DD MMM 'YY")}</td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </Table>
+                        <div style={style.scrollableTable}>
+                            <Table responsive >
+                                <thead>
+                                    <tr>
+                                        <th style={{width: 150}}>From</th>
+                                        <th>Text</th>
+                                        <th style={{width: 170}}>When</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {_.orderBy(conversation.messages, 'timestamp').map((message, index) => {
+                                        const from = message.from._id === user._id ? 'Me' : message.from.username;
+                                        return (
+                                            <tr key={index} style={!message.read ? {backgroundColor: '#e6fff2'} : {}}>
+                                                <td>{from}</td>
+                                                <td>{message.text}</td>
+                                                <td>{moment(message.timestamp).format("HH:mm, DD MMM 'YY")}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </Table>
+                        </div>
 
                         <form>
                             <FormGroup controlId="message">
@@ -140,6 +142,14 @@ class Conversation extends React.Component<void, Props, State> {
         )
     }
 }
+
+const style = {
+    scrollableTable: {
+        overflowY: 'auto',
+        maxHeight: '60vh',
+        marginBottom: 20
+    }
+};
 
 export default connect(
     state => ({
