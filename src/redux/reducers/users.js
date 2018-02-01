@@ -44,9 +44,9 @@ export function register(username: string, email: string, password: string) {
                 email,
                 password,
                 online: false,
-                lastTime: null
+                lastTime: Date.now()
             };
-            return $http.post(USERS_URL, payload)
+            $http.post(USERS_URL, payload)
                 .then(response => {
                     dispatch({
                         type: actions.ADD_USER,

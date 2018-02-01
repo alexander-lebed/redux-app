@@ -29,7 +29,8 @@ class Login extends React.Component<void, Props, State> {
         this.setState({[name]: value});
     };
 
-    login = () => {
+    login = (e) => {
+        e.preventDefault();
         const {email, password} = this.state;
         this.props.login(email, password).then(isLoggedIn => {
             if (isLoggedIn) {

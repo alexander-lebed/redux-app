@@ -28,7 +28,8 @@ class Login extends React.Component<void, Props, State> {
         this.setState({[name]: value});
     };
 
-    register = () => {
+    register = (e) => {
+        e.preventDefault();
         const {username, email, password} = this.state;
         this.props.register(username, email, password);
     };
