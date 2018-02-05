@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from 'react-bootstrap';
+import { Row, Col, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button } from 'react-bootstrap';
 import { login } from '../../redux/reducers/authentication';
-import { success, error } from "../../redux/reducers/alerts";
-import history from "../../helpers/history";
+import { success, error } from '../../redux/reducers/alerts';
+import history from '../../helpers/history';
+import { getEmailValidationState, getPasswordValidationState } from '../../helpers/input-validation';
 
 type Props = {
     login: Function,
@@ -49,38 +50,44 @@ class Login extends React.Component<void, Props, State> {
 
                     <Row>
                         <Col xsOffset={2} xs={10}>
-                            <h2>Login</h2>
+                            <h2 style={{marginBottom: 20}}>Login</h2>
                         </Col>
                     </Row>
 
                     <Form horizontal onSubmit={this.login}>
-                        <FormGroup controlId="formHorizontalEmail">
+                        <FormGroup controlId='formHorizontalEmail' validationState={getEmailValidationState(email)}>
                             <Col componentClass={ControlLabel} xs={2}>
                                 Email
                             </Col>
                             <Col xs={10}>
                                 <FormControl
                                     name='email'
-                                    type="email"
-                                    placeholder="Email"
+                                    type='email'
+                                    placeholder='Email'
                                     value={email}
                                     onChange={this.handleChange}
                                 />
+                                <HelpBlock style={style.helpBlock}>
+                                    {getEmailValidationState(email) === 'error' && 'Email address should be valid'}
+                                </HelpBlock>
                             </Col>
                         </FormGroup>
 
-                        <FormGroup controlId="formHorizontalPassword">
+                        <FormGroup controlId='formHorizontalPassword' validationState={getPasswordValidationState(password)}>
                             <Col componentClass={ControlLabel} xs={2}>
                                 Password
                             </Col>
                             <Col xs={10}>
                                 <FormControl
                                     name='password'
-                                    type="password"
-                                    placeholder="Password"
+                                    type='password'
+                                    placeholder='Password'
                                     value={password}
                                     onChange={this.handleChange}
                                 />
+                                <HelpBlock style={style.helpBlock}>
+                                    {getPasswordValidationState(password) === 'error' && 'Password should contain at least 5 characters'}
+                                </HelpBlock>
                             </Col>
                         </FormGroup>
 
@@ -88,7 +95,7 @@ class Login extends React.Component<void, Props, State> {
                             <Col xsOffset={2} xs={10}>
                                 <ButtonToolbar>
                                     <Button
-                                        type="submit"
+                                        type='submit'
                                         bsStyle='primary'
                                     >
                                         Log in
@@ -108,6 +115,13 @@ class Login extends React.Component<void, Props, State> {
         )
     }
 }
+
+const style = {
+    helpBlock: {
+        fontSize: 'medium',
+        marginBottom: 0
+    }
+};
 
 export default connect(
     () => ({}),
