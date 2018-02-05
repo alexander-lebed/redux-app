@@ -1,11 +1,10 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button } from 'react-bootstrap';
+import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from 'react-bootstrap';
 import { login } from '../../redux/reducers/authentication';
 import { success, error } from '../../redux/reducers/alerts';
 import history from '../../helpers/history';
-import { getEmailValidationState, getPasswordValidationState } from '../../helpers/input-validation';
 
 type Props = {
     login: Function,
@@ -55,7 +54,7 @@ class Login extends React.Component<void, Props, State> {
                     </Row>
 
                     <Form horizontal onSubmit={this.login}>
-                        <FormGroup controlId='formHorizontalEmail' validationState={getEmailValidationState(email)}>
+                        <FormGroup controlId='formHorizontalEmail'>
                             <Col componentClass={ControlLabel} xs={2}>
                                 Email
                             </Col>
@@ -67,13 +66,10 @@ class Login extends React.Component<void, Props, State> {
                                     value={email}
                                     onChange={this.handleChange}
                                 />
-                                <HelpBlock style={style.helpBlock}>
-                                    {getEmailValidationState(email) === 'error' && 'Email address should be valid'}
-                                </HelpBlock>
                             </Col>
                         </FormGroup>
 
-                        <FormGroup controlId='formHorizontalPassword' validationState={getPasswordValidationState(password)}>
+                        <FormGroup controlId='formHorizontalPassword'>
                             <Col componentClass={ControlLabel} xs={2}>
                                 Password
                             </Col>
@@ -85,9 +81,6 @@ class Login extends React.Component<void, Props, State> {
                                     value={password}
                                     onChange={this.handleChange}
                                 />
-                                <HelpBlock style={style.helpBlock}>
-                                    {getPasswordValidationState(password) === 'error' && 'Password should contain at least 5 characters'}
-                                </HelpBlock>
                             </Col>
                         </FormGroup>
 
@@ -115,13 +108,6 @@ class Login extends React.Component<void, Props, State> {
         )
     }
 }
-
-const style = {
-    helpBlock: {
-        fontSize: 'medium',
-        marginBottom: 0
-    }
-};
 
 export default connect(
     () => ({}),

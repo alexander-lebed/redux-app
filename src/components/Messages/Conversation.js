@@ -101,14 +101,7 @@ class Conversation extends React.Component<void, Props, State> {
         return (
             <div>
                 <Row>
-                    <Col xs={2}>
-                        <LinkContainer to='/conversations'>
-                            <Button bsStyle='link'>
-                                <Glyphicon glyph="arrow-left" /> Back
-                            </Button>
-                        </LinkContainer>
-                    </Col>
-                    <Col xs={8}>
+                    <Col xsOffset={2} xs={8}>
                         <h2 className='text-center'>Messages</h2>
                         <div style={style.scrollableTable} ref={(e) => {this.scrollableTable = e}}>
                             <Table responsive>
