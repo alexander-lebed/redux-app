@@ -58,10 +58,10 @@ export class WeatherList extends React.Component<void, Props, void> {
                 <Row>
                     <Col xs={3} />
                     <Col xs={6}>
-                        <ul className="todo__list">
+                        <ul className="weather-list">
                             {locations.filter(l => !l.get('isDeleted'))
                                 .map(l => (
-                                    <li key={l.get('id')} className="todo__item">
+                                    <li key={l.get('id')} className="weather-item">
                                         <Location location={l} onDelete={() => removeLocation(l.get('id'))} />
                                     </li>
                                 ))

@@ -19,7 +19,7 @@ class People extends React.Component<void, Props, void> {
         const {users} = this.props;
         return (
             <Row>
-                <Col xsOffset={2} xs={6}>
+                <Col xsOffset={3} xs={6}>
                     <Table responsive>
                         <thead>
                             <tr>

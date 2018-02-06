@@ -1,15 +1,17 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import queryString from 'query-string';
+import { Map } from 'immutable';
 import { Row, Col, Table, Badge, Glyphicon } from 'react-bootstrap';
 import history from '../../helpers/history';
+import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType } from '../../types';
 
 type Props = {
     user: User,
+    users: Map<string, User>,
     conversations: Array<ConversationType>,
     getConversationsByUser: Function,
     deleteConversation: Function
@@ -31,27 +33,17 @@ class Conversations extends React.Component<void, Props, void> {
         }
     };
 
-    getLastMessageTime = (timestamp: number) => {
-        let time = '';
-        const now = moment();
-        if (now.format('YYYY') !== moment(timestamp).format('YYYY')) {
-            time = moment(timestamp).format('DD MMM YYYY')
-        } else if (now.format('DD MMM') !== moment(timestamp).format('DD MMM')) {
-            time = moment(timestamp).format('DD MMM')
-        } else {
-            time = moment(timestamp).format('HH:mm')
-        }
-        return time;
-    };
-
     render() {
-        const {user, conversations} = this.props;
+        const {user, users, conversations} = this.props;
         const tableBody = conversations.map(conv => {
             const newMessages = conv.messages.filter(m => !m.read && m.from._id !== user._id);
             const lastConv = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1] : null;
-            const senders = conv.users.length === 1 ?
-                conv.users[0].username : // conversation with oneself
-                conv.users.filter(u => u._id !== user._id).map(u => u.username).join(', ');
+
+            const convUserIds =  conv.users.map(u => u._id);
+            let senders: Array<User> = users.toArray().filter(u => convUserIds.includes(u._id));
+            if (senders.length > 1) {
+                senders = senders.filter(u => u._id !== user._id); // exclude recipient
+            }
             return (
                 <tr
                     key={conv._id}
@@ -60,14 +52,18 @@ class Conversations extends React.Component<void, Props, void> {
                     <td className='cursor' style={style.conversation} >
                         <Row>
                             <Col xs={9} onClick={() => this.goToConversation(conv._id)}>
-                                {senders}
+                                {senders.map(sender => (
+                                    <span key={sender._id} style={{color: sender.online ? 'green' : 'red'}}>
+                                        {sender.username}
+                                    </span>
+                                ))}
                             </Col>
                             <Col xs={3} style={style.convRight}>
                                 <span>
-                                    {newMessages.length && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
-                                    {this.getLastMessageTime(conv.timestamp)}
+                                    {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
+                                    {timestampToHumanDate(conv.timestamp)}
                                     <Glyphicon
-                                        id='remove-todo'
+                                        id='remove'
                                         glyph='remove'
                                         className='cursor'
                                         style={{paddingLeft: 10}}
@@ -81,7 +77,7 @@ class Conversations extends React.Component<void, Props, void> {
                                 {lastConv &&
                                 <Row style={style.message}>
                                     <Col xs={2} className='text-right'>{lastConv.from.username}:</Col>
-                                    <Col xs={10}>{lastConv.text}</Col>
+                                    <Col xs={10} style={style.text}>{lastConv.text}</Col>
                                 </Row>
                                 }
                             </Col>
@@ -94,9 +90,11 @@ class Conversations extends React.Component<void, Props, void> {
         return (
             <div>
                 <Row>
-                    <Col xsOffset={2} xs={8}>
-                        <h2 className='text-center'>Conversations</h2>
-                        <Table responsive hover>
+                    <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
+                        <h4 style={{marginBottom: 20}} className='text-center'>
+                            Conversations
+                        </h4>
+                        <Table hover className='glyphicon-hover'>
                             <tbody>
                                 {tableBody}
                             </tbody>
@@ -110,23 +108,31 @@ class Conversations extends React.Component<void, Props, void> {
 
 const style = {
     conversation: {
-        fontFamily: '-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;'
+        fontSize: 15
     },
     convRight: {
         color: 'grey',
-        textAlign: 'right',
-        fontSize: 15
+        textAlign: 'right'
     },
     message: {
         color: 'grey',
-        fontSize: 13,
-        fontFamily: '-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;'
+        fontSize: 13
+    },
+    text: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        display: '-webkit-box',
+        WebkitBoxOrient: 'vertical',
+        WebkitLineClamp: 3, // N number of lines to show
+        lineHeight: 1.154   // X fallback
+        // maxHeight: 3.462    // N * X
     }
 };
 
 export default connect(
     state => ({
         user: state.authentication.user,
+        users: state.users.users,
         conversations: state.conversations.conversations
     }),
     { getConversationsByUser, deleteConversation }

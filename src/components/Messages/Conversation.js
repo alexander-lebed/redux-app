@@ -2,10 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import moment from 'moment';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
-import { LinkContainer } from "react-router-bootstrap";
+import { Row, Col, Table, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
+import { timestampToHumanDate } from '../../helpers/time';
 import { getConversation, getConversationWithUsers, markAsRead, saveConversation } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType, Message } from '../../types';
 
@@ -42,7 +41,13 @@ class Conversation extends React.Component<void, Props, State> {
         this.getConversation();
         // periodically updated conversation info
         this.interval = setInterval(() => this.getConversation(), 2000);
-        this.scrollConversationToBottom();
+        setTimeout(() => this.scrollConversationToBottom(), 50);
+    }
+
+    componentDidUpdate(prevProps: Props) {
+        if (prevProps.conversation.messages.length !== this.props.conversation.messages.length) {
+            setTimeout(() => this.scrollConversationToBottom(), 50);
+        }
     }
 
     componentWillUnmount() {
@@ -92,34 +97,51 @@ class Conversation extends React.Component<void, Props, State> {
             this.props.saveConversation(conversation);
             this.setState({
                 messageText: ''}
-            )
+            );
+            setTimeout(() => this.scrollConversationToBottom(), 50);
         }
     };
 
     render() {
-        const {user, conversation} = this.props;
+        const {conversation} = this.props;
         return (
             <div>
                 <Row>
-                    <Col xsOffset={2} xs={8}>
-                        <h2 className='text-center'>Messages</h2>
+                    <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
+                        <h4 style={{marginBottom: 20}} className='text-center'>
+                            Messages
+                        </h4>
                         <div style={style.scrollableTable} ref={(e) => {this.scrollableTable = e}}>
-                            <Table responsive>
-                                <thead>
-                                    <tr>
-                                        <th style={{width: 150}}>From</th>
-                                        <th>Text</th>
-                                        <th style={{width: 170}}>When</th>
-                                    </tr>
-                                </thead>
+                            <Table className='glyphicon-hover'>
                                 <tbody>
                                     {_.orderBy(conversation.messages, 'timestamp').map((message, index) => {
-                                        const from = message.from._id === user._id ? 'Me' : message.from.username;
                                         return (
                                             <tr key={index} style={!message.read ? {backgroundColor: '#e6fff2'} : {}}>
-                                                <td>{from}</td>
-                                                <td>{message.text}</td>
-                                                <td>{moment(message.timestamp).format("HH:mm, DD MMM 'YY")}</td>
+                                                <td>
+                                                    <Row style={{marginRight: 0}}>
+                                                        <Col xs={9}>
+                                                            <span style={style.top}>
+                                                                <span style={style.from}>
+                                                                    {message.from.username}
+                                                                </span>
+                                                                <span style={{paddingLeft: 15}}>
+                                                                    {timestampToHumanDate(message.timestamp)}
+                                                                </span>
+                                                            </span>
+                                                            <div style={style.text}>
+                                                                {message.text}
+                                                            </div>
+                                                        </Col>
+                                                        <Col xs={3} style={style.top}>
+                                                            <Glyphicon
+                                                                id='remove'
+                                                                glyph='remove'
+                                                                className='pull-right cursor'
+                                                                onClick={() => {}}
+                                                            />
+                                                        </Col>
+                                                    </Row>
+                                                </td>
                                             </tr>
                                         )
                                     })}
@@ -151,6 +173,18 @@ const style = {
         overflowY: 'auto',
         maxHeight: '60vh',
         marginBottom: 20
+    },
+    top: {
+        color: 'grey',
+        fontSize: 13
+    },
+    from: {
+        color: '#42648b',
+        fontSize: 15,
+        fontWeight: 700
+    },
+    text: {
+        fontSize: 15
     }
 };
 

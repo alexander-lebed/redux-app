@@ -1,5 +1,4 @@
 // @flow
-import React from 'react';
 import { combineReducers } from 'redux';
 import $http from 'axios';
 import _ from 'lodash';
@@ -73,15 +72,15 @@ export function getUsers() {
                     type: actions.SET_USERS, payload
                 });
             })
-            .catch(err => {
-                const error = (
-                    <div>
-                        <strong>Error on fetch users:</strong>
-                        <div>{err.message}</div>
-                    </div>
-                );
-                dispatch(Alert.error(error));
-            })
+            // .catch(err => {
+            //     const error = (
+            //         <div>
+            //             <strong>Error on fetch users:</strong>
+            //             <div>{err.message}</div>
+            //         </div>
+            //     );
+            //     dispatch(Alert.error(error));
+            // })
     }
 }
 
