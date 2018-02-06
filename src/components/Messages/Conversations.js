@@ -81,15 +81,16 @@ class Conversations extends React.Component<void, Props, void> {
                                 </Col>
                             </Row>
                             <Row onClick={() => this.goToConversation(conv._id)}>
-                                <Col xs={7} xsOffset={2}>
+                                <Col xsOffset={1} xs={9} >
                                     {lastConv &&
                                     <Row style={style.message}>
-                                        <Col xs={2} className='text-right'>{lastConv.from.username}:</Col>
-                                        <Col xs={10} style={style.text}>{lastConv.text}</Col>
+                                        <Col xs={3} className='text-right' style={{paddingRight: 0}}>
+                                            {lastConv.from.username}:
+                                        </Col>
+                                        <Col xs={9} style={style.text}>{lastConv.text}</Col>
                                     </Row>
                                     }
                                 </Col>
-                                <Col xs={3} />
                             </Row>
                         </td>
                     </tr>

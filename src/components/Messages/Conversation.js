@@ -118,9 +118,9 @@ class Conversation extends React.Component<void, Props, State> {
                                         return (
                                             <tr key={index} style={!message.read ? {backgroundColor: '#e6fff2'} : {}}>
                                                 <td>
-                                                    <Row style={{marginRight: 0}}>
+                                                    <Row style={{...style.top, ...{marginRight: 0}}}>
                                                         <Col xs={9}>
-                                                            <span style={style.top}>
+                                                            <span>
                                                                 <span style={style.from}>
                                                                     {message.from.username}
                                                                 </span>
@@ -128,11 +128,8 @@ class Conversation extends React.Component<void, Props, State> {
                                                                     {timestampToHumanDate(message.timestamp)}
                                                                 </span>
                                                             </span>
-                                                            <div style={style.text}>
-                                                                {message.text}
-                                                            </div>
                                                         </Col>
-                                                        <Col xs={3} style={style.top}>
+                                                        <Col xs={3}>
                                                             <Glyphicon
                                                                 id='remove'
                                                                 glyph='remove'
@@ -141,6 +138,9 @@ class Conversation extends React.Component<void, Props, State> {
                                                             />
                                                         </Col>
                                                     </Row>
+                                                    <div style={style.text}>
+                                                        {message.text}
+                                                    </div>
                                                 </td>
                                             </tr>
                                         )
@@ -176,7 +176,8 @@ const style = {
     },
     top: {
         color: 'grey',
-        fontSize: 13
+        fontSize: 13,
+        marginBottom: 5
     },
     from: {
         color: '#42648b',
