@@ -35,58 +35,67 @@ class Conversations extends React.Component<void, Props, void> {
 
     render() {
         const {user, users, conversations} = this.props;
-        const tableBody = conversations.map(conv => {
-            const newMessages = conv.messages.filter(m => !m.read && m.from._id !== user._id);
-            const lastConv = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1] : null;
-
-            const convUserIds =  conv.users.map(u => u._id);
-            let senders: Array<User> = users.toArray().filter(u => convUserIds.includes(u._id));
-            if (senders.length > 1) {
-                senders = senders.filter(u => u._id !== user._id); // exclude recipient
-            }
-            return (
-                <tr
-                    key={conv._id}
-                    style={newMessages.length > 0 ? {backgroundColor: '#e6fff2'} : {}}
-                >
-                    <td className='cursor' style={style.conversation} >
-                        <Row>
-                            <Col xs={9} onClick={() => this.goToConversation(conv._id)}>
-                                {senders.map(sender => (
-                                    <span key={sender._id} style={{color: sender.online ? 'green' : 'red'}}>
-                                        {sender.username}
-                                    </span>
-                                ))}
-                            </Col>
-                            <Col xs={3} style={style.convRight}>
-                                <span>
-                                    {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
-                                    {timestampToHumanDate(conv.timestamp)}
-                                    <Glyphicon
-                                        id='remove'
-                                        glyph='remove'
-                                        className='cursor'
-                                        style={{paddingLeft: 10}}
-                                        onClick={() => this.deleteConfirmation(conv._id)}
-                                    />
-                                </span>
-                            </Col>
-                        </Row>
-                        <Row onClick={() => this.goToConversation(conv._id)}>
-                            <Col xs={7} xsOffset={2}>
-                                {lastConv &&
-                                <Row style={style.message}>
-                                    <Col xs={2} className='text-right'>{lastConv.from.username}:</Col>
-                                    <Col xs={10} style={style.text}>{lastConv.text}</Col>
-                                </Row>
-                                }
-                            </Col>
-                            <Col xs={3} />
-                        </Row>
-                    </td>
-                </tr>
+        let body;
+        if (conversations.length === 0) {
+            body = (
+                <div className='center-page'>
+                    {'You don\'t have any conversations yet'}
+                </div>
             )
-        });
+        } else {
+            body = conversations.map(conv => {
+                const newMessages = conv.messages.filter(m => !m.read && m.from._id !== user._id);
+                const lastConv = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1] : null;
+
+                const convUserIds =  conv.users.map(u => u._id);
+                let senders: Array<User> = users.toArray().filter(u => convUserIds.includes(u._id));
+                if (senders.length > 1) {
+                    senders = senders.filter(u => u._id !== user._id); // exclude recipient
+                }
+                return (
+                    <tr
+                        key={conv._id}
+                        style={newMessages.length > 0 ? {backgroundColor: '#e6fff2'} : {}}
+                    >
+                        <td className='cursor' style={style.conversation} >
+                            <Row>
+                                <Col xs={9} onClick={() => this.goToConversation(conv._id)}>
+                                    {senders.map(sender => (
+                                        <span key={sender._id} style={{color: sender.online ? 'green' : 'red'}}>
+                                            {sender.username}
+                                        </span>
+                                    ))}
+                                </Col>
+                                <Col xs={3} style={style.convRight}>
+                                    <span>
+                                        {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
+                                        {timestampToHumanDate(conv.timestamp)}
+                                        <Glyphicon
+                                            id='remove'
+                                            glyph='remove'
+                                            className='cursor'
+                                            style={{paddingLeft: 10}}
+                                            onClick={() => this.deleteConfirmation(conv._id)}
+                                        />
+                                    </span>
+                                </Col>
+                            </Row>
+                            <Row onClick={() => this.goToConversation(conv._id)}>
+                                <Col xs={7} xsOffset={2}>
+                                    {lastConv &&
+                                    <Row style={style.message}>
+                                        <Col xs={2} className='text-right'>{lastConv.from.username}:</Col>
+                                        <Col xs={10} style={style.text}>{lastConv.text}</Col>
+                                    </Row>
+                                    }
+                                </Col>
+                                <Col xs={3} />
+                            </Row>
+                        </td>
+                    </tr>
+                )
+            });
+        }
         return (
             <div>
                 <Row>
@@ -96,7 +105,7 @@ class Conversations extends React.Component<void, Props, void> {
                         </h4>
                         <Table hover className='glyphicon-hover'>
                             <tbody>
-                                {tableBody}
+                                {body}
                             </tbody>
                         </Table>
                     </Col>

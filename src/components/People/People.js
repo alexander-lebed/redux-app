@@ -5,7 +5,7 @@ import { Map } from 'immutable';
 import queryString from 'query-string';
 import { Row, Col, Table, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
-import moment from "moment";
+import { timestampToHumanDate } from '../../helpers/time';
 import type { User } from '../../types';
 
 type Props = {
@@ -19,33 +19,32 @@ class People extends React.Component<void, Props, void> {
         const {users} = this.props;
         return (
             <Row>
-                <Col xsOffset={3} xs={6}>
+                <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
                     <Table responsive>
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th />
-                                <th />
-                                <th />
-                            </tr>
-                        </thead>
                         <tbody>
                             {users.toArray().map(user => {
                                 const query = queryString.stringify({userId: user._id});
+                                const glyphStyle = {...{color: user.online ? 'green' : 'red'}, ...{marginRight: 15}};
                                 return (
-                                    <tr key={user._id}>
-                                        <td>{user.username}</td>
+                                    <tr key={user._id} style={{fontSize: 17}}>
                                         <td>
-                                            <Glyphicon glyph='user' style={{color: user.online ? 'green' : 'red'}} />
+                                            <Row style={{marginRight: 0}}>
+                                                <Col xs={6}>
+                                                    <Glyphicon glyph='user' style={glyphStyle} />
+                                                    {user.username}
+                                                </Col>
+                                                <Col xs={6} style={style.time}>
+                                                    {!user.online && `last seen ${timestampToHumanDate(user.lastTime)}`}
+                                                    <LinkContainer to={`/conversation?${query}`} className='pull-right'>
+                                                        <Button bsSize='small'>
+                                                            Write a message
+                                                        </Button>
+                                                    </LinkContainer>
+                                                </Col>
+                                            </Row>
                                         </td>
-                                        <td>{moment(user.lastTime).format("HH:mm, DD MMM 'YY")}</td>
-                                        <td className='text-right'>
-                                            <LinkContainer to={`/conversation?${query}`}>
-                                                <Button>
-                                                    Write a message
-                                                </Button>
-                                            </LinkContainer>
-                                        </td>
+
+
                                     </tr>
                                 )
                             })}
@@ -56,6 +55,13 @@ class People extends React.Component<void, Props, void> {
         )
     }
 }
+
+const style = {
+    time: {
+        color: 'grey',
+        fontSize: 13
+    }
+};
 
 export default connect(
     state => ({
