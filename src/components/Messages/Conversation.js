@@ -82,23 +82,24 @@ class Conversation extends React.Component<void, Props, State> {
     handleKeyPress = (evt) => {
         if (evt.key === "Enter" && !evt.shiftKey) {
             evt.preventDefault();
-            const {user, conversation} = this.props;
-
-            const currentTime = Date.now();
-            const message: Message = {
-                from: {_id: user._id, username: user.username},
-                text: this.state.messageText,
-                timestamp: currentTime,
-                read: false,
-                deleted: false
-            };
-            conversation.messages.push(message);
-            conversation.timestamp = currentTime;
-            this.props.saveConversation(conversation);
-            this.setState({
-                messageText: ''}
-            );
-            setTimeout(() => this.scrollConversationToBottom(), 50);
+            if (this.state.messageText) {
+                const {user, conversation} = this.props;
+                const currentTime = Date.now();
+                const message: Message = {
+                    from: {_id: user._id, username: user.username},
+                    text: this.state.messageText,
+                    timestamp: currentTime,
+                    read: false,
+                    deleted: false
+                };
+                conversation.messages.push(message);
+                conversation.timestamp = currentTime;
+                this.props.saveConversation(conversation);
+                this.setState({
+                    messageText: ''}
+                );
+                setTimeout(() => this.scrollConversationToBottom(), 50);
+            }
         }
     };
 
