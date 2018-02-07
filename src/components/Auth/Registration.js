@@ -108,7 +108,7 @@ class Login extends React.Component<void, Props, State> {
                                     onChange={this.handleChange}
                                 />
                                 <HelpBlock style={style.helpBlock}>
-                                    {getPasswordValidationState(password) === 'error' && 'Password should contain at least 5 characters'}
+                                    {getPasswordValidationState(password) === 'error' && 'Password should contain at least 5 characters and do not contain spaces'}
                                 </HelpBlock>
                             </Col>
                         </FormGroup>

@@ -11,10 +11,10 @@ export function getUsernameValidationState(username = '') {
 }
 
 export function getEmailValidationState(email = '') {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (email.length === 0) {
         return null;
-    } else if (re.test(email)) {
+    } else if (emailRegEx.test(email)) {
         return 'success';
     } else {
         return 'error';
@@ -22,11 +22,12 @@ export function getEmailValidationState(email = '') {
 }
 
 export function getPasswordValidationState(password = '') {
+    const noSpacesRegEx = /^\S*$/
     if (password.length === 0) {
         return null;
-    } else if (password.length >= 5) {
+    } else if (password.length >= 5 && noSpacesRegEx.test(password)) {
         return 'success';
-    } else if (password.length < 5) {
+    } else {
         return 'error';
     }
 }
