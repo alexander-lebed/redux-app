@@ -81,18 +81,14 @@ class Conversations extends React.Component<void, Props, void> {
                                     </span>
                                 </Col>
                             </Row>
-                            <Row onClick={() => this.goToConversation(conv._id)}>
-                                <Col xsOffset={1} xs={9} >
-                                    {lastConv &&
-                                    <Row style={style.message}>
-                                        <Col xs={3} className='text-right' style={{paddingRight: 0}}>
-                                            {lastConv.from.username}:
-                                        </Col>
-                                        <Col xs={9} style={style.text}>{lastConv.text}</Col>
-                                    </Row>
-                                    }
+                            {lastConv &&
+                            <Row style={style.message} onClick={() => this.goToConversation(conv._id)}>
+                                <Col xs={2} className='text-right' style={{paddingRight: 0}}>
+                                    {lastConv.from.username}:
                                 </Col>
+                                <Col xs={8} style={style.text}>{lastConv.text}</Col>
                             </Row>
+                            }
                         </td>
                     </tr>
                 )
@@ -130,6 +126,7 @@ const style = {
         fontSize: 13
     },
     text: {
+        paddingTop: 1,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         display: '-webkit-box',
