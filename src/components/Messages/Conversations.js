@@ -44,8 +44,9 @@ class Conversations extends React.Component<void, Props, void> {
             )
         } else {
             body = conversations.map(conv => {
-                const newMessages = conv.messages.filter(m => !m.read && m.from._id !== user._id);
-                const lastConv = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1] : null;
+                const convMessages = conv.messages.filter(e => !e.deleted);
+                const newMessages = convMessages.filter(m => !m.read && m.from._id !== user._id);
+                const lastConv = convMessages.length > 0 ? convMessages[convMessages.length - 1] : null;
 
                 const convUserIds =  conv.users.map(u => u._id);
                 let senders: Array<User> = users.toArray().filter(u => convUserIds.includes(u._id));

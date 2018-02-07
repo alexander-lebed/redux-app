@@ -263,6 +263,19 @@ export function saveConversation(conversation: Object) {
     }
 }
 
+export function deleteMessage(messageId: string) {
+    return (dispatch: Dispatch, getState: Function) => {
+        const conversation = getState().conversations.conversation;
+        conversation.messages.forEach(m => {
+            if (m._id === messageId) {
+                m.deleted = true;
+            }
+        });
+        dispatch(saveConversation(conversation))
+    }
+}
+
+// todo: don't deleted, just mark as deleted
 export function deleteConversation(convId: string) {
     return (dispatch: Dispatch, getState: Function) => {
         $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`)

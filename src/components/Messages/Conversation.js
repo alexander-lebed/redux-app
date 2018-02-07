@@ -5,7 +5,7 @@ import _ from 'lodash';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
-import { getConversation, getConversationWithUsers, markAsRead, saveConversation } from '../../redux/reducers/conversations';
+import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType, Message } from '../../types';
 
 type Props = {
@@ -15,6 +15,7 @@ type Props = {
     getConversation: Function,
     getConversationWithUsers: Function,
     markAsRead: Function,
+    deleteMessage: Function,
     saveConversation: Function
 }
 
@@ -39,8 +40,7 @@ class Conversation extends React.Component<void, Props, State> {
 
     componentDidMount() {
         this.getConversation();
-        // periodically updated conversation info
-        this.interval = setInterval(() => this.getConversation(), 2000);
+        this.interval = setInterval(() => this.getConversation(), 2000); // periodically update conversation
         setTimeout(() => this.scrollConversationToBottom(), 50);
     }
 
@@ -104,7 +104,6 @@ class Conversation extends React.Component<void, Props, State> {
     };
 
     render() {
-        const {conversation} = this.props;
         return (
             <div>
                 <Row>
@@ -112,61 +111,81 @@ class Conversation extends React.Component<void, Props, State> {
                         <h4 style={{marginBottom: 20}} className='text-center'>
                             Messages
                         </h4>
-                        <div style={style.scrollableTable} ref={(e) => {this.scrollableTable = e}}>
-                            <Table className='glyphicon-hover'>
-                                <tbody>
-                                    {_.orderBy(conversation.messages, 'timestamp').map((message, index) => {
-                                        return (
-                                            <tr key={index} style={!message.read ? {backgroundColor: '#e6fff2'} : {}}>
-                                                <td>
-                                                    <Row style={{...style.top, ...{marginRight: 0}}}>
-                                                        <Col xs={9}>
-                                                            <span>
-                                                                <span style={style.from}>
-                                                                    {message.from.username}
-                                                                </span>
-                                                                <span style={{paddingLeft: 15}}>
-                                                                    {timestampToHumanDate(message.timestamp)}
-                                                                </span>
-                                                            </span>
-                                                        </Col>
-                                                        <Col xs={3}>
-                                                            <Glyphicon
-                                                                id='remove'
-                                                                glyph='remove'
-                                                                className='pull-right cursor'
-                                                                onClick={() => {}}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-                                                    <div style={style.text}>
-                                                        {message.text}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                                </tbody>
-                            </Table>
-                        </div>
-
-                        <form>
-                            <FormGroup controlId="message">
-                                <FormControl
-                                    componentClass="textarea"
-                                    placeholder="Write a message..."
-                                    value={this.state.messageText}
-                                    onKeyPress={this.handleKeyPress}
-                                    onChange={e => this.setState({messageText: e.target.value})}
-                                />
-                            </FormGroup>
-                        </form>
-
+                        {this.renderMessages()}
+                        {this.renderMessageForm()}
                     </Col>
                 </Row>
             </div>
         )
     }
+
+    renderMessages = () => {
+        const messages = _.orderBy(this.props.conversation.messages.filter(e => !e.deleted), 'timestamp');
+        return (
+            <div style={style.scrollableTable} ref={(e) => {this.scrollableTable = e}}>
+                <Table className='glyphicon-hover'>
+                    <tbody>
+                        {messages.map((message, index) => {
+                            const rowStyle = !message.read ? {backgroundColor: '#e6fff2'} : {};
+                            return (
+                                <tr key={index} style={rowStyle}>
+                                    <td>{this.renderMessage(message)}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+            </div>
+        )
+    };
+
+    renderMessage = (message: Message) => {
+        const {user, deleteMessage} = this.props;
+        const isMessageFromCurrentUser = message.from._id === user._id;
+        return (
+            <div>
+                <Row style={{...style.top, ...{marginRight: 0}}}>
+                    <Col xs={9}>
+                        <div>
+                            <span style={style.from}>
+                                {message.from.username}
+                            </span>
+                            <span style={{paddingLeft: 15}}>
+                                {timestampToHumanDate(message.timestamp)}
+                            </span>
+                        </div>
+                    </Col>
+                    <Col xs={3}>
+                        {isMessageFromCurrentUser &&
+                        <Glyphicon
+                            id='remove'
+                            glyph='remove'
+                            className='pull-right cursor'
+                            onClick={() => deleteMessage(message._id)}
+                        />
+                        }
+                    </Col>
+                </Row>
+                <div style={style.text}>
+                    {message.text}
+                </div>
+            </div>
+        )
+    };
+
+    renderMessageForm = () => (
+        <form>
+            <FormGroup controlId="write-message">
+                <FormControl
+                    componentClass="textarea"
+                    placeholder="Write a message..."
+                    value={this.state.messageText}
+                    onKeyPress={this.handleKeyPress}
+                    onChange={e => this.setState({messageText: e.target.value})}
+                />
+            </FormGroup>
+        </form>
+    )
 }
 
 const style = {
@@ -195,5 +214,5 @@ export default connect(
         user: state.authentication.user,
         conversation: state.conversations.conversation
     }),
-    { getConversation, getConversationWithUsers, markAsRead, saveConversation }
+    { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation }
 )(Conversation);

@@ -80,7 +80,6 @@ router.put('/', function(req, res, next) {
 
 router.delete('/', function(req, res, next) {
     const query = {_id : req.query.convId};
-    // todo: just mark as deleted!
     Conversation.find(query).remove(function(err, data) {
         if (err)
             return next(err);

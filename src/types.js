@@ -24,6 +24,7 @@ export type Alert = {
 }
 
 export type Message = {
+    _id?: string,
     from: {_id: string, username: string},
     text: string,
     timestamp: number,
