@@ -196,8 +196,7 @@ const style = {
     },
     top: {
         color: 'grey',
-        fontSize: 13,
-        marginBottom: 5
+        fontSize: 13
     },
     from: {
         color: '#42648b',
@@ -205,7 +204,8 @@ const style = {
         fontWeight: 700
     },
     text: {
-        fontSize: 15
+        fontSize: 15,
+        padding: '5px 5px 0 5px'
     }
 };
 

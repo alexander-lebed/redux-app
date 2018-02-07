@@ -59,13 +59,13 @@ class NavigationBar extends React.Component<void, Props, void> {
                     <LinkContainer key='login' to='/login'>
                         <NavItem>
                             <Button bsSize='small'>
-                                <Glyphicon glyph="log-in" style={{marginRight: 10}} /> Log In
+                                <Glyphicon glyph="log-in" style={{marginRight: 5}} /> Log in
                             </Button>
                         </NavItem>
                     </LinkContainer>
                     <NavItem eventKey={3} onSelect={logout}>
                         <Button bsSize='small'>
-                            <Glyphicon glyph="log-out" style={{marginRight: 10}} /> Log Out
+                            <Glyphicon glyph="log-out" style={{marginRight: 5}} /> Log out
                         </Button>
                     </NavItem>
                 </Nav>
