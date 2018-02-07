@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { Picker, Emoji } from 'emoji-mart'
 import _ from 'lodash';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
@@ -20,7 +21,8 @@ type Props = {
 }
 
 type State = {
-    messageText: string
+    messageText: string,
+    showEmoji: boolean
 };
 
 class Conversation extends React.Component<void, Props, State> {
@@ -32,7 +34,8 @@ class Conversation extends React.Component<void, Props, State> {
     constructor(params: any) {
         super(params);
         this.state = {
-            messageText: ''
+            messageText: '',
+            showEmoji: false
         };
         this.interval = 0;
         this.scrollableTable = {};
@@ -55,10 +58,12 @@ class Conversation extends React.Component<void, Props, State> {
     }
 
     scrollConversationToBottom = () => {
-        const el = this.scrollableTable;
-        const isScrolledToBottom = el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
-        if (!isScrolledToBottom) {
-            el.scrollTop = el.scrollHeight - el.clientHeight;
+        if (this.scrollableTable) {
+            const el = this.scrollableTable;
+            const isScrolledToBottom = el.scrollHeight - el.clientHeight <= el.scrollTop + 1;
+            if (!isScrolledToBottom) {
+                el.scrollTop = el.scrollHeight - el.clientHeight;
+            }
         }
     };
 
@@ -80,7 +85,7 @@ class Conversation extends React.Component<void, Props, State> {
     };
 
     handleKeyPress = (evt) => {
-        if (evt.key === "Enter" && !evt.shiftKey) {
+        if (evt.key === 'Enter' && !evt.shiftKey) {
             evt.preventDefault();
             if (this.state.messageText) {
                 const {user, conversation} = this.props;
@@ -105,17 +110,16 @@ class Conversation extends React.Component<void, Props, State> {
 
     render() {
         return (
-            <div>
-                <Row>
-                    <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
-                        <h4 style={{marginBottom: 20}} className='text-center'>
-                            Messages
-                        </h4>
-                        {this.renderMessages()}
-                        {this.renderMessageForm()}
-                    </Col>
-                </Row>
-            </div>
+            <Row>
+                <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
+                    <h4 className='text-center' style={{marginBottom: 20}}>
+                        Messages
+                    </h4>
+                    {this.renderMessages()}
+                    {this.renderEmojiPicker()}
+                    {this.renderMessageForm()}
+                </Col>
+            </Row>
         )
     }
 
@@ -173,16 +177,47 @@ class Conversation extends React.Component<void, Props, State> {
         )
     };
 
+    renderEmojiPicker = () => {
+        const {messageText, showEmoji} = this.state;
+        return (
+            <div>
+                {showEmoji &&
+                <div className='pull-right'>
+                    <Picker
+                        title='pick your emoji…'
+                        emoji='monkey'
+                        native={true}
+                        onClick={emoji => {
+                            const text = messageText ? messageText + ` ${emoji.native}` : emoji.native;
+                            this.setState({messageText: text});
+                        }}
+                    />
+                </div>
+                }
+            </div>
+        )
+    };
+
     renderMessageForm = () => (
         <form>
-            <FormGroup controlId="write-message">
+            <FormGroup controlId='message-form' style={{display: 'flex'}}>
                 <FormControl
-                    componentClass="textarea"
-                    placeholder="Write a message..."
+                    componentClass='textarea'
+                    style={style.textarea}
+                    rows={4}
+                    placeholder='Write a message...'
                     value={this.state.messageText}
                     onKeyPress={this.handleKeyPress}
                     onChange={e => this.setState({messageText: e.target.value})}
                 />
+                <div className='cursor' style={style.emojiSelect}>
+                    <Emoji
+                        set='twitter'
+                        size={32}
+                        emoji='slightly_smiling_face'
+                        onClick={() => this.setState({showEmoji: !this.state.showEmoji})}
+                    />
+                </div>
             </FormGroup>
         </form>
     )
@@ -205,7 +240,18 @@ const style = {
     },
     text: {
         fontSize: 15,
-        padding: '5px 5px 0 5px'
+        padding: '5px 5px 0 5px',
+        whiteSpace: 'pre-wrap'
+    },
+    textarea: {
+        resize: 'none',
+        flex: 1,
+        paddingRight: 60
+    },
+    emojiSelect: {
+        paddingTop: 10,
+        paddingRight: 10,
+        marginLeft: -43
     }
 };
 
