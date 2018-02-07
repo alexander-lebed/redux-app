@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Picker, Emoji } from 'emoji-mart'
+import Linkify from 'react-linkify';
 import _ from 'lodash';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
@@ -170,9 +171,11 @@ class Conversation extends React.Component<void, Props, State> {
                         }
                     </Col>
                 </Row>
-                <div style={style.text}>
-                    {message.text}
-                </div>
+                <Linkify>
+                    <div style={style.text}>
+                        {message.text}
+                    </div>
+                </Linkify>
             </div>
         )
     };
