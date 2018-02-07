@@ -243,7 +243,7 @@ const style = {
     },
     text: {
         fontSize: 15,
-        padding: '5px 5px 0 5px',
+        paddingTop: 5,
         whiteSpace: 'pre-wrap'
     },
     textarea: {
