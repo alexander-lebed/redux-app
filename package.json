@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --progress --colors --watch",
+    "start": "nf start",
     "test": "jest --coverage",
     "start-ui": "webpack-dev-server --open",
     "start-api": "node server.js",
