@@ -1,2 +1,2 @@
-web: webpack-dev-server 8082
-api: nodemon server.js
+web: webpack-dev-server --open
+api: node server.js

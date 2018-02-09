@@ -9,7 +9,7 @@ const conversations = require('./api/service/conversations');
 const app = express();
 const router = express.Router();
 
-const mongoDB = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger';
+const mongoDB = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
 const port = process.env.API_PORT || 3001;
 
 mongoose.connect(mongoDB, {useMongoClient: true});
