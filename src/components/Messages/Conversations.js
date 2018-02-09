@@ -35,15 +35,15 @@ class Conversations extends React.Component<void, Props, void> {
 
     render() {
         const {user, users, conversations} = this.props;
-        let body;
+        let content = [];
         if (conversations.length === 0) {
-            body = (
-                <div className='center-page'>
+            content = (
+                <div className='text-center'>
                     {'You don\'t have any conversations yet'}
                 </div>
             )
         } else {
-            body = conversations.map(conv => {
+            const tableBody = conversations.map(conv => {
                 const convMessages = conv.messages.filter(e => !e.deleted);
                 const newMessages = convMessages.filter(m => !m.read && m.from._id !== user._id);
                 const lastConv = convMessages.length > 0 ? convMessages[convMessages.length - 1] : null;
@@ -93,6 +93,14 @@ class Conversations extends React.Component<void, Props, void> {
                     </tr>
                 )
             });
+
+            content = (
+                <Table hover className='glyphicon-hover'>
+                    <tbody>
+                        {tableBody}
+                    </tbody>
+                </Table>
+            )
         }
         return (
             <div>
@@ -101,11 +109,7 @@ class Conversations extends React.Component<void, Props, void> {
                         <h4 style={{marginBottom: 20}} className='text-center'>
                             Conversations
                         </h4>
-                        <Table hover className='glyphicon-hover'>
-                            <tbody>
-                                {body}
-                            </tbody>
-                        </Table>
+                        {content}
                     </Col>
                 </Row>
             </div>

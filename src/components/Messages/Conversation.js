@@ -125,12 +125,13 @@ class Conversation extends React.Component<void, Props, State> {
     }
 
     renderMessages = () => {
-        const messages = _.orderBy(this.props.conversation.messages.filter(e => !e.deleted), 'timestamp');
+        const messages = this.props.conversation.messages || [];
+        const orderedMessages = _.orderBy(messages.filter(e => !e.deleted), 'timestamp');
         return (
             <div style={style.scrollableTable} ref={(e) => {this.scrollableTable = e}}>
                 <Table className='glyphicon-hover'>
                     <tbody>
-                        {messages.map((message, index) => {
+                        {orderedMessages.map((message, index) => {
                             const rowStyle = !message.read ? {backgroundColor: '#e6fff2'} : {};
                             return (
                                 <tr key={index} style={rowStyle}>

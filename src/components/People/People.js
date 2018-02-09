@@ -26,7 +26,7 @@ class People extends React.Component<void, Props, void> {
                                 const query = queryString.stringify({userId: user._id});
                                 const glyphStyle = {...{color: user.online ? 'green' : 'red'}, ...{marginRight: 15}};
                                 return (
-                                    <tr key={user._id} style={{fontSize: 17}}>
+                                    <tr key={user._id}>
                                         <td>
                                             <Row style={{marginRight: 0}}>
                                                 <Col xs={6}>

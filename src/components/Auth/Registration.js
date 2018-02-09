@@ -60,7 +60,7 @@ class Login extends React.Component<void, Props, State> {
                     </Row>
 
                     <Form horizontal onSubmit={this.register}>
-                        <FormGroup controlId='formHorizontalUsername'  validationState={getUsernameValidationState(username)}>
+                        <FormGroup controlId='username'  validationState={getUsernameValidationState(username)}>
                             <Col componentClass={ControlLabel} xs={2}>
                                 Username
                             </Col>
@@ -77,7 +77,7 @@ class Login extends React.Component<void, Props, State> {
                             </Col>
                         </FormGroup>
 
-                        <FormGroup controlId='formHorizontalEmail' validationState={getEmailValidationState(email)}>
+                        <FormGroup controlId='email' validationState={getEmailValidationState(email)}>
                             <Col componentClass={ControlLabel} xs={2}>
                                 Email
                             </Col>
@@ -95,7 +95,7 @@ class Login extends React.Component<void, Props, State> {
                             </Col>
                         </FormGroup>
 
-                        <FormGroup controlId='formHorizontalPassword' validationState={getPasswordValidationState(password)}>
+                        <FormGroup controlId='password' validationState={getPasswordValidationState(password)}>
                             <Col componentClass={ControlLabel} xs={2}>
                                 Password
                             </Col>
@@ -113,7 +113,7 @@ class Login extends React.Component<void, Props, State> {
                             </Col>
                         </FormGroup>
 
-                        <FormGroup controlId='formHorizontalPassword' validationState={getConfirmPasswordValidationState(password, confirmPassword)}>
+                        <FormGroup controlId='confirm-password' validationState={getConfirmPasswordValidationState(password, confirmPassword)}>
                             <Col componentClass={ControlLabel} xs={2}>
                                 Confirm password
                             </Col>
