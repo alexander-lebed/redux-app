@@ -45,20 +45,20 @@ class Login extends React.Component<void, Props, State> {
         const {email, password} = this.state;
         return (
             <Row style={{marginTop: 100}}>
-                <Col mdOffset={3} md={6}>
+                <Col xsOffset={2} mdOffset={3} xs={8} md={6}>
 
                     <Row>
-                        <Col xsOffset={2} xs={10}>
-                            <h2 style={{marginBottom: 20}}>Login</h2>
+                        <Col xsOffset={3} smOffset={2}  xs={9} sm={10}>
+                            <h3 style={{marginBottom: 20}}>Login</h3>
                         </Col>
                     </Row>
 
                     <Form horizontal onSubmit={this.login}>
                         <FormGroup controlId='formHorizontalEmail'>
-                            <Col componentClass={ControlLabel} xs={2}>
+                            <Col componentClass={ControlLabel} xs={3} sm={2}>
                                 Email
                             </Col>
-                            <Col xs={10}>
+                            <Col xs={9} sm={10}>
                                 <FormControl
                                     name='email'
                                     type='email'
@@ -70,10 +70,10 @@ class Login extends React.Component<void, Props, State> {
                         </FormGroup>
 
                         <FormGroup controlId='formHorizontalPassword'>
-                            <Col componentClass={ControlLabel} xs={2}>
+                            <Col componentClass={ControlLabel} xs={3} sm={2}>
                                 Password
                             </Col>
-                            <Col xs={10}>
+                            <Col xs={9} sm={10}>
                                 <FormControl
                                     name='password'
                                     type='password'
@@ -85,7 +85,7 @@ class Login extends React.Component<void, Props, State> {
                         </FormGroup>
 
                         <FormGroup>
-                            <Col xsOffset={2} xs={10}>
+                            <Col xsOffset={3} smOffset={2} xs={9} sm={10}>
                                 <ButtonToolbar>
                                     <Button
                                         type='submit'
@@ -94,7 +94,6 @@ class Login extends React.Component<void, Props, State> {
                                         Log in
                                     </Button>
                                     <Button
-                                        bsStyle='link'
                                         href='/register'
                                     >
                                         Register

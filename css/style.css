@@ -3,6 +3,10 @@ html, body, input, button {
     font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
 }
 
+.help-block {
+    font-size: small !important;
+}
+
 table.glyphicon-hover .glyphicon {
     visibility: hidden;
 }

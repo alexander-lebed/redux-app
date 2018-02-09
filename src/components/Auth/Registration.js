@@ -51,20 +51,20 @@ class Login extends React.Component<void, Props, State> {
         const {username, email, password, confirmPassword} = this.state;
         return (
             <Row style={{marginTop: 100}}>
-                <Col mdOffset={3} md={6}>
+                <Col xsOffset={2} mdOffset={3} xs={8} md={6}>
 
                     <Row>
-                        <Col xsOffset={2} xs={10}>
-                            <h2 style={{marginBottom: 20}}>Registration</h2>
+                        <Col xsOffset={3} smOffset={2}  xs={9} sm={10}>
+                            <h3 style={{marginBottom: 20}}>Registration</h3>
                         </Col>
                     </Row>
 
                     <Form horizontal onSubmit={this.register}>
                         <FormGroup controlId='username'  validationState={getUsernameValidationState(username)}>
-                            <Col componentClass={ControlLabel} xs={2}>
+                            <Col componentClass={ControlLabel} xs={3} sm={2}>
                                 Username
                             </Col>
-                            <Col xs={10}>
+                            <Col xs={9} sm={10}>
                                 <FormControl
                                     name='username'
                                     placeholder='Username'
@@ -78,10 +78,10 @@ class Login extends React.Component<void, Props, State> {
                         </FormGroup>
 
                         <FormGroup controlId='email' validationState={getEmailValidationState(email)}>
-                            <Col componentClass={ControlLabel} xs={2}>
+                            <Col componentClass={ControlLabel} xs={3} sm={2}>
                                 Email
                             </Col>
-                            <Col xs={10}>
+                            <Col xs={9} sm={10}>
                                 <FormControl
                                     name='email'
                                     type='email'
@@ -96,10 +96,10 @@ class Login extends React.Component<void, Props, State> {
                         </FormGroup>
 
                         <FormGroup controlId='password' validationState={getPasswordValidationState(password)}>
-                            <Col componentClass={ControlLabel} xs={2}>
+                            <Col componentClass={ControlLabel} xs={3} sm={2}>
                                 Password
                             </Col>
-                            <Col xs={10}>
+                            <Col xs={9} sm={10}>
                                 <FormControl
                                     name='password'
                                     type='password'
@@ -114,10 +114,10 @@ class Login extends React.Component<void, Props, State> {
                         </FormGroup>
 
                         <FormGroup controlId='confirm-password' validationState={getConfirmPasswordValidationState(password, confirmPassword)}>
-                            <Col componentClass={ControlLabel} xs={2}>
+                            <Col componentClass={ControlLabel} xs={3} sm={2}>
                                 Confirm password
                             </Col>
-                            <Col xs={10}>
+                            <Col xs={9} sm={10}>
                                 <FormControl
                                     name='confirmPassword'
                                     type='password'
@@ -132,7 +132,7 @@ class Login extends React.Component<void, Props, State> {
                         </FormGroup>
 
                         <FormGroup>
-                            <Col xsOffset={2} xs={10}>
+                            <Col xsOffset={3} smOffset={2}  xs={9} sm={10}>
                                 <Button
                                     type='submit'
                                     bsStyle='primary'

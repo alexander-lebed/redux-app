@@ -27,48 +27,48 @@ class NavigationBar extends React.Component<void, Props, void> {
         return (
             <Navbar>
                 <Navbar.Header>
-                    <Navbar.Brand>
-                        {}
-                    </Navbar.Brand>
+                    <Navbar.Toggle />
                 </Navbar.Header>
-                <Nav>
-                    <LinkContainer key='conversations' to='/conversations'>
+                <Navbar.Collapse>
+                    <Nav>
+                        <LinkContainer key='conversations' to='/conversations'>
+                            <NavItem eventKey={1}>
+                                Messages {newMessages}
+                            </NavItem>
+                        </LinkContainer>
+                        <LinkContainer key='people' to='/people'>
+                            <NavItem eventKey={2}>People</NavItem>
+                        </LinkContainer>
+                        <LinkContainer key='weather' to='/weather'>
+                            <NavItem eventKey={3}>Weather</NavItem>
+                        </LinkContainer>
+                    </Nav>
+                    <Nav pullRight>
                         <NavItem eventKey={1}>
-                            Messages {newMessages}
+                            {user &&
+                            <Button
+                                bsSize='small'
+                                bsStyle={user.online ? 'success' : 'danger'}
+                                onClick={() => online(!user.online)}
+                            >
+                                {user.username} {user.online ? '(online)' : '(offline)'}
+                            </Button>
+                            }
                         </NavItem>
-                    </LinkContainer>
-                    <LinkContainer key='people' to='/people'>
-                        <NavItem eventKey={2}>People</NavItem>
-                    </LinkContainer>
-                    <LinkContainer key='weather' to='/weather'>
-                        <NavItem eventKey={3}>Weather</NavItem>
-                    </LinkContainer>
-                </Nav>
-                <Nav pullRight>
-                    <NavItem eventKey={1}>
-                        {user &&
-                        <Button
-                            bsSize='small'
-                            bsStyle={user.online ? 'success' : 'danger'}
-                            onClick={() => online(!user.online)}
-                        >
-                            <Glyphicon glyph='user' /> {user.username} {user.online ? '(online)' : '(offline)'}
-                        </Button>
-                        }
-                    </NavItem>
-                    <LinkContainer key='login' to='/login'>
-                        <NavItem>
+                        <LinkContainer key='login' to='/login'>
+                            <NavItem>
+                                <Button bsSize='small'>
+                                    <Glyphicon glyph="log-in" style={{marginRight: 5}} /> Log in
+                                </Button>
+                            </NavItem>
+                        </LinkContainer>
+                        <NavItem eventKey={3} onSelect={logout}>
                             <Button bsSize='small'>
-                                <Glyphicon glyph="log-in" style={{marginRight: 5}} /> Log in
+                                <Glyphicon glyph="log-out" style={{marginRight: 5}} /> Log out
                             </Button>
                         </NavItem>
-                    </LinkContainer>
-                    <NavItem eventKey={3} onSelect={logout}>
-                        <Button bsSize='small'>
-                            <Glyphicon glyph="log-out" style={{marginRight: 5}} /> Log out
-                        </Button>
-                    </NavItem>
-                </Nav>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
         )
     }

@@ -22,13 +22,13 @@ const Location = (props: Props) => {
     }
     return (
         <Row>
-            <Col xs={6}>{location.get('city')}</Col>
+            <Col xs={6}><Glyphicon glyph='map-marker' style={{marginRight: 5, color: 'grey'}} />{location.get('city')}</Col>
             <Col xs={3}>{tempInfo}</Col>
             <Col xs={3}>
                 <Glyphicon
                     glyph="remove"
                     className="pull-right"
-                    style={{ marginRight: 10 }}
+                    style={{marginRight: 10, color: 'grey'}}
                     title="Remove Location"
                     onClick={onDelete}
                 />

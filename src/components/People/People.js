@@ -29,11 +29,11 @@ class People extends React.Component<void, Props, void> {
                                     <tr key={user._id}>
                                         <td>
                                             <Row style={{marginRight: 0}}>
-                                                <Col xs={6}>
+                                                <Col xs={5} sm={6}>
                                                     <Glyphicon glyph='user' style={glyphStyle} />
                                                     {user.username}
                                                 </Col>
-                                                <Col xs={6} style={style.time}>
+                                                <Col xs={7} sm={6} style={style.time}>
                                                     {!user.online && `last seen ${timestampToHumanDate(user.lastTime)}`}
                                                     <LinkContainer to={`/conversation?${query}`} className='pull-right'>
                                                         <Button bsSize='small'>

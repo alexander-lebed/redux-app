@@ -56,8 +56,7 @@ export class WeatherList extends React.Component<void, Props, void> {
         return (
             <div className="todo">
                 <Row>
-                    <Col xs={3} />
-                    <Col xs={6}>
+                    <Col xsOffset={1} smOffset={3} xs={10} sm={6}>
                         <ul className="weather-list">
                             {locations.filter(l => !l.get('isDeleted'))
                                 .map(l => (
@@ -82,7 +81,6 @@ export class WeatherList extends React.Component<void, Props, void> {
                             </DropdownButton>
                         </ButtonToolbar>
                     </Col>
-                    <Col xs={3} />
                 </Row>
             </div>
         );
