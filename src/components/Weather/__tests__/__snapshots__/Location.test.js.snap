@@ -7,6 +7,15 @@ exports[`<Location/> should render Location 1`] = `
   <div
     className="col-xs-6"
   >
+    <span
+      className="glyphicon glyphicon-map-marker"
+      style={
+        Object {
+          "color": "grey",
+          "marginRight": 5,
+        }
+      }
+    />
     Odessa
   </div>
   <div
@@ -22,6 +31,7 @@ exports[`<Location/> should render Location 1`] = `
       onClick={[Function]}
       style={
         Object {
+          "color": "grey",
           "marginRight": 10,
         }
       }
