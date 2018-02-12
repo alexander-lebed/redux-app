@@ -6,7 +6,6 @@
   "author": "alebed",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn build",
     "build": "webpack --progress --colors --watch",
     "start": "nf start",
     "start-ui": "webpack-dev-server --open",
