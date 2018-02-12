@@ -1,2 +1,2 @@
-web: node server.js
-worker: webpack-dev-server --port 8082
+web: webpack-dev-server --port $PORT
+api: node server.js
