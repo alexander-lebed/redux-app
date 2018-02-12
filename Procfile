@@ -1,2 +1,2 @@
-web: webpack-dev-server $PORT
+web: webpack-dev-server
 api: node server.js
