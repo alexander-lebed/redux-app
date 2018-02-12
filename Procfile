@@ -1,2 +1,2 @@
 web: webpack-dev-server --open
-api: nodemon server.js
+api: node server.js
