@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --progress --colors --watch",
+    "postinstall": "yarn run build",
     "start": "nf start",
     "start-ui": "webpack-dev-server --open",
     "start-api": "node server.js",
