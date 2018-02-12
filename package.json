@@ -8,7 +8,6 @@
   "scripts": {
     "build": "webpack --progress --colors --watch",
     "start": "nf start",
-    "heroku-postbuild": "yarn install && yarn run build",
     "start-ui": "webpack-dev-server --open",
     "start-api": "node server.js",
     "test": "jest --coverage",
