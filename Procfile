@@ -1,2 +1,2 @@
-web: webpack-dev-server
+worker: webpack-dev-server
 api: node server.js
