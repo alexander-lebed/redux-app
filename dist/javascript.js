@@ -37948,7 +37948,7 @@ module.exports = defaults;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var API_URL = exports.API_URL = 'http://localhost:3001/api/';
+var API_URL = exports.API_URL = 'http://localhost:3000/api/';
 var USERS_URL = exports.USERS_URL = API_URL + 'users';
 var CONVERSATIONS_URL = exports.CONVERSATIONS_URL = API_URL + 'conversations';
 
