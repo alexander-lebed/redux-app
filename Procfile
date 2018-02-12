@@ -1,2 +1,2 @@
-worker: webpack-dev-server --port $PORT
+web: webpack-dev-server --port $PORT
 api: node server.js
