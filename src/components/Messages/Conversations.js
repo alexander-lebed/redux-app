@@ -108,16 +108,14 @@ class Conversations extends React.Component<void, Props, void> {
             )
         }
         return (
-            <div>
-                <Row>
-                    <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
-                        <h4 style={{marginBottom: 20}} className='text-center'>
-                            Conversations
-                        </h4>
-                        {content}
-                    </Col>
-                </Row>
-            </div>
+            <Row style={{marginLeft: 0, marginRight: 0}}>
+                <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
+                    <h4 style={{marginBottom: 20}} className='text-center'>
+                        Conversations
+                    </h4>
+                    {content}
+                </Col>
+            </Row>
         )
     }
 }

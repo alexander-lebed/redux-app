@@ -54,35 +54,33 @@ export class WeatherList extends React.Component<void, Props, void> {
         };
         const deletedLocations = locations.filter(l => l.get('isDeleted'));
         return (
-            <div className="todo">
-                <Row>
-                    <Col xsOffset={1} smOffset={3} xs={10} sm={6}>
-                        <ul className="weather-list">
-                            {locations.filter(l => !l.get('isDeleted'))
-                                .map(l => (
-                                    <li key={l.get('id')} className="weather-item">
-                                        <Location location={l} onDelete={() => removeLocation(l.get('id'))} />
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                        <ButtonToolbar style={{ marginTop: 10 }}>
-                            <DropdownButton
-                                id="add-location"
-                                title="Add Location"
-                                disabled={deletedLocations.size === 0}
-                                onSelect={l => onAddLocation(l)}
-                            >
-                                {deletedLocations.map(l => (
-                                    <MenuItem key={l.get('id')} eventKey={l}>
-                                        {`${l.get('city')}, ${l.get('country')}`}
-                                    </MenuItem>
-                                ))}
-                            </DropdownButton>
-                        </ButtonToolbar>
-                    </Col>
-                </Row>
-            </div>
+            <Row style={{marginLeft: 0, marginRight: 0}}>
+                <Col xsOffset={1} smOffset={3} xs={10} sm={6}>
+                    <ul className="weather-list">
+                        {locations.filter(l => !l.get('isDeleted'))
+                            .map(l => (
+                                <li key={l.get('id')} className="weather-item">
+                                    <Location location={l} onDelete={() => removeLocation(l.get('id'))} />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    <ButtonToolbar style={{ marginTop: 10 }}>
+                        <DropdownButton
+                            id="add-location"
+                            title="Add Location"
+                            disabled={deletedLocations.size === 0}
+                            onSelect={l => onAddLocation(l)}
+                        >
+                            {deletedLocations.map(l => (
+                                <MenuItem key={l.get('id')} eventKey={l}>
+                                    {`${l.get('city')}, ${l.get('country')}`}
+                                </MenuItem>
+                            ))}
+                        </DropdownButton>
+                    </ButtonToolbar>
+                </Col>
+            </Row>
         );
     }
 }

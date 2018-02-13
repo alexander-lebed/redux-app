@@ -115,7 +115,7 @@ class Conversation extends React.Component<void, Props, State> {
 
     render() {
         return (
-            <Row>
+            <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
                     <h4 className='text-center' style={{marginBottom: 20}}>
                         Messages
