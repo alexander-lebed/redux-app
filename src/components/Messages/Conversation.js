@@ -7,7 +7,7 @@ import _ from 'lodash';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
-import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation } from '../../redux/reducers/conversations';
+import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType, Message } from '../../types';
 
 type Props = {
@@ -18,7 +18,8 @@ type Props = {
     getConversationWithUsers: Function,
     markAsRead: Function,
     deleteMessage: Function,
-    saveConversation: Function
+    saveConversation: Function,
+    conversationCleanup: Function
 }
 
 type State = {
@@ -49,13 +50,16 @@ class Conversation extends React.Component<void, Props, State> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (prevProps.conversation.messages.length !== this.props.conversation.messages.length) {
+        const prevMessages = prevProps.conversation.messages || [];
+        const currentMessages = this.props.conversation.messages || [];
+        if (prevMessages.length !== currentMessages.length) {
             setTimeout(() => this.scrollConversationToBottom(), 50);
         }
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
+        this.props.conversationCleanup();
     }
 
     scrollConversationToBottom = () => {
@@ -264,5 +268,5 @@ export default connect(
         user: state.authentication.user,
         conversation: state.conversations.conversation
     }),
-    { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation }
+    { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup }
 )(Conversation);
