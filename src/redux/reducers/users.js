@@ -6,6 +6,7 @@ import { Map } from 'immutable';
 import history from "../../helpers/history";
 import { USERS_URL } from '../../urls';
 import { Alert } from './alerts';
+import { login } from './authentication';
 import type { Action, Dispatch, User } from '../../types';
 
 const actions = {
@@ -47,11 +48,17 @@ export function register(username: string, email: string, password: string) {
             };
             $http.post(USERS_URL, payload)
                 .then(response => {
-                    dispatch({
-                        type: actions.ADD_USER,
-                        payload: response.data
-                    });
-                    history.push('/');
+                    const user = response.data;
+                    Promise.resolve()
+                        .then(() => dispatch({type: actions.ADD_USER, payload: user}))
+                        .then(() => {
+                            // $FlowFixMe
+                            dispatch(login(user.email, user.password)).then(isLoggedIn => {
+                                if (isLoggedIn) {
+                                    history.push('/');
+                                }
+                            })
+                        })
                 })
                 .catch(e => {
                     dispatch(Alert.error(`Error on register user: ${e.toString()}`));
