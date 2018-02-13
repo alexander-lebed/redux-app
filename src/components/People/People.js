@@ -6,14 +6,24 @@ import queryString from 'query-string';
 import { Row, Col, Table, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 import { timestampToHumanDate } from '../../helpers/time';
+import { deleteUser } from '../../redux/reducers/users';
 import type { User } from '../../types';
 
 type Props = {
     user: User,
-    users: Map<string, User>
+    users: Map<string, User>,
+    deleteUser: Function
 }
 
 class People extends React.Component<void, Props, void> {
+
+    deleteConfirmation = (userId: string) => {
+        if (confirm('Are you sure you want to delete this user?')) {
+            this.props.deleteUser(userId)
+        }
+    };
+
+    isAdmin = () => this.props.user.email === 'alexanderlebed999@gmail.com';
 
     render() {
         const {users} = this.props;
@@ -32,6 +42,15 @@ class People extends React.Component<void, Props, void> {
                                                 <Col xs={5} sm={6}>
                                                     <Glyphicon glyph='user' style={glyphStyle} />
                                                     {user.username}
+                                                    {this.isAdmin() &&
+                                                    <Glyphicon
+                                                        id='remove'
+                                                        glyph='remove'
+                                                        style={{color: 'grey'}}
+                                                        className='pull-right cursor'
+                                                        onClick={() => this.deleteConfirmation(user._id)}
+                                                    />
+                                                    }
                                                 </Col>
                                                 <Col xs={7} sm={6} style={style.time}>
                                                     {!user.online && `last seen ${timestampToHumanDate(user.lastTime)}`}
@@ -68,5 +87,5 @@ export default connect(
         user: state.authentication.user,
         users: state.users.users
     }),
-    { }
+    { deleteUser }
 )(People);

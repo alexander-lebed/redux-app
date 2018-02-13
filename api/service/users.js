@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const User = require('../model/users');
 
-// GET all users    http://localhost:3001/api/users
-// GET user         http://localhost:3001/api/users?userId={id}
-// POST user        http://localhost:3001/api/users  +  payload
-// PUT user         http://localhost:3001/api/users/{id}  +  payload
-// DELETE user      http://localhost:3001/api/users/{id}
+// GET all users    .../api/users
+// GET user         .../api/users?userId={id}
+// POST user        .../api/users  +  payload
+// PUT user         .../api/users/{id}  +  payload
+// DELETE user      .../api/users/{id}
 
 router.get('/', function(req, res, next) {
     if (req.query.userId) {
@@ -16,13 +16,13 @@ router.get('/', function(req, res, next) {
                 return next(err);
             res.json(user)
         })
+    } else {
+        User.find(function(err, comments) {
+            if (err)
+                return next(err);
+            res.json(comments)
+        });
     }
-
-    User.find(function(err, comments) {
-        if (err)
-            return next(err);
-        res.json(comments)
-    });
 });
 
 router.post('/', function(req, res, next) {
@@ -52,12 +52,12 @@ router.put('/:id', function(req, res, next) {
     });
 });
 
-router.delete('/:id', function(req, res, next) {
-    const query = {_id : req.params.id};
-    User.find(query).remove(function(err, result) {
+router.delete('/', function(req, res, next) {
+    const query = {_id : req.query.userId};
+    User.find(query).remove(function(err, data) {
         if (err)
             return next(err);
-        res.json(result);
+        res.json(data);
     });
 });
 

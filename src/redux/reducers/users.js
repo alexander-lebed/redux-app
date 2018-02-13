@@ -1,10 +1,12 @@
 // @flow
+import React from 'react';
 import { combineReducers } from 'redux';
 import $http from 'axios';
 import _ from 'lodash';
 import { Map } from 'immutable';
 import history from "../../helpers/history";
-import { USERS_URL } from '../../urls';
+import { USERS_URL} from '../../urls';
+import generateError from "../../helpers/generateError";
 import { Alert } from './alerts';
 import { login } from './authentication';
 import type { Action, Dispatch, User } from '../../types';
@@ -79,15 +81,24 @@ export function getUsers() {
                     type: actions.SET_USERS, payload
                 });
             })
-            // .catch(err => {
-            //     const error = (
-            //         <div>
-            //             <strong>Error on fetch users:</strong>
-            //             <div>{err.message}</div>
-            //         </div>
-            //     );
-            //     dispatch(Alert.error(error));
-            // })
+    }
+}
+
+export function deleteUser(userId: string) {
+    return (dispatch: Dispatch) => {
+        $http.delete(`${USERS_URL}?userId=${userId}`)
+            .then(() => {
+                dispatch(Alert.success('User has been deleted.'));
+                dispatch(getUsers())
+            }).catch(err => {
+                const error = (
+                    <div>
+                        <strong>Error on delete user:</strong>
+                        <div>{generateError(err)}</div>
+                    </div>
+                );
+                dispatch(Alert.error(error));
+            })
     }
 }
 

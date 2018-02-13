@@ -51,15 +51,15 @@ export function getConversationsByUser(userId: string) {
                     payload: _.orderBy(response.data, 'timestamp', 'desc')
                 });
             })
-            .catch(err => {
-                const error = (
-                    <div>
-                        <strong>Error on fetch conversations:</strong>
-                        <div>{generateError(err)}</div>
-                    </div>
-                );
-                dispatch(Alert.error(error));
-            });
+            // .catch(err => {
+            //     const error = (
+            //         <div>
+            //             <strong>Error on fetch conversations:</strong>
+            //             <div>{generateError(err)}</div>
+            //         </div>
+            //     );
+            //     dispatch(Alert.error(error));
+            // });
     }
 }
 
@@ -73,15 +73,15 @@ export function getConversation(convId: string) {
                     payload: conversation
                 })
             })
-            .catch(err => {
-                const error = (
-                    <div>
-                        <strong>Error on fetch conversation:</strong>
-                        <div>{generateError(err)}</div>
-                    </div>
-                );
-                dispatch(Alert.error(error));
-            });
+            // .catch(err => {
+            //     const error = (
+            //         <div>
+            //             <strong>Error on fetch conversation:</strong>
+            //             <div>{generateError(err)}</div>
+            //         </div>
+            //     );
+            //     dispatch(Alert.error(error));
+            // });
     }
 }
 
@@ -124,15 +124,16 @@ export function getConversationWithUsers(userIds: Array<string>) {
                             })
                         })
                 }
-            }).catch(err => {
-                const error = (
-                    <div>
-                        <strong>Error on fetch conversation:</strong>
-                        <div>{generateError(err)}</div>
-                    </div>
-                );
-                dispatch(Alert.error(error));
-            });
+            })
+            // .catch(err => {
+            //     const error = (
+            //         <div>
+            //             <strong>Error on fetch conversation:</strong>
+            //             <div>{generateError(err)}</div>
+            //         </div>
+            //     );
+            //     dispatch(Alert.error(error));
+            // });
     }
 }
 
@@ -169,15 +170,15 @@ export function saveConversation(conversation: Object) {
                     dispatch(getConversationsByUser(currentUser._id))
                 }
             })
-            .catch(err => {
-                const error = (
-                    <div>
-                        <strong>Error on save conversation:</strong>
-                        <div>{generateError(err)}</div>
-                    </div>
-                );
-                dispatch(Alert.error(error));
-            });
+            // .catch(err => {
+            //     const error = (
+            //         <div>
+            //             <strong>Error on save conversation:</strong>
+            //             <div>{generateError(err)}</div>
+            //         </div>
+            //     );
+            //     dispatch(Alert.error(error));
+            // });
     }
 }
 

@@ -4,12 +4,12 @@ const router = express.Router();
 // const User = require('../model/users');
 const Conversation = require('../model/conversations');
 
-// GET all conversations        http://localhost:3001/api/conversations
-// GET conversation by id       http://localhost:3001/api/conversations?convId={id}
-// GET conversation by user     http://localhost:3001/api/conversations?userId={id1}
-// GET conversation by users    http://localhost:3001/api/conversations?userIds={id1,id2}
-// PUT conversation             http://localhost:3001/api/conversations  +  payload
-// DELETE conversation          http://localhost:3001/api/conversations?convId={id}
+// GET all conversations        .../api/conversations
+// GET conversation by id       .../api/conversations?convId={id}
+// GET conversation by user     .../api/conversations?userId={id1}
+// GET conversation by users    .../api/conversations?userIds={id1,id2}
+// PUT conversation             .../api/conversations  +  payload
+// DELETE conversation          .../api/conversations?convId={id}
 
 router.get('/', function(req, res, next) {
     if (req.query.convId) {
