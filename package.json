@@ -1,13 +1,13 @@
 {
   "name": "redux-todo",
   "version": "1.0.0",
-  "description": "Web Messenger app using MERN stack + Redux",
+  "description": "todo and weather app using React and Redux",
   "main": "index.js",
   "author": "alebed",
   "license": "MIT",
   "scripts": {
     "build": "webpack --progress --colors --watch",
-    "start": "node server.js",
+    "start": "nf start",
     "start-ui": "webpack-dev-server --open",
     "start-api": "node server.js",
     "test": "jest --coverage",

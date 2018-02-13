@@ -10,7 +10,7 @@ const app = express();
 const router = express.Router();
 
 const mongoDB = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
-const port = process.env.PORT || 3000; // process.env.PORT
+const port = process.env.API_PORT || 3000; // process.env.PORT
 
 mongoose.connect(mongoDB, {useMongoClient: true});
 const db = mongoose.connection;
