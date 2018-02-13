@@ -2,137 +2,139 @@
 
 exports[`<WeatherList/> should render WeatherList 1`] = `
 <div
-  className="todo"
+  className="row"
+  style={
+    Object {
+      "marginLeft": 0,
+      "marginRight": 0,
+    }
+  }
 >
   <div
-    className="row"
+    className="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1"
   >
-    <div
-      className="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1"
+    <ul
+      className="weather-list"
     >
-      <ul
-        className="weather-list"
-      >
-        <li
-          className="weather-item"
-        >
-          <div
-            className="row"
-          >
-            <div
-              className="col-xs-6"
-            >
-              <span
-                className="glyphicon glyphicon-map-marker"
-                style={
-                  Object {
-                    "color": "grey",
-                    "marginRight": 5,
-                  }
-                }
-              />
-              Odessa
-            </div>
-            <div
-              className="col-xs-3"
-            >
-              not available
-            </div>
-            <div
-              className="col-xs-3"
-            >
-              <span
-                className="pull-right glyphicon glyphicon-remove"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "color": "grey",
-                    "marginRight": 10,
-                  }
-                }
-                title="Remove Location"
-              />
-            </div>
-          </div>
-        </li>
-        <li
-          className="weather-item"
-        >
-          <div
-            className="row"
-          >
-            <div
-              className="col-xs-6"
-            >
-              <span
-                className="glyphicon glyphicon-map-marker"
-                style={
-                  Object {
-                    "color": "grey",
-                    "marginRight": 5,
-                  }
-                }
-              />
-              New York
-            </div>
-            <div
-              className="col-xs-3"
-            >
-              not available
-            </div>
-            <div
-              className="col-xs-3"
-            >
-              <span
-                className="pull-right glyphicon glyphicon-remove"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "color": "grey",
-                    "marginRight": 10,
-                  }
-                }
-                title="Remove Location"
-              />
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div
-        className="btn-toolbar"
-        role="toolbar"
-        style={
-          Object {
-            "marginTop": 10,
-          }
-        }
+      <li
+        className="weather-item"
       >
         <div
-          className="dropdown disabled btn-group"
+          className="row"
         >
-          <button
-            aria-expanded={false}
-            aria-haspopup={true}
-            className="dropdown-toggle btn btn-default"
-            disabled={true}
-            id="add-location"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            role="button"
-            type="button"
+          <div
+            className="col-xs-6"
           >
-            Add Location
-             
             <span
-              className="caret"
+              className="glyphicon glyphicon-map-marker"
+              style={
+                Object {
+                  "color": "grey",
+                  "marginRight": 5,
+                }
+              }
             />
-          </button>
-          <ul
-            aria-labelledby="add-location"
-            className="dropdown-menu"
-            role="menu"
-          />
+            Odessa
+          </div>
+          <div
+            className="col-xs-3"
+          >
+            not available
+          </div>
+          <div
+            className="col-xs-3"
+          >
+            <span
+              className="pull-right glyphicon glyphicon-remove"
+              onClick={[Function]}
+              style={
+                Object {
+                  "color": "grey",
+                  "marginRight": 10,
+                }
+              }
+              title="Remove Location"
+            />
+          </div>
         </div>
+      </li>
+      <li
+        className="weather-item"
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="col-xs-6"
+          >
+            <span
+              className="glyphicon glyphicon-map-marker"
+              style={
+                Object {
+                  "color": "grey",
+                  "marginRight": 5,
+                }
+              }
+            />
+            New York
+          </div>
+          <div
+            className="col-xs-3"
+          >
+            not available
+          </div>
+          <div
+            className="col-xs-3"
+          >
+            <span
+              className="pull-right glyphicon glyphicon-remove"
+              onClick={[Function]}
+              style={
+                Object {
+                  "color": "grey",
+                  "marginRight": 10,
+                }
+              }
+              title="Remove Location"
+            />
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div
+      className="btn-toolbar"
+      role="toolbar"
+      style={
+        Object {
+          "marginTop": 10,
+        }
+      }
+    >
+      <div
+        className="dropdown disabled btn-group"
+      >
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle btn btn-default"
+          disabled={true}
+          id="add-location"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          role="button"
+          type="button"
+        >
+          Add Location
+           
+          <span
+            className="caret"
+          />
+        </button>
+        <ul
+          aria-labelledby="add-location"
+          className="dropdown-menu"
+          role="menu"
+        />
       </div>
     </div>
   </div>
