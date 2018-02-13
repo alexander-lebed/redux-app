@@ -6,28 +6,22 @@ MERN (MongoDB, Express, React, Node.js) + react-redux, react-router
 
 ### To run the app:
 
-**1. Up and run mongodb:**
-```
-mongod --dbpath F:/STUFF/CRAP/mongodb/db
-```
-**2. Start app**
-
-install project dependencies:
+Install project dependencies:
 ```
 yarn install
 ```
 
-(optional, in separate terminal)  watch your code changes:
+Build and watch code changes:
 ```
 yarn build
 ```
 
-(in separate terminal) up and run server and UI:
+Up and run backend and frontend:
 ```
-yarn start-all
+yarn start
 ```
 
-**3. browser opens new tab with the App**
+Go to http://localhost:8082/
 
 
 
@@ -36,6 +30,11 @@ yarn start-all
 ```
 mongo
 use gorodovoydb
+```
+
+#### Up and run local mongodb
+```
+mongod --dbpath F:/STUFF/CRAP/mongodb/db
 ```
 
 #### To upgrade all project dependencies:
