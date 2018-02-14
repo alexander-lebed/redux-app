@@ -8,7 +8,7 @@ const environment = {
                 apiHostname = 'http://localhost:3000/api';
                 break;
             default:
-                apiHostname = 'https://gorodovoy.herokuapp.com/api/';
+                apiHostname = 'https://gorodovoy.herokuapp.com/api';
                 break;
         }
         return apiHostname;
