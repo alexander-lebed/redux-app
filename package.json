@@ -1,7 +1,7 @@
 {
   "name": "redux-todo",
   "version": "1.0.0",
-  "description": "todo and weather app using React and Redux",
+  "description": "Web Messanger (MERN and Redux)",
   "main": "index.js",
   "author": "alebed",
   "license": "MIT",
