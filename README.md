@@ -16,12 +16,17 @@ Build and watch code changes:
 yarn build
 ```
 
-Up and run backend and frontend:
+Up and run backend and frontend in development mode:
 ```
-yarn start
+yarn dev
 ```
 
 Go to http://localhost:8082/
+
+Up and run backend and frontend in production mode:
+```
+yarn start
+```
 
 
 

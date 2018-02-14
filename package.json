@@ -1,13 +1,14 @@
 {
-  "name": "redux-todo",
+  "name": "web-messenger",
   "version": "1.0.0",
   "description": "Web Messanger (MERN and Redux)",
   "main": "index.js",
   "author": "alebed",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "build": "webpack --progress --colors --watch",
-    "start": "nf start",
+    "start": "node server.js",
+    "dev": "nf start -j Procfile.dev",
     "start-ui": "webpack-dev-server --open",
     "start-api": "node server.js",
     "test": "jest --coverage",

@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -9,12 +10,21 @@ const conversations = require('./api/service/conversations');
 const app = express();
 const router = express.Router();
 
-const mongoDB = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
-const port = process.env.API_PORT || 3000; // process.env.PORT
+const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
+const isDevelopment = process.env.NODE_ENV !== 'production';
+console.log(`--- development mode: ${isDevelopment}`);
+const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000; // process.env.PORT
+const DIST_DIR      = path.join(__dirname, 'dist');
+const HTML_FILE     = path.join(DIST_DIR, 'index.html');
 
 mongoose.connect(mongoDB, {useMongoClient: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+if (!isDevelopment) {
+    console.log('--- use static files');
+    app.use(express.static(DIST_DIR));
+}
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -32,7 +42,8 @@ app.use(function(req, res, next) {
 
 // now  we can set the route path & initialize the API
 router.get('/', function(req, res) {
-    res.json({ message: 'API Initialized!'});
+    // res.json({ message: 'API initialized!'});
+    res.sendFile(HTML_FILE)
 });
 
 router.use('/users', users);
