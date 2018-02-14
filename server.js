@@ -12,17 +12,17 @@ const router = express.Router();
 
 const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
 const isDevelopment = process.env.NODE_ENV !== 'production';
-console.log(`--- development mode: ${isDevelopment}`);
 const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000; // process.env.PORT
 const DIST_DIR      = path.join(__dirname, 'dist');
 const HTML_FILE     = path.join(DIST_DIR, 'index.html');
+
+console.log(`--- development mode: ${isDevelopment}`);
 
 mongoose.connect(mongoDB, {useMongoClient: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 if (!isDevelopment) {
-    console.log('--- use static files');
     app.use(express.static(DIST_DIR));
 }
 
