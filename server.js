@@ -12,8 +12,8 @@ const router = express.Router();
 
 const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
 const isDevelopment = process.env.NODE_ENV !== 'production';
-const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000; // process.env.PORT
-const DIST_DIR      = path.join(__dirname, 'dist');
+const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000;
+// const DIST_DIR      = path.join(__dirname, 'dist');
 const HTML_FILE     = path.join(__dirname, 'index.html'); // path.join(DIST_DIR, 'index.html');
 
 console.log(`--- development mode: ${isDevelopment}`);
@@ -35,15 +35,19 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-    //and remove cacheing so we get the most recent comments
+    //and remove caching so we get the most recent data
     res.setHeader('Cache-Control', 'no-cache');
     next();
 });
 
+app.get('/', function(req, res) {
+    res.sendFile(HTML_FILE)
+});
+
 // now  we can set the route path & initialize the API
 router.get('/', function(req, res) {
-    // res.json({ message: 'API initialized!'});
-    res.sendFile(HTML_FILE)
+    res.json({ message: 'API initialized!'});
+    // res.sendFile(HTML_FILE)
 });
 
 router.use('/users', users);
