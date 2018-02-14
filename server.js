@@ -7,14 +7,12 @@ const bodyParser = require('body-parser');
 const users = require('./api/service/users');
 const conversations = require('./api/service/conversations');
 
-const app = express();
-const router = express.Router();
-
+const app           = express();
+const router        = express.Router();
 const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000;
 // const DIST_DIR      = path.join(__dirname, 'dist');
-const HTML_FILE     = path.join(__dirname, 'index.html'); // path.join(DIST_DIR, 'index.html');
 
 console.log(`--- development mode: ${isDevelopment}`);
 
@@ -40,14 +38,9 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/', function(req, res) {
-    res.sendFile(HTML_FILE)
-});
-
 // now  we can set the route path & initialize the API
 router.get('/', function(req, res) {
     res.json({ message: 'API initialized!'});
-    // res.sendFile(HTML_FILE)
 });
 
 router.use('/users', users);
@@ -55,6 +48,11 @@ router.use('/conversations', conversations);
 
 // use our router configuration when we call /api
 app.use('/api', router);
+
+// capture all page requests and directs them to the client
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'index.html')) // path.join(DIST_DIR, 'index.html');
+});
 
 // starts the server and listens for requests
 app.listen(port, function() {
