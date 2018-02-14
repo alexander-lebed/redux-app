@@ -14,7 +14,7 @@ const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/mes
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000; // process.env.PORT
 const DIST_DIR      = path.join(__dirname, 'dist');
-const HTML_FILE     = path.join(__dirname, 'index.html'); //path.join(DIST_DIR, 'index.html');
+const HTML_FILE     = path.join(__dirname, 'index.html'); // path.join(DIST_DIR, 'index.html');
 
 console.log(`--- development mode: ${isDevelopment}`);
 
@@ -23,7 +23,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 if (!isDevelopment) {
-    app.use(express.static(DIST_DIR)); // DIST_DIR
+    app.use(express.static(DIST_DIR));
 }
 
 app.use(bodyParser.json()); // for parsing application/json
