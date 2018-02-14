@@ -23,7 +23,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 if (!isDevelopment) {
-    app.use(express.static(DIST_DIR));
+    app.use(express.static(__dirname + '/')); // DIST_DIR
 }
 
 app.use(bodyParser.json()); // for parsing application/json
