@@ -97,6 +97,8 @@ const styles = {
         transform: 'translateX(-50%)',
         width: '50%',
         maxWidth: 800,
-        zIndex: 999
+        zIndex: 999,
+        fontSize: 14,
+        fontFamily: '-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif'
     }
 };

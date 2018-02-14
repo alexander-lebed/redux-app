@@ -34484,18 +34484,20 @@ function markAsRead() {
     return function (dispatch, getState) {
         var currentUser = getState().authentication.user;
         var conversation = getState().conversations.conversation;
-        var hasUnread = conversation.messages.some(function (e) {
-            return !e.read;
-        });
-        if (hasUnread) {
-            var convWithOneself = conversation.users.length === 1;
-            conversation.messages.forEach(function (m) {
-                var notFromCurrentUser = m.from._id !== currentUser._id;
-                if (notFromCurrentUser || convWithOneself) {
-                    m.read = true;
-                }
+        if (conversation.messages) {
+            var hasUnread = conversation.messages.some(function (e) {
+                return !e.read;
             });
-            dispatch(saveConversation(conversation));
+            if (hasUnread) {
+                var convWithOneself = conversation.users.length === 1;
+                conversation.messages.forEach(function (m) {
+                    var notFromCurrentUser = m.from._id !== currentUser._id;
+                    if (notFromCurrentUser || convWithOneself) {
+                        m.read = true;
+                    }
+                });
+                dispatch(saveConversation(conversation));
+            }
         }
     };
 }
@@ -101391,7 +101393,9 @@ var styles = {
         transform: 'translateX(-50%)',
         width: '50%',
         maxWidth: 800,
-        zIndex: 999
+        zIndex: 999,
+        fontSize: 14,
+        fontFamily: '-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif'
     }
 };
 
