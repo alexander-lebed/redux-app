@@ -12,7 +12,6 @@ const router        = express.Router();
 const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000;
-// const DIST_DIR      = path.join(__dirname, 'dist');
 
 console.log(`--- development mode: ${isDevelopment}`);
 
@@ -21,7 +20,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 if (!isDevelopment) {
-    app.use(express.static(__dirname + '/')); // DIST_DIR
+    app.use(express.static(__dirname + '/'));
 }
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -51,7 +50,7 @@ app.use('/api', router);
 
 // capture all page requests and directs them to the client
 app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'index.html')) // path.join(DIST_DIR, 'index.html');
+    res.sendFile(path.join(__dirname, 'index.html'))
 });
 
 // starts the server and listens for requests

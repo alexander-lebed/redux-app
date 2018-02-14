@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Web Messanger (MERN and Redux)",
   "main": "index.js",
-  "author": "alebed",
+  "author": "alexander-lebed",
   "license": "UNLICENSED",
   "scripts": {
     "build": "webpack --progress --colors --watch",
