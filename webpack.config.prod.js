@@ -15,9 +15,21 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('development'),
-                API_HOST: JSON.stringify('http://localhost:3000/api')
+                NODE_ENV: JSON.stringify('production'),
+                API_HOST: JSON.stringify('https://gorodovoy.herokuapp.com/api')
             }
+        }),
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            mangle: false,
+            compress: {
+                warnings: false
+            },
+            output: {
+                comments: false
+            },
+            exclude: [/\.min\.js$/gi]
         })
     ],
     module: {
@@ -39,14 +51,18 @@ module.exports = {
                 test: /\.html$/,
                 loader: 'file-loader?name=[name].[ext]'
             }
+        ],
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env']
+                    }
+                }
+            }
         ]
-    },
-    devServer: {
-        historyApiFallback: true,
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-        }
     }
 };
