@@ -37965,9 +37965,19 @@ module.exports = defaults;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var API_HOST = exports.API_HOST = "http://localhost:3000/api";
-var USERS_URL = exports.USERS_URL = API_HOST + '/users';
-var CONVERSATIONS_URL = exports.CONVERSATIONS_URL = API_HOST + '/conversations';
+exports.CONVERSATIONS_URL = exports.USERS_URL = exports.API_URL = undefined;
+
+var _environment = __webpack_require__(756);
+
+var _environment2 = _interopRequireDefault(_environment);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+var API_URL = exports.API_URL = _environment2.default.getApiUrl();
+var USERS_URL = exports.USERS_URL = API_URL + '/users';
+var CONVERSATIONS_URL = exports.CONVERSATIONS_URL = API_URL + '/conversations';
 
 /***/ }),
 /* 133 */
@@ -101196,6 +101206,36 @@ var styles = {
         fontFamily: '-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif'
     }
 };
+
+/***/ }),
+/* 755 */,
+/* 756 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var environment = {
+    getApiUrl: function getApiUrl() {
+        var apiHostname = '';
+        var hostname = typeof window !== 'undefined' && typeof location !== 'undefined' ? window.location.hostname : 'hostname';
+        switch (hostname) {
+            case 'localhost':
+                apiHostname = 'http://localhost:3000/api';
+                break;
+            default:
+                apiHostname = 'https://gorodovoy.herokuapp.com/api';
+                break;
+        }
+        return apiHostname;
+    }
+};
+
+exports.default = environment;
 
 /***/ })
 /******/ ]);
