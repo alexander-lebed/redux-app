@@ -48,7 +48,7 @@ router.use('/conversations', conversations);
 // use our router configuration when we call /api
 app.use('/api', router);
 
-// capture all page requests and directs them to the client
+// serve index.html to the client
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'))
 });

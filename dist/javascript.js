@@ -94801,18 +94801,25 @@ var NavigationBar = function (_React$Component) {
                 });
                 newMessages = unreadConversations.length > 0 && _react2.default.createElement(_reactBootstrap.Badge, null, unreadConversations.length);
             }
-            return _react2.default.createElement(_reactBootstrap.Navbar, null, _react2.default.createElement(_reactBootstrap.Navbar.Header, null, _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)), _react2.default.createElement(_reactBootstrap.Navbar.Collapse, null, _react2.default.createElement(_reactBootstrap.Nav, null, _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'conversations', to: '/conversations' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, 'Messages ', newMessages)), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'people', to: '/people' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, 'People')), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'weather', to: '/weather' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3 }, 'Weather'))), _react2.default.createElement(_reactBootstrap.Nav, { pullRight: true }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, user && _react2.default.createElement(_reactBootstrap.Button, {
+            return _react2.default.createElement(_reactBootstrap.Navbar, null, _react2.default.createElement(_reactBootstrap.Navbar.Header, null, _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)), _react2.default.createElement(_reactBootstrap.Navbar.Collapse, null, _react2.default.createElement(_reactBootstrap.Nav, null, _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'conversations', to: '/conversations' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, _react2.default.createElement('div', { style: style.navTab }, 'Messages ', newMessages))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'people', to: '/people' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, _react2.default.createElement('div', { style: style.navTab }, 'People'))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'weather', to: '/weather' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3 }, _react2.default.createElement('div', { style: style.navTab }, 'Weather')))), _react2.default.createElement(_reactBootstrap.Nav, { pullRight: true }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, user && _react2.default.createElement(_reactBootstrap.Button, {
                 bsSize: 'small',
                 bsStyle: user.online ? 'success' : 'danger',
                 onClick: function onClick() {
                     return online(!user.online);
                 }
-            }, user.username, ' ', user.online ? '(online)' : '(offline)')), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'login', to: '/login' }, _react2.default.createElement(_reactBootstrap.NavItem, null, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-in', style: { marginRight: 5 } }), ' Log in'))), _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3, onSelect: logout }, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-out', style: { marginRight: 5 } }), ' Log out')))));
+            }, user.username, ' ', user.online ? '(online)' : '(offline)')), !user && _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'login', to: '/login' }, _react2.default.createElement(_reactBootstrap.NavItem, null, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-in', style: { marginRight: 5 } }), ' Log in'))), user && _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3, onSelect: logout }, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-out', style: { marginRight: 5 } }), ' Log out')))));
         }
     }]);
 
     return NavigationBar;
 }(_react2.default.Component);
+
+var style = {
+    navTab: {
+        paddingTop: 5,
+        paddingBottom: 5
+    }
+};
 
 exports.default = (0, _reactRedux.connect)(function (state) {
     return {

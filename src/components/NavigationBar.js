@@ -33,14 +33,24 @@ class NavigationBar extends React.Component<void, Props, void> {
                     <Nav>
                         <LinkContainer key='conversations' to='/conversations'>
                             <NavItem eventKey={1}>
-                                Messages {newMessages}
+                                <div style={style.navTab}>
+                                    Messages {newMessages}
+                                </div>
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer key='people' to='/people'>
-                            <NavItem eventKey={2}>People</NavItem>
+                            <NavItem eventKey={2}>
+                                <div style={style.navTab}>
+                                    People
+                                </div>
+                            </NavItem>
                         </LinkContainer>
                         <LinkContainer key='weather' to='/weather'>
-                            <NavItem eventKey={3}>Weather</NavItem>
+                            <NavItem eventKey={3}>
+                                <div style={style.navTab}>
+                                    Weather
+                                </div>
+                            </NavItem>
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
@@ -55,6 +65,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                             </Button>
                             }
                         </NavItem>
+                        {!user &&
                         <LinkContainer key='login' to='/login'>
                             <NavItem>
                                 <Button bsSize='small'>
@@ -62,15 +73,25 @@ class NavigationBar extends React.Component<void, Props, void> {
                                 </Button>
                             </NavItem>
                         </LinkContainer>
+                        }
+                        {user &&
                         <NavItem eventKey={3} onSelect={logout}>
                             <Button bsSize='small'>
                                 <Glyphicon glyph="log-out" style={{marginRight: 5}} /> Log out
                             </Button>
                         </NavItem>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
         )
+    }
+}
+
+const style = {
+    navTab: {
+        paddingTop: 5,
+        paddingBottom: 5
     }
 }
 
