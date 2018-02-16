@@ -101808,7 +101808,7 @@ var People = function (_React$Component) {
             return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement(_reactBootstrap.Table, { responsive: true }, _react2.default.createElement('tbody', null, users.toArray().map(function (user) {
                 var query = _queryString2.default.stringify({ userId: user._id });
                 var glyphStyle = (0, _extends3.default)({ color: user.online ? 'green' : 'red' }, { marginRight: 15 });
-                return _react2.default.createElement('tr', { key: user._id }, _react2.default.createElement('td', null, _react2.default.createElement(_reactBootstrap.Row, { style: { marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xs: 5, sm: 6 }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user', style: glyphStyle }), user.username, _this2.isAdmin() && _react2.default.createElement(_reactBootstrap.Glyphicon, {
+                return _react2.default.createElement('tr', { key: user._id }, _react2.default.createElement('td', null, _react2.default.createElement(_reactBootstrap.Row, { style: { marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xs: 6 }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user', style: glyphStyle }), user.username, _this2.isAdmin() && _react2.default.createElement(_reactBootstrap.Glyphicon, {
                     id: 'remove',
                     glyph: 'remove',
                     style: { color: 'grey' },
@@ -101816,7 +101816,7 @@ var People = function (_React$Component) {
                     onClick: function onClick() {
                         return _this2.deleteConfirmation(user._id);
                     }
-                })), _react2.default.createElement(_reactBootstrap.Col, { xs: 7, sm: 6, style: style.time }, !user.online && 'last seen ' + (0, _time.timestampToHumanDate)(user.lastTime), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { to: '/conversation?' + query, className: 'pull-right' }, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small' }, 'Write a message'))))));
+                })), _react2.default.createElement(_reactBootstrap.Col, { xs: 6, style: style.time }, !user.online && 'last seen ' + (0, _time.timestampToHumanDate)(user.lastTime), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { to: '/conversation?' + query, className: 'pull-right' }, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small' }, 'Write a message'))))));
             })))));
         }
     }]);
