@@ -96160,13 +96160,14 @@ var NavigationBar = function (_React$Component) {
                 });
                 newMessages = unreadConversations.length > 0 && _react2.default.createElement(_reactBootstrap.Badge, null, unreadConversations.length);
             }
-            return _react2.default.createElement(_reactBootstrap.Navbar, null, _react2.default.createElement(_reactBootstrap.Navbar.Header, null, _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)), _react2.default.createElement(_reactBootstrap.Navbar.Collapse, null, _react2.default.createElement(_reactBootstrap.Nav, null, _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'conversations', to: '/conversations' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, _react2.default.createElement('div', { style: style.navTab }, 'Messages ', newMessages))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'people', to: '/people' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, _react2.default.createElement('div', { style: style.navTab }, 'People'))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'weather', to: '/weather' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3 }, _react2.default.createElement('div', { style: style.navTab }, 'Weather')))), _react2.default.createElement(_reactBootstrap.Nav, { pullRight: true }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, user && _react2.default.createElement(_reactBootstrap.Button, {
+            return _react2.default.createElement(_reactBootstrap.Navbar, null, _react2.default.createElement(_reactBootstrap.Navbar.Header, null, _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)), _react2.default.createElement(_reactBootstrap.Navbar.Collapse, null, _react2.default.createElement(_reactBootstrap.Nav, null, _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'conversations', to: '/conversations' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, _react2.default.createElement('div', { style: style.navTab, className: 'tab-text' }, 'Messages ', newMessages))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'people', to: '/people' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, _react2.default.createElement('div', { style: style.navTab, className: 'tab-text' }, 'People'))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'weather', to: '/weather' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3, className: 'tab-text' }, _react2.default.createElement('div', { style: style.navTab }, 'Weather')))), _react2.default.createElement(_reactBootstrap.Nav, { pullRight: true }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, user && _react2.default.createElement(_reactBootstrap.Button, {
                 bsSize: 'small',
                 bsStyle: user.online ? 'success' : 'danger',
+                className: 'mobile-btn',
                 onClick: function onClick() {
                     return online(!user.online);
                 }
-            }, user.username, ' ', user.online ? '(online)' : '(offline)')), !user && _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'login', to: '/login' }, _react2.default.createElement(_reactBootstrap.NavItem, null, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-in', style: { marginRight: 5 } }), ' Log in'))), user && _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3, onSelect: logout }, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-out', style: { marginRight: 5 } }), ' Log out')))));
+            }, user.username, ' ', user.online ? '(online)' : '(offline)')), !user && _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'login', to: '/login' }, _react2.default.createElement(_reactBootstrap.NavItem, null, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small', className: 'mobile-btn' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-in', style: { marginRight: 5 } }), ' Log in'))), user && _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3, onSelect: logout }, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small', className: 'mobile-btn' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-out', style: { marginRight: 5 } }), ' Log out')))));
         }
     }]);
     return NavigationBar;
@@ -96727,12 +96728,12 @@ var Conversations = function (_React$Component) {
                         }
                     })))), lastConv && _react2.default.createElement(_reactBootstrap.Row, { style: style.message, onClick: function onClick() {
                             return _this2.goToConversation(conv._id);
-                        } }, _react2.default.createElement(_reactBootstrap.Col, { xs: 2, className: 'text-right', style: { paddingRight: 0 } }, lastConv.from.username, ':'), _react2.default.createElement(_reactBootstrap.Col, { xs: 8, style: style.text }, lastConv.text))));
+                        } }, _react2.default.createElement(_reactBootstrap.Col, { xs: 3, sm: 2, className: 'text-right', style: { paddingRight: 0 } }, lastConv.from.username, ':'), _react2.default.createElement(_reactBootstrap.Col, { xs: 7, sm: 8, style: style.text }, lastConv.text))));
                 });
 
                 content = _react2.default.createElement(_reactBootstrap.Table, { hover: true, className: 'glyphicon-hover' }, _react2.default.createElement('tbody', null, tableBody));
             }
-            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 1, mdOffset: 2, xs: 10, md: 8 }, _react2.default.createElement('h4', { style: { marginBottom: 20 }, className: 'text-center' }, 'Conversations'), content));
+            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement('h4', { style: { marginBottom: 20 }, className: 'text-center' }, 'Conversations'), content));
         }
     }]);
     return Conversations;
@@ -97383,7 +97384,7 @@ var Conversation = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 1, mdOffset: 2, xs: 10, md: 8 }, _react2.default.createElement('h4', { className: 'text-center', style: { marginBottom: 20 } }, 'Messages'), this.renderMessages(), this.renderEmojiPicker(), this.renderMessageForm()));
+            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement('h4', { className: 'text-center', style: { marginBottom: 20 } }, 'Messages'), this.renderMessages(), this.renderEmojiPicker(), this.renderMessageForm()));
         }
     }]);
     return Conversation;
@@ -101804,7 +101805,7 @@ var People = function (_React$Component) {
 
             var users = this.props.users;
 
-            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 1, mdOffset: 2, xs: 10, md: 8 }, _react2.default.createElement(_reactBootstrap.Table, { responsive: true }, _react2.default.createElement('tbody', null, users.toArray().map(function (user) {
+            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement(_reactBootstrap.Table, { responsive: true }, _react2.default.createElement('tbody', null, users.toArray().map(function (user) {
                 var query = _queryString2.default.stringify({ userId: user._id });
                 var glyphStyle = (0, _extends3.default)({ color: user.online ? 'green' : 'red' }, { marginRight: 15 });
                 return _react2.default.createElement('tr', { key: user._id }, _react2.default.createElement('td', null, _react2.default.createElement(_reactBootstrap.Row, { style: { marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xs: 5, sm: 6 }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user', style: glyphStyle }), user.username, _this2.isAdmin() && _react2.default.createElement(_reactBootstrap.Glyphicon, {
@@ -101962,7 +101963,7 @@ var WeatherList = exports.WeatherList = function (_React$Component) {
             var deletedLocations = locations.filter(function (l) {
                 return l.get('isDeleted');
             });
-            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 1, smOffset: 3, xs: 10, sm: 6 }, _react2.default.createElement('ul', { className: 'weather-list' }, locations.filter(function (l) {
+            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 3, xs: 12, sm: 6 }, _react2.default.createElement('ul', { className: 'weather-list' }, locations.filter(function (l) {
                 return !l.get('isDeleted');
             }).map(function (l) {
                 return _react2.default.createElement('li', { key: l.get('id'), className: 'weather-item' }, _react2.default.createElement(_Location2.default, { location: l, onDelete: function onDelete() {

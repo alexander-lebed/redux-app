@@ -3,6 +3,27 @@ html, body, input, button {
     font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
 }
 
+/* for mobile device */
+@media only screen and (max-width: 768px) {
+    html, body, input, button {
+        font-size: 20px;
+    }
+    .mobile-btn {
+        width: 100%;
+        min-height: 40px;
+    }
+    .tab-text {
+        text-align: center;
+    }
+    h4 {
+        font-size: 20px;
+        margin: 0;
+    }
+    div, span {
+        font-size: 16px !important;
+    }
+}
+
 .help-block {
     font-size: small !important;
 }

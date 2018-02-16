@@ -55,7 +55,7 @@ export class WeatherList extends React.Component<void, Props, void> {
         const deletedLocations = locations.filter(l => l.get('isDeleted'));
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={1} smOffset={3} xs={10} sm={6}>
+                <Col xsOffset={0} smOffset={3} xs={12} sm={6}>
                     <ul className="weather-list">
                         {locations.filter(l => !l.get('isDeleted'))
                             .map(l => (

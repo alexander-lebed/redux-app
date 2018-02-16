@@ -11,7 +11,7 @@ exports[`<WeatherList/> should render WeatherList 1`] = `
   }
 >
   <div
-    className="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1"
+    className="col-sm-6 col-sm-offset-3 col-xs-12 col-xs-offset-0"
   >
     <ul
       className="weather-list"

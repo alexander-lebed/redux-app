@@ -29,7 +29,7 @@ class People extends React.Component<void, Props, void> {
         const {users} = this.props;
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={1} mdOffset={2} xs={10} md={8}>
+                <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
                     <Table responsive>
                         <tbody>
                             {users.toArray().map(user => {

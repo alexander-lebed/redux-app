@@ -33,20 +33,20 @@ class NavigationBar extends React.Component<void, Props, void> {
                     <Nav>
                         <LinkContainer key='conversations' to='/conversations'>
                             <NavItem eventKey={1}>
-                                <div style={style.navTab}>
+                                <div style={style.navTab} className='tab-text'>
                                     Messages {newMessages}
                                 </div>
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer key='people' to='/people'>
                             <NavItem eventKey={2}>
-                                <div style={style.navTab}>
+                                <div style={style.navTab} className='tab-text'>
                                     People
                                 </div>
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer key='weather' to='/weather'>
-                            <NavItem eventKey={3}>
+                            <NavItem eventKey={3} className='tab-text'>
                                 <div style={style.navTab}>
                                     Weather
                                 </div>
@@ -59,6 +59,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                             <Button
                                 bsSize='small'
                                 bsStyle={user.online ? 'success' : 'danger'}
+                                className='mobile-btn'
                                 onClick={() => online(!user.online)}
                             >
                                 {user.username} {user.online ? '(online)' : '(offline)'}
@@ -68,7 +69,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                         {!user &&
                         <LinkContainer key='login' to='/login'>
                             <NavItem>
-                                <Button bsSize='small'>
+                                <Button bsSize='small' className='mobile-btn'>
                                     <Glyphicon glyph="log-in" style={{marginRight: 5}} /> Log in
                                 </Button>
                             </NavItem>
@@ -76,7 +77,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                         }
                         {user &&
                         <NavItem eventKey={3} onSelect={logout}>
-                            <Button bsSize='small'>
+                            <Button bsSize='small' className='mobile-btn'>
                                 <Glyphicon glyph="log-out" style={{marginRight: 5}} /> Log out
                             </Button>
                         </NavItem>
@@ -93,7 +94,7 @@ const style = {
         paddingTop: 5,
         paddingBottom: 5
     }
-}
+};
 
 export default connect(
     (state) => ({
