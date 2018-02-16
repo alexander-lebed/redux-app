@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     context: __dirname,
@@ -11,6 +12,14 @@ module.exports = {
         filename: "[name].js"
     },
     devtool: 'source-map',
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('development'),
+                API_HOST: JSON.stringify('http://localhost:3000/api')
+            }
+        })
+    ],
     module: {
         loaders: [
             {
@@ -18,7 +27,7 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2015', 'react', 'flow']
+                    presets: ['env', 'react', 'flow']
                 }
             },
             {
