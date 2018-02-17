@@ -97384,7 +97384,7 @@ var Conversation = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement('h4', { className: 'text-center', style: { marginBottom: 20 } }, 'Messages'), this.renderMessages(), this.renderEmojiPicker(), this.renderMessageForm()));
+            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement('h4', { className: 'text-center', style: { marginBottom: 20 } }, 'Messages'), this.renderMessages(), this.renderMessageForm(), this.renderEmojiPicker()));
         }
     }]);
     return Conversation;
@@ -97394,6 +97394,7 @@ var style = {
     scrollableTable: {
         overflowY: 'auto',
         maxHeight: '60vh',
+        wordBreak: 'break-word',
         marginBottom: 20
     },
     top: {

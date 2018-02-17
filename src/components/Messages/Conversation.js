@@ -235,6 +235,7 @@ const style = {
     scrollableTable: {
         overflowY: 'auto',
         maxHeight: '60vh',
+        wordBreak: 'break-word',
         marginBottom: 20
     },
     top: {
