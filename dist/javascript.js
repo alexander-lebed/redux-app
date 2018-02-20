@@ -97304,11 +97304,9 @@ var Conversation = function (_React$Component) {
         };
 
         _this.renderEmojiPicker = function () {
-            var _this$state = _this.state,
-                messageText = _this$state.messageText,
-                showEmoji = _this$state.showEmoji;
+            var messageText = _this.state.messageText;
 
-            return _react2.default.createElement('div', null, showEmoji && _react2.default.createElement('div', { className: 'pull-right' }, _react2.default.createElement(_emojiMart.Picker, {
+            return _react2.default.createElement(_emojiMart.Picker, {
                 title: 'pick your emoji\u2026',
                 emoji: 'monkey',
                 native: true,
@@ -97316,11 +97314,11 @@ var Conversation = function (_React$Component) {
                     var text = messageText ? messageText + (' ' + emoji.native) : emoji.native;
                     _this.setState({ messageText: text });
                 }
-            })));
+            });
         };
 
         _this.renderMessageForm = function () {
-            return _react2.default.createElement('form', null, _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: 'message-form', style: { display: 'flex' } }, _react2.default.createElement(_reactBootstrap.FormControl, {
+            return _react2.default.createElement(_reactBootstrap.Form, null, _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: 'message-form', style: { display: 'flex', marginBottom: 5 } }, _react2.default.createElement(_reactBootstrap.FormControl, {
                 componentClass: 'textarea',
                 style: style.textarea,
                 rows: 4,
@@ -97384,7 +97382,11 @@ var Conversation = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement('h4', { className: 'text-center', style: { marginBottom: 20 } }, 'Messages'), this.renderMessages(), this.renderMessageForm(), this.renderEmojiPicker()));
+            var showEmoji = this.state.showEmoji;
+
+            var messageStyle = showEmoji ? { paddingRight: 0 } : {};
+            var emojiStyle = showEmoji ? { paddingLeft: 0 } : {};
+            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement('h4', { className: 'text-center', style: { marginBottom: 20 } }, 'Messages'), this.renderMessages(), _react2.default.createElement(_reactBootstrap.Row, null, _react2.default.createElement(_reactBootstrap.Col, { xs: 12, sm: showEmoji ? 7 : 12, className: 'message-form', style: messageStyle }, this.renderMessageForm()), _react2.default.createElement(_reactBootstrap.Col, { xs: 12, sm: showEmoji ? 5 : 12, className: 'emoji-picker', style: emojiStyle }, showEmoji && this.renderEmojiPicker()))));
         }
     }]);
     return Conversation;

@@ -5,7 +5,7 @@ import { Picker, Emoji } from 'emoji-mart'
 import Linkify from 'react-linkify';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
+import { Row, Col, Table, Form, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType, Message } from '../../types';
@@ -114,6 +114,9 @@ class Conversation extends React.Component<void, Props, State> {
     };
 
     render() {
+        const {showEmoji} = this.state;
+        const messageStyle = showEmoji ? {paddingRight: 0} : {};
+        const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
@@ -121,8 +124,16 @@ class Conversation extends React.Component<void, Props, State> {
                         Messages
                     </h4>
                     {this.renderMessages()}
-                    {this.renderEmojiPicker()}
-                    {this.renderMessageForm()}
+                    <Row>
+                        <Col xs={12} sm={showEmoji ? 7 : 12} className='message-form' style={messageStyle}>
+                            {this.renderMessageForm()}
+                        </Col>
+                        <Col xs={12} sm={showEmoji ? 5 : 12} className='emoji-picker' style={emojiStyle}>
+                            {showEmoji &&
+                            this.renderEmojiPicker()
+                            }
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
         )
@@ -186,29 +197,23 @@ class Conversation extends React.Component<void, Props, State> {
     };
 
     renderEmojiPicker = () => {
-        const {messageText, showEmoji} = this.state;
+        const {messageText} = this.state;
         return (
-            <div>
-                {showEmoji &&
-                <div className='pull-right'>
-                    <Picker
-                        title='pick your emoji…'
-                        emoji='monkey'
-                        native={true}
-                        onClick={emoji => {
-                            const text = messageText ? messageText + ` ${emoji.native}` : emoji.native;
-                            this.setState({messageText: text});
-                        }}
-                    />
-                </div>
-                }
-            </div>
+            <Picker
+                title='pick your emoji…'
+                emoji='monkey'
+                native={true}
+                onClick={emoji => {
+                    const text = messageText ? messageText + ` ${emoji.native}` : emoji.native;
+                    this.setState({messageText: text});
+                }}
+            />
         )
     };
 
     renderMessageForm = () => (
-        <form>
-            <FormGroup controlId='message-form' style={{display: 'flex'}}>
+        <Form>
+            <FormGroup controlId='message-form' style={{display: 'flex', marginBottom: 5}}>
                 <FormControl
                     componentClass='textarea'
                     style={style.textarea}
@@ -227,7 +232,7 @@ class Conversation extends React.Component<void, Props, State> {
                     />
                 </div>
             </FormGroup>
-        </form>
+        </Form>
     )
 }
 
