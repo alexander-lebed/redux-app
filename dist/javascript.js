@@ -97318,7 +97318,7 @@ var Conversation = function (_React$Component) {
         };
 
         _this.renderMessageForm = function () {
-            return _react2.default.createElement(_reactBootstrap.Form, null, _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: 'message-form', style: { display: 'flex', marginBottom: 5 } }, _react2.default.createElement(_reactBootstrap.FormControl, {
+            return _react2.default.createElement(_reactBootstrap.Form, null, _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: 'message-form', style: { display: 'flex', marginBottom: 2 } }, _react2.default.createElement(_reactBootstrap.FormControl, {
                 componentClass: 'textarea',
                 style: style.textarea,
                 rows: 4,
@@ -97331,7 +97331,7 @@ var Conversation = function (_React$Component) {
             }), _react2.default.createElement('div', { className: 'cursor', style: style.emojiSelect }, _react2.default.createElement(_emojiMart.Emoji, {
                 set: 'twitter',
                 size: 32,
-                emoji: 'slightly_smiling_face',
+                emoji: _this.state.showEmoji ? 'grinning' : 'slightly_smiling_face',
                 onClick: function onClick() {
                     return _this.setState({ showEmoji: !_this.state.showEmoji });
                 }

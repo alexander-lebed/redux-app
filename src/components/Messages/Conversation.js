@@ -213,7 +213,7 @@ class Conversation extends React.Component<void, Props, State> {
 
     renderMessageForm = () => (
         <Form>
-            <FormGroup controlId='message-form' style={{display: 'flex', marginBottom: 5}}>
+            <FormGroup controlId='message-form' style={{display: 'flex', marginBottom: 2}}>
                 <FormControl
                     componentClass='textarea'
                     style={style.textarea}
@@ -227,7 +227,7 @@ class Conversation extends React.Component<void, Props, State> {
                     <Emoji
                         set='twitter'
                         size={32}
-                        emoji='slightly_smiling_face'
+                        emoji={this.state.showEmoji ? 'grinning' : 'slightly_smiling_face'}
                         onClick={() => this.setState({showEmoji: !this.state.showEmoji})}
                     />
                 </div>
