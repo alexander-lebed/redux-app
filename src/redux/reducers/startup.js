@@ -4,6 +4,7 @@ import { getUsers } from './users';
 import { login } from './authentication';
 import { getConversationsByUser } from './conversations';
 import { Alert } from './alerts';
+import { DOCUMENT_TITLE } from "../../constants";
 
 const actions = {
     START_INIT: 'START_INIT',
@@ -58,7 +59,18 @@ export function updateData() {
         // refresh user messages
         const currentUser = getState().authentication.user;
         if (currentUser) {
-            dispatch(getConversationsByUser(currentUser._id))
+            Promise.resolve()
+                .then(() => dispatch(getConversationsByUser(currentUser._id)))
+                .then(() => {
+                    // update document title
+                    const conversations = getState().conversations.conversations;
+                    const newMessages = conversations.filter(c => c.messages.some(m => !m.read && m.from._id !== currentUser._id));
+                    if (newMessages.length > 0) {
+                        document.title = `${newMessages.length} new message${newMessages.length > 1 ? 's' : ''}`;
+                    } else {
+                        document.title = DOCUMENT_TITLE;
+                    }
+                })
         }
     }
 }

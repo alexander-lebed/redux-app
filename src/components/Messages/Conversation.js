@@ -147,7 +147,7 @@ class Conversation extends React.Component<void, Props, State> {
                 <Table className='glyphicon-hover'>
                     <tbody>
                         {orderedMessages.map((message, index) => {
-                            const rowStyle = !message.read ? {backgroundColor: '#e6fff2'} : {};
+                            const rowStyle = !message.read ? {backgroundColor: '#edf0f5'} : {};
                             return (
                                 <tr key={index} style={rowStyle}>
                                     <td>{this.renderMessage(message)}</td>

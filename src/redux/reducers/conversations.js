@@ -4,7 +4,7 @@ import _ from 'lodash';
 import $http from 'axios';
 import { Alert } from "./alerts";
 import generateError from '../../helpers/generateError';
-import { CONVERSATIONS_URL } from "../../urls";
+import { CONVERSATIONS_URL } from "../../constants";
 import type { Action, Dispatch } from '../../types';
 
 const actions = {

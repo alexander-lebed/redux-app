@@ -51,7 +51,8 @@ class Conversations extends React.Component<void, Props, void> {
             const tableBody = conversations.map(conv => {
                 const convMessages = conv.messages.filter(e => !e.deleted);
                 const newMessages = convMessages.filter(m => !m.read && m.from._id !== user._id);
-                const lastConv = convMessages.length > 0 ? convMessages[convMessages.length - 1] : null;
+                const lastMessage = convMessages.length > 0 ? convMessages[convMessages.length - 1] : null;
+                const textStyle = lastMessage && !lastMessage.read ? {...style.text, ...{backgroundColor: '#edf0f5'}} : style.text;
 
                 const convUserIds =  conv.users.map(u => u._id);
                 let senders: Array<User> = users.toArray().filter(u => convUserIds.includes(u._id));
@@ -61,7 +62,7 @@ class Conversations extends React.Component<void, Props, void> {
                 return (
                     <tr
                         key={conv._id}
-                        style={newMessages.length > 0 ? {backgroundColor: '#e6fff2'} : {}}
+                        style={newMessages.length > 0 ? {backgroundColor: '#edf0f5'} : {}}
                     >
                         <td className='cursor' style={style.conversation} >
                             <Row>
@@ -86,12 +87,12 @@ class Conversations extends React.Component<void, Props, void> {
                                     </span>
                                 </Col>
                             </Row>
-                            {lastConv &&
+                            {lastMessage &&
                             <Row style={style.message} onClick={() => this.goToConversation(conv._id)}>
                                 <Col xs={3} sm={2} className='text-right' style={{paddingRight: 0}}>
-                                    {lastConv.from.username}:
+                                    {lastMessage.from.username}:
                                 </Col>
-                                <Col xs={7} sm={8} style={style.text}>{lastConv.text}</Col>
+                                <Col xs={7} sm={8} style={textStyle}>{lastMessage.text}</Col>
                             </Row>
                             }
                         </td>
@@ -133,7 +134,8 @@ const style = {
         fontSize: 13
     },
     text: {
-        paddingTop: 1,
+        paddingTop: 3,
+        paddingBottom: 3,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         display: '-webkit-box',

@@ -2,7 +2,7 @@
 import {combineReducers} from 'redux';
 import _ from 'lodash';
 import $http from 'axios';
-import { USERS_URL } from "../../urls";
+import { USERS_URL } from "../../constants";
 import type { Action, Dispatch } from '../../types';
 import { getUsers } from "./users";
 

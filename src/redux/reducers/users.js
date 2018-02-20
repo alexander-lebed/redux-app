@@ -5,7 +5,7 @@ import $http from 'axios';
 import _ from 'lodash';
 import { Map } from 'immutable';
 import history from "../../helpers/history";
-import { USERS_URL} from '../../urls';
+import { USERS_URL} from '../../constants';
 import generateError from "../../helpers/generateError";
 import { Alert } from './alerts';
 import { login } from './authentication';
