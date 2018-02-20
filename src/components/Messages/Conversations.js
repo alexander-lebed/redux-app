@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import { Map } from 'immutable';
 import { Row, Col, Table, Badge, Glyphicon } from 'react-bootstrap';
 import history from '../../helpers/history';
+import { COLOR_ONLINE } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation, conversationsCleanup } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType } from '../../types';
@@ -68,7 +69,7 @@ class Conversations extends React.Component<void, Props, void> {
                             <Row>
                                 <Col xs={9} onClick={() => this.goToConversation(conv._id)}>
                                     {senders.map(sender => (
-                                        <span key={sender._id} style={{color: sender.online ? 'green' : 'red'}}>
+                                        <span key={sender._id} style={sender.online ? {color: COLOR_ONLINE} : {}}>
                                             {sender.username}
                                         </span>
                                     ))}
@@ -136,6 +137,8 @@ const style = {
     text: {
         paddingTop: 3,
         paddingBottom: 3,
+        paddingLeft: 5,
+        marginLeft: 5,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         display: '-webkit-box',

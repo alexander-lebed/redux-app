@@ -34412,6 +34412,8 @@ var API_HOST = exports.API_HOST = "http://localhost:3000/api";
 var USERS_URL = exports.USERS_URL = API_HOST + '/users';
 var CONVERSATIONS_URL = exports.CONVERSATIONS_URL = API_HOST + '/conversations';
 
+var COLOR_ONLINE = exports.COLOR_ONLINE = '#00b386';
+
 /***/ }),
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -96146,6 +96148,8 @@ var _reactBootstrap = __webpack_require__(40);
 
 var _reactRouterBootstrap = __webpack_require__(288);
 
+var _constants = __webpack_require__(102);
+
 var _authentication = __webpack_require__(82);
 
 function _interopRequireDefault(obj) {
@@ -96181,7 +96185,7 @@ var NavigationBar = function (_React$Component) {
             }
             return _react2.default.createElement(_reactBootstrap.Navbar, null, _react2.default.createElement(_reactBootstrap.Navbar.Header, null, _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)), _react2.default.createElement(_reactBootstrap.Navbar.Collapse, null, _react2.default.createElement(_reactBootstrap.Nav, null, _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'conversations', to: '/conversations' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, _react2.default.createElement('div', { style: style.navTab, className: 'tab-text' }, 'Messages ', newMessages))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'people', to: '/people' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, _react2.default.createElement('div', { style: style.navTab, className: 'tab-text' }, 'People'))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'weather', to: '/weather' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3, className: 'tab-text' }, _react2.default.createElement('div', { style: style.navTab }, 'Weather')))), _react2.default.createElement(_reactBootstrap.Nav, { pullRight: true }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, user && _react2.default.createElement(_reactBootstrap.Button, {
                 bsSize: 'small',
-                bsStyle: user.online ? 'success' : 'danger',
+                style: { backgroundColor: user.online ? _constants.COLOR_ONLINE : 'grey', color: 'white' },
                 className: 'mobile-btn',
                 onClick: function onClick() {
                     return online(!user.online);
@@ -96659,6 +96663,8 @@ var _history = __webpack_require__(99);
 
 var _history2 = _interopRequireDefault(_history);
 
+var _constants = __webpack_require__(102);
+
 var _time = __webpack_require__(168);
 
 var _conversations = __webpack_require__(103);
@@ -96741,7 +96747,7 @@ var Conversations = function (_React$Component) {
                     }, _react2.default.createElement('td', { className: 'cursor', style: style.conversation }, _react2.default.createElement(_reactBootstrap.Row, null, _react2.default.createElement(_reactBootstrap.Col, { xs: 9, onClick: function onClick() {
                             return _this2.goToConversation(conv._id);
                         } }, senders.map(function (sender) {
-                        return _react2.default.createElement('span', { key: sender._id, style: { color: sender.online ? 'green' : 'red' } }, sender.username);
+                        return _react2.default.createElement('span', { key: sender._id, style: sender.online ? { color: _constants.COLOR_ONLINE } : {} }, sender.username);
                     })), _react2.default.createElement(_reactBootstrap.Col, { xs: 3, style: style.convRight }, _react2.default.createElement('span', null, newMessages.length > 0 && _react2.default.createElement(_reactBootstrap.Badge, { style: { marginRight: 15 } }, newMessages.length), (0, _time.timestampToHumanDate)(conv.timestamp), _react2.default.createElement(_reactBootstrap.Glyphicon, {
                         id: 'remove',
                         glyph: 'remove',
@@ -96778,6 +96784,8 @@ var style = {
     text: {
         paddingTop: 3,
         paddingBottom: 3,
+        paddingLeft: 5,
+        marginLeft: 5,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         display: '-webkit-box',
@@ -97430,11 +97438,11 @@ var style = {
     },
     from: {
         color: '#42648b',
-        fontSize: 15,
+        fontSize: 13,
         fontWeight: 700
     },
     text: {
-        fontSize: 15,
+        fontSize: 13,
         paddingTop: 5,
         whiteSpace: 'pre-wrap'
     },
@@ -101795,6 +101803,8 @@ var _reactBootstrap = __webpack_require__(40);
 
 var _reactRouterBootstrap = __webpack_require__(288);
 
+var _constants = __webpack_require__(102);
+
 var _time = __webpack_require__(168);
 
 var _users = __webpack_require__(81);
@@ -101835,7 +101845,7 @@ var People = function (_React$Component) {
 
             return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement(_reactBootstrap.Table, { responsive: true }, _react2.default.createElement('tbody', null, users.toArray().map(function (user) {
                 var query = _queryString2.default.stringify({ userId: user._id });
-                var glyphStyle = (0, _extends3.default)({ color: user.online ? 'green' : 'red' }, { marginRight: 15 });
+                var glyphStyle = user.online ? (0, _extends3.default)({ color: _constants.COLOR_ONLINE }, { marginRight: 15 }) : { marginRight: 15 };
                 return _react2.default.createElement('tr', { key: user._id }, _react2.default.createElement('td', null, _react2.default.createElement(_reactBootstrap.Row, { style: { marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xs: 6 }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user', style: glyphStyle }), user.username, _this2.isAdmin() && _react2.default.createElement(_reactBootstrap.Glyphicon, {
                     id: 'remove',
                     glyph: 'remove',

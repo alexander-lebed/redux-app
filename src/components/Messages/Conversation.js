@@ -249,11 +249,11 @@ const style = {
     },
     from: {
         color: '#42648b',
-        fontSize: 15,
+        fontSize: 13,
         fontWeight: 700
     },
     text: {
-        fontSize: 15,
+        fontSize: 13,
         paddingTop: 5,
         whiteSpace: 'pre-wrap'
     },

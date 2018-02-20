@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Button, Glyphicon, Badge } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
+import { COLOR_ONLINE } from '../constants';
 import { logout, online } from '../redux/reducers/authentication';
 import type { User } from '../types';
 
@@ -58,7 +59,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                             {user &&
                             <Button
                                 bsSize='small'
-                                bsStyle={user.online ? 'success' : 'danger'}
+                                style={{backgroundColor: user.online ? COLOR_ONLINE : 'grey', color: 'white'}}
                                 className='mobile-btn'
                                 onClick={() => online(!user.online)}
                             >
