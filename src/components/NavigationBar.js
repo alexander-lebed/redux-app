@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, Button, Glyphicon, Badge } from 'react-bootstrap';
-import { LinkContainer } from "react-router-bootstrap";
+import { Navbar, Nav, NavItem, Button, DropdownButton, MenuItem, Glyphicon, Badge } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { COLOR_ONLINE } from '../constants';
 import { logout, online } from '../redux/reducers/authentication';
 import type { User } from '../types';
@@ -57,31 +57,40 @@ class NavigationBar extends React.Component<void, Props, void> {
                     <Nav pullRight>
                         <NavItem eventKey={1}>
                             {user &&
-                            <Button
+                            <DropdownButton
+                                id='user-button'
                                 bsSize='small'
-                                style={{backgroundColor: user.online ? COLOR_ONLINE : 'grey', color: 'white'}}
                                 className='mobile-btn'
-                                onClick={() => online(!user.online)}
+                                title={`${user.username} ${user.online ? '(online)' : '(offline)'}`}
+                                style={{backgroundColor: user.online ? COLOR_ONLINE : 'grey', color: 'white'}}
                             >
-                                {user.username} {user.online ? '(online)' : '(offline)'}
-                            </Button>
+                                <MenuItem eventKey='1' onClick={() => online(!user.online)} className='dropdown-item'>
+                                    <Glyphicon glyph='user' style={{marginRight: 8}} />
+                                    {user.online ? 'Go offline' : 'Go online'}
+                                </MenuItem>
+                                <LinkContainer key='profile' to='/profile'>
+                                    <MenuItem eventKey='2' className='dropdown-item'>
+                                        <Glyphicon glyph='pencil' style={{marginRight: 8}} />
+                                        Edit profile
+                                    </MenuItem>
+                                </LinkContainer>
+                                {user &&
+                                <MenuItem eventKey='4' className='dropdown-item' onSelect={logout}>
+                                    <Glyphicon glyph='log-out' style={{marginRight: 8}} />
+                                    Log out
+                                </MenuItem>
+                                }
+                            </DropdownButton>
                             }
                         </NavItem>
                         {!user &&
                         <LinkContainer key='login' to='/login'>
-                            <NavItem>
+                            <NavItem eventKey={2}>
                                 <Button bsSize='small' className='mobile-btn'>
-                                    <Glyphicon glyph="log-in" style={{marginRight: 5}} /> Log in
+                                    <Glyphicon glyph='log-in' style={{marginRight: 5}} /> Log in
                                 </Button>
                             </NavItem>
                         </LinkContainer>
-                        }
-                        {user &&
-                        <NavItem eventKey={3} onSelect={logout}>
-                            <Button bsSize='small' className='mobile-btn'>
-                                <Glyphicon glyph="log-out" style={{marginRight: 5}} /> Log out
-                            </Button>
-                        </NavItem>
                         }
                     </Nav>
                 </Navbar.Collapse>

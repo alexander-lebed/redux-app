@@ -8,7 +8,7 @@ import history from "../../helpers/history";
 import { USERS_URL} from '../../constants';
 import generateError from "../../helpers/generateError";
 import { Alert } from './alerts';
-import { login } from './authentication';
+import { login, setUser } from './authentication';
 import type { Action, Dispatch, User } from '../../types';
 
 const actions = {
@@ -81,6 +81,29 @@ export function getUsers() {
                     type: actions.SET_USERS, payload
                 });
             })
+    }
+}
+
+export function editUser(userId: string, user: User) {
+    return (dispatch: Dispatch, getState: Function) => {
+
+        const currentUser = getState().authentication.user;
+
+        if (currentUser._id === userId) {
+            $http.put(`${USERS_URL}/${userId}`, user)
+                .then((response) => dispatch(setUser(response.data)))
+                .then(() => dispatch(Alert.success('Your profile has been updated.')))
+                .then(() => dispatch(getUsers()))
+                .catch(err => {
+                    const error = (
+                        <div>
+                            <strong>Error on update profile:</strong>
+                            <div>{generateError(err)}</div>
+                        </div>
+                    );
+                    dispatch(Alert.error(error));
+                })
+        }
     }
 }
 

@@ -3,7 +3,7 @@ import {combineReducers} from 'redux';
 import _ from 'lodash';
 import $http from 'axios';
 import { USERS_URL } from "../../constants";
-import type { Action, Dispatch } from '../../types';
+import type { Action, Dispatch, User } from '../../types';
 import { getUsers } from "./users";
 
 const actions = {
@@ -36,16 +36,10 @@ export function login(email: string, password: string) {
                 user.lastTime = Date.now();
                 $http.put(`${USERS_URL}/${user._id}`, user);
 
-                dispatch({
-                    type: actions.SET_USER,
-                    payload: user
-                });
+                dispatch(setUser(user));
                 resolve(true);
             } else {
-                dispatch({
-                    type: actions.SET_USER,
-                    payload: null
-                });
+                dispatch(setUser(null));
                 resolve(false);
             }
         })
@@ -60,10 +54,7 @@ export function logout() {
             user.online = false;
             user.lastTime = Date.now();
             $http.put(`${USERS_URL}/${user._id}`, user).then(() => {
-                dispatch({
-                    type: actions.SET_USER,
-                    payload: null
-                });
+                dispatch(setUser(null));
             });
         }
     }
@@ -78,14 +69,19 @@ export function online(isOnline: boolean) {
             user.lastTime = Date.now();
             $http.put(`${USERS_URL}/${user._id}`, user)
                 .then((response) => {
-                    dispatch({
-                        type: actions.SET_USER,
-                        payload: response.data
-                    });
+                    dispatch(setUser(response.data));
                 })
                 .then(() => dispatch(getUsers()));
         }
     }
 }
 
+export function setUser(user: User | null) {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: actions.SET_USER,
+            payload: user
+        });
+    }
+}
 

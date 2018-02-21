@@ -14,6 +14,7 @@ import Conversations from './components/Messages/Conversations';
 import Conversation from './components/Messages/Conversation';
 import People from './components/People/People';
 import WeatherList from './components/Weather/WeatherList';
+import Profile from './components/Profile/Profile';
 import Alerts from './components/Alerts';
 
 
@@ -34,6 +35,7 @@ async function init() {
                             <PrivateRoute path="/conversation" component={Conversation} /> {/* query: convId or userId */}
                             <PrivateRoute exact path="/people" component={People} />
                             <PrivateRoute path="/weather" component={WeatherList} />
+                            <PrivateRoute path="/profile" component={Profile} />
                         </Switch>
                     </div>
                 </Router>

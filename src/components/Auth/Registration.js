@@ -51,7 +51,7 @@ class Login extends React.Component<void, Props, State> {
         const {username, email, password, confirmPassword} = this.state;
         return (
             <Row style={{marginTop: 100, marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={2} mdOffset={3} xs={8} md={6}>
+                <Col smOffset={3} sm={6}>
 
                     <Row>
                         <Col xsOffset={3} smOffset={2}  xs={9} sm={10}>

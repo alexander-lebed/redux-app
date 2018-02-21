@@ -1,6 +1,22 @@
+:root {
+    --main-color: #00b386;
+}
+
 html, body, input, button {
     font-size: 16px;
     font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+}
+
+.btn-primary {
+    background-color: var(--main-color) !important;
+    border-color: #008060 !important;
+}
+
+.has-success .control-label,
+.has-success .help-block,
+.has-success .form-control .form-control-feedback {
+    color: var(--main-color) !important;
+    border-color: #008060 !important;
 }
 
 /* for mobile device */
@@ -8,12 +24,25 @@ html, body, input, button {
     html, body, input, button {
         font-size: 20px;
     }
+    .btn-group {
+        width: 100%;
+        min-height: 40px;
+    }
     .mobile-btn {
         width: 100%;
         min-height: 40px;
     }
     .tab-text {
         text-align: center;
+    }
+    .dropdown-menu {
+        padding-top: 40px !important;
+        padding-bottom: 0 !important;
+    }
+    .dropdown-item {
+        padding-top: 10px;
+        text-align: center;
+        font-size: 16px;
     }
     h4 {
         font-size: 20px;
@@ -30,6 +59,15 @@ html, body, input, button {
     }
 }
 
+.dropdown-menu {
+    padding: 0;
+}
+.dropdown-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #777;
+}
+
 .help-block {
     font-size: small !important;
 }
@@ -39,6 +77,20 @@ table.glyphicon-hover .glyphicon {
 }
 table.glyphicon-hover td:hover .glyphicon {
     visibility: visible;
+}
+
+.dropdown-menu>.active>a {
+    color: #555;
+    text-decoration: none;
+    background-color: #e7e7e7;
+    outline: 0;
+}
+
+.dropdown-menu>.active>a:hover {
+    color: #555;
+    text-decoration: none;
+    background-color: #e7e7e7;
+    outline: 0;
 }
 
 .weather-list {

@@ -44,11 +44,11 @@ router.post('/', function(req, res, next) {
 
 router.put('/:id', function(req, res, next) {
     const query = {_id : req.params.id};
-    const options = {upsert: false};
-    User.findOneAndUpdate(query, req.body, options, function(err) {
+    const options = {upsert: false, new: true};
+    User.findOneAndUpdate(query, req.body, options, function(err, data) {
         if (err)
             return next(err);
-        res.json(req.body);
+        res.json(data);
     });
 });
 
