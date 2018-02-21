@@ -61,6 +61,7 @@ html, body, input, button {
 
 .dropdown-menu {
     padding: 0;
+    width: 100%;
 }
 .dropdown-item {
     padding-top: 5px;

@@ -102673,7 +102673,6 @@ var Profile = function (_React$Component) {
                 value: email,
                 onChange: this.handleChange
             }), _react2.default.createElement(_reactBootstrap.HelpBlock, { style: style.helpBlock }, (0, _inputValidation.getEmailValidationState)(email) === 'error' && 'Email address should be valid'), _react2.default.createElement(_reactBootstrap.HelpBlock, { style: style.helpBlock }, this.suchEmailExist(email) === 'error' && 'User with such email already exist'))), _react2.default.createElement(_reactBootstrap.FormGroup, null, _react2.default.createElement(_reactBootstrap.Col, { smOffset: 2, sm: 8 }, _react2.default.createElement(_reactBootstrap.Button, {
-                type: 'submit',
                 bsStyle: 'primary',
                 className: 'pull-right',
                 disabled: !this.isBasicFormValid(),

@@ -104,7 +104,6 @@ class Profile extends React.Component<void, Props, State> {
                             <FormGroup>
                                 <Col smOffset={2} sm={8}>
                                     <Button
-                                        type='submit'
                                         bsStyle='primary'
                                         className='pull-right'
                                         disabled={!this.isBasicFormValid()}
