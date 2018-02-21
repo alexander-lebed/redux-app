@@ -25,7 +25,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                 <Badge>{unreadConversations.length}</Badge>
             );
         }
-        const dropdownStyle = user.online ? {backgroundColor: MAIN_COLOR, borderColor: BORDER_COLOR, color: 'white'} : {};
+        const dropdownStyle = user && user.online ? {backgroundColor: MAIN_COLOR, borderColor: BORDER_COLOR, color: 'white'} : {};
         return (
             <Navbar>
                 <Navbar.Header>
