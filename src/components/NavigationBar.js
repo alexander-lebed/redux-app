@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Button, DropdownButton, MenuItem, Glyphicon, Badge } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { COLOR_ONLINE } from '../constants';
+import { MAIN_COLOR, BORDER_COLOR } from '../constants';
 import { logout, online } from '../redux/reducers/authentication';
 import type { User } from '../types';
 
@@ -25,6 +25,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                 <Badge>{unreadConversations.length}</Badge>
             );
         }
+        const dropdownStyle = user.online ? {backgroundColor: MAIN_COLOR, borderColor: BORDER_COLOR, color: 'white'} : {};
         return (
             <Navbar>
                 <Navbar.Header>
@@ -62,7 +63,7 @@ class NavigationBar extends React.Component<void, Props, void> {
                                 bsSize='small'
                                 className='mobile-btn'
                                 title={`${user.username} ${user.online ? '(online)' : '(offline)'}`}
-                                style={{backgroundColor: user.online ? COLOR_ONLINE : 'grey', color: 'white'}}
+                                style={dropdownStyle}
                             >
                                 <MenuItem eventKey='1' onClick={() => online(!user.online)} className='dropdown-item'>
                                     <Glyphicon glyph='user' style={{marginRight: 8}} />

@@ -5,7 +5,7 @@ import { Map } from 'immutable';
 import queryString from 'query-string';
 import { Row, Col, Table, Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
-import { COLOR_ONLINE } from '../../constants';
+import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { deleteUser } from '../../redux/reducers/users';
 import type { User } from '../../types';
@@ -35,7 +35,7 @@ class People extends React.Component<void, Props, void> {
                         <tbody>
                             {users.toArray().map(user => {
                                 const query = queryString.stringify({userId: user._id});
-                                const glyphStyle = user.online ? {...{color: COLOR_ONLINE }, ...{marginRight: 15}} : {marginRight: 15};
+                                const glyphStyle = user.online ? {...{color: MAIN_COLOR }, ...{marginRight: 15}} : {marginRight: 15};
                                 return (
                                     <tr key={user._id}>
                                         <td>
