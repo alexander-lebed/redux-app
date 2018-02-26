@@ -11,7 +11,7 @@ type Props = {
     onDelete: (id: string) => void
 }
 
-const Location = (props: Props) => {
+export const Location = (props: Props) => {
     const { location, onDelete } = props;
     let tempInfo = '';
     if (location.get('temp')) {
@@ -22,7 +22,10 @@ const Location = (props: Props) => {
     }
     return (
         <Row>
-            <Col xs={6}><Glyphicon glyph='map-marker' style={{marginRight: 5, color: 'grey'}} />{location.get('city')}</Col>
+            <Col xs={6}>
+                <Glyphicon glyph='map-marker' style={{marginRight: 5, color: 'grey'}} />
+                {location.get('city')}
+            </Col>
             <Col xs={3}>{tempInfo}</Col>
             <Col xs={3}>
                 <Glyphicon

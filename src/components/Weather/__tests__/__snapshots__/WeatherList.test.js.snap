@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<WeatherList/> should render WeatherList 1`] = `
+exports[`<WeatherList/> should match snapshot 1`] = `
 <div
   className="row"
   style={

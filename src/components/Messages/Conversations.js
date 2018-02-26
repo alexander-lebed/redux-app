@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import { Map } from 'immutable';
 import { Row, Col, Table, Badge, Glyphicon } from 'react-bootstrap';
-import history from '../../helpers/history';
 import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation, conversationsCleanup } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType } from '../../types';
 
 type Props = {
+    history: Object,
     user: User,
     users: Map<string, User>,
     conversations: Array<ConversationType>,
@@ -30,7 +30,7 @@ class Conversations extends React.Component<void, Props, void> {
     }
 
     goToConversation = (convId: string) => {
-        history.push(`/conversation?${queryString.stringify({convId})}`);
+        this.props.history.push(`/conversation?${queryString.stringify({convId})}`);
     };
 
     deleteConfirmation = (convId: string) => {

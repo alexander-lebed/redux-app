@@ -28,19 +28,24 @@ export default combineReducers({
 export function login(email: string, password: string) {
     return (dispatch: Dispatch, getState: Function) => {
         return new Promise(function(resolve) {
+            const reject = () => {
+                dispatch(setUser(null));
+                resolve(false);
+            };
             const users = getState().users.users;
             const user = users.find(e => e.email === email && e.password === password);
 
             if (user) {
                 user.online = true;
                 user.lastTime = Date.now();
-                $http.put(`${USERS_URL}/${user._id}`, user);
-
-                dispatch(setUser(user));
-                resolve(true);
+                $http.put(`${USERS_URL}/${user._id}`, user)
+                    .then(response => {
+                        dispatch(setUser(response.data));
+                        resolve(true);
+                    })
+                    .catch(() => reject())
             } else {
-                dispatch(setUser(null));
-                resolve(false);
+                reject();
             }
         })
     }
@@ -53,7 +58,7 @@ export function logout() {
         if (user) {
             user.online = false;
             user.lastTime = Date.now();
-            $http.put(`${USERS_URL}/${user._id}`, user).then(() => {
+            return $http.put(`${USERS_URL}/${user._id}`, user).then(() => {
                 dispatch(setUser(null));
             });
         }
@@ -67,7 +72,7 @@ export function online(isOnline: boolean) {
         if (user) {
             user.online = isOnline;
             user.lastTime = Date.now();
-            $http.put(`${USERS_URL}/${user._id}`, user)
+            return $http.put(`${USERS_URL}/${user._id}`, user)
                 .then((response) => {
                     dispatch(setUser(response.data));
                 })

@@ -40,8 +40,9 @@ export class WeatherList extends React.Component<void, Props, void> {
                     return l.set('temp', results ? results.channel.item.condition.temp : 0);
                 });
                 updateData(currentData.set('locations', data));
-            }).catch(err => {
-                console.log(err);
+            })
+            .catch(() => {
+                // console.log(err);
             });
     };
 

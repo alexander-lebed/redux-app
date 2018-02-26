@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<People/> should match snapshot 1`] = `
+<div
+  className="row"
+  style={
+    Object {
+      "marginLeft": 0,
+      "marginRight": 0,
+    }
+  }
+>
+  <div
+    className="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0"
+  >
+    <div
+      className="table-responsive"
+    >
+      <table
+        className="table"
+      >
+        <tbody>
+          <tr
+            id="111"
+          >
+            <td>
+              <div
+                className="row"
+                style={
+                  Object {
+                    "marginRight": 0,
+                  }
+                }
+              >
+                <div
+                  className="col-xs-6"
+                >
+                  <span
+                    className="glyphicon glyphicon-user"
+                    style={
+                      Object {
+                        "color": "#00b386",
+                        "marginRight": 15,
+                      }
+                    }
+                  />
+                  Current User
+                </div>
+                <div
+                  className="col-xs-6"
+                  style={
+                    Object {
+                      "color": "grey",
+                      "fontSize": 13,
+                    }
+                  }
+                >
+                  <button
+                    className="pull-right btn btn-sm btn-default"
+                    disabled={false}
+                    id="write-user-111"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Write a message
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            id="222"
+          >
+            <td>
+              <div
+                className="row"
+                style={
+                  Object {
+                    "marginRight": 0,
+                  }
+                }
+              >
+                <div
+                  className="col-xs-6"
+                >
+                  <span
+                    className="glyphicon glyphicon-user"
+                    style={
+                      Object {
+                        "color": "#00b386",
+                        "marginRight": 15,
+                      }
+                    }
+                  />
+                  Alice
+                </div>
+                <div
+                  className="col-xs-6"
+                  style={
+                    Object {
+                      "color": "grey",
+                      "fontSize": 13,
+                    }
+                  }
+                >
+                  <button
+                    className="pull-right btn btn-sm btn-default"
+                    disabled={false}
+                    id="write-user-222"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Write a message
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            id="333"
+          >
+            <td>
+              <div
+                className="row"
+                style={
+                  Object {
+                    "marginRight": 0,
+                  }
+                }
+              >
+                <div
+                  className="col-xs-6"
+                >
+                  <span
+                    className="glyphicon glyphicon-user"
+                    style={
+                      Object {
+                        "color": "#00b386",
+                        "marginRight": 15,
+                      }
+                    }
+                  />
+                  Bob
+                </div>
+                <div
+                  className="col-xs-6"
+                  style={
+                    Object {
+                      "color": "grey",
+                      "fontSize": 13,
+                    }
+                  }
+                >
+                  <button
+                    className="pull-right btn btn-sm btn-default"
+                    disabled={false}
+                    id="write-user-333"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Write a message
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

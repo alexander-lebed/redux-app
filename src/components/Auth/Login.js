@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from 'react-bootstrap';
 import { login } from '../../redux/reducers/authentication';
 import { success, error } from '../../redux/reducers/alerts';
-import history from '../../helpers/history';
 
 type Props = {
+    history: Object,
     login: Function,
     success: Function,
     error: Function
@@ -34,7 +34,7 @@ class Login extends React.Component<void, Props, State> {
         const {email, password} = this.state;
         this.props.login(email, password).then(isLoggedIn => {
             if (isLoggedIn) {
-                history.push('/');
+                this.props.history.push('/');
             } else {
                 this.props.error('Email or password is incorrect');
             }
