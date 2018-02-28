@@ -3,14 +3,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button } from 'react-bootstrap';
 import { Map } from 'immutable';
-import { editUser } from '../../redux/reducers/users';
+import { editUser, deleteUser } from '../../redux/reducers/users';
 import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
 import type { User } from "../../types";
 
 type Props = {
+    history: Object;
     user: User,
     users: Map<string, User>,
-    editUser: Function
+    editUser: Function,
+    deleteUser: Function
 };
 
 type State = {
@@ -52,6 +54,13 @@ class Profile extends React.Component<void, Props, State> {
         const {user} = this.props;
         const {newPassword} = this.state;
         this.props.editUser(user._id, {password: newPassword});
+    };
+
+    deleteConfirmation = (userId: string) => {
+        if (confirm('Are you sure you want to delete your profile?')) {
+            this.props.deleteUser(userId);
+            this.props.history.push('/login');
+        }
     };
 
     render() {
@@ -182,6 +191,17 @@ class Profile extends React.Component<void, Props, State> {
                             </FormGroup>
                         </Well>
 
+                        <div className='text-center'>
+                            <Button
+                                bsStyle='link'
+                                style={{color: 'red'}}
+                                onClick={() => this.deleteConfirmation(this.props.user._id)}
+                            >
+                                Delete profile
+                            </Button>
+                        </div>
+
+
                     </Form>
                 </Col>
             </Row>
@@ -263,6 +283,6 @@ export default connect(
         users: state.users.users
     }),
     {
-        editUser
+        editUser, deleteUser
     }
 )(Profile)

@@ -102711,7 +102711,13 @@ var Profile = function (_React$Component) {
                 onClick: function onClick() {
                     return _this2.savePassword();
                 }
-            }, 'Save'))))))));
+            }, 'Save'))))), _react2.default.createElement('div', { className: 'text-center' }, _react2.default.createElement(_reactBootstrap.Button, {
+                bsStyle: 'link',
+                style: { color: 'red' },
+                onClick: function onClick() {
+                    return _this2.deleteConfirmation(_this2.props.user._id);
+                }
+            }, 'Delete profile')))));
         }
     }]);
     return Profile;
@@ -102742,6 +102748,13 @@ var _initialiseProps = function _initialiseProps() {
         var newPassword = _this3.state.newPassword;
 
         _this3.props.editUser(user._id, { password: newPassword });
+    };
+
+    this.deleteConfirmation = function (userId) {
+        if (confirm('Are you sure you want to delete your profile?')) {
+            _this3.props.deleteUser(userId);
+            _this3.props.history.push('/login');
+        }
     };
 
     this.isBasicFormValid = function () {
@@ -102831,7 +102844,7 @@ exports.default = (0, _reactRedux.connect)(function (state) {
         users: state.users.users
     };
 }, {
-    editUser: _users.editUser
+    editUser: _users.editUser, deleteUser: _users.deleteUser
 })(Profile);
 
 /***/ }),

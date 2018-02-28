@@ -15,7 +15,7 @@ const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env
 
 console.log(`--- development mode: ${isDevelopment}`);
 
-mongoose.connect(mongoDB, {useMongoClient: true});
+mongoose.connect(mongoDB);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
