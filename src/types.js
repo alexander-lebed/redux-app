@@ -1,10 +1,8 @@
 // @flow
 import type { Element } from 'react';
-import { Map } from 'immutable';
-
 
 export type Action = {type: string, payload: any};
-export type State = Map<string, any>;
+export type State = any;
 export type Dispatch = (action: Action | Function) => void;
 
 export type User = {
@@ -19,7 +17,7 @@ export type User = {
 export type Alert = {
     uid: string,
     message: string | Element<any>,
-    type: 'success' | 'info' | 'danger' | 'warning' | 'dialog',
+    type: 'success' | 'info' | 'danger' | 'warning',
     timeout?: number
 }
 

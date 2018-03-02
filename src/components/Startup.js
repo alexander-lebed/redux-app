@@ -1,11 +1,13 @@
+// @flow
 import React from 'react';
+import type { Node } from 'react';
 import { connect } from "react-redux";
 import { initApp, updateData } from "../redux/reducers/startup";
 import Spinner from './common/Spinner';
 
 type Props = {
     loading: boolean,
-    children?: React.Node,
+    children?: Node,
     initApp: Function,
     updateData: Function
 }

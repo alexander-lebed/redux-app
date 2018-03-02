@@ -14502,7 +14502,7 @@ var setAlertType = function setAlertType(alertType, alerts, payload) {
 
 var alerts = function alerts() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var action = arguments[1];
 
     switch (action.type) {
         case actionTypes.SHOW_DIALOG:
@@ -14542,7 +14542,7 @@ var success = exports.success = function success(message) {
 };
 
 var error = exports.error = function error(message) {
-    var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
 
     return function (dispatch) {
         dispatch({
@@ -78823,7 +78823,7 @@ var Startup = function (_React$Component) {
     }
 
     (0, _createClass3.default)(Startup, [{
-        key: "componentDidMount",
+        key: 'componentDidMount',
         value: function componentDidMount() {
             var _this2 = this;
 
@@ -78833,12 +78833,12 @@ var Startup = function (_React$Component) {
             }, 5000);
         }
     }, {
-        key: "componentWillUnmount",
+        key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             clearInterval(this.interval);
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             if (this.props.loading) {
                 return _react2.default.createElement(_Spinner2.default, null);

@@ -1,5 +1,7 @@
+// @flow
+import type { Node } from 'react';
 import uid from '../../helpers/id-generator';
-import type { Dispatch, Action, State } from "../../types";
+import type { Dispatch, Action, State, Alert as AlertType } from '../../types';
 
 export const actionTypes = {
     CLEAR: 'CLEAR',
@@ -16,7 +18,7 @@ const setAlertType = (alertType, alerts, payload) => {
     return alerts.filter(n => n.uid !== id).concat(newAlert);
 };
 
-const alerts = (state = [], action: Action = {}): State => {
+const alerts = (state: Array<AlertType> = [], action: Action): State => {
     switch (action.type) {
         case actionTypes.SHOW_DIALOG:
             return setAlertType('dialog', state, action.payload);
@@ -39,7 +41,7 @@ const alerts = (state = [], action: Action = {}): State => {
 export default alerts;
 
 
-export const success = (message: string, timeout: number = 3000) => {
+export const success = (message: string | Node, timeout?: number = 3000) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: actionTypes.SHOW_SUCCESS,
@@ -51,7 +53,7 @@ export const success = (message: string, timeout: number = 3000) => {
     }
 };
 
-export const error = (message, timeout: number | null = null) => {
+export const error = (message: string | Node, timeout?: number = 5000) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: actionTypes.SHOW_ERROR,
