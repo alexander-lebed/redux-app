@@ -96233,13 +96233,28 @@ var NavigationBar = function (_React$Component) {
     (0, _inherits3.default)(NavigationBar, _React$Component);
 
     function NavigationBar() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         (0, _classCallCheck3.default)(this, NavigationBar);
-        return (0, _possibleConstructorReturn3.default)(this, (NavigationBar.__proto__ || (0, _getPrototypeOf2.default)(NavigationBar)).apply(this, arguments));
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = NavigationBar.__proto__ || (0, _getPrototypeOf2.default)(NavigationBar)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            expanded: false
+        }, _this.expand = function (expand) {
+            _this.setState({ expanded: expand });
+        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
     }
 
     (0, _createClass3.default)(NavigationBar, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var _props = this.props,
                 user = _props.user,
                 _props$conversations = _props.conversations,
@@ -96257,15 +96272,39 @@ var NavigationBar = function (_React$Component) {
                 newMessages = unreadConversations.length > 0 && _react2.default.createElement(_reactBootstrap.Badge, null, unreadConversations.length);
             }
             var dropdownStyle = user && user.online ? { backgroundColor: _constants.MAIN_COLOR, borderColor: _constants.BORDER_COLOR, color: 'white' } : {};
-            return _react2.default.createElement(_reactBootstrap.Navbar, null, _react2.default.createElement(_reactBootstrap.Navbar.Header, null, _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)), _react2.default.createElement(_reactBootstrap.Navbar.Collapse, null, _react2.default.createElement(_reactBootstrap.Nav, null, _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'conversations', to: '/conversations' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, _react2.default.createElement('div', { style: style.navTab, className: 'tab-text' }, 'Messages ', newMessages))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'people', to: '/people' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, _react2.default.createElement('div', { style: style.navTab, className: 'tab-text' }, 'People'))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'weather', to: '/weather' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3, className: 'tab-text' }, _react2.default.createElement('div', { style: style.navTab }, 'Weather')))), _react2.default.createElement(_reactBootstrap.Nav, { pullRight: true }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, user && _react2.default.createElement(_reactBootstrap.DropdownButton, {
+            return _react2.default.createElement(_reactBootstrap.Navbar, { onToggle: this.expand, expanded: this.state.expanded }, _react2.default.createElement(_reactBootstrap.Navbar.Header, null, _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)), _react2.default.createElement(_reactBootstrap.Navbar.Collapse, null, _react2.default.createElement(_reactBootstrap.Nav, null, _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'conversations', to: '/conversations', onClick: function onClick() {
+                    return _this2.expand(false);
+                } }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, _react2.default.createElement('div', { style: style.navTab, className: 'tab-text' }, 'Messages ', newMessages))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'people', to: '/people', onClick: function onClick() {
+                    return _this2.expand(false);
+                } }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, _react2.default.createElement('div', { style: style.navTab, className: 'tab-text' }, 'People'))), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'weather', to: '/weather', onClick: function onClick() {
+                    return _this2.expand(false);
+                } }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 3, className: 'tab-text' }, _react2.default.createElement('div', { style: style.navTab }, 'Weather')))), _react2.default.createElement(_reactBootstrap.Nav, { pullRight: true }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 1 }, user && _react2.default.createElement(_reactBootstrap.DropdownButton, {
                 id: 'user-button',
                 bsSize: 'small',
                 className: 'mobile-btn',
                 title: user.username + ' ' + (user.online ? '(online)' : '(offline)'),
                 style: dropdownStyle
-            }, _react2.default.createElement(_reactBootstrap.MenuItem, { eventKey: '1', onClick: function onClick() {
-                    return online(!user.online);
-                }, className: 'dropdown-item' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user', style: { marginRight: 8 } }), user.online ? 'Go offline' : 'Go online'), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'profile', to: '/profile' }, _react2.default.createElement(_reactBootstrap.MenuItem, { eventKey: '2', className: 'dropdown-item' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pencil', style: { marginRight: 8 } }), 'Edit profile')), user && _react2.default.createElement(_reactBootstrap.MenuItem, { eventKey: '4', className: 'dropdown-item', onSelect: logout }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-out', style: { marginRight: 8 } }), 'Log out'))), !user && _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'login', to: '/login' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small', className: 'mobile-btn' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-in', style: { marginRight: 5 } }), ' Log in'))))));
+            }, _react2.default.createElement(_reactBootstrap.MenuItem, {
+                eventKey: '1',
+                onClick: function onClick() {
+                    online(!user.online);
+                    _this2.expand(false);
+                },
+                className: 'dropdown-item'
+            }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user', style: { marginRight: 8 } }), user.online ? 'Go offline' : 'Go online'), _react2.default.createElement(_reactRouterBootstrap.LinkContainer, {
+                key: 'profile',
+                to: '/profile',
+                onClick: function onClick() {
+                    return _this2.expand(false);
+                }
+            }, _react2.default.createElement(_reactBootstrap.MenuItem, { eventKey: '2', className: 'dropdown-item' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pencil', style: { marginRight: 8 } }), 'Edit profile')), user && _react2.default.createElement(_reactBootstrap.MenuItem, {
+                eventKey: '3',
+                className: 'dropdown-item',
+                onSelect: function onSelect() {
+                    logout();
+                    _this2.expand(false);
+                }
+            }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-out', style: { marginRight: 8 } }), 'Log out'))), !user && _react2.default.createElement(_reactRouterBootstrap.LinkContainer, { key: 'login', to: '/login' }, _react2.default.createElement(_reactBootstrap.NavItem, { eventKey: 2 }, _react2.default.createElement(_reactBootstrap.Button, { bsSize: 'small', className: 'mobile-btn' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'log-in', style: { marginRight: 5 } }), ' Log in'))))));
         }
     }]);
     return NavigationBar;

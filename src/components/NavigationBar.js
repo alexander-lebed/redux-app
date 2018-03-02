@@ -14,7 +14,19 @@ type Props = {
     online: Function
 }
 
-class NavigationBar extends React.Component<void, Props, void> {
+type State = {
+    expanded: boolean
+}
+
+class NavigationBar extends React.Component<void, Props, State> {
+
+    state = {
+        expanded: false
+    };
+
+    expand = (expand) => {
+        this.setState({expanded: expand});
+    };
 
     render() {
         const {user, conversations = [], logout, online} = this.props;
@@ -27,27 +39,27 @@ class NavigationBar extends React.Component<void, Props, void> {
         }
         const dropdownStyle = user && user.online ? {backgroundColor: MAIN_COLOR, borderColor: BORDER_COLOR, color: 'white'} : {};
         return (
-            <Navbar>
+            <Navbar onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <LinkContainer key='conversations' to='/conversations'>
+                        <LinkContainer key='conversations' to='/conversations' onClick={() => this.expand(false)}>
                             <NavItem eventKey={1}>
                                 <div style={style.navTab} className='tab-text'>
                                     Messages {newMessages}
                                 </div>
                             </NavItem>
                         </LinkContainer>
-                        <LinkContainer key='people' to='/people'>
+                        <LinkContainer key='people' to='/people' onClick={() => this.expand(false)}>
                             <NavItem eventKey={2}>
                                 <div style={style.navTab} className='tab-text'>
                                     People
                                 </div>
                             </NavItem>
                         </LinkContainer>
-                        <LinkContainer key='weather' to='/weather'>
+                        <LinkContainer key='weather' to='/weather' onClick={() => this.expand(false)}>
                             <NavItem eventKey={3} className='tab-text'>
                                 <div style={style.navTab}>
                                     Weather
@@ -65,18 +77,36 @@ class NavigationBar extends React.Component<void, Props, void> {
                                 title={`${user.username} ${user.online ? '(online)' : '(offline)'}`}
                                 style={dropdownStyle}
                             >
-                                <MenuItem eventKey='1' onClick={() => online(!user.online)} className='dropdown-item'>
+                                <MenuItem
+                                    eventKey='1'
+                                    onClick={() => {
+                                        online(!user.online);
+                                        this.expand(false)
+                                    }}
+                                    className='dropdown-item'
+                                >
                                     <Glyphicon glyph='user' style={{marginRight: 8}} />
                                     {user.online ? 'Go offline' : 'Go online'}
                                 </MenuItem>
-                                <LinkContainer key='profile' to='/profile'>
+                                <LinkContainer
+                                    key='profile'
+                                    to='/profile'
+                                    onClick={() => this.expand(false)}
+                                >
                                     <MenuItem eventKey='2' className='dropdown-item'>
                                         <Glyphicon glyph='pencil' style={{marginRight: 8}} />
                                         Edit profile
                                     </MenuItem>
                                 </LinkContainer>
                                 {user &&
-                                <MenuItem eventKey='4' className='dropdown-item' onSelect={logout}>
+                                <MenuItem
+                                    eventKey='3'
+                                    className='dropdown-item'
+                                    onSelect={() => {
+                                        logout();
+                                        this.expand(false)
+                                    }}
+                                >
                                     <Glyphicon glyph='log-out' style={{marginRight: 8}} />
                                     Log out
                                 </MenuItem>
