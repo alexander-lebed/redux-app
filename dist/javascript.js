@@ -97415,6 +97415,7 @@ var Conversation = function (_React$Component) {
         _this.renderMessageForm = function () {
             return _react2.default.createElement(_reactBootstrap.Form, null, _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: 'message-form', style: { display: 'flex', marginBottom: 2 } }, _react2.default.createElement(_reactBootstrap.FormControl, {
                 componentClass: 'textarea',
+                autoFocus: true,
                 style: style.textarea,
                 rows: 4,
                 placeholder: 'Write a message...',
@@ -97499,7 +97500,7 @@ var style = {
         fontSize: 13
     },
     from: {
-        color: '#42648b',
+        color: 'dimgray',
         fontSize: 13,
         fontWeight: 700
     },

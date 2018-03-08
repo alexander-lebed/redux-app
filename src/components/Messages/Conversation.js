@@ -216,6 +216,7 @@ class Conversation extends React.Component<void, Props, State> {
             <FormGroup controlId='message-form' style={{display: 'flex', marginBottom: 2}}>
                 <FormControl
                     componentClass='textarea'
+                    autoFocus={true}
                     style={style.textarea}
                     rows={4}
                     placeholder='Write a message...'
@@ -248,7 +249,7 @@ const style = {
         fontSize: 13
     },
     from: {
-        color: '#42648b',
+        color: 'dimgray',
         fontSize: 13,
         fontWeight: 700
     },
