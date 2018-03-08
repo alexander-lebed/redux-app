@@ -97451,7 +97451,7 @@ var Conversation = function (_React$Component) {
             this.getConversation();
             this.interval = setInterval(function () {
                 return _this2.getConversation();
-            }, 2000); // periodically update conversation
+            }, 2000); // update conversation every 2 sec
             setTimeout(function () {
                 return _this2.scrollConversationToBottom();
             }, 50);

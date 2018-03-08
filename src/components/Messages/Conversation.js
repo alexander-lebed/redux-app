@@ -45,7 +45,7 @@ class Conversation extends React.Component<void, Props, State> {
 
     componentDidMount() {
         this.getConversation();
-        this.interval = setInterval(() => this.getConversation(), 2000); // periodically update conversation
+        this.interval = setInterval(() => this.getConversation(), 2000); // update conversation every 2 sec
         setTimeout(() => this.scrollConversationToBottom(), 50);
     }
 
