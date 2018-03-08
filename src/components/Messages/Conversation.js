@@ -249,7 +249,7 @@ const style = {
         fontSize: 13
     },
     from: {
-        color: 'dimgray',
+        color: '#3a3a3a',
         fontSize: 13,
         fontWeight: 700
     },
