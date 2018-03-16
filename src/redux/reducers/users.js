@@ -45,7 +45,7 @@ export function register(username: string, email: string, password: string) {
                 username,
                 email,
                 password,
-                online: false,
+                online: true,
                 lastTime: Date.now()
             };
             $http.post(USERS_URL, payload)

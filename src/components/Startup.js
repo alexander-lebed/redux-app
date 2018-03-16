@@ -14,7 +14,8 @@ type Props = {
 
 /*
 todo: go user offline when he close browser/tab
-    window.beforeunload event: https://stackoverflow.com/questions/36355093/reactjs-browser-tab-close-event
+    https://stackoverflow.com/questions/36355093/reactjs-browser-tab-close-event
+    https://stackoverflow.com/questions/568977/identifying-between-refresh-and-close-browser-actions
 */
 class Startup extends React.Component<void, Props, void> {
 
