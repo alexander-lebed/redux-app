@@ -1,5 +1,6 @@
 :root {
     --main-color: #00b386;
+    --main-border-color: #008060;
 }
 
 html, body, input, button {
@@ -9,19 +10,29 @@ html, body, input, button {
 
 .btn-primary {
     background-color: var(--main-color) !important;
-    border-color: #008060 !important;
+    border-color: var(--main-border-color) !important;
 }
 
 .has-success .control-label,
 .has-success .help-block,
 .has-success .form-control .form-control-feedback {
     color: var(--main-color) !important;
-    border-color: #008060 !important;
+    border-color: var(--main-border-color) !important;
 }
 
 .btn {
     min-width: 100px !important;
     border-radius: 0 !important;
+}
+
+.has-success .form-control:focus {
+    box-shadow: 0 0 5px var(--main-color);
+    border-color: var(--main-border-color);
+}
+
+textarea:focus {
+    box-shadow: 0 0 5px var(--main-color) !important;
+    border-color: var(--main-border-color) !important;
 }
 
 /* for mobile device */

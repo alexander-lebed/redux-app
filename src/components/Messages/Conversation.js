@@ -5,7 +5,7 @@ import { Picker, Emoji } from 'emoji-mart'
 import Linkify from 'react-linkify';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { Row, Col, Table, Form, FormGroup, FormControl, Glyphicon } from 'react-bootstrap';
+import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Glyphicon } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType, Message } from '../../types';
@@ -214,16 +214,25 @@ class Conversation extends React.Component<void, Props, State> {
     renderMessageForm = () => (
         <Form>
             <FormGroup controlId='message-form' style={{display: 'flex', marginBottom: 2}}>
-                <FormControl
-                    componentClass='textarea'
-                    autoFocus={true}
-                    style={style.textarea}
-                    rows={4}
-                    placeholder='Write a message...'
-                    value={this.state.messageText}
-                    onKeyPress={this.handleKeyPress}
-                    onChange={e => this.setState({messageText: e.target.value})}
-                />
+                <div style={{flex: 1}}>
+                    <FormControl
+                        componentClass='textarea'
+                        autoFocus={true}
+                        style={style.textControl}
+                        rows={4}
+                        placeholder='Write a message...'
+                        value={this.state.messageText}
+                        onKeyPress={this.handleKeyPress}
+                        onChange={e => this.setState({messageText: e.target.value})}
+                    />
+                    <Row style={{margin: 0}}>
+                        <Col xsHidden>
+                            <HelpBlock>
+                                Press <strong>Shift+Enter</strong> for next line, <strong>Enter</strong> to send message
+                            </HelpBlock>
+                        </Col>
+                    </Row>
+                </div>
                 <div className='cursor' style={style.emojiSelect}>
                     <Emoji
                         set='twitter'
@@ -258,9 +267,8 @@ const style = {
         paddingTop: 5,
         whiteSpace: 'pre-wrap'
     },
-    textarea: {
+    textControl: {
         resize: 'none',
-        flex: 1,
         paddingRight: 60
     },
     emojiSelect: {

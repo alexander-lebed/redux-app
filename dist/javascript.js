@@ -97412,10 +97412,10 @@ var Conversation = function (_React$Component) {
         };
 
         _this.renderMessageForm = function () {
-            return _react2.default.createElement(_reactBootstrap.Form, null, _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: 'message-form', style: { display: 'flex', marginBottom: 2 } }, _react2.default.createElement(_reactBootstrap.FormControl, {
+            return _react2.default.createElement(_reactBootstrap.Form, null, _react2.default.createElement(_reactBootstrap.FormGroup, { controlId: 'message-form', style: { display: 'flex', marginBottom: 2 } }, _react2.default.createElement('div', { style: { flex: 1 } }, _react2.default.createElement(_reactBootstrap.FormControl, {
                 componentClass: 'textarea',
                 autoFocus: true,
-                style: style.textarea,
+                style: style.textControl,
                 rows: 4,
                 placeholder: 'Write a message...',
                 value: _this.state.messageText,
@@ -97423,7 +97423,7 @@ var Conversation = function (_React$Component) {
                 onChange: function onChange(e) {
                     return _this.setState({ messageText: e.target.value });
                 }
-            }), _react2.default.createElement('div', { className: 'cursor', style: style.emojiSelect }, _react2.default.createElement(_emojiMart.Emoji, {
+            }), _react2.default.createElement(_reactBootstrap.Row, { style: { margin: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsHidden: true }, _react2.default.createElement(_reactBootstrap.HelpBlock, null, 'Press ', _react2.default.createElement('strong', null, 'Shift+Enter'), ' for next line, ', _react2.default.createElement('strong', null, 'Enter'), ' to send message')))), _react2.default.createElement('div', { className: 'cursor', style: style.emojiSelect }, _react2.default.createElement(_emojiMart.Emoji, {
                 set: 'twitter',
                 size: 32,
                 emoji: _this.state.showEmoji ? 'grinning' : 'slightly_smiling_face',
@@ -97508,9 +97508,8 @@ var style = {
         paddingTop: 5,
         whiteSpace: 'pre-wrap'
     },
-    textarea: {
+    textControl: {
         resize: 'none',
-        flex: 1,
         paddingRight: 60
     },
     emojiSelect: {
