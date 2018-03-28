@@ -94,16 +94,16 @@ class Conversation extends React.Component<void, Props, State> {
             evt.preventDefault();
             if (this.state.messageText) {
                 const {user, conversation} = this.props;
-                const currentTime = Date.now();
+                const emptyTime = null; // to set the time on server side
                 const message: Message = {
                     from: {_id: user._id, username: user.username},
                     text: this.state.messageText,
-                    timestamp: currentTime,
+                    timestamp: emptyTime,
                     read: false,
                     deleted: false
                 };
                 conversation.messages.push(message);
-                conversation.timestamp = currentTime;
+                conversation.timestamp = emptyTime;
                 this.props.saveConversation(conversation);
                 this.setState({
                     messageText: ''}

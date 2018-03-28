@@ -109,7 +109,7 @@ export function getConversationWithUsers(userIds: Array<string>) {
                     conversation = {
                         users: convUsers,
                         messages: [],
-                        timestamp: Date.now()
+                        timestamp: null // to set the time on server side
                     };
 
                     $http.put(CONVERSATIONS_URL, conversation)

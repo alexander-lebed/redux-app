@@ -33,7 +33,7 @@ router.post('/', function(req, res, next) {
     user.email = payload.email;
     user.password = payload.password;
     user.online = payload.online;
-    user.lastTime = payload.lastTime;
+    user.lastTime = payload.lastTime || Date.now();
 
     user.save(function(err, data) {
         if (err)
@@ -45,6 +45,9 @@ router.post('/', function(req, res, next) {
 router.put('/:id', function(req, res, next) {
     const query = {_id : req.params.id};
     const options = {upsert: false, new: true};
+    if (!req.body.lastTime) {
+        req.body.lastTime = Date.now();
+    }
     User.findOneAndUpdate(query, req.body, options, function(err, data) {
         if (err)
             return next(err);

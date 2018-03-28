@@ -46,7 +46,7 @@ export function register(username: string, email: string, password: string) {
                 email,
                 password,
                 online: true,
-                lastTime: Date.now()
+                lastTime: null // to set the time on server side
             };
             $http.post(USERS_URL, payload)
                 .then(response => {

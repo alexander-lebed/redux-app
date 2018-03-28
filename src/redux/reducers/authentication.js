@@ -55,7 +55,7 @@ export function logout() {
         const user = getState().authentication.user;
         if (user) {
             user.online = false;
-            user.lastTime = Date.now();
+            user.lastTime = null; // to set the time on server side
             return $http.put(`${USERS_URL}/${user._id}`, user).then(() => {
                 dispatch(setUser(null));
             });
@@ -69,7 +69,7 @@ export function online(isOnline: boolean) {
         const user = getState().authentication.user;
         if (user) {
             user.online = isOnline;
-            user.lastTime = Date.now();
+            user.lastTime = null; // to set the time on server side
             return $http.put(`${USERS_URL}/${user._id}`, user)
                 .then((response) => {
                     dispatch(setUser(response.data));

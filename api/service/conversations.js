@@ -60,6 +60,7 @@ router.get('/', function(req, res, next) {
 
 router.put('/', function(req, res, next) {
     const payload = req.body;
+    const currentTime = Date.now();
 
     const conv = new Conversation();
     if (payload._id) {
@@ -68,11 +69,17 @@ router.put('/', function(req, res, next) {
     }
     conv.users = payload.users;
     conv.messages = payload.messages;
-    conv.timestamp = payload.timestamp;
+    conv.timestamp = payload.timestamp || currentTime;
+
+    conv.messages.forEach(m => {
+        if(!m.timestamp) {
+            m.timestamp = currentTime;
+        }
+    });
 
     conv.save(function(err, data) {
         if (err)
-            return next(err); //res.send(err);
+            return next(err);
         res.json(data);
     });
 });
