@@ -75,9 +75,32 @@ textarea:focus {
     }
 }
 
-input, textarea, .well, .dropdown-menu, .emoji-mart {
+input, textarea, .well, .dropdown-menu, .input-group-addon, .emoji-mart {
     border-radius: 0 !important;
 }
+
+
+.inner-addon {
+    position: relative;
+}
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+.left-addon .glyphicon  {
+    left:  0;
+}
+.right-addon .glyphicon {
+    right: 0;
+}
+.left-addon input  {
+    padding-left:  30px;
+}
+.right-addon input {
+    padding-right: 30px;
+}
+
 
 .dropdown-menu {
     padding: 0;

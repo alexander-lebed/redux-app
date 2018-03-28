@@ -101876,27 +101876,30 @@ function _interopRequireDefault(obj) {
 var People = exports.People = function (_React$Component) {
     (0, _inherits3.default)(People, _React$Component);
 
-    function People() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
+    function People(props) {
         (0, _classCallCheck3.default)(this, People);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+        var _this = (0, _possibleConstructorReturn3.default)(this, (People.__proto__ || (0, _getPrototypeOf2.default)(People)).call(this, props));
 
-        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = People.__proto__ || (0, _getPrototypeOf2.default)(People)).call.apply(_ref, [this].concat(args))), _this), _this.deleteConfirmation = function (userId) {
+        _this.deleteConfirmation = function (userId) {
             if (confirm('Are you sure you want to delete this user?')) {
                 _this.props.deleteUser(userId);
             }
-        }, _this.goToConversationWith = function (userId) {
+        };
+
+        _this.goToConversationWith = function (userId) {
             var query = _queryString2.default.stringify({ userId: userId });
             _this.props.history.push('/conversation?' + query);
-        }, _this.isAdmin = function () {
+        };
+
+        _this.isAdmin = function () {
             return _this.props.user.email === 'alexanderlebed999@gmail.com';
-        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+        };
+
+        _this.state = {
+            searchText: ''
+        };
+        return _this;
     }
 
     (0, _createClass3.default)(People, [{
@@ -101906,7 +101909,20 @@ var People = exports.People = function (_React$Component) {
 
             var users = this.props.users;
 
-            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement(_reactBootstrap.Table, { responsive: true }, _react2.default.createElement('tbody', null, users.toArray().map(function (user) {
+            users = users.toArray();
+            if (this.state.searchText) {
+                users = users.filter(function (e) {
+                    return e.username.toLowerCase().indexOf(_this2.state.searchText.toLowerCase()) !== -1;
+                });
+            }
+            return _react2.default.createElement(_reactBootstrap.Row, { style: { marginLeft: 0, marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xsOffset: 0, smOffset: 1, mdOffset: 2, xs: 12, sm: 10, md: 8 }, _react2.default.createElement(_reactBootstrap.Row, null, _react2.default.createElement(_reactBootstrap.Col, { xs: 12, sm: 5 }, _react2.default.createElement(_reactBootstrap.FormGroup, null, _react2.default.createElement('div', { className: 'inner-addon left-addon' }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' }), _react2.default.createElement(_reactBootstrap.FormControl, {
+                type: 'text',
+                placeholder: 'Search people',
+                value: this.state.searchText,
+                onChange: function onChange(e) {
+                    return _this2.setState({ searchText: e.target.value });
+                }
+            }))))), users.length === 0 ? _react2.default.createElement('div', { className: 'text-center' }, 'No results') : _react2.default.createElement(_reactBootstrap.Table, null, _react2.default.createElement('tbody', null, users.map(function (user) {
                 var glyphStyle = user.online ? (0, _extends3.default)({ color: _constants.MAIN_COLOR }, { marginRight: 15 }) : { marginRight: 15 };
                 return _react2.default.createElement('tr', { key: user._id, id: user._id }, _react2.default.createElement('td', null, _react2.default.createElement(_reactBootstrap.Row, { style: { marginRight: 0 } }, _react2.default.createElement(_reactBootstrap.Col, { xs: 6 }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user', style: glyphStyle }), user.username, _this2.isAdmin() && _react2.default.createElement(_reactBootstrap.Glyphicon, {
                     id: 'remove',
