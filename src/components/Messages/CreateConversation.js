@@ -19,8 +19,8 @@ type State = {
 }
 
 export class CreateConversation extends React.Component<void, Props, State> {
-
-    constructor(props) {
+    state: State;
+    constructor(props: Props) {
         super(props);
         this.state = {
             searchText: '',
