@@ -73,6 +73,6 @@ describe('<People/>', () => {
 
         expect(props.history.push.calledOnce).toBe(false);
         wrapper.find('#write-user-222').simulate('click');
-        expect(props.history.push.withArgs('/conversation?userId=222').calledOnce).toBe(true);
+        expect(props.history.push.withArgs('/conversation?userIds=222').calledOnce).toBe(true);
     });
 });

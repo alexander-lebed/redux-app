@@ -74,17 +74,18 @@ class Conversation extends React.Component<void, Props, State> {
 
     getConversation = () => {
         const query = queryString.parse(this.props.location.search);
-        const {convId, userId} = query;
+        const {convId, userIds} = query;
         if (convId) {
             this.props.getConversation(convId);
-        } else if (userId) {
-            let usersIds = [];
-            if (this.props.user._id === userId) { // conversation with oneself
-                usersIds = [userId];
+        } else if (userIds) {
+            let participants = [];
+            if (Array.isArray(userIds)) {
+                participants = userIds.concat(this.props.user._id);
             } else {
-                usersIds = [this.props.user._id, userId]
+                const isConvWithOneself = this.props.user._id === userIds;
+                participants = isConvWithOneself ? [userIds] : [this.props.user._id, userIds];
             }
-            this.props.getConversationWithUsers(usersIds);
+            this.props.getConversationWithUsers(participants);
         }
         setTimeout(this.props.markAsRead, 500);
     };

@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import { Map } from 'immutable';
-import { Row, Col, Table, Badge, Glyphicon } from 'react-bootstrap';
+import { Row, Col, Table, Badge, Glyphicon, Button } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation, conversationsCleanup } from '../../redux/reducers/conversations';
@@ -33,8 +33,12 @@ class Conversations extends React.Component<void, Props, void> {
         this.props.history.push(`/conversation?${queryString.stringify({convId})}`);
     };
 
+    createConversation = () => {
+        this.props.history.push('/create-conversation');
+    };
+
     deleteConfirmation = (convId: string) => {
-        if (confirm('Are you sure you want to delete this conversation?')) {
+        if (confirm('This will delete conversation for all participants. Are you sure?')) {
             this.props.deleteConversation(convId);
         }
     };
@@ -61,18 +65,17 @@ class Conversations extends React.Component<void, Props, void> {
                     senders = senders.filter(u => u._id !== user._id); // exclude recipient
                 }
                 return (
-                    <tr
-                        key={conv._id}
-                        style={newMessages.length > 0 ? {backgroundColor: '#edf0f5'} : {}}
-                    >
+                    <tr key={conv._id} style={newMessages.length > 0 ? {backgroundColor: '#edf0f5'} : {}}>
                         <td className='cursor' style={style.conversation} >
                             <Row>
                                 <Col xs={9} onClick={() => this.goToConversation(conv._id)}>
-                                    {senders.map(sender => (
-                                        <span key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
-                                            {sender.username}
-                                        </span>
-                                    ))}
+                                    <div style={style.cutSendersText}>
+                                        {senders.map(sender => (
+                                            <span key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
+                                                {sender.username}
+                                            </span>
+                                        )).reduce((prev, curr) => [prev, ', ', curr])}
+                                    </div>
                                 </Col>
                                 <Col xs={3} style={style.convRight}>
                                     <span>
@@ -114,6 +117,16 @@ class Conversations extends React.Component<void, Props, void> {
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
                     <h4 style={{marginBottom: 20}} className='text-center'>
                         Conversations
+                        <Button
+                            id='create-conversation'
+                            bsSize='small'
+                            title='Create new conversation'
+                            style={{border: 'none'}}
+                            className='pull-right btn-circle-glyphicon'
+                            onClick={() => this.createConversation()}
+                        >
+                            <Glyphicon glyph='plus' />
+                        </Button>
                     </h4>
                     {content}
                 </Col>
@@ -146,6 +159,13 @@ const style = {
         WebkitLineClamp: 3, // N number of lines to show
         lineHeight: 1.154   // X fallback
         // maxHeight: 3.462    // N * X
+    },
+    cutSendersText: {
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        width: 300,
+        height: '1.4em',
+        whiteSpace: 'nowrap'
     }
 };
 

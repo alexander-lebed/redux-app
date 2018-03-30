@@ -12,6 +12,7 @@ import Login from './components/Auth/Login';
 import Registration from './components/Auth/Registration';
 import Conversations from './components/Messages/Conversations';
 import Conversation from './components/Messages/Conversation';
+import CreateConversation from './components/Messages/CreateConversation';
 import People from './components/People/People';
 import WeatherList from './components/Weather/WeatherList';
 import Profile from './components/Profile/Profile';
@@ -33,6 +34,7 @@ async function init() {
                             <PrivateRoute exact path="/" component={Conversations} />
                             <PrivateRoute exact path="/conversations" component={Conversations} />
                             <PrivateRoute path="/conversation" component={Conversation} /> {/* query: convId or userId */}
+                            <PrivateRoute path="/create-conversation" component={CreateConversation} />
                             <PrivateRoute exact path="/people" component={People} />
                             <PrivateRoute path="/weather" component={WeatherList} />
                             <PrivateRoute path="/profile" component={Profile} />

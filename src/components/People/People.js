@@ -35,8 +35,8 @@ export class People extends React.Component<void, Props, State> {
         }
     };
 
-    goToConversationWith = (userId: string) => {
-        const query = queryString.stringify({userId});
+    goToConversationWith = (userIds: Array<string>) => {
+        const query = queryString.stringify({userIds});
         this.props.history.push(`/conversation?${query}`);
     };
 
@@ -94,7 +94,7 @@ export class People extends React.Component<void, Props, State> {
                                                             id={`write-user-${user._id}`}
                                                             bsSize='small'
                                                             className='pull-right'
-                                                            onClick={() => this.goToConversationWith(user._id)}
+                                                            onClick={() => this.goToConversationWith([user._id])}
                                                         >
                                                             Write a message
                                                         </Button>
