@@ -21,8 +21,8 @@ class Startup extends React.Component<void, Props, void> {
 
     interval: number;
 
-    constructor(params: any) {
-        super(params);
+    constructor(props: Props) {
+        super(props);
         this.interval = 0;
     }
 

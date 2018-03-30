@@ -11,7 +11,7 @@ export type User = {
     email: string,
     password: string,
     online: boolean,
-    lastTime: number
+    lastTime: number | null
 }
 
 export type Alert = {
@@ -25,7 +25,7 @@ export type Message = {
     _id?: string,
     from: {_id: string, username: string},
     text: string,
-    timestamp: number,
+    timestamp: number | null,
     read: boolean,
     deleted: boolean
 }
@@ -34,5 +34,5 @@ export type Conversation = {
     _id: string,
     users: Array<{_id: string, username: string}>,
     messages: Array<Message>,
-    timestamp: number
+    timestamp: number | null
 }

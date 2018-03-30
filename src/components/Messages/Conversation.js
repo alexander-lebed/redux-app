@@ -33,7 +33,7 @@ class Conversation extends React.Component<void, Props, State> {
     interval: number;
     scrollableTable: Object;
 
-    constructor(params: any) {
+    constructor(params: Props) {
         super(params);
         this.state = {
             messageText: '',

@@ -190,6 +190,7 @@ exports[`<People/> should match snapshot 1`] = `
         </tr>
       </tbody>
     </table>
+    
   </div>
 </div>
 `;

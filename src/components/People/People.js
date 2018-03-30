@@ -7,6 +7,7 @@ import { Row, Col, Table, FormGroup, FormControl, Button, Glyphicon } from 'reac
 import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { deleteUser } from '../../redux/reducers/users';
+import ConfirmationModal from '../common/ConfirmationModal';
 import type { User } from '../../types';
 
 type Props = {
@@ -17,22 +18,37 @@ type Props = {
 }
 
 type State = {
-    searchText: string
+    searchText: string,
+    deleteUserId: string
 }
 
 export class People extends React.Component<void, Props, State> {
 
-    constructor(props) {
+    state: State;
+
+    constructor(props: Props) {
         super(props);
         this.state = {
-            searchText: ''
+            searchText: '',
+            deleteUserId: ''
         }
     }
 
-    deleteConfirmation = (userId: string) => {
-        if (confirm('Are you sure you want to delete this user?')) {
-            this.props.deleteUser(userId)
-        }
+    showDeleteConfirmation = (userId: string) => {
+        this.setState({
+            deleteUserId: userId
+        })
+    };
+
+    hideDeleteConfirmation = () => {
+        this.setState({
+            deleteUserId: ''
+        })
+    };
+
+    deleteUser = () => {
+        this.props.deleteUser(this.state.deleteUserId);
+        this.hideDeleteConfirmation();
     };
 
     goToConversationWith = (userIds: Array<string>) => {
@@ -84,7 +100,7 @@ export class People extends React.Component<void, Props, State> {
                                                             glyph='remove'
                                                             style={{color: 'grey'}}
                                                             className='pull-right cursor'
-                                                            onClick={() => this.deleteConfirmation(user._id)}
+                                                            onClick={() => this.showDeleteConfirmation(user._id)}
                                                         />
                                                         }
                                                     </Col>
@@ -106,6 +122,14 @@ export class People extends React.Component<void, Props, State> {
                                 })}
                             </tbody>
                         </Table>
+                    }
+                    {this.state.deleteUserId &&
+                        <ConfirmationModal
+                            title={'Delete confirmation'}
+                            body={'Are you sure you want to delete this user?'}
+                            onConfirm={() => this.deleteUser()}
+                            onCancel={() => this.hideDeleteConfirmation()}
+                        />
                     }
                 </Col>
             </Row>

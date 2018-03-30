@@ -7,6 +7,7 @@ import { Row, Col, Table, Badge, Glyphicon, Button } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation, conversationsCleanup } from '../../redux/reducers/conversations';
+import ConfirmationModal from '../common/ConfirmationModal';
 import type { User, Conversation as ConversationType } from '../../types';
 
 type Props = {
@@ -19,7 +20,18 @@ type Props = {
     conversationsCleanup: Function
 }
 
-class Conversations extends React.Component<void, Props, void> {
+type State = {
+    deleteConversationId: string
+}
+
+class Conversations extends React.Component<void, Props, State> {
+    state: State;
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            deleteConversationId: ''
+        }
+    }
 
     componentDidMount() {
         this.props.getConversationsByUser(this.props.user._id);
@@ -37,10 +49,21 @@ class Conversations extends React.Component<void, Props, void> {
         this.props.history.push('/create-conversation');
     };
 
-    deleteConfirmation = (convId: string) => {
-        if (confirm('This will delete conversation for all participants. Are you sure?')) {
-            this.props.deleteConversation(convId);
-        }
+    showDeleteConfirmation = (convId: string) => {
+        this.setState({
+            deleteConversationId: convId
+        })
+    };
+
+    hideDeleteConfirmation = () => {
+        this.setState({
+            deleteConversationId: ''
+        })
+    };
+
+    deleteConversation = () => {
+        this.props.deleteConversation(this.state.deleteConversationId);
+        this.hideDeleteConfirmation();
     };
 
     render() {
@@ -86,7 +109,7 @@ class Conversations extends React.Component<void, Props, void> {
                                             glyph='remove'
                                             className='cursor'
                                             style={{paddingLeft: 10}}
-                                            onClick={() => this.deleteConfirmation(conv._id)}
+                                            onClick={() => this.showDeleteConfirmation(conv._id)}
                                         />
                                     </span>
                                 </Col>
@@ -129,6 +152,15 @@ class Conversations extends React.Component<void, Props, void> {
                         </Button>
                     </h4>
                     {content}
+
+                    {this.state.deleteConversationId &&
+                        <ConfirmationModal
+                            title={'Delete confirmation'}
+                            body={'This will delete conversation for all participants. Are you sure?'}
+                            onConfirm={() => this.deleteConversation()}
+                            onCancel={() => this.hideDeleteConfirmation()}
+                        />
+                    }
                 </Col>
             </Row>
         )

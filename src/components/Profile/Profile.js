@@ -5,6 +5,7 @@ import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, 
 import { Map } from 'immutable';
 import { editUser, deleteUser } from '../../redux/reducers/users';
 import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
+import ConfirmationModal from '../common/ConfirmationModal';
 import type { User } from "../../types";
 
 type Props = {
@@ -20,14 +21,15 @@ type State = {
     email: string,
     currentPassword: string,
     newPassword: string,
-    confirmNewPassword: string
+    confirmNewPassword: string,
+    showDeleteConfirmation: boolean
 };
 
 class Profile extends React.Component<void, Props, State> {
 
     state: State;
 
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
         const user = props.user;
         this.state = {
@@ -35,7 +37,8 @@ class Profile extends React.Component<void, Props, State> {
             email: user ? user.email : '',
             currentPassword: '',
             newPassword: '',
-            confirmNewPassword: ''
+            confirmNewPassword: '',
+            showDeleteConfirmation: false
         };
     }
 
@@ -56,11 +59,22 @@ class Profile extends React.Component<void, Props, State> {
         this.props.editUser(user._id, {password: newPassword});
     };
 
-    deleteConfirmation = (userId: string) => {
-        if (confirm('Are you sure you want to delete your profile?')) {
-            this.props.deleteUser(userId);
-            this.props.history.push('/login');
-        }
+    showDeleteConfirmation = () => {
+        this.setState({
+            showDeleteConfirmation: true
+        })
+    };
+
+    hideDeleteConfirmation = () => {
+        this.setState({
+            showDeleteConfirmation: false
+        })
+    };
+
+    deleteProfile = () => {
+        this.props.deleteUser(this.props.user._id);
+        this.props.history.push('/login');
+        this.hideDeleteConfirmation();
     };
 
     render() {
@@ -195,14 +209,21 @@ class Profile extends React.Component<void, Props, State> {
                             <Button
                                 bsStyle='link'
                                 style={{color: 'red'}}
-                                onClick={() => this.deleteConfirmation(this.props.user._id)}
+                                onClick={() => this.showDeleteConfirmation()}
                             >
                                 Delete profile
                             </Button>
                         </div>
-
-
                     </Form>
+
+                    {this.state.showDeleteConfirmation &&
+                        <ConfirmationModal
+                            title={'Delete confirmation'}
+                            body={'Are you sure you want to delete your profile?'}
+                            onConfirm={() => this.deleteProfile()}
+                            onCancel={() => this.hideDeleteConfirmation()}
+                        />
+                    }
                 </Col>
             </Row>
         )
