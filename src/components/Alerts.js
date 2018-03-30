@@ -44,7 +44,7 @@ export class Alert extends React.Component<void, AlertProps, void> {
                     style={styles.closeBtn}
                     className='pull-right close'
                 >
-                    <Glyphicon glyph='remove' />
+                    <Glyphicon glyph='remove' style={{fontSize: 18}} />
                 </Button>
             </BSAlert>
         )
@@ -83,7 +83,8 @@ export default connect(
 
 const styles = {
     alert: {
-        position: 'relative'
+        position: 'relative',
+        borderRadius: 3
     },
     closeBtn: {
         position: 'absolute',

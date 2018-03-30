@@ -103164,7 +103164,7 @@ var Alert = exports.Alert = function (_React$Component) {
                 bsStyle: 'link',
                 style: styles.closeBtn,
                 className: 'pull-right close'
-            }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'remove' })));
+            }, _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'remove', style: { fontSize: 18 } })));
         }
     }]);
     return Alert;
@@ -103203,7 +103203,8 @@ exports.default = (0, _reactRedux.connect)(function (state) {
 
 var styles = {
     alert: {
-        position: 'relative'
+        position: 'relative',
+        borderRadius: 3
     },
     closeBtn: {
         position: 'absolute',

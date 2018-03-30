@@ -19,6 +19,13 @@ html, body, input, button {
     color: var(--main-color) !important;
     border-color: var(--main-border-color) !important;
 }
+.has-success .form-control:focus {
+    box-shadow: 0 0 5px var(--main-color);
+    border-color: var(--main-border-color);
+}
+.label-success {
+    background-color: var(--main-color)
+}
 
 .btn {
     min-width: 100px !important;
@@ -37,15 +44,6 @@ html, body, input, button {
     font-size: 12px !important;
     line-height: 1.428571429 !important;
     border-radius: 16px !important;
-}
-
-.label-success {
-    background-color: var(--main-color)
-}
-
-.has-success .form-control:focus {
-    box-shadow: 0 0 5px var(--main-color);
-    border-color: var(--main-border-color);
 }
 
 textarea:focus {
