@@ -21,15 +21,21 @@ exports[`<WeatherList/> should match snapshot 1`] = `
       >
         <div
           className="row"
+          style={
+            Object {
+              "paddingBottom": 5,
+              "paddingTop": 5,
+            }
+          }
         >
           <div
-            className="col-xs-6"
+            className="col-xs-4"
           >
             <span
               className="glyphicon glyphicon-map-marker"
               style={
                 Object {
-                  "color": "grey",
+                  "color": "#00b386",
                   "marginRight": 5,
                 }
               }
@@ -37,12 +43,12 @@ exports[`<WeatherList/> should match snapshot 1`] = `
             Odessa
           </div>
           <div
-            className="col-xs-3"
+            className="col-xs-6"
           >
             not available
           </div>
           <div
-            className="col-xs-3"
+            className="col-xs-2"
           >
             <span
               className="pull-right glyphicon glyphicon-remove"
@@ -63,15 +69,21 @@ exports[`<WeatherList/> should match snapshot 1`] = `
       >
         <div
           className="row"
+          style={
+            Object {
+              "paddingBottom": 5,
+              "paddingTop": 5,
+            }
+          }
         >
           <div
-            className="col-xs-6"
+            className="col-xs-4"
           >
             <span
               className="glyphicon glyphicon-map-marker"
               style={
                 Object {
-                  "color": "grey",
+                  "color": "#00b386",
                   "marginRight": 5,
                 }
               }
@@ -79,12 +91,12 @@ exports[`<WeatherList/> should match snapshot 1`] = `
             New York
           </div>
           <div
-            className="col-xs-3"
+            className="col-xs-6"
           >
             not available
           </div>
           <div
-            className="col-xs-3"
+            className="col-xs-2"
           >
             <span
               className="pull-right glyphicon glyphicon-remove"

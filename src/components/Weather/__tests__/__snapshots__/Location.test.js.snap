@@ -3,15 +3,21 @@
 exports[`<Location/> should render Location 1`] = `
 <div
   className="row"
+  style={
+    Object {
+      "paddingBottom": 5,
+      "paddingTop": 5,
+    }
+  }
 >
   <div
-    className="col-xs-6"
+    className="col-xs-4"
   >
     <span
       className="glyphicon glyphicon-map-marker"
       style={
         Object {
-          "color": "grey",
+          "color": "#00b386",
           "marginRight": 5,
         }
       }
@@ -19,12 +25,17 @@ exports[`<Location/> should render Location 1`] = `
     Odessa
   </div>
   <div
-    className="col-xs-3"
+    className="col-xs-6"
   >
-    27 °C
+    <span>
+      <strong>
+        27
+      </strong>
+      °C
+    </span>
   </div>
   <div
-    className="col-xs-3"
+    className="col-xs-2"
   >
     <span
       className="pull-right glyphicon glyphicon-remove"
