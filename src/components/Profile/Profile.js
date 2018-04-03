@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button } from 'react-bootstrap';
+import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 import { Map } from 'immutable';
 import { editUser, deleteUser } from '../../redux/reducers/users';
 import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
@@ -207,11 +207,11 @@ class Profile extends React.Component<void, Props, State> {
 
                         <div className='text-center'>
                             <Button
-                                bsStyle='link'
-                                style={{color: 'red'}}
+                                bsStyle='danger'
+                                style={{marginBottom: 10}}
                                 onClick={() => this.showDeleteConfirmation()}
                             >
-                                Delete profile
+                                <Glyphicon glyph='trash' style={{marginRight: 5}}/> Delete Profile
                             </Button>
                         </div>
                     </Form>

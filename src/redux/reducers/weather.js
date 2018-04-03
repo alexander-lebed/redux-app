@@ -5,11 +5,11 @@ import { ADD_LOCATION, UPDATE_DATA, REMOVE_LOCATION } from '../actions/weather-a
 
 const initialState = Immutable.Map({
     locations: Immutable.List([
-        Immutable.Map({ id: '9hrptuontk1', city: 'Odessa', country: 'Ukraine', temp: 0, isDeleted: false }),
-        Immutable.Map({ id: 't4t6hhe6bf2', city: 'New York', country: 'United States', temp: 0, isDeleted: false }),
-        Immutable.Map({ id: 'mwev5gwa8p3', city: 'Valencia', country: 'Spain', temp: 0, isDeleted: true }),
-        Immutable.Map({ id: 'od7bvnqj6x4', city: 'London', country: 'Great Britain', temp: 0, isDeleted: true }),
-        Immutable.Map({ id: '6237op5obl5', city: 'San Francisco', country: 'United States', temp: 0, isDeleted: true })
+        Immutable.Map({ id: '9hrptuontk1', city: 'Odessa', country: 'Ukraine', temp: 0, text: '', isDeleted: false }),
+        Immutable.Map({ id: 't4t6hhe6bf2', city: 'New York', country: 'United States', temp: 0, text: '', isDeleted: false }),
+        Immutable.Map({ id: 'mwev5gwa8p3', city: 'Valencia', country: 'Spain', temp: 0, text: '', isDeleted: true }),
+        Immutable.Map({ id: 'od7bvnqj6x4', city: 'London', country: 'Great Britain', temp: 0, text: '', isDeleted: true }),
+        Immutable.Map({ id: '6237op5obl5', city: 'San Francisco', country: 'United States', temp: 0, text: '', isDeleted: true })
     ])
 });
 

@@ -37,7 +37,12 @@ export class WeatherList extends React.Component<void, Props, void> {
             .then(([...response]) => {
                 const data = locations.map((l, index) => {
                     const results = response[index].data.query.results;
-                    return l.set('temp', results ? results.channel.item.condition.temp : 0);
+                    if (results && results.channel.item.condition) {
+                        const condition = results.channel.item.condition;
+                        l = l.set('temp', condition.temp);
+                        l = l.set('text', condition.text);
+                    }
+                    return l;
                 });
                 updateData(currentData.set('locations', data));
             })
