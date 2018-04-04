@@ -1,10 +1,7 @@
 /* @flow */
 import React from 'react'
 import type { Node } from 'react';
-import Modal from 'react-bootstrap/lib/Modal'
-import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
-import Button from 'react-bootstrap/lib/Button'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
+import { Modal, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 
 type Props = {
   title: Node | string,

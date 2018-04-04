@@ -1,9 +1,7 @@
 // @flow
 import React from 'react';
 import { Map } from 'immutable';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import { Row, Col, Glyphicon } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
 
 
