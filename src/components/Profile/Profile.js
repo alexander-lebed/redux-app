@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 import { Map } from 'immutable';
 import { editUser, deleteUser } from '../../redux/reducers/users';
+import encryptPassword from '../../helpers/encryptPassword';
 import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
 import ConfirmationModal from '../common/ConfirmationModal';
 import type { User } from "../../types";
@@ -56,7 +57,7 @@ class Profile extends React.Component<void, Props, State> {
     savePassword = () => {
         const {user} = this.props;
         const {newPassword} = this.state;
-        this.props.editUser(user._id, {password: newPassword});
+        this.props.editUser(user._id, {password: encryptPassword(newPassword)});
     };
 
     showDeleteConfirmation = () => {
@@ -79,6 +80,7 @@ class Profile extends React.Component<void, Props, State> {
 
     render() {
         const {username, email, currentPassword, newPassword, confirmNewPassword} = this.state;
+        const currentEncryptedPassword = currentPassword ? encryptPassword(currentPassword) : '';
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col mdOffset={3} md={6}>
@@ -142,7 +144,7 @@ class Profile extends React.Component<void, Props, State> {
                         <h4 style={{marginBottom: 10}}>Change password:</h4>
 
                         <Well bsSize='small'>
-                            <FormGroup controlId='current-password' validationState={getConfirmPasswordValidationState(this.props.user.password, currentPassword)}>
+                            <FormGroup controlId='current-password' validationState={getConfirmPasswordValidationState(this.props.user.password, currentEncryptedPassword)}>
                                 <Col smOffset={2} sm={8}>
                                     <ControlLabel>Current password</ControlLabel>
                                     <FormControl
@@ -153,7 +155,7 @@ class Profile extends React.Component<void, Props, State> {
                                         onChange={this.handleChange}
                                     />
                                     <HelpBlock style={style.helpBlock}>
-                                        {getConfirmPasswordValidationState(this.props.user.password, currentPassword) === 'error' && 'Current password does not match'}
+                                        {getConfirmPasswordValidationState(this.props.user.password, currentEncryptedPassword) === 'error' && 'Current password does not match'}
                                     </HelpBlock>
                                 </Col>
                             </FormGroup>
@@ -281,8 +283,9 @@ class Profile extends React.Component<void, Props, State> {
     isPasswordFormValid = () => {
         const {user} = this.props;
         const {currentPassword, newPassword, confirmNewPassword} = this.state;
+        const currentEncryptedPassword = currentPassword ? encryptPassword(currentPassword) : '';
         const validationStates = [
-            getConfirmPasswordValidationState(user.password, currentPassword),
+            getConfirmPasswordValidationState(user.password, currentEncryptedPassword),
             getPasswordValidationState(newPassword),
             getConfirmPasswordValidationState(newPassword, confirmNewPassword),
             user.password === newPassword ? 'error' : 'success'

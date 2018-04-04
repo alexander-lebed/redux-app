@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from 'react-bootstrap';
+import encryptPassword from '../../helpers/encryptPassword';
 import { login } from '../../redux/reducers/authentication';
 import { success, error } from '../../redux/reducers/alerts';
 
@@ -32,7 +33,8 @@ class Login extends React.Component<void, Props, State> {
     login = (e) => {
         e.preventDefault();
         const {email, password} = this.state;
-        this.props.login(email, password).then(isLoggedIn => {
+        const encryptedPassword = encryptPassword(password);
+        this.props.login(email, encryptedPassword).then(isLoggedIn => {
             if (isLoggedIn) {
                 this.props.history.push('/');
             } else {

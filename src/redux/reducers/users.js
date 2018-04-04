@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { Map } from 'immutable';
 import history from "../../helpers/history";
 import { USERS_URL} from '../../constants';
+import encryptPassword from '../../helpers/encryptPassword';
 import generateError from "../../helpers/generateError";
 import { Alert } from './alerts';
 import { login, setUser } from './authentication';
@@ -39,12 +40,13 @@ export function register(username: string, email: string, password: string) {
 
         const users = getState().users.users;
         const registeredUser = users.get(email);
+        const encryptedPassword = encryptPassword(password);
 
         if (!registeredUser) {
             const payload = {
                 username,
                 email,
-                password,
+                password: encryptedPassword,
                 online: true,
                 lastTime: null // to set the time on server side
             };
