@@ -83,6 +83,9 @@ textarea:focus {
     div, span {
         font-size: 16px !important;
     }
+    .cut-senders-text {
+        width: 200px !important;
+    }
     .message-form {
         padding-right: 15px !important;
     }
@@ -99,6 +102,13 @@ input[type='checkbox'] {
 
 }
 
+.cut-senders-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 300px;
+    height: 1.4em;
+    white-space: nowrap
+}
 
 /* Switch checkbox */
 .material-switch > input[type="checkbox"] {

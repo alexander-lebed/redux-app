@@ -167,7 +167,7 @@ class Conversation extends React.Component<void, Props, State> {
         return (
             <div>
                 <Row style={{...style.top, ...{marginRight: 0}}}>
-                    <Col xs={9}>
+                    <Col xs={12} sm={9}>
                         <div>
                             <span style={style.from}>
                                 {message.from.username}
@@ -177,7 +177,7 @@ class Conversation extends React.Component<void, Props, State> {
                             </span>
                         </div>
                     </Col>
-                    <Col xs={3}>
+                    <Col xs={12} sm={3}>
                         {isMessageFromCurrentUser &&
                         <Glyphicon
                             id='remove'

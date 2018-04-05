@@ -21,12 +21,12 @@ export const Location = (props: Props) => {
     }
     return (
         <Row style={{paddingTop: 5, paddingBottom: 5}}>
-            <Col xs={4}>
+            <Col xs={5} sm={4}>
                 <Glyphicon glyph='map-marker' style={{marginRight: 5, color: MAIN_COLOR}} />
                 {location.get('city')}
             </Col>
-            <Col xs={6}>{tempInfo}{location.get('text') && `, ${location.get('text').toLowerCase()}`}</Col>
-            <Col xs={2}>
+            <Col xs={5} sm={6}>{tempInfo}{location.get('text') && `, ${location.get('text').toLowerCase()}`}</Col>
+            <Col xs={2} sm={2}>
                 <Glyphicon
                     glyph="remove"
                     className="pull-right"

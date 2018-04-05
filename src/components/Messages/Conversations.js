@@ -91,8 +91,8 @@ class Conversations extends React.Component<void, Props, State> {
                     <tr key={conv._id} style={newMessages.length > 0 ? {backgroundColor: '#edf0f5'} : {}}>
                         <td className='cursor' style={style.conversation} >
                             <Row>
-                                <Col xs={9} onClick={() => this.goToConversation(conv._id)}>
-                                    <div style={style.cutSendersText}>
+                                <Col xs={7} sm={9} onClick={() => this.goToConversation(conv._id)}>
+                                    <div className='cut-senders-text'>
                                         {senders.map(sender => (
                                             <span key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
                                                 {sender.username}
@@ -100,7 +100,7 @@ class Conversations extends React.Component<void, Props, State> {
                                         )).reduce((prev, curr) => [prev, ', ', curr])}
                                     </div>
                                 </Col>
-                                <Col xs={3} style={style.convRight}>
+                                <Col xs={5} sm={3} style={style.convRight}>
                                     <span>
                                         {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
                                         {timestampToHumanDate(conv.timestamp)}
@@ -119,7 +119,9 @@ class Conversations extends React.Component<void, Props, State> {
                                 <Col xs={3} sm={2} className='text-right' style={{paddingRight: 0}}>
                                     {lastMessage.from.username}:
                                 </Col>
-                                <Col xs={7} sm={8} style={textStyle}>{lastMessage.text}</Col>
+                                <Col xs={9} sm={8}>
+                                    <div style={textStyle}>{lastMessage.text}</div>
+                                </Col>
                             </Row>
                             }
                         </td>
