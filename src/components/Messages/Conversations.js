@@ -173,7 +173,8 @@ const style = {
     },
     convRight: {
         color: 'grey',
-        textAlign: 'right'
+        textAlign: 'right',
+        fontSize: 13
     },
     message: {
         color: 'grey',

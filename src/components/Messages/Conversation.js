@@ -173,7 +173,7 @@ class Conversation extends React.Component<void, Props, State> {
                                 {message.from.username}
                             </span>
                             <span style={{paddingLeft: 15}}>
-                                {timestampToHumanDate(message.timestamp)}
+                                {timestampToHumanDate(message.timestamp, true)}
                             </span>
                         </div>
                     </Col>
