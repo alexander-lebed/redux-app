@@ -52,7 +52,12 @@ exports[`<People/> should match snapshot 1`] = `
               className="row"
             >
               <div
-                className="col-sm-6 col-xs-12"
+                className="col-sm-4 col-xs-12"
+                style={
+                  Object {
+                    "paddingTop": 5,
+                  }
+                }
               >
                 <span
                   className="glyphicon glyphicon-user"
@@ -66,7 +71,7 @@ exports[`<People/> should match snapshot 1`] = `
                 Current User
               </div>
               <div
-                className="col-sm-6 col-xs-12"
+                className="col-sm-8 col-xs-12"
                 style={
                   Object {
                     "color": "grey",
@@ -95,7 +100,12 @@ exports[`<People/> should match snapshot 1`] = `
               className="row"
             >
               <div
-                className="col-sm-6 col-xs-12"
+                className="col-sm-4 col-xs-12"
+                style={
+                  Object {
+                    "paddingTop": 5,
+                  }
+                }
               >
                 <span
                   className="glyphicon glyphicon-user"
@@ -109,7 +119,7 @@ exports[`<People/> should match snapshot 1`] = `
                 Alice
               </div>
               <div
-                className="col-sm-6 col-xs-12"
+                className="col-sm-8 col-xs-12"
                 style={
                   Object {
                     "color": "grey",
@@ -138,7 +148,12 @@ exports[`<People/> should match snapshot 1`] = `
               className="row"
             >
               <div
-                className="col-sm-6 col-xs-12"
+                className="col-sm-4 col-xs-12"
+                style={
+                  Object {
+                    "paddingTop": 5,
+                  }
+                }
               >
                 <span
                   className="glyphicon glyphicon-user"
@@ -152,7 +167,7 @@ exports[`<People/> should match snapshot 1`] = `
                 Bob
               </div>
               <div
-                className="col-sm-6 col-xs-12"
+                className="col-sm-8 col-xs-12"
                 style={
                   Object {
                     "color": "grey",
