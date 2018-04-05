@@ -91,7 +91,7 @@ export class People extends React.Component<void, Props, State> {
                                         <tr key={user._id} id={user._id}>
                                             <td>
                                                 <Row>
-                                                    <Col xs={12} sm={6}>
+                                                    <Col xs={12} sm={4} style={{paddingTop: 5}}>
                                                         <Glyphicon glyph='user' style={glyphStyle} />
                                                         {user.username}
                                                         {this.isAdmin() &&
@@ -104,7 +104,7 @@ export class People extends React.Component<void, Props, State> {
                                                         />
                                                         }
                                                     </Col>
-                                                    <Col xs={12} sm={6} style={style.time}>
+                                                    <Col xs={12} sm={8} style={style.time}>
                                                         {!user.online && `last seen ${timestampToHumanDate(user.lastTime)}`}
                                                         <Button
                                                             id={`write-user-${user._id}`}
