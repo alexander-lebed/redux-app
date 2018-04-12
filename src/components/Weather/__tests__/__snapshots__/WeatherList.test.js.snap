@@ -13,141 +13,207 @@ exports[`<WeatherList/> should match snapshot 1`] = `
   <div
     className="col-sm-6 col-sm-offset-3 col-xs-12 col-xs-offset-0"
   >
-    <ul
-      className="weather-list"
-    >
-      <li
-        className="weather-item"
-      >
-        <div
-          className="row"
-          style={
-            Object {
-              "paddingBottom": 5,
-              "paddingTop": 5,
-            }
-          }
-        >
-          <div
-            className="col-sm-4 col-xs-5"
-          >
-            <span
-              className="glyphicon glyphicon-map-marker"
-              style={
-                Object {
-                  "color": "#00b386",
-                  "marginRight": 5,
-                }
-              }
-            />
-            Odessa
-          </div>
-          <div
-            className="col-sm-6 col-xs-5"
-          >
-            not available
-          </div>
-          <div
-            className="col-sm-2 col-xs-2"
-          >
-            <span
-              className="pull-right glyphicon glyphicon-remove"
-              onClick={[Function]}
-              style={
-                Object {
-                  "color": "grey",
-                  "marginRight": 10,
-                }
-              }
-              title="Remove Location"
-            />
-          </div>
-        </div>
-      </li>
-      <li
-        className="weather-item"
-      >
-        <div
-          className="row"
-          style={
-            Object {
-              "paddingBottom": 5,
-              "paddingTop": 5,
-            }
-          }
-        >
-          <div
-            className="col-sm-4 col-xs-5"
-          >
-            <span
-              className="glyphicon glyphicon-map-marker"
-              style={
-                Object {
-                  "color": "#00b386",
-                  "marginRight": 5,
-                }
-              }
-            />
-            New York
-          </div>
-          <div
-            className="col-sm-6 col-xs-5"
-          >
-            not available
-          </div>
-          <div
-            className="col-sm-2 col-xs-2"
-          >
-            <span
-              className="pull-right glyphicon glyphicon-remove"
-              onClick={[Function]}
-              style={
-                Object {
-                  "color": "grey",
-                  "marginRight": 10,
-                }
-              }
-              title="Remove Location"
-            />
-          </div>
-        </div>
-      </li>
-    </ul>
     <div
-      className="btn-toolbar"
-      role="toolbar"
+      className="row"
+    >
+      <div
+        className="col-sm-6 col-xs-12"
+      >
+        <div
+          onKeyUp={[Function]}
+        >
+          <div
+            className="Select is-clearable is-searchable Select--single"
+            style={undefined}
+          >
+            <div
+              className="Select-control"
+              onKeyDown={[Function]}
+              onMouseDown={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              style={undefined}
+            >
+              <span
+                className="Select-multi-value-wrapper"
+                id="react-select-2--value"
+              >
+                <div
+                  className="Select-placeholder"
+                >
+                  Search for a city
+                </div>
+                <div
+                  className="Select-input"
+                  style={
+                    Object {
+                      "display": "inline-block",
+                    }
+                  }
+                >
+                  <input
+                    aria-activedescendant="react-select-2--value"
+                    aria-describedby={undefined}
+                    aria-expanded="false"
+                    aria-haspopup="false"
+                    aria-label={undefined}
+                    aria-labelledby={undefined}
+                    aria-owns=""
+                    className={undefined}
+                    id={undefined}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    required={false}
+                    role="combobox"
+                    style={
+                      Object {
+                        "boxSizing": "content-box",
+                        "width": "5px",
+                      }
+                    }
+                    tabIndex={undefined}
+                    value=""
+                  />
+                  <div
+                    style={
+                      Object {
+                        "height": 0,
+                        "left": 0,
+                        "overflow": "scroll",
+                        "position": "absolute",
+                        "top": 0,
+                        "visibility": "hidden",
+                        "whiteSpace": "pre",
+                      }
+                    }
+                  >
+                    
+                  </div>
+                </div>
+              </span>
+              <span
+                className="Select-arrow-zone"
+                onMouseDown={[Function]}
+              >
+                <span
+                  className="Select-arrow"
+                  onMouseDown={[Function]}
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
       style={
         Object {
-          "marginTop": 10,
+          "paddingTop": 15,
         }
       }
     >
-      <div
-        className="dropdown disabled btn-group"
+      <ul
+        className="weather-list"
       >
-        <button
-          aria-expanded={false}
-          aria-haspopup={true}
-          className="dropdown-toggle btn btn-default"
-          disabled={true}
-          id="add-location"
-          onClick={[Function]}
-          onKeyDown={[Function]}
-          role="button"
-          type="button"
+        <li
+          className="weather-item"
         >
-          Add Location
-           
-          <span
-            className="caret"
-          />
-        </button>
-        <ul
-          aria-labelledby="add-location"
-          className="dropdown-menu"
-          role="menu"
-        />
-      </div>
+          <div
+            className="row"
+            style={
+              Object {
+                "paddingBottom": 5,
+                "paddingTop": 5,
+              }
+            }
+          >
+            <div
+              className="col-xs-6"
+            >
+              <span
+                className="glyphicon glyphicon-map-marker"
+                style={
+                  Object {
+                    "color": "#00b386",
+                    "marginRight": 5,
+                  }
+                }
+              />
+              Odessa (OD), Ukraine
+            </div>
+            <div
+              className="col-xs-4"
+            >
+              not available
+            </div>
+            <div
+              className="col-xs-2"
+            >
+              <span
+                className="pull-right glyphicon glyphicon-remove"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "color": "grey",
+                    "marginRight": 10,
+                  }
+                }
+                title="Remove Location"
+              />
+            </div>
+          </div>
+        </li>
+        <li
+          className="weather-item"
+        >
+          <div
+            className="row"
+            style={
+              Object {
+                "paddingBottom": 5,
+                "paddingTop": 5,
+              }
+            }
+          >
+            <div
+              className="col-xs-6"
+            >
+              <span
+                className="glyphicon glyphicon-map-marker"
+                style={
+                  Object {
+                    "color": "#00b386",
+                    "marginRight": 5,
+                  }
+                }
+              />
+              New York (NY), United States
+            </div>
+            <div
+              className="col-xs-4"
+            >
+              not available
+            </div>
+            <div
+              className="col-xs-2"
+            >
+              <span
+                className="pull-right glyphicon glyphicon-remove"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "color": "grey",
+                    "marginRight": 10,
+                  }
+                }
+                title="Remove Location"
+              />
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

@@ -36,3 +36,13 @@ export type Conversation = {
     messages: Array<Message>,
     timestamp: number | null
 }
+
+export type Location = {
+    id: string,
+    city: string,
+    region: string,
+    country: string,
+    isDeleted?: boolean,
+    temp?: number,
+    text?: string
+}
