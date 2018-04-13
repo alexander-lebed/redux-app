@@ -2,10 +2,10 @@
 import React from 'react';
 import type { Node } from 'react';
 import $http from 'axios';
-import jsonp from 'jsonp';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
+import { PLACES_URL } from '../../constants';
 import { updateData } from '../../redux/reducers/weather'
 import Location from './Location';
 import type { State as CurrentData, Location as LocationType } from '../../types';
@@ -43,28 +43,37 @@ export class WeatherList extends React.Component<void, Props, State> {
     }
 
     onSearch = (text: string) => {
-        this.setState({searchText: text});
+        this.setState({
+            searchText: text
+        });
 
-        const search = (param) => {
-            jsonp(`http://gd.geobytes.com/AutoCompleteCity?q=${param}`, null, (err, data) => {
-                if (err || JSON.stringify(data) === '["%s"]') {
-                    return;
-                }
-                const locations = data.map(e => {
-                    const locArr = e.split(',');
-                    return {
-                        id: e.replace(/ /g,''),
-                        city: locArr[0],
-                        region: locArr[1].substring(1),
-                        country: locArr[2].substring(1)
-                    };
-                });
-                this.setState({
-                    searchList: locations
-                });
-            });
+        const search = (city) => {
+            $http.get(`${PLACES_URL}?city=${city}`)
+                .then(response => {
+                    const locations = response.data.map(e => {
+                        const locationName = e.description;
+                        const locArr = locationName.split(',');
+                        const city = locArr[0];
+                        let region = '';
+                        let country = '';
+                        if (locArr.length === 3) {
+                            region = locArr[1].substring(1);
+                            country = locArr[2].substring(1);
+                        } else {
+                            country = locArr[1].substring(1);
+                        }
+                        return {
+                            id: e.id,
+                            city,
+                            region,
+                            country
+                        };
+                    });
+                    this.setState({
+                        searchList: locations
+                    });
+                })
         };
-
         const delay = (callback, ms) => {
             clearTimeout(this.timer);
             this.timer = setTimeout(callback, ms)
@@ -82,7 +91,7 @@ export class WeatherList extends React.Component<void, Props, State> {
             select * from weather.forecast
             where woeid in (
                 select woeid from geo.places(1)
-                where text="${location.city}, ${location.country}, ${location.region}"
+                where text="${location.city}, ${location.country}${location.region && `, ${location.region}`}"
             )
             &format=json`;
         const promises = locations.map(l => $http.get(getWeatherUrl(l)));
@@ -99,9 +108,6 @@ export class WeatherList extends React.Component<void, Props, State> {
                 });
                 this.props.updateData(data);
             })
-            .catch(() => {
-                // console.log(err);
-            });
     };
 
     render() {

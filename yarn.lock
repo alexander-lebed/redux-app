@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@google/maps@^0.4.6":
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/@google/maps/-/maps-0.4.6.tgz#0a1957fd71a4c9f30706b2fd2aac13cafd6a9072"
+
 "@sinonjs/formatio@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/formatio/-/formatio-2.0.0.tgz#84db7e9eb5531df18a8c5e0bfb6e449e55e654b2"
@@ -2724,6 +2728,10 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
+googleplaces@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/googleplaces/-/googleplaces-0.6.1.tgz#ca7ba2f42181cb6bc06d458f51ed265d03e91e72"
+
 got@^6.7.1:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/got/-/got-6.7.1.tgz#240cd05785a9a18e561dc1b44b41c763ef1e8db0"
@@ -3762,6 +3770,10 @@ linkify-it@^2.0.3:
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.0.3.tgz#d94a4648f9b1c179d64fa97291268bdb6ce9434f"
   dependencies:
     uc.micro "^1.0.1"
+
+load-google-maps-api@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/load-google-maps-api/-/load-google-maps-api-1.2.1.tgz#012529a93e8cea234efab56ca80733db49a653e7"
 
 load-json-file@^1.0.0:
   version "1.1.0"
@@ -5313,6 +5325,10 @@ sane@~1.6.0:
 sax@^1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
+
+scriptjs@^2.5.8:
+  version "2.5.8"
+  resolved "https://registry.yarnpkg.com/scriptjs/-/scriptjs-2.5.8.tgz#d0c43955c2e6bad33b6e4edf7b53b8965aa7ca5f"
 
 select-hose@^2.0.0:
   version "2.0.0"

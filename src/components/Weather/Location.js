@@ -23,7 +23,7 @@ export const Location = (props: Props) => {
         <Row style={{paddingTop: 5, paddingBottom: 5}}>
             <Col xs={6}>
                 <Glyphicon glyph='map-marker' style={{marginRight: 5, color: MAIN_COLOR}} />
-                {`${location.city}${location.region && ` (${location.region}`}), ${location.country}`}
+                {`${location.city}${location.region && ` (${location.region})`}, ${location.country}`}
             </Col>
             <Col xs={4}>{tempInfo}{location.text && `, ${location.text.toLowerCase()}`}</Col>
             <Col xs={2}>

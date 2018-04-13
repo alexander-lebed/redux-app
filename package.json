@@ -33,7 +33,6 @@
     "foreman": "^2.0.0",
     "history": "^4.6.3",
     "immutable": "^3.8.1",
-    "jsonp": "^0.2.1",
     "lodash": "^4.17.4",
     "moment": "^2.19.4",
     "mongoose": "5.0.1",
