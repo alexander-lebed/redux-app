@@ -8,7 +8,9 @@ import { DOCUMENT_TITLE } from "../../constants";
 
 const actions = {
     START_INIT: 'START_INIT',
-    END_INIT: 'END_INIT'
+    END_INIT: 'END_INIT',
+    WINDOW_ACTIVE: 'UPDATE_USER_ACTIVE',
+    BLOCKED_MESSAGES: 'BLOCKED_MESSAGES'
 };
 
 const loading = (state = false, action: Action) => {
@@ -22,8 +24,28 @@ const loading = (state = false, action: Action) => {
     }
 };
 
+const isUserInMessenger = (state = true, action: Action) => {
+    switch (action.type) {
+        case actions.WINDOW_ACTIVE:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+const blockedNotifications = (state = [], action: Action) => {
+    switch (action.type) {
+        case actions.BLOCKED_MESSAGES:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
 export default combineReducers({
-    loading
+    loading,
+    isUserInMessenger,
+    blockedNotifications
 });
 
 
@@ -44,7 +66,20 @@ export function initApp() {
                     })
                 }
             })
+            .then(() => dispatch({type: actions.BLOCKED_MESSAGES, payload: []}))
             .then(() => {
+                window.addEventListener('focus', () => dispatch({type: actions.WINDOW_ACTIVE, payload: true}));
+                window.addEventListener('blur', () => dispatch({type: actions.WINDOW_ACTIVE, payload: false}));
+                // request browser notification permission on page load
+                document.addEventListener('DOMContentLoaded', () => {
+                    if (!Notification) {
+                        alert('Desktop notifications not available in your browser.');
+                        return;
+                    }
+                    if (Notification.permission !== 'granted') {
+                        Notification.requestPermission();
+                    }
+                });
                 dispatch({
                     type: actions.END_INIT
                 });
@@ -67,6 +102,7 @@ export function updateData() {
                     const newMessages = conversations.filter(c => c.messages.some(m => !m.read && m.from._id !== currentUser._id));
                     if (newMessages.length > 0) {
                         document.title = `${newMessages.length} new message${newMessages.length > 1 ? 's' : ''}`;
+                        showDesktopNotifications(newMessages, dispatch, getState);
                     } else {
                         document.title = DOCUMENT_TITLE;
                     }
@@ -74,3 +110,45 @@ export function updateData() {
         }
     }
 }
+
+const showDesktopNotifications = (conversations, dispatch, getState) => {
+    conversations.forEach(c => {
+        const convId = c._id;
+        const unreadMessages = c.messages.filter(e => !e.read);
+        const messageHash = convId + unreadMessages.map(e => e.timestamp).sort().toString();
+
+        Promise.resolve()
+            .then(() => {
+                if (getState().startup.isUserInMessenger) {
+                    dispatch({
+                        type: actions.BLOCKED_MESSAGES,
+                        payload: getState().startup.blockedNotifications.concat(messageHash)
+                    })
+                }
+            })
+            .then(() => {
+                const blockedNotifications = getState().startup.blockedNotifications;
+                if (!blockedNotifications.includes(messageHash)) {
+                    const messagesArr = unreadMessages.map(e => e.text);
+                    const senders = [...new Set(unreadMessages.map(e => e.from.username))];
+                    const title = `Message from ${senders.join(', ')}`;
+                    const notification = new Notification(title, {
+                        tag: convId,
+                        icon: 'favicon.png',
+                        body: messagesArr.join('\n'),
+                        vibrate: [200, 100, 200]
+                    });
+                    notification.onclick = () => {
+                        window.open(`${window.location.origin}/conversation?convId=${convId}`);
+                        notification.close();
+                    };
+
+                    // do not show the same notification again
+                    dispatch({
+                        type: actions.BLOCKED_MESSAGES,
+                        payload: blockedNotifications.concat(messageHash)
+                    });
+                }
+            });
+    });
+};
