@@ -3,7 +3,7 @@ import React from 'react';
 import type { Node } from 'react';
 import { connect } from "react-redux";
 import { initApp, updateData } from "../redux/reducers/startup";
-import Spinner from './common/Spinner';
+// import Spinner from './common/Spinner';
 
 type Props = {
     loading: boolean,
@@ -36,11 +36,11 @@ class Startup extends React.Component<void, Props, void> {
     }
 
     render() {
-        if (this.props.loading) {
-            return (
-                <Spinner />
-            )
-        }
+        // if (this.props.loading) {
+        //     return (
+        //         <Spinner />
+        //     )
+        // }
         return this.props.children;
     }
 }
