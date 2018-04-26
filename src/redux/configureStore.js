@@ -37,7 +37,7 @@ export default function configureStore() {
                 store,
                 { transforms: [immutableTransform()] },
                 () => resolve(store)
-            ).purge(); // .purge();
+            ); // .purge();
         } catch (e) {
             reject(e);
         }
