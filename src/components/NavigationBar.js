@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Button, DropdownButton, MenuItem, Glyphicon, Badge } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { MAIN_COLOR, BORDER_COLOR } from '../constants';
-import { logout, online } from '../redux/reducers/authentication';
+import { logout } from '../redux/reducers/authentication';
 import type { User } from '../types';
 
 type Props = {
     user: User,
     conversations: Array<Object>,
-    logout: Function,
-    online: Function
+    logout: Function
 }
 
 type State = {
@@ -29,7 +28,7 @@ class NavigationBar extends React.Component<void, Props, State> {
     };
 
     render() {
-        const {user, conversations = [], logout, online} = this.props;
+        const {user, conversations = [], logout} = this.props;
         let newMessages = null;
         if (user) {
             const unreadConversations = conversations.filter(c => c.messages.some(m => !m.read && m.from._id !== user._id));
@@ -74,33 +73,22 @@ class NavigationBar extends React.Component<void, Props, State> {
                                 id='user-button'
                                 bsSize='small'
                                 className='mobile-btn'
-                                title={`${user.username} ${user.online ? '(online)' : '(offline)'}`}
+                                title={user.username}
                                 style={dropdownStyle}
                             >
-                                <MenuItem
-                                    eventKey='1'
-                                    onClick={() => {
-                                        online(!user.online);
-                                        this.expand(false)
-                                    }}
-                                    className='dropdown-item'
-                                >
-                                    <Glyphicon glyph='user' style={{marginRight: 8}} />
-                                    {user.online ? 'Go offline' : 'Go online'}
-                                </MenuItem>
                                 <LinkContainer
                                     key='profile'
                                     to='/profile'
                                     onClick={() => this.expand(false)}
                                 >
-                                    <MenuItem eventKey='2' className='dropdown-item'>
+                                    <MenuItem eventKey='1' className='dropdown-item'>
                                         <Glyphicon glyph='pencil' style={{marginRight: 8}} />
                                         Edit profile
                                     </MenuItem>
                                 </LinkContainer>
                                 {user &&
                                 <MenuItem
-                                    eventKey='3'
+                                    eventKey='2'
                                     className='dropdown-item'
                                     onSelect={() => {
                                         logout();
@@ -142,5 +130,5 @@ export default connect(
         user: state.authentication.user,
         conversations: state.conversations.conversations
     }),
-    { logout, online }, null, {pure: false}
+    { logout }, null, {pure: false}
 )(NavigationBar);

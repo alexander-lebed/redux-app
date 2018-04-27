@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import type { Action, Dispatch } from '../../types';
 import { getUsers } from './users';
-import { login } from './authentication';
+import { login, online } from './authentication';
 import { getConversationsByUser } from './conversations';
 import { Alert } from './alerts';
 import { DOCUMENT_TITLE } from "../../constants";
@@ -70,15 +70,24 @@ export function initApp() {
             .then(() => {
                 window.addEventListener('focus', () => dispatch({type: actions.WINDOW_ACTIVE, payload: true}));
                 window.addEventListener('blur', () => dispatch({type: actions.WINDOW_ACTIVE, payload: false}));
+
                 // request browser notification permission on page load
                 document.addEventListener('DOMContentLoaded', () => {
-                    if (!Notification) {
-                        alert('Desktop notifications not available in your browser.');
-                        return;
-                    }
-                    if (Notification.permission !== 'granted') {
+                    if (Notification && Notification.permission !== 'granted') {
                         Notification.requestPermission();
                     }
+                });
+
+                // go user offline on page leave
+                const currentUser = getState().authentication.user;
+                window.addEventListener('beforeunload', (event) => {
+                    event.preventDefault();
+                    if (currentUser && currentUser.online) {
+                        dispatch(online(false));
+                        setTimeout(() => dispatch(online(true)), 1000); // back to online if user click Cancel
+                        return event.returnValue = 'Are you sure you what to leave?';
+                    }
+                    return null;
                 });
                 dispatch({
                     type: actions.END_INIT

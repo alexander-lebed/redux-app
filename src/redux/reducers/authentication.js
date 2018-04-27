@@ -36,6 +36,7 @@ export function login(email: string, password: string) {
             const user = users.find(e => e.email === email && e.password === password);
 
             if (user) {
+                user.online = true;
                 $http.put(`${USERS_URL}/${user._id}`, user)
                     .then(response => {
                         dispatch(setUser(response.data));
