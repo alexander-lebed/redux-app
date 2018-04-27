@@ -6,7 +6,7 @@ import { Map } from 'immutable';
 import { Row, Col, Table, Badge, Glyphicon, Button } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
-import { getConversationsByUser, deleteConversation, conversationsCleanup } from '../../redux/reducers/conversations';
+import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
 import ConfirmationModal from '../common/ConfirmationModal';
 import type { User, Conversation as ConversationType } from '../../types';
 
@@ -16,8 +16,7 @@ type Props = {
     users: Map<string, User>,
     conversations: Array<ConversationType>,
     getConversationsByUser: Function,
-    deleteConversation: Function,
-    conversationsCleanup: Function
+    deleteConversation: Function
 }
 
 type State = {
@@ -35,10 +34,6 @@ class Conversations extends React.Component<void, Props, State> {
 
     componentDidMount() {
         this.props.getConversationsByUser(this.props.user._id);
-    }
-
-    componentWillUnmount() {
-        this.props.conversationsCleanup();
     }
 
     goToConversation = (convId: string) => {
@@ -210,5 +205,5 @@ export default connect(
         users: state.users.users,
         conversations: state.conversations.conversations
     }),
-    { getConversationsByUser, deleteConversation, conversationsCleanup }
+    { getConversationsByUser, deleteConversation }
 )(Conversations);

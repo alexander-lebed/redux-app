@@ -193,15 +193,6 @@ export function conversationCleanup() {
     }
 }
 
-export function conversationsCleanup() {
-    return (dispatch: Dispatch) => {
-        dispatch({
-            type: actions.SET_CONVERSATIONS,
-            payload: []
-        });
-    }
-}
-
 export function deleteMessage(messageId: string) {
     return (dispatch: Dispatch, getState: Function) => {
         const conversation = getState().conversations.conversation;

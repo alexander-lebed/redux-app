@@ -1,4 +1,3 @@
-/* @flow */
 import React from 'react'
 import type { Node } from 'react';
 import { Modal, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
