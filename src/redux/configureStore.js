@@ -35,7 +35,10 @@ export default function configureStore() {
             // note: use persistStore(...).purge() to reset the store
             persistStore(
                 store,
-                { transforms: [immutableTransform()] },
+                {
+                    whitelist : ['authentication', 'users', 'weather'],
+                    transforms: [immutableTransform()]
+                },
                 () => resolve(store)
             ); // .purge();
         } catch (e) {
