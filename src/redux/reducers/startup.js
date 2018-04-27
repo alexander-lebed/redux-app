@@ -78,17 +78,19 @@ export function initApp() {
                     }
                 });
 
-                // go user offline on page leave
                 const currentUser = getState().authentication.user;
-                window.addEventListener('beforeunload', (event) => {
+                const confirmLeave = (event) => {
                     event.preventDefault();
                     if (currentUser && currentUser.online) {
-                        dispatch(online(false));
+                        dispatch(online(false)); // go user offline on page leave
                         setTimeout(() => dispatch(online(true)), 1000); // back to online if user click Cancel
                         return event.returnValue = 'Are you sure you what to leave?';
                     }
                     return null;
-                });
+                };
+                window.addEventListener('beforeunload', (event) => confirmLeave(event));
+                window.addEventListener('unload', (event) => confirmLeave(event));
+
                 dispatch({
                     type: actions.END_INIT
                 });
