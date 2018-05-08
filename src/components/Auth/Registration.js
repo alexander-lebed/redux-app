@@ -16,7 +16,7 @@ type State = {
     confirmPassword: string
 };
 
-class Login extends React.Component<void, Props, State> {
+class Login extends React.Component<Props, State> {
 
     state = {
         username: '',

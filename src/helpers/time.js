@@ -1,7 +1,11 @@
+// @flow
 import moment from 'moment';
 
 // returns human readable time/date comparable to the current time
-export function timestampToHumanDate(timestamp: number, exactTime: boolean = false) {
+export function timestampToHumanDate(timestamp: number | null, exactTime: boolean = false) {
+    if (!timestamp) {
+        return '';
+    }
     let time = '';
     const now = moment();
     if (now.format('YYYY') !== moment(timestamp).format('YYYY')) {

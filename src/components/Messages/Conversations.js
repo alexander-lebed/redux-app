@@ -23,7 +23,7 @@ type State = {
     deleteConversationId: string
 }
 
-class Conversations extends React.Component<void, Props, State> {
+class Conversations extends React.Component<Props, State> {
     state: State;
     constructor(props: Props) {
         super(props);

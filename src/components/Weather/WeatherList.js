@@ -21,20 +21,19 @@ type State = {
     searchList: Array<LocationType>
 }
 
-export class WeatherList extends React.Component<void, Props, State> {
+export class WeatherList extends React.Component<Props, State> {
     state: State;
-    timer: number;
+    timer: TimeoutID;
     constructor(props: Props) {
         super(props);
         this.state = {
             searchText: '',
             searchList: []
         };
-        this.timer = 0;
     }
 
     componentDidMount() {
-        // for backward compatibility
+        // for backward compatibility; $FlowFixMe
         if (this.props.locations.size) {
             this.props.updateData([]);
         }

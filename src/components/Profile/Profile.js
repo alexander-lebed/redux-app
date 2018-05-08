@@ -26,7 +26,7 @@ type State = {
     showDeleteConfirmation: boolean
 };
 
-class Profile extends React.Component<void, Props, State> {
+class Profile extends React.Component<Props, State> {
 
     state: State;
 

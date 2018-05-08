@@ -21,30 +21,33 @@ import Alerts from './components/Alerts';
 
 async function init() {
     const store = await configureStore();
-    render(
-        <Provider store={store}>
-            <Startup>
-                <Router history={history}>
-                    <div>
-                        <Alerts />
-                        <NavigationBar />
-                        <Switch>
-                            <Route exact path="/login" component={Login} />
-                            <Route exact path="/register" component={Registration} />
-                            <PrivateRoute exact path="/" component={Conversations} />
-                            <PrivateRoute exact path="/conversations" component={Conversations} />
-                            <PrivateRoute path="/conversation" component={Conversation} /> {/* query: convId or userId */}
-                            <PrivateRoute path="/create-conversation" component={CreateConversation} />
-                            <PrivateRoute exact path="/people" component={People} />
-                            <PrivateRoute path="/weather" component={WeatherList} />
-                            <PrivateRoute path="/profile" component={Profile} />
-                        </Switch>
-                    </div>
-                </Router>
-            </Startup>
-        </Provider>,
-        document.getElementById('app')
-    );
+    const app = document.getElementById('app');
+    if (app) {
+        render(
+            <Provider store={store}>
+                <Startup>
+                    <Router history={history}>
+                        <div>
+                            <Alerts />
+                            <NavigationBar />
+                            <Switch>
+                                <Route exact path="/login" component={Login} />
+                                <Route exact path="/register" component={Registration} />
+                                <PrivateRoute exact path="/" component={Conversations} />
+                                <PrivateRoute exact path="/conversations" component={Conversations} />
+                                <PrivateRoute path="/conversation" component={Conversation} /> {/* query: convId or userId */}
+                                <PrivateRoute path="/create-conversation" component={CreateConversation} />
+                                <PrivateRoute exact path="/people" component={People} />
+                                <PrivateRoute path="/weather" component={WeatherList} />
+                                <PrivateRoute path="/profile" component={Profile} />
+                            </Switch>
+                        </div>
+                    </Router>
+                </Startup>
+            </Provider>,
+            app
+        );
+    }
 }
 
 init();

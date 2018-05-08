@@ -27,11 +27,11 @@ type State = {
     showEmoji: boolean
 };
 
-class Conversation extends React.Component<void, Props, State> {
+class Conversation extends React.Component<Props, State> {
 
     state: State;
-    interval: number;
-    scrollableTable: Object;
+    interval: IntervalID;
+    scrollableTable: Object | null;
 
     constructor(params: Props) {
         super(params);
@@ -39,7 +39,6 @@ class Conversation extends React.Component<void, Props, State> {
             messageText: '',
             showEmoji: false
         };
-        this.interval = 0;
         this.scrollableTable = {};
     }
 

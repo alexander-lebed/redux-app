@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import type { Action, Dispatch } from '../../types';
 import { getUsers } from './users';
 import { login, online } from './authentication';
 import { getConversationsByUser } from './conversations';
@@ -13,7 +12,7 @@ const actions = {
     BLOCKED_MESSAGES: 'BLOCKED_MESSAGES'
 };
 
-const loading = (state = false, action: Action) => {
+const loading = (state = false, action) => {
     switch (action.type) {
         case actions.START_INIT:
             return true;
@@ -24,7 +23,7 @@ const loading = (state = false, action: Action) => {
     }
 };
 
-const isUserInMessenger = (state = true, action: Action) => {
+const isUserInMessenger = (state = true, action) => {
     switch (action.type) {
         case actions.WINDOW_ACTIVE:
             return action.payload;
@@ -33,7 +32,7 @@ const isUserInMessenger = (state = true, action: Action) => {
     }
 };
 
-const blockedNotifications = (state = [], action: Action) => {
+const blockedNotifications = (state = [], action) => {
     switch (action.type) {
         case actions.BLOCKED_MESSAGES:
             return action.payload;
@@ -50,7 +49,7 @@ export default combineReducers({
 
 
 export function initApp() {
-    return (dispatch: Dispatch, getState: Function) => {
+    return (dispatch, getState) => {
         dispatch({
             type: actions.START_INIT
         });
@@ -99,7 +98,7 @@ export function initApp() {
 }
 
 export function updateData() {
-    return (dispatch: Dispatch, getState: Function) => {
+    return (dispatch, getState) => {
         // refresh users
         dispatch(getUsers());
         // refresh user messages

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
@@ -51,15 +52,6 @@ export function getConversationsByUser(userId: string) {
                     payload: _.orderBy(response.data, 'timestamp', 'desc')
                 });
             })
-            // .catch(err => {
-            //     const error = (
-            //         <div>
-            //             <strong>Error on fetch conversations:</strong>
-            //             <div>{generateError(err)}</div>
-            //         </div>
-            //     );
-            //     dispatch(Alert.error(error));
-            // });
     }
 }
 
@@ -73,15 +65,6 @@ export function getConversation(convId: string) {
                     payload: conversation
                 })
             })
-            // .catch(err => {
-            //     const error = (
-            //         <div>
-            //             <strong>Error on fetch conversation:</strong>
-            //             <div>{generateError(err)}</div>
-            //         </div>
-            //     );
-            //     dispatch(Alert.error(error));
-            // });
     }
 }
 
@@ -125,15 +108,6 @@ export function getConversationWithUsers(userIds: Array<string>) {
                         })
                 }
             })
-            // .catch(err => {
-            //     const error = (
-            //         <div>
-            //             <strong>Error on fetch conversation:</strong>
-            //             <div>{generateError(err)}</div>
-            //         </div>
-            //     );
-            //     dispatch(Alert.error(error));
-            // });
     }
 }
 
@@ -172,15 +146,6 @@ export function saveConversation(conversation: Object) {
                     dispatch(getConversationsByUser(currentUser._id))
                 }
             })
-            // .catch(err => {
-            //     const error = (
-            //         <div>
-            //             <strong>Error on save conversation:</strong>
-            //             <div>{generateError(err)}</div>
-            //         </div>
-            //     );
-            //     dispatch(Alert.error(error));
-            // });
     }
 }
 
@@ -205,7 +170,7 @@ export function deleteMessage(messageId: string) {
     }
 }
 
-// todo: don't deleted, just mark as deleted
+// this method doesn't delete conversation, just mark as deleted
 export function deleteConversation(convId: string) {
     return (dispatch: Dispatch, getState: Function) => {
         $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`)
@@ -227,86 +192,3 @@ export function deleteConversation(convId: string) {
             })
     }
 }
-
-/*
-const users = [
-    {_id:"5a41105fb392155d94051100",password:"USER_1",email:"USER_1@mail",username:"USER_1"}   ,
-    {_id:"5a44deee722dac719019e7be",password:"USER_2",email:"USER_2@mail",username:"USER_2"}   ,
-    {_id:"5a29110972b7713a540696d1",password:"USER_3",email:"USER_3@mail",username:"USER_3"}
-];
-
-const initConvs = [
-    {
-        _id: 'c1',
-        users: [
-            {_id:"5a41105fb392155d94051100",username:"USER_1"},
-            {_id:"5a44deee722dac719019e7be",username:"USER_2"}
-        ],
-        messages: [
-            {
-                from: {_id:"5a41105fb392155d94051100",username:"USER_1"},
-                text: 'M1',
-                timestamp: 1513068476000, // 12 Dec
-                read: true,
-                deleted: false
-            },
-            {
-                from: {_id:"5a44deee722dac719019e7be",username:"USER_2"},
-                text: 'M2',
-                timestamp: 1513327676000, // 15 Dec
-                read: false,
-                deleted: false
-            },
-            {
-                from: {_id:"5a44deee722dac719019e7be",username:"USER_2"},
-                text: 'Sodfg dfgdfg!',
-                timestamp: 1513327676000, // 15 Dec
-                read: false,
-                deleted: false
-            }
-        ],
-        timestamp: 1513338697514 // 15 Dec
-    },
-    {
-        _id: 'c2',
-        users: [
-            {_id:"5a41105fb392155d94051100",username:"USER_1"},
-            {_id:"5a5e048fefa6b82958c08dfa",username:"USER_3"}
-        ],
-        messages: [
-            {
-                from: {_id:"5a41105fb392155d94051100",username:"USER_1"},
-                text: 'M3',
-                timestamp: 1513239956000, // 14 Dec
-                read: false,
-                deleted: false
-            }
-        ],
-        timestamp: 1513245060000 // 14 Dec
-    },
-    {
-        _id: 'c3',
-        users: [
-            {_id:"5a44deee722dac719019e7be",username:"USER_2"},
-            {_id:"5a5e048fefa6b82958c08dfa",username:"USER_3"}
-        ],
-        messages: [
-            {
-                from: {_id:"5a44deee722dac719019e7be",username:"USER_2"},
-                text: 'M4',
-                timestamp: 1513330256000, // 15 Dec
-                read: false,
-                deleted: false
-            },
-            {
-                from: {_id:"5a5e048fefa6b82958c08dfa",username:"USER_3"},
-                text: 'M5',
-                timestamp: 1513334456000, // 15 Dec
-                read: false,
-                deleted: false
-            }
-        ],
-        timestamp: 1513334456000 // 15 Dec
-    }
-];
-*/

@@ -18,7 +18,7 @@ type State = {
     participants: Array<string>
 }
 
-export class CreateConversation extends React.Component<void, Props, State> {
+export class CreateConversation extends React.Component<Props, State> {
     state: State;
     constructor(props: Props) {
         super(props);

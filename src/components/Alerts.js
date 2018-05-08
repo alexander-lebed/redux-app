@@ -10,8 +10,8 @@ type AlertProps = AlertType & {
     dispatch: Function
 }
 
-export class Alert extends React.Component<void, AlertProps, void> {
-    _timeout: number;
+export class Alert extends React.Component<AlertProps, void> {
+    _timeout: TimeoutID;
 
     componentDidMount () {
         if (this.props.timeout) {
@@ -61,7 +61,7 @@ type Props = StoreProps & {
     dispatch: Function
 }
 
-export class Alerts extends React.Component<void, Props, void> {
+export class Alerts extends React.Component<Props, void> {
     render () {
         return (
             <div style={styles.alerts}>

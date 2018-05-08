@@ -3,7 +3,6 @@ import React from 'react';
 import type { Node } from 'react';
 import { connect } from "react-redux";
 import { initApp, updateData } from "../redux/reducers/startup";
-// import Spinner from './common/Spinner';
 
 type Props = {
     loading: boolean,
@@ -12,19 +11,9 @@ type Props = {
     updateData: Function
 }
 
-/*
-todo: go user offline when he close browser/tab
-    https://stackoverflow.com/questions/36355093/reactjs-browser-tab-close-event
-    https://stackoverflow.com/questions/568977/identifying-between-refresh-and-close-browser-actions
-*/
-class Startup extends React.Component<void, Props, void> {
+class Startup extends React.Component<Props, void> {
 
-    interval: number;
-
-    constructor(props: Props) {
-        super(props);
-        this.interval = 0;
-    }
+    interval: IntervalID;
 
     componentDidMount() {
         this.props.initApp();
@@ -36,11 +25,6 @@ class Startup extends React.Component<void, Props, void> {
     }
 
     render() {
-        // if (this.props.loading) {
-        //     return (
-        //         <Spinner />
-        //     )
-        // }
         return this.props.children;
     }
 }

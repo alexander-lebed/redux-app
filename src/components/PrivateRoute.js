@@ -1,10 +1,12 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import type { User } from '../types';
 
 type Props = Route & {
-    user: User
+    user: User,
+    location: Object
 }
 
 const PrivateRoute = (props: Props) => {

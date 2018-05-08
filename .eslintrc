@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "plugins": [
-    "react"
+    "react", "flowtype"
   ],
   "parserOptions": {
     "ecmaVersion": 6,
@@ -15,6 +15,11 @@
     "node": true,
     "jest": true
   },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  },
   "rules": {
     "no-console": "off",
     "linebreak-style": "off", //["error", "windows"],
@@ -25,5 +30,5 @@
     "comma-dangle": ["error", "never"],
     "indent": [2, 4, {"SwitchCase": 1}]
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"]
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:flowtype/recommended"]
 }

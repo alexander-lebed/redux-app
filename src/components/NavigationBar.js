@@ -17,7 +17,7 @@ type State = {
     expanded: boolean
 }
 
-class NavigationBar extends React.Component<void, Props, State> {
+class NavigationBar extends React.Component<Props, State> {
 
     state = {
         expanded: false

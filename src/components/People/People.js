@@ -22,7 +22,7 @@ type State = {
     deleteUserId: string
 }
 
-export class People extends React.Component<void, Props, State> {
+export class People extends React.Component<Props, State> {
 
     state: State;
 

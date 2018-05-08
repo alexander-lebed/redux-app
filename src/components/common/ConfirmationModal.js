@@ -1,16 +1,16 @@
 import React from 'react'
-import type { Node } from 'react';
+// import type { Node } from 'react';
 import { Modal, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 
-type Props = {
-  title: Node | string,
-  body: Node | string,
-  onConfirm: Function,
-  onCancel: Function,
-  inProgress?: boolean
-}
+// type Props = {
+//   title: Node | string,
+//   body: Node | string,
+//   onConfirm: Function,
+//   onCancel: Function,
+//   inProgress?: boolean
+// }
 
-class ConfirmationModal extends React.Component<void, Props, void> {
+class ConfirmationModal extends React.Component<void, void> {
     render() {
         const Spinner = (
             <div className='text-center'>
