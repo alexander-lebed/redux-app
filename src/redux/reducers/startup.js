@@ -70,12 +70,10 @@ export function initApp() {
                 window.addEventListener('focus', () => dispatch({type: actions.WINDOW_ACTIVE, payload: true}));
                 window.addEventListener('blur', () => dispatch({type: actions.WINDOW_ACTIVE, payload: false}));
 
-                // request browser notification permission on page load
-                document.addEventListener('DOMContentLoaded', () => {
-                    if (Notification && Notification.permission !== 'granted') {
-                        Notification.requestPermission();
-                    }
-                });
+                // ask user to show or block browser notifications
+                if (Notification && Notification.permission !== 'granted') {
+                    Notification.requestPermission();
+                }
 
                 const currentUser = getState().authentication.user;
                 const confirmLeave = (event) => {
