@@ -52,42 +52,35 @@ describe('Authentication reducer', () => {
         store.clearActions();
     });
 
-    test('should successfully login user', () => {
+    test('should successfully login user', async () => {
         mockAdapter.onPut(USERS_PUT_API).reply(200, testUser);
-
         const expectedActions = [
             {type: 'SET_USER', payload: testUser}
         ];
-        return store.dispatch(login('user@mail.com', 'user-password'))
-            .then((isLoggedIn) => {
-                expect(isLoggedIn).toBe(true);
-                expect(store.getActions()).toEqual(expectedActions);
-            })
+        const isLoggedIn = await store.dispatch(login('user@mail.com', 'user-password'));
+        expect(isLoggedIn).toBe(true);
+        expect(store.getActions()).toEqual(expectedActions);
     });
 
     test('should successfully logout user', () => {
         mockAdapter.onPut(USERS_PUT_API).reply(200, testUser);
-
         const expectedActions = [
             {type: 'SET_USER', payload: null}
         ];
-        return store.dispatch(logout())
+        store.dispatch(logout())
             .then(() => {
                 expect(store.getActions()).toEqual(expectedActions);
             })
     });
 
-    test('should go user offline', () => {
+    test('should go user offline', async () => {
         const response = {...testUser, online: false};
         mockAdapter.onPut(USERS_PUT_API).reply(200, response);
-
         const expectedActions = [
             {type: 'SET_USER', payload: response}
         ];
-        return store.dispatch(online(false))
-            .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
-            })
+        await store.dispatch(online(false));
+        expect(store.getActions()).toEqual(expectedActions);
     });
 });
 

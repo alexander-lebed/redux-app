@@ -30,17 +30,16 @@ class Login extends React.Component<Props, State> {
         this.setState({[name]: value});
     };
 
-    login = (e) => {
+    login = async (e) => {
         e.preventDefault();
         const {email, password} = this.state;
         const encryptedPassword = encryptPassword(password);
-        this.props.login(email, encryptedPassword).then(isLoggedIn => {
-            if (isLoggedIn) {
-                this.props.history.push('/');
-            } else {
-                this.props.error('Email or password is incorrect');
-            }
-        })
+        const isLoggedIn = await this.props.login(email, encryptedPassword);
+        if (isLoggedIn) {
+            this.props.history.push('/');
+        } else {
+            this.props.error('Email or password is incorrect');
+        }
     };
 
     render() {

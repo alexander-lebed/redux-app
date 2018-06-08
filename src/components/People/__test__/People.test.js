@@ -63,7 +63,7 @@ describe('<People/>', () => {
         expect(wrapper.props().users.size).toEqual(3);
     });
 
-    test('should route to conversation', () => {
+    xit('should route to conversation', () => {
         props.history = {
             push: sinon.spy()
         };

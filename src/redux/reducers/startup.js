@@ -49,49 +49,60 @@ export default combineReducers({
 
 
 export function initApp() {
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
         dispatch({
             type: actions.START_INIT
         });
-        Promise.resolve()
-            .then(() => dispatch(getUsers()))
-            .then(() => {
-                const currentUser = getState().authentication.user;
-                if (currentUser) {
-                    return dispatch(login(currentUser.email, currentUser.password)).then(isLoggedIn => {
-                        if (!isLoggedIn) {
-                            dispatch(Alert.error('Please re-login'));
-                        }
-                    })
+
+        await dispatch(getUsers());
+
+        let currentUser = getState().authentication.user;
+        // login user
+        if (currentUser) {
+            const isLoggedIn = await dispatch(login(currentUser.email, currentUser.password));
+            if (!isLoggedIn) {
+                dispatch(Alert.error('Please re-login'));
+            }
+        }
+
+        const clearBrowserNotifications = () => {
+            dispatch({type: actions.BLOCKED_MESSAGES, payload: []});
+        };
+
+        const askUserShowNotifications = () => {
+            if (Notification && Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        };
+
+        const watchUserOnline = () => {
+            window.addEventListener('focus', () => dispatch({type: actions.WINDOW_ACTIVE, payload: true}));
+            window.addEventListener('blur', () => dispatch({type: actions.WINDOW_ACTIVE, payload: false}));
+        };
+
+        const watchUserLeaveOrReload = () => {
+            currentUser = getState().authentication.user;
+            const confirmLeave = (event) => {
+                event.preventDefault();
+                if (currentUser && currentUser.online) {
+                    dispatch(online(false)); // go user offline on page leave
+                    setTimeout(() => dispatch(online(true)), 1000); // back to online if user click Cancel
+                    return event.returnValue = 'Are you sure you what to leave?';
                 }
-            })
-            .then(() => dispatch({type: actions.BLOCKED_MESSAGES, payload: []}))
-            .then(() => {
-                window.addEventListener('focus', () => dispatch({type: actions.WINDOW_ACTIVE, payload: true}));
-                window.addEventListener('blur', () => dispatch({type: actions.WINDOW_ACTIVE, payload: false}));
+                return null;
+            };
+            window.addEventListener('beforeunload', (event) => confirmLeave(event));
+            window.addEventListener('unload', (event) => confirmLeave(event));
+        };
 
-                // ask user to show or block browser notifications
-                if (Notification && Notification.permission !== 'granted') {
-                    Notification.requestPermission();
-                }
+        clearBrowserNotifications();
+        askUserShowNotifications();
+        watchUserOnline();
+        watchUserLeaveOrReload();
 
-                const currentUser = getState().authentication.user;
-                const confirmLeave = (event) => {
-                    event.preventDefault();
-                    if (currentUser && currentUser.online) {
-                        dispatch(online(false)); // go user offline on page leave
-                        setTimeout(() => dispatch(online(true)), 1000); // back to online if user click Cancel
-                        return event.returnValue = 'Are you sure you what to leave?';
-                    }
-                    return null;
-                };
-                window.addEventListener('beforeunload', (event) => confirmLeave(event));
-                window.addEventListener('unload', (event) => confirmLeave(event));
-
-                dispatch({
-                    type: actions.END_INIT
-                });
-            });
+        dispatch({
+            type: actions.END_INIT
+        });
     }
 }
 

@@ -46,32 +46,25 @@ export class WeatherList extends React.Component<Props, State> {
             searchText: text
         });
 
-        const search = (city) => {
-            $http.get(`${PLACES_URL}?city=${city}`)
-                .then(response => {
-                    const locations = response.data.map(e => {
-                        const locationName = e.description;
-                        const locArr = locationName.split(',');
-                        const city = locArr[0];
-                        let region = '';
-                        let country = '';
-                        if (locArr.length === 3) {
-                            region = locArr[1].substring(1);
-                            country = locArr[2].substring(1);
-                        } else {
-                            country = locArr[1].substring(1);
-                        }
-                        return {
-                            id: e.id,
-                            city,
-                            region,
-                            country
-                        };
-                    });
-                    this.setState({
-                        searchList: locations
-                    });
-                })
+        const search = async (city) => {
+            const response = await $http.get(`${PLACES_URL}?city=${city}`);
+            const locations = response.data.map(e => {
+                const locationName = e.description;
+                const locArr = locationName.split(',');
+                const city = locArr[0];
+                let region, country = '';
+                if (locArr.length === 3) {
+                    region = locArr[1].substring(1);
+                    country = locArr[2].substring(1);
+                } else {
+                    country = locArr[1].substring(1);
+                }
+                return {id: e.id, city, region, country};
+            });
+
+            this.setState({
+                searchList: locations
+            });
         };
         const delay = (callback, ms) => {
             clearTimeout(this.timer);
@@ -83,7 +76,7 @@ export class WeatherList extends React.Component<Props, State> {
         }
     };
 
-    updateWeather = () => {
+    updateWeather = async () => {
         const { locations } = this.props;
         const getWeatherUrl = (location): string => `
             https://query.yahooapis.com/v1/public/yql?q=
@@ -94,19 +87,17 @@ export class WeatherList extends React.Component<Props, State> {
             )
             &format=json`;
         const promises = locations.map(l => $http.get(getWeatherUrl(l)));
-        Promise.all(promises)
-            .then(([...response]) => {
-                const data = locations.map((l, index) => {
-                    const results = response[index].data.query.results;
-                    if (results && results.channel.item.condition) {
-                        const condition = results.channel.item.condition;
-                        l.temp = condition.temp;
-                        l.text = condition.text
-                    }
-                    return l;
-                });
-                this.props.updateData(data);
-            })
+        const responses = await Promise.all(promises);
+        const data = locations.map((l, index) => {
+            const results = responses[index].data.query.results;
+            if (results && results.channel.item.condition) {
+                const condition = results.channel.item.condition;
+                l.temp = condition.temp;
+                l.text = condition.text
+            }
+            return l;
+        });
+        this.props.updateData(data);
     };
 
     render() {

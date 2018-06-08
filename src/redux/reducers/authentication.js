@@ -26,27 +26,23 @@ export default combineReducers({
 
 
 export function login(email: string, password: string) {
-    return (dispatch: Dispatch, getState: Function) => {
-        return new Promise(function(resolve) {
-            const reject = () => {
+    return async (dispatch: Dispatch, getState: Function) => {
+        const users = getState().users.users;
+        const user = users.find(e => e.email === email && e.password === password);
+        if (user) {
+            user.online = true;
+            try {
+                const response = await $http.put(`${USERS_URL}/${user._id}`, user);
+                dispatch(setUser(response.data));
+                return true;
+            } catch (err) {
                 dispatch(setUser(null));
-                resolve(false);
-            };
-            const users = getState().users.users;
-            const user = users.find(e => e.email === email && e.password === password);
-
-            if (user) {
-                user.online = true;
-                $http.put(`${USERS_URL}/${user._id}`, user)
-                    .then(response => {
-                        dispatch(setUser(response.data));
-                        resolve(true);
-                    })
-                    .catch(() => reject())
-            } else {
-                reject();
+                return false;
             }
-        })
+        } else {
+            dispatch(setUser(null));
+            return false;
+        }
     }
 }
 
@@ -65,17 +61,14 @@ export function logout() {
 }
 
 export function online(isOnline: boolean) {
-    return (dispatch: Dispatch, getState: Function) => {
-
+    return async (dispatch: Dispatch, getState: Function) => {
         const user = getState().authentication.user;
         if (user) {
             user.online = isOnline;
             user.lastTime = null; // to set the time on server side
-            return $http.put(`${USERS_URL}/${user._id}`, user)
-                .then((response) => {
-                    dispatch(setUser(response.data));
-                })
-                .then(() => dispatch(getUsers()));
+            const response = await $http.put(`${USERS_URL}/${user._id}`, user);
+            dispatch(setUser(response.data));
+            dispatch(getUsers());
         }
     }
 }

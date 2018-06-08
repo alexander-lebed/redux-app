@@ -36,7 +36,7 @@ export default combineReducers({
 });
 
 export function register(username: string, email: string, password: string) {
-    return (dispatch: Dispatch, getState: Function) => {
+    return async (dispatch: Dispatch, getState: Function) => {
 
         const users = getState().users.users;
         const registeredUser = users.get(email);
@@ -48,25 +48,22 @@ export function register(username: string, email: string, password: string) {
                 email,
                 password: encryptedPassword,
                 online: true,
-                lastTime: null // to set the time on server side
+                lastTime: null // flag to set the time on server side
             };
-            $http.post(USERS_URL, payload)
-                .then(response => {
-                    const user = response.data;
-                    Promise.resolve()
-                        .then(() => dispatch({type: actions.ADD_USER, payload: user}))
-                        .then(() => {
-                            // $FlowFixMe
-                            dispatch(login(user.email, user.password)).then(isLoggedIn => {
-                                if (isLoggedIn) {
-                                    history.push('/');
-                                }
-                            })
-                        })
-                })
-                .catch(e => {
-                    dispatch(Alert.error(`Error on register user: ${e.toString()}`));
-                })
+            try {
+                const response = await $http.post(USERS_URL, payload);
+                const user = response.data;
+                await dispatch({
+                    type: actions.ADD_USER,
+                    payload: user
+                });
+                const isLoggedIn = await dispatch(login(user.email, user.password));
+                if (isLoggedIn) {
+                    history.push('/');
+                }
+            } catch (err) {
+                dispatch(Alert.error(`Error on register user: ${err.toString()}`));
+            }
         } else {
             dispatch(Alert.error(`User with ${email} email already exist`));
         }
@@ -87,43 +84,44 @@ export function getUsers() {
 }
 
 export function editUser(userId: string, user: User) {
-    return (dispatch: Dispatch, getState: Function) => {
+    return async (dispatch: Dispatch, getState: Function) => {
 
         const currentUser = getState().authentication.user;
 
         if (currentUser._id === userId) {
-            $http.put(`${USERS_URL}/${userId}`, user)
-                .then((response) => dispatch(setUser(response.data)))
-                .then(() => dispatch(Alert.success('Your profile has been updated.')))
-                .then(() => dispatch(getUsers()))
-                .catch(err => {
-                    const error = (
-                        <div>
-                            <strong>Error on update profile:</strong>
-                            <div>{generateError(err)}</div>
-                        </div>
-                    );
-                    dispatch(Alert.error(error));
-                })
+            try {
+                const response = await $http.put(`${USERS_URL}/${userId}`, user);
+                await dispatch(setUser(response.data));
+                dispatch(Alert.success('Your profile has been updated.'));
+                dispatch(getUsers());
+            } catch (err) {
+                const error = (
+                    <div>
+                        <strong>Error on update profile:</strong>
+                        <div>{generateError(err)}</div>
+                    </div>
+                );
+                dispatch(Alert.error(error));
+            }
         }
     }
 }
 
 export function deleteUser(userId: string) {
-    return (dispatch: Dispatch) => {
-        $http.delete(`${USERS_URL}?userId=${userId}`)
-            .then(() => {
-                dispatch(Alert.success('User has been deleted.'));
-                dispatch(getUsers())
-            }).catch(err => {
-                const error = (
-                    <div>
-                        <strong>Error on delete user:</strong>
-                        <div>{generateError(err)}</div>
-                    </div>
-                );
-                dispatch(Alert.error(error));
-            })
+    return async (dispatch: Dispatch) => {
+        try {
+            await $http.delete(`${USERS_URL}?userId=${userId}`);
+            dispatch(Alert.success('User has been deleted.'));
+            dispatch(getUsers());
+        } catch (err) {
+            const error = (
+                <div>
+                    <strong>Error on delete user:</strong>
+                    <div>{generateError(err)}</div>
+                </div>
+            );
+            dispatch(Alert.error(error));
+        }
     }
 }
 

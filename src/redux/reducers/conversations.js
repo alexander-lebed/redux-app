@@ -172,23 +172,23 @@ export function deleteMessage(messageId: string) {
 
 // this method doesn't delete conversation, just mark as deleted
 export function deleteConversation(convId: string) {
-    return (dispatch: Dispatch, getState: Function) => {
-        $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`)
-            .then(() => {
-                dispatch(Alert.success('Conversation has been deleted.'));
-                // update conversations state
-                const currentUser = getState().authentication.user;
-                if (currentUser) {
-                    dispatch(getConversationsByUser(currentUser._id))
-                }
-            }).catch(err => {
-                const error = (
-                    <div>
-                        <strong>Error on delete conversation:</strong>
-                        <div>{generateError(err)}</div>
-                    </div>
-                );
-                dispatch(Alert.error(error));
-            })
+    return async (dispatch: Dispatch, getState: Function) => {
+        try {
+            await $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`);
+            dispatch(Alert.success('Conversation has been deleted.'));
+            // update conversations state
+            const currentUser = getState().authentication.user;
+            if (currentUser) {
+                dispatch(getConversationsByUser(currentUser._id))
+            }
+        } catch (err) {
+            const error = (
+                <div>
+                    <strong>Error on delete conversation:</strong>
+                    <div>{generateError(err)}</div>
+                </div>
+            );
+            dispatch(Alert.error(error));
+        }
     }
 }
