@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
+import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
 import type { User } from '../../types';
 
@@ -70,15 +70,17 @@ export class CreateConversation extends React.Component<Props, State> {
                         </Col>
                         <Col xs={12} sm={5} style={{float: 'left'}}>
                             <FormGroup>
-                                <div className="inner-addon left-addon">
-                                    <Glyphicon glyph='search' />
+                                <InputGroup>
                                     <FormControl
                                         type='text'
                                         placeholder='Search participants'
                                         value={searchText}
                                         onChange={e => this.setState({searchText: e.target.value})}
                                     />
-                                </div>
+                                    <InputGroup.Addon>
+                                        <Glyphicon glyph='search' />
+                                    </InputGroup.Addon>
+                                </InputGroup>
                             </FormGroup>
                         </Col>
                     </Row>

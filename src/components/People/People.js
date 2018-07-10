@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
+import { Row, Col, Table, FormGroup, FormControl, InputGroup, Button, Glyphicon } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { deleteUser } from '../../redux/reducers/users';
@@ -70,15 +70,17 @@ export class People extends React.Component<Props, State> {
                     <Row>
                         <Col xs={12} sm={5}>
                             <FormGroup>
-                                <div className="inner-addon left-addon">
-                                    <Glyphicon glyph='search' />
+                                <InputGroup>
                                     <FormControl
                                         type='text'
                                         placeholder='Search people'
                                         value={this.state.searchText}
                                         onChange={e => this.setState({searchText: e.target.value})}
                                     />
-                                </div>
+                                    <InputGroup.Addon>
+                                        <Glyphicon glyph='search' />
+                                    </InputGroup.Addon>
+                                </InputGroup>
                             </FormGroup>
                         </Col>
                     </Row>

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, Button, DropdownButton, MenuItem, Glyphicon, Badge } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Button, DropdownButton, MenuItem, Glyphicon, Badge, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { MAIN_COLOR, BORDER_COLOR } from '../constants';
 import { logout } from '../redux/reducers/authentication';
@@ -40,6 +40,13 @@ class NavigationBar extends React.Component<Props, State> {
         return (
             <Navbar onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
+                    <Navbar.Brand>
+                        <Image
+                            style={{padding: '9px 50px 9px 9px'}}
+                            src='/favicon.png'
+                            alt={'Messenger'}
+                        />
+                    </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>

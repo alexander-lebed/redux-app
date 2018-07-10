@@ -22,12 +22,9 @@ exports[`<People/> should match snapshot 1`] = `
         <div
           className="form-group"
         >
-          <div
-            className="inner-addon left-addon"
+          <span
+            className="input-group"
           >
-            <span
-              className="glyphicon glyphicon-search"
-            />
             <input
               className="form-control"
               id={undefined}
@@ -36,7 +33,14 @@ exports[`<People/> should match snapshot 1`] = `
               type="text"
               value=""
             />
-          </div>
+            <span
+              className="input-group-addon"
+            >
+              <span
+                className="glyphicon glyphicon-search"
+              />
+            </span>
+          </span>
         </div>
       </div>
     </div>
