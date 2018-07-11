@@ -36,13 +36,14 @@ class NavigationBar extends React.Component<Props, State> {
                 <Badge>{unreadConversations.length}</Badge>
             );
         }
+        const messageTabStyle = convSubPathnames.includes(window.location.pathname) ? {borderBottom: '1px solid #777'} : {};
         const dropdownStyle = user && user.online ? {backgroundColor: MAIN_COLOR, borderColor: BORDER_COLOR, color: 'white'} : {};
         return (
             <Navbar onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Image
-                            style={{padding: '9px 50px 9px 9px'}}
+                            style={{padding: '9px 45px 9px 9px', marginTop: 4}}
                             src='/favicon.png'
                             alt={'Messenger'}
                         />
@@ -50,31 +51,31 @@ class NavigationBar extends React.Component<Props, State> {
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
-                    <Nav>
-                        <LinkContainer key='conversations' to='/conversations' onClick={() => this.expand(false)}>
+                    <Nav activeKey={2}>
+                        <LinkContainer key='conversations' to='/conversations' style={messageTabStyle} onClick={() => this.expand(false)}>
                             <NavItem eventKey={1}>
-                                <div style={style.navTab} className='tab-text'>
+                                <div className='tab-text'>
                                     Messages {newMessages}
                                 </div>
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer key='people' to='/people' onClick={() => this.expand(false)}>
                             <NavItem eventKey={2}>
-                                <div style={style.navTab} className='tab-text'>
+                                <div className='tab-text'>
                                     People
                                 </div>
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer key='weather' to='/weather' onClick={() => this.expand(false)}>
-                            <NavItem eventKey={3} className='tab-text'>
-                                <div style={style.navTab}>
+                            <NavItem eventKey={3} >
+                                <div className='tab-text'>
                                     Weather
                                 </div>
                             </NavItem>
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={1}>
+                        <NavItem eventKey={4}>
                             {user &&
                             <DropdownButton
                                 id='user-button'
@@ -88,14 +89,14 @@ class NavigationBar extends React.Component<Props, State> {
                                     to='/profile'
                                     onClick={() => this.expand(false)}
                                 >
-                                    <MenuItem eventKey='1' className='dropdown-item'>
+                                    <MenuItem eventKey={4.1} className='dropdown-item'>
                                         <Glyphicon glyph='pencil' style={{marginRight: 8}} />
                                         Edit profile
                                     </MenuItem>
                                 </LinkContainer>
                                 {user &&
                                 <MenuItem
-                                    eventKey='2'
+                                    eventKey={4.2}
                                     className='dropdown-item'
                                     onSelect={() => {
                                         logout();
@@ -111,7 +112,7 @@ class NavigationBar extends React.Component<Props, State> {
                         </NavItem>
                         {!user &&
                         <LinkContainer key='login' to='/login'>
-                            <NavItem eventKey={2}>
+                            <NavItem eventKey={5}>
                                 <Button bsSize='small' className='mobile-btn'>
                                     <Glyphicon glyph='log-in' style={{marginRight: 5}} /> Log in
                                 </Button>
@@ -125,12 +126,7 @@ class NavigationBar extends React.Component<Props, State> {
     }
 }
 
-const style = {
-    navTab: {
-        paddingTop: 5,
-        paddingBottom: 5
-    }
-};
+const convSubPathnames = ['/conversation'];
 
 export default connect(
     (state) => ({
