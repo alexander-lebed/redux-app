@@ -63,17 +63,20 @@ exports[`<People/> should match snapshot 1`] = `
                   }
                 }
               >
-                <img
-                  alt="Image"
-                  className="profile-picture img-circle"
-                  src="/default-profile.png"
-                  style={
-                    Object {
-                      "border": "2px solid #00b386",
-                      "float": "left",
+                <div
+                  className="profile-picture-wrapper"
+                >
+                  <img
+                    alt="Image"
+                    className="profile-picture img-circle"
+                    src="/default-profile.png"
+                    style={
+                      Object {
+                        "border": "2px solid #00b386",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
                 <div>
                   Current User
                   <div
@@ -122,17 +125,20 @@ exports[`<People/> should match snapshot 1`] = `
                   }
                 }
               >
-                <img
-                  alt="Image"
-                  className="profile-picture img-circle"
-                  src="/default-profile.png"
-                  style={
-                    Object {
-                      "border": "2px solid #00b386",
-                      "float": "left",
+                <div
+                  className="profile-picture-wrapper"
+                >
+                  <img
+                    alt="Image"
+                    className="profile-picture img-circle"
+                    src="/default-profile.png"
+                    style={
+                      Object {
+                        "border": "2px solid #00b386",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
                 <div>
                   Alice
                   <div
@@ -181,17 +187,20 @@ exports[`<People/> should match snapshot 1`] = `
                   }
                 }
               >
-                <img
-                  alt="Image"
-                  className="profile-picture img-circle"
-                  src="/default-profile.png"
-                  style={
-                    Object {
-                      "border": "2px solid #00b386",
-                      "float": "left",
+                <div
+                  className="profile-picture-wrapper"
+                >
+                  <img
+                    alt="Image"
+                    className="profile-picture img-circle"
+                    src="/default-profile.png"
+                    style={
+                      Object {
+                        "border": "2px solid #00b386",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
                 <div>
                   Bob
                   <div

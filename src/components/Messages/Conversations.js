@@ -90,23 +90,25 @@ class Conversations extends React.Component<Props, State> {
                                 <Col xs={10} onClick={() => this.goToConversation(conv._id)}>
 
                                     {/* Sender profile picture */}
-                                    {senders.length === 1 ?
-                                        <Image
-                                            circle
-                                            style={sender.online ? {border: `2px solid ${MAIN_COLOR}`, float: 'left'} : {float: 'left'}}
-                                            className='profile-picture'
-                                            src={sender.pictureUrl ? sender.pictureUrl : '/default-profile.png'}
-                                            alt={'Image'}
-                                        />
-                                        :
-                                        <Image
-                                            circle
-                                            style={senders.some(e => e.online) ? {border: `2px solid ${MAIN_COLOR}`, float: 'left'} : {float: 'left'}}
-                                            className='profile-picture'
-                                            src='/conversation-group.png'
-                                            alt={'Image'}
-                                        />
-                                    }
+                                    <div className='profile-picture-wrapper'>
+                                        {senders.length === 1 ?
+                                            <Image
+                                                circle
+                                                style={sender.online ? {border: `2px solid ${MAIN_COLOR}`} : {}}
+                                                className='profile-picture'
+                                                src={sender.pictureUrl ? sender.pictureUrl : '/default-profile.png'}
+                                                alt={'Image'}
+                                            />
+                                            :
+                                            <Image
+                                                circle
+                                                style={senders.some(e => e.online) ? {border: `2px solid ${MAIN_COLOR}`} : {}}
+                                                className='profile-picture'
+                                                src='/conversation-group.png'
+                                                alt={'Image'}
+                                            />
+                                        }
+                                    </div>
 
                                     {/* Sender name */}
                                     {senders.length === 1 ?

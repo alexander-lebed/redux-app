@@ -170,13 +170,15 @@ class Conversation extends React.Component<Props, State> {
         const messageUser: User = users.toArray().find(e => e._id === message.from._id);
         return (
             <div>
-                <Image
-                    circle
-                    style={messageUser.online ? {border: `2px solid ${MAIN_COLOR}`, float: 'left'} : {float: 'left'}}
-                    className='profile-picture'
-                    src={messageUser.pictureUrl ? messageUser.pictureUrl : '/default-profile.png'}
-                    alt={'Image'}
-                />
+                <div className='profile-picture-wrapper'>
+                    <Image
+                        circle
+                        style={messageUser.online ? {border: `2px solid ${MAIN_COLOR}`} : {}}
+                        className='profile-picture'
+                        src={messageUser.pictureUrl ? messageUser.pictureUrl : '/default-profile.png'}
+                        alt={'Image'}
+                    />
+                </div>
                 <div style={style.top}>
                     <div>
                         <span style={style.from}>

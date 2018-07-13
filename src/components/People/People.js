@@ -88,19 +88,21 @@ export class People extends React.Component<Props, State> {
                         <Table>
                             <tbody>
                                 {users.map(user => {
-                                    const imageStyle = user.online ? {border: `2px solid ${MAIN_COLOR}`, float: 'left'} : {float: 'left'};
+                                    const imageStyle = user.online ? {border: `2px solid ${MAIN_COLOR}`} : {};
                                     return (
                                         <tr key={user._id} id={user._id}>
                                             <td>
                                                 <Row>
                                                     <Col xs={12} sm={6} style={{paddingTop: 5}}>
-                                                        <Image
-                                                            circle
-                                                            style={imageStyle}
-                                                            className='profile-picture'
-                                                            src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
-                                                            alt={'Image'}
-                                                        />
+                                                        <div className='profile-picture-wrapper'>
+                                                            <Image
+                                                                circle
+                                                                style={imageStyle}
+                                                                className='profile-picture'
+                                                                src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                                                                alt={'Image'}
+                                                            />
+                                                        </div>
                                                         <div>
                                                             {user.username}
                                                             <div style={style.time}>

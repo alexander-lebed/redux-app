@@ -124,7 +124,7 @@ class Profile extends React.Component<Props, State> {
                                             Go to <a href="http://funkyimg.com/" target="_blank" rel='noopener noreferrer'>FunkyImg</a> or <a href="https://postimages.org/" target="_blank" rel='noopener noreferrer'>PostImage</a>
                                         </li>
                                         <li>Upload your picture</li>
-                                        <li>Get Direct Link</li>
+                                        <li>Get <strong>Direct Link</strong> (Прямая ссылка)</li>
                                     </ol>
                                 </Col>
                             </FormGroup>
