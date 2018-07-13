@@ -32,60 +32,61 @@ class NavigationBar extends React.Component<Props, State> {
     render() {
         const {user, conversations = [], logout} = this.props;
         let newMessages = null;
+        let accountDropdown = null;
         if (user) {
             const unreadConversations = conversations.filter(c => c.messages.some(m => !m.read && m.from._id !== user._id));
             newMessages = unreadConversations.length > 0 && (
                 <Badge>{unreadConversations.length}</Badge>
             );
-        }
-        const accountDropdown = (
-            <Dropdown
-                open={this.state.accountClicked}
-                id='account-menu'
-                style={{paddingTop: 10, textAlign: 'center'}}
-            >
-                <div style={{display: 'inline-block'}}>
-                    <Image
-                        circle
-                        style={user.online ? {border: `2px solid ${MAIN_COLOR}`, cursor: 'pointer'} : {cursor: 'pointer'}}
-                        className='account-menu pull-right'
-                        src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
-                        title={user.username}
-                        alt={'Account'}
-                        onClick={() => this.setState({accountClicked: !this.state.accountClicked})}
-                    />
-                </div>
-                <Dropdown.Menu>
-                    <LinkContainer
-                        key='profile'
-                        to='/profile'
-                        onClick={() => {
-                            this.expand(false);
-                            this.setState({accountClicked: false})
-                        }}>
+            accountDropdown = (
+                <Dropdown
+                    open={this.state.accountClicked}
+                    id='account-menu'
+                    style={{paddingTop: 10, textAlign: 'center'}}
+                >
+                    <div style={{display: 'inline-block'}}>
+                        <Image
+                            circle
+                            style={user.online ? {border: `2px solid ${MAIN_COLOR}`, cursor: 'pointer'} : {cursor: 'pointer'}}
+                            className='account-menu pull-right'
+                            src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                            title={user.username}
+                            alt={'Account'}
+                            onClick={() => this.setState({accountClicked: !this.state.accountClicked})}
+                        />
+                    </div>
+                    <Dropdown.Menu>
+                        <LinkContainer
+                            key='profile'
+                            to='/profile'
+                            onClick={() => {
+                                this.expand(false);
+                                this.setState({accountClicked: false})
+                            }}>
+                            <MenuItem
+                                eventKey={4.1}
+                                className='dropdown-item'
+                            >
+                                <Glyphicon glyph='pencil' style={{marginRight: 8}} />
+                                Edit profile
+                            </MenuItem>
+                        </LinkContainer>
                         <MenuItem
-                            eventKey={4.1}
+                            eventKey={4.2}
                             className='dropdown-item'
+                            onSelect={() => {
+                                logout();
+                                this.expand(false);
+                                this.setState({accountClicked: false});
+                            }}
                         >
-                            <Glyphicon glyph='pencil' style={{marginRight: 8}} />
-                            Edit profile
+                            <Glyphicon glyph='log-out' style={{marginRight: 8}} />
+                            Log out
                         </MenuItem>
-                    </LinkContainer>
-                    <MenuItem
-                        eventKey={4.2}
-                        className='dropdown-item'
-                        onSelect={() => {
-                            logout();
-                            this.expand(false);
-                            this.setState({accountClicked: false});
-                        }}
-                    >
-                        <Glyphicon glyph='log-out' style={{marginRight: 8}} />
-                        Log out
-                    </MenuItem>
-                </Dropdown.Menu>
-            </Dropdown>
-        );
+                    </Dropdown.Menu>
+                </Dropdown>
+            )
+        }
         const messageTabStyle = convSubPathnames.includes(window.location.pathname) ? {borderBottom: '1px solid #777'} : {};
         return (
             <Navbar onToggle={this.expand} expanded={this.state.expanded}>
@@ -126,7 +127,7 @@ class NavigationBar extends React.Component<Props, State> {
                     </Nav>
                     <Nav pullRight>
 
-                        {user && accountDropdown}
+                        {accountDropdown}
 
                         {!user &&
                         <LinkContainer key='login' to='/login'>
