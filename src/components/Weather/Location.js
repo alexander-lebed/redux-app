@@ -28,7 +28,7 @@ export const Location = (props: Props) => {
             <Col xs={4}>{tempInfo}{location.text && `, ${location.text.toLowerCase()}`}</Col>
             <Col xs={2}>
                 <Glyphicon
-                    glyph="remove"
+                    glyph="trash"
                     className="pull-right"
                     style={{marginRight: 10, color: 'grey'}}
                     title="Remove Location"

@@ -152,7 +152,7 @@ exports[`<WeatherList/> should match snapshot 1`] = `
               className="col-xs-2"
             >
               <span
-                className="pull-right glyphicon glyphicon-remove"
+                className="pull-right glyphicon glyphicon-trash"
                 onClick={[Function]}
                 style={
                   Object {
@@ -200,7 +200,7 @@ exports[`<WeatherList/> should match snapshot 1`] = `
               className="col-xs-2"
             >
               <span
-                className="pull-right glyphicon glyphicon-remove"
+                className="pull-right glyphicon glyphicon-trash"
                 onClick={[Function]}
                 style={
                   Object {

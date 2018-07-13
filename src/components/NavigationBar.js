@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, Button, DropdownButton, MenuItem, Glyphicon, Badge, Image } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Button, Dropdown, MenuItem, Glyphicon, Badge, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { MAIN_COLOR, BORDER_COLOR } from '../constants';
+import { MAIN_COLOR } from '../constants';
 import { logout } from '../redux/reducers/authentication';
 import type { User } from '../types';
 
@@ -14,13 +14,15 @@ type Props = {
 }
 
 type State = {
-    expanded: boolean
+    expanded: boolean,
+    accountClicked: boolean
 }
 
 class NavigationBar extends React.Component<Props, State> {
 
     state = {
-        expanded: false
+        expanded: false,
+        accountClicked: false
     };
 
     expand = (expand) => {
@@ -36,8 +38,55 @@ class NavigationBar extends React.Component<Props, State> {
                 <Badge>{unreadConversations.length}</Badge>
             );
         }
+        const accountDropdown = (
+            <Dropdown
+                open={this.state.accountClicked}
+                id='account-menu'
+                style={{paddingTop: 10, textAlign: 'center'}}
+            >
+                <div style={{display: 'inline-block'}}>
+                    <Image
+                        circle
+                        style={user.online ? {border: `2px solid ${MAIN_COLOR}`, cursor: 'pointer'} : {cursor: 'pointer'}}
+                        className='account-menu pull-right'
+                        src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                        title={user.username}
+                        alt={'Account'}
+                        onClick={() => this.setState({accountClicked: !this.state.accountClicked})}
+                    />
+                </div>
+                <Dropdown.Menu>
+                    <LinkContainer
+                        key='profile'
+                        to='/profile'
+                        onClick={() => {
+                            this.expand(false);
+                            this.setState({accountClicked: false})
+                        }}>
+                        <MenuItem
+                            eventKey={4.1}
+                            className='dropdown-item'
+                        >
+                            <Glyphicon glyph='pencil' style={{marginRight: 8}} />
+                            Edit profile
+                        </MenuItem>
+                    </LinkContainer>
+                    <MenuItem
+                        eventKey={4.2}
+                        className='dropdown-item'
+                        onSelect={() => {
+                            logout();
+                            this.expand(false);
+                            this.setState({accountClicked: false});
+                        }}
+                    >
+                        <Glyphicon glyph='log-out' style={{marginRight: 8}} />
+                        Log out
+                    </MenuItem>
+                </Dropdown.Menu>
+            </Dropdown>
+        );
         const messageTabStyle = convSubPathnames.includes(window.location.pathname) ? {borderBottom: '1px solid #777'} : {};
-        const dropdownStyle = user && user.online ? {backgroundColor: MAIN_COLOR, borderColor: BORDER_COLOR, color: 'white'} : {};
         return (
             <Navbar onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
@@ -45,13 +94,14 @@ class NavigationBar extends React.Component<Props, State> {
                         <Image
                             style={{padding: '9px 45px 9px 9px', marginTop: 4}}
                             src='/favicon.png'
+                            title={'Messenger'}
                             alt={'Messenger'}
                         />
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
-                    <Nav activeKey={2}>
+                    <Nav>
                         <LinkContainer key='conversations' to='/conversations' style={messageTabStyle} onClick={() => this.expand(false)}>
                             <NavItem eventKey={1}>
                                 <div className='tab-text'>
@@ -75,44 +125,12 @@ class NavigationBar extends React.Component<Props, State> {
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={4}>
-                            {user &&
-                            <DropdownButton
-                                id='user-button'
-                                bsSize='small'
-                                className='mobile-btn'
-                                title={user.username}
-                                style={dropdownStyle}
-                            >
-                                <LinkContainer
-                                    key='profile'
-                                    to='/profile'
-                                    onClick={() => this.expand(false)}
-                                >
-                                    <MenuItem eventKey={4.1} className='dropdown-item'>
-                                        <Glyphicon glyph='pencil' style={{marginRight: 8}} />
-                                        Edit profile
-                                    </MenuItem>
-                                </LinkContainer>
-                                {user &&
-                                <MenuItem
-                                    eventKey={4.2}
-                                    className='dropdown-item'
-                                    onSelect={() => {
-                                        logout();
-                                        this.expand(false)
-                                    }}
-                                >
-                                    <Glyphicon glyph='log-out' style={{marginRight: 8}} />
-                                    Log out
-                                </MenuItem>
-                                }
-                            </DropdownButton>
-                            }
-                        </NavItem>
+
+                        {user && accountDropdown}
+
                         {!user &&
                         <LinkContainer key='login' to='/login'>
-                            <NavItem eventKey={5}>
+                            <NavItem eventKey={4}>
                                 <Button bsSize='small' className='mobile-btn'>
                                     <Glyphicon glyph='log-in' style={{marginRight: 5}} /> Log in
                                 </Button>

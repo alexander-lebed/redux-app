@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, InputGroup, Button, Glyphicon } from 'react-bootstrap';
+import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { deleteUser } from '../../redux/reducers/users';
@@ -66,9 +66,9 @@ export class People extends React.Component<Props, State> {
         }
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
+                <Col xsOffset={0} smOffset={1} mdOffset={3} xs={12} sm={10} md={6}>
                     <Row>
-                        <Col xs={12} sm={5}>
+                        <Col xs={12} sm={6}>
                             <FormGroup>
                                 <InputGroup>
                                     <FormControl
@@ -88,34 +88,46 @@ export class People extends React.Component<Props, State> {
                         <Table>
                             <tbody>
                                 {users.map(user => {
-                                    const glyphStyle = user.online ? {...{color: MAIN_COLOR }, ...{marginRight: 15}} : {marginRight: 15};
+                                    const imageStyle = user.online ? {border: `2px solid ${MAIN_COLOR}`, float: 'left'} : {float: 'left'};
                                     return (
                                         <tr key={user._id} id={user._id}>
                                             <td>
                                                 <Row>
-                                                    <Col xs={12} sm={4} style={{paddingTop: 5}}>
-                                                        <Glyphicon glyph='user' style={glyphStyle} />
-                                                        {user.username}
-                                                        {this.isAdmin() &&
-                                                        <Glyphicon
-                                                            id='remove'
-                                                            glyph='remove'
-                                                            style={{color: 'grey'}}
-                                                            className='pull-right cursor'
-                                                            onClick={() => this.showDeleteConfirmation(user._id)}
+                                                    <Col xs={12} sm={6} style={{paddingTop: 5}}>
+                                                        <Image
+                                                            circle
+                                                            style={imageStyle}
+                                                            className='profile-picture'
+                                                            src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                                                            alt={'Image'}
                                                         />
-                                                        }
+                                                        <div>
+                                                            {user.username}
+                                                            <div style={style.time}>
+                                                                {!user.online && `last seen ${timestampToHumanDate(user.lastTime)}`}
+                                                            </div>
+                                                        </div>
                                                     </Col>
-                                                    <Col xs={12} sm={8} style={style.time}>
-                                                        {!user.online && `last seen ${timestampToHumanDate(user.lastTime)}`}
-                                                        <Button
-                                                            id={`write-user-${user._id}`}
-                                                            bsSize='small'
-                                                            className='pull-right'
-                                                            onClick={() => this.goToConversationWith([user._id])}
-                                                        >
-                                                            Write a message
-                                                        </Button>
+                                                    <Col xs={12} sm={6}>
+                                                        <ButtonToolbar className='pull-right'>
+                                                            {this.isAdmin() &&
+                                                            <Button
+                                                                id={`remove-user-${user._id}`}
+                                                                bsSize='small'
+                                                                bsStyle='danger'
+                                                                onClick={() => this.showDeleteConfirmation(user._id)}
+                                                            >
+                                                                Delete
+                                                            </Button>
+                                                            }
+                                                            <Button
+                                                                id={`write-user-${user._id}`}
+                                                                bsSize='small'
+                                                                onClick={() => this.goToConversationWith([user._id])}
+                                                            >
+                                                                Write a message
+                                                            </Button>
+                                                        </ButtonToolbar>
                                                     </Col>
                                                 </Row>
                                             </td>

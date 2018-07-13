@@ -74,7 +74,8 @@ export function getUsers() {
     return (dispatch: Dispatch) => {
         $http.get(USERS_URL)
             .then(response => {
-                const dataObj = _.keyBy(response.data, 'email');
+                const sorted = _.orderBy(response.data, ['username']);
+                const dataObj = _.keyBy(sorted, 'email');
                 const payload = Map(dataObj);
                 dispatch({
                     type: actions.SET_USERS, payload

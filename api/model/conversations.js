@@ -6,8 +6,8 @@ const Schema = mongoose.Schema;
 const ConversationSchema = new Schema({
     users: [{
         _id: String,
-        username: String}
-    ],
+        username: String
+    }],
     messages: [{
         from: {
             _id: String,

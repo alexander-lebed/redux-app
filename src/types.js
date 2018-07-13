@@ -11,6 +11,7 @@ export type User = {
     email: string,
     password: string,
     online: boolean,
+    pictureUrl: string,
     lastTime: number | null
 }
 

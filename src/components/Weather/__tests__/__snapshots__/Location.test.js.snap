@@ -33,7 +33,7 @@ exports[`<Location/> should render Location 1`] = `
     className="col-xs-2"
   >
     <span
-      className="pull-right glyphicon glyphicon-remove"
+      className="pull-right glyphicon glyphicon-trash"
       onClick={[MockFunction]}
       style={
         Object {

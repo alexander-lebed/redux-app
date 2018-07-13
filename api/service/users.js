@@ -33,6 +33,7 @@ router.post('/', function(req, res, next) {
     user.email = payload.email;
     user.password = payload.password;
     user.online = payload.online;
+    user.pictureUrl = payload.pictureUrl;
     user.lastTime = payload.lastTime || Date.now();
 
     user.save(function(err, data) {

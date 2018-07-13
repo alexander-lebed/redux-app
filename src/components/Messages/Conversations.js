@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import { Map } from 'immutable';
-import { Row, Col, Table, Badge, Glyphicon, Button } from 'react-bootstrap';
+import { Row, Col, Table, Badge, Glyphicon, Button, Image } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
@@ -82,26 +82,66 @@ class Conversations extends React.Component<Props, State> {
                 if (senders.length > 1) {
                     senders = senders.filter(u => u._id !== user._id); // exclude recipient
                 }
+                const sender = senders[0];
                 return (
                     <tr key={conv._id} style={newMessages.length > 0 ? {backgroundColor: '#edf0f5'} : {}}>
-                        <td className='cursor' style={style.conversation} >
+                        <td className='cursor' style={style.conversation}>
                             <Row>
-                                <Col xs={7} sm={9} onClick={() => this.goToConversation(conv._id)}>
-                                    <div className='cut-senders-text'>
-                                        {senders.map(sender => (
-                                            <span key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
-                                                {sender.username}
-                                            </span>
-                                        )).reduce((prev, curr) => [prev, ', ', curr])}
-                                    </div>
+                                <Col xs={10} onClick={() => this.goToConversation(conv._id)}>
+
+                                    {/* Sender profile picture */}
+                                    {senders.length === 1 ?
+                                        <Image
+                                            circle
+                                            style={sender.online ? {border: `2px solid ${MAIN_COLOR}`, float: 'left'} : {float: 'left'}}
+                                            className='profile-picture'
+                                            src={sender.pictureUrl ? sender.pictureUrl : '/default-profile.png'}
+                                            alt={'Image'}
+                                        />
+                                        :
+                                        <Image
+                                            circle
+                                            style={senders.some(e => e.online) ? {border: `2px solid ${MAIN_COLOR}`, float: 'left'} : {float: 'left'}}
+                                            className='profile-picture'
+                                            src='/conversation-group.png'
+                                            alt={'Image'}
+                                        />
+                                    }
+
+                                    {/* Sender name */}
+                                    {senders.length === 1 ?
+                                        <strong>{sender.username}</strong>
+                                        :
+                                        <div className='cut-senders-text'>
+                                            {senders.map(sender => (
+                                                <strong key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
+                                                    {sender.username}
+                                                </strong>
+                                            )).reduce((prev, curr) => [prev, ', ', curr])}
+                                        </div>
+                                    }
+
+                                    {/* Last message details */}
+                                    {lastMessage &&
+                                    <Row style={style.message} onClick={() => this.goToConversation(conv._id)}>
+                                        <Col xs={2} className='text-right' style={{paddingRight: 0}}>
+                                            {lastMessage.from.username}:
+                                        </Col>
+                                        <Col xs={8}>
+                                            <div style={textStyle}>{lastMessage.text}</div>
+                                        </Col>
+                                    </Row>
+                                    }
                                 </Col>
-                                <Col xs={5} sm={3} style={style.convRight}>
+                                <Col xs={2} style={style.convRight}>
+                                    {/* Last message time and ability to remove message */}
                                     <span>
                                         {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
                                         {timestampToHumanDate(conv.timestamp)}
                                         <Glyphicon
                                             id='remove'
-                                            glyph='remove'
+                                            glyph='trash'
+                                            title='Remove conversation'
                                             className='cursor'
                                             style={{paddingLeft: 10}}
                                             onClick={() => this.showDeleteConfirmation(conv._id)}
@@ -109,16 +149,6 @@ class Conversations extends React.Component<Props, State> {
                                     </span>
                                 </Col>
                             </Row>
-                            {lastMessage &&
-                            <Row style={style.message} onClick={() => this.goToConversation(conv._id)}>
-                                <Col xs={3} sm={2} className='text-right' style={{paddingRight: 0}}>
-                                    {lastMessage.from.username}:
-                                </Col>
-                                <Col xs={9} sm={8}>
-                                    <div style={textStyle}>{lastMessage.text}</div>
-                                </Col>
-                            </Row>
-                            }
                         </td>
                     </tr>
                 )
@@ -166,7 +196,7 @@ class Conversations extends React.Component<Props, State> {
 
 const style = {
     conversation: {
-        fontSize: 15
+        fontSize: 13
     },
     convRight: {
         color: 'grey',
@@ -175,7 +205,8 @@ const style = {
     },
     message: {
         color: 'grey',
-        fontSize: 13
+        fontSize: 13,
+        marginTop: 5
     },
     text: {
         paddingTop: 3,
@@ -187,7 +218,7 @@ const style = {
         display: '-webkit-box',
         WebkitBoxOrient: 'vertical',
         WebkitLineClamp: 3, // N number of lines to show
-        lineHeight: 1.154   // X fallback
+        lineHeight: 1.3   // X fallback
         // maxHeight: 3.462    // N * X
     },
     cutSendersText: {

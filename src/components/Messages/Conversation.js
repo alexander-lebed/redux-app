@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 import { Picker, Emoji } from 'emoji-mart'
 import Linkify from 'react-linkify';
 import _ from 'lodash';
+import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Glyphicon } from 'react-bootstrap';
+import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Glyphicon, Image } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType, Message } from '../../types';
+import {MAIN_COLOR} from "../../constants";
 
 type Props = {
     user: User,
+    users: Map<string, User>,
     conversation: ConversationType,
     location: Object,
     getConversation: Function,
@@ -161,37 +164,46 @@ class Conversation extends React.Component<Props, State> {
     };
 
     renderMessage = (message: Message) => {
-        const {user, deleteMessage} = this.props;
+        const {user, users, deleteMessage} = this.props;
         const isMessageFromCurrentUser = message.from._id === user._id;
+        // $FlowFixMe
+        const messageUser: User = users.toArray().find(e => e._id === message.from._id);
         return (
             <div>
-                <Row style={{...style.top, ...{marginRight: 0}}}>
-                    <Col xs={12} sm={9}>
-                        <div>
-                            <span style={style.from}>
-                                {message.from.username}
-                            </span>
-                            <span style={{paddingLeft: 15}}>
-                                {timestampToHumanDate(message.timestamp, true)}
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={12} sm={3}>
-                        {isMessageFromCurrentUser &&
+                <Image
+                    circle
+                    style={messageUser.online ? {border: `2px solid ${MAIN_COLOR}`, float: 'left'} : {float: 'left'}}
+                    className='profile-picture'
+                    src={messageUser.pictureUrl ? messageUser.pictureUrl : '/default-profile.png'}
+                    alt={'Image'}
+                />
+                <div style={style.top}>
+                    <div>
+                        <span style={style.from}>
+                            {message.from.username}
+                        </span>
+                        <span style={style.time}>
+                            {timestampToHumanDate(message.timestamp, true)}
+                        </span>
+                        <Linkify>
+                            <div style={style.text}>
+                                {message.text}
+                            </div>
+                        </Linkify>
+                    </div>
+                    {isMessageFromCurrentUser &&
+                    <div>
                         <Glyphicon
                             id='remove'
                             glyph='remove'
+                            title='Remove message'
+                            style={{color: 'grey'}}
                             className='pull-right cursor'
                             onClick={() => deleteMessage(message._id)}
                         />
-                        }
-                    </Col>
-                </Row>
-                <Linkify>
-                    <div style={style.text}>
-                        {message.text}
                     </div>
-                </Linkify>
+                    }
+                </div>
             </div>
         )
     };
@@ -254,7 +266,9 @@ const style = {
         marginBottom: 20
     },
     top: {
-        color: 'grey',
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginRight: 0,
         fontSize: 13
     },
     from: {
@@ -262,7 +276,12 @@ const style = {
         fontSize: 13,
         fontWeight: 700
     },
+    time: {
+        color: 'grey',
+        paddingLeft: 15
+    },
     text: {
+        color: '#3a3a3a',
         fontSize: 13,
         paddingTop: 5,
         whiteSpace: 'pre-wrap'
@@ -281,6 +300,7 @@ const style = {
 export default connect(
     state => ({
         user: state.authentication.user,
+        users: state.users.users,
         conversation: state.conversations.conversation
     }),
     { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup }

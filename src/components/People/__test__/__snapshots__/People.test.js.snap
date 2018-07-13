@@ -11,13 +11,13 @@ exports[`<People/> should match snapshot 1`] = `
   }
 >
   <div
-    className="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0"
+    className="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0"
   >
     <div
       className="row"
     >
       <div
-        className="col-sm-5 col-xs-12"
+        className="col-sm-6 col-xs-12"
       >
         <div
           className="form-group"
@@ -56,42 +56,53 @@ exports[`<People/> should match snapshot 1`] = `
               className="row"
             >
               <div
-                className="col-sm-4 col-xs-12"
+                className="col-sm-6 col-xs-12"
                 style={
                   Object {
                     "paddingTop": 5,
                   }
                 }
               >
-                <span
-                  className="glyphicon glyphicon-user"
+                <img
+                  alt="Image"
+                  className="profile-picture img-circle"
+                  src="/default-profile.png"
                   style={
                     Object {
-                      "color": "#00b386",
-                      "marginRight": 15,
+                      "border": "2px solid #00b386",
+                      "float": "left",
                     }
                   }
                 />
-                Current User
+                <div>
+                  Current User
+                  <div
+                    style={
+                      Object {
+                        "color": "grey",
+                        "fontSize": 13,
+                      }
+                    }
+                  />
+                </div>
               </div>
               <div
-                className="col-sm-8 col-xs-12"
-                style={
-                  Object {
-                    "color": "grey",
-                    "fontSize": 13,
-                  }
-                }
+                className="col-sm-6 col-xs-12"
               >
-                <button
-                  className="pull-right btn btn-sm btn-default"
-                  disabled={false}
-                  id="write-user-111"
-                  onClick={[Function]}
-                  type="button"
+                <div
+                  className="pull-right btn-toolbar"
+                  role="toolbar"
                 >
-                  Write a message
-                </button>
+                  <button
+                    className="btn btn-sm btn-default"
+                    disabled={false}
+                    id="write-user-111"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Write a message
+                  </button>
+                </div>
               </div>
             </div>
           </td>
@@ -104,42 +115,53 @@ exports[`<People/> should match snapshot 1`] = `
               className="row"
             >
               <div
-                className="col-sm-4 col-xs-12"
+                className="col-sm-6 col-xs-12"
                 style={
                   Object {
                     "paddingTop": 5,
                   }
                 }
               >
-                <span
-                  className="glyphicon glyphicon-user"
+                <img
+                  alt="Image"
+                  className="profile-picture img-circle"
+                  src="/default-profile.png"
                   style={
                     Object {
-                      "color": "#00b386",
-                      "marginRight": 15,
+                      "border": "2px solid #00b386",
+                      "float": "left",
                     }
                   }
                 />
-                Alice
+                <div>
+                  Alice
+                  <div
+                    style={
+                      Object {
+                        "color": "grey",
+                        "fontSize": 13,
+                      }
+                    }
+                  />
+                </div>
               </div>
               <div
-                className="col-sm-8 col-xs-12"
-                style={
-                  Object {
-                    "color": "grey",
-                    "fontSize": 13,
-                  }
-                }
+                className="col-sm-6 col-xs-12"
               >
-                <button
-                  className="pull-right btn btn-sm btn-default"
-                  disabled={false}
-                  id="write-user-222"
-                  onClick={[Function]}
-                  type="button"
+                <div
+                  className="pull-right btn-toolbar"
+                  role="toolbar"
                 >
-                  Write a message
-                </button>
+                  <button
+                    className="btn btn-sm btn-default"
+                    disabled={false}
+                    id="write-user-222"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Write a message
+                  </button>
+                </div>
               </div>
             </div>
           </td>
@@ -152,42 +174,53 @@ exports[`<People/> should match snapshot 1`] = `
               className="row"
             >
               <div
-                className="col-sm-4 col-xs-12"
+                className="col-sm-6 col-xs-12"
                 style={
                   Object {
                     "paddingTop": 5,
                   }
                 }
               >
-                <span
-                  className="glyphicon glyphicon-user"
+                <img
+                  alt="Image"
+                  className="profile-picture img-circle"
+                  src="/default-profile.png"
                   style={
                     Object {
-                      "color": "#00b386",
-                      "marginRight": 15,
+                      "border": "2px solid #00b386",
+                      "float": "left",
                     }
                   }
                 />
-                Bob
+                <div>
+                  Bob
+                  <div
+                    style={
+                      Object {
+                        "color": "grey",
+                        "fontSize": 13,
+                      }
+                    }
+                  />
+                </div>
               </div>
               <div
-                className="col-sm-8 col-xs-12"
-                style={
-                  Object {
-                    "color": "grey",
-                    "fontSize": 13,
-                  }
-                }
+                className="col-sm-6 col-xs-12"
               >
-                <button
-                  className="pull-right btn btn-sm btn-default"
-                  disabled={false}
-                  id="write-user-333"
-                  onClick={[Function]}
-                  type="button"
+                <div
+                  className="pull-right btn-toolbar"
+                  role="toolbar"
                 >
-                  Write a message
-                </button>
+                  <button
+                    className="btn btn-sm btn-default"
+                    disabled={false}
+                    id="write-user-333"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Write a message
+                  </button>
+                </div>
               </div>
             </div>
           </td>

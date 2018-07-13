@@ -15,6 +15,7 @@ describe('<People/>', () => {
             username:'Current User',
             email: 'user@gmail.com',
             password: 'password',
+            pictureUrl: '',
             online: true,
             lastTime: 1519294933743
         },
@@ -24,6 +25,7 @@ describe('<People/>', () => {
                 username:'Current User',
                 email: 'user@mail.com',
                 password: 'user-password',
+                pictureUrl: '',
                 online: true,
                 lastTime: 1519294933743
             },
@@ -32,6 +34,7 @@ describe('<People/>', () => {
                 username:'Alice',
                 email: 'alice@gmail.com',
                 password: 'alice-password',
+                pictureUrl: '',
                 online: true,
                 lastTime: 1518346740388
             },
@@ -40,6 +43,7 @@ describe('<People/>', () => {
                 username:'Bob',
                 email: 'bob@mail.com',
                 password: 'bob-password',
+                pictureUrl: '',
                 online: true,
                 lastTime: 1518346740388
             }

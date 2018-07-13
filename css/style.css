@@ -51,6 +51,25 @@ textarea:focus {
     border-color: var(--main-border-color) !important;
 }
 
+.modal {
+    text-align: center;
+    padding: 0 0 300px 0 !important;
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
 
 /*
 for Mobile device
@@ -71,10 +90,6 @@ for Mobile device
         text-align: center;
         padding-top: 5px !important;
         padding-bottom: 5px !important;
-    }
-    .dropdown-menu {
-        padding-top: 40px !important;
-        padding-bottom: 0 !important;
     }
     .dropdown-item {
         padding-top: 10px;
@@ -106,6 +121,17 @@ for Desktop
 .tab-text {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
+}
+
+.profile-picture {
+    max-height: 50px;
+    max-width: 50px;
+    margin-right: 10px;
+}
+
+.account-menu {
+    max-height: 40px;
+    max-width: 40px;
 }
 
 .cut-senders-text {

@@ -1,11 +1,11 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
+import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
 import { Map } from 'immutable';
 import { editUser, deleteUser } from '../../redux/reducers/users';
 import encryptPassword from '../../helpers/encryptPassword';
-import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
+import { getUsernameValidationState, getEmailValidationState, getUrlValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
 import ConfirmationModal from '../common/ConfirmationModal';
 import type { User } from "../../types";
 
@@ -20,6 +20,7 @@ type Props = {
 type State = {
     username: string,
     email: string,
+    pictureUrl: string,
     currentPassword: string,
     newPassword: string,
     confirmNewPassword: string,
@@ -36,6 +37,7 @@ class Profile extends React.Component<Props, State> {
         this.state = {
             username: user ? user.username : '',
             email: user ? user.email : '',
+            pictureUrl: user ? user.pictureUrl : '',
             currentPassword: '',
             newPassword: '',
             confirmNewPassword: '',
@@ -46,6 +48,12 @@ class Profile extends React.Component<Props, State> {
     handleChange = (event: Object) => {
         const {name, value} = event.target;
         this.setState({[name]: value});
+    };
+
+    savePicture = () => {
+        const {user} = this.props;
+        const {pictureUrl} = this.state;
+        this.props.editUser(user._id, {pictureUrl});
     };
 
     saveBasic = () => {
@@ -79,12 +87,62 @@ class Profile extends React.Component<Props, State> {
     };
 
     render() {
-        const {username, email, currentPassword, newPassword, confirmNewPassword} = this.state;
+        const {username, email, pictureUrl, currentPassword, newPassword, confirmNewPassword} = this.state;
         const currentEncryptedPassword = currentPassword ? encryptPassword(currentPassword) : '';
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col mdOffset={3} md={6}>
                     <Form horizontal>
+
+                        <h4 style={{marginBottom: 10}}>Upload profile picture:</h4>
+
+                        <Well bsSize='small'>
+                            <Col smOffset={2} sm={8}>
+                                <Image
+                                    circle
+                                    style={{maxHeight: 150, maxWidth: 300}}
+                                    src={pictureUrl ? pictureUrl : '/default-profile.png'}
+                                    alt={'Image'}
+                                />
+                            </Col>
+
+                            <FormGroup controlId='pictureUrl' validationState={getUrlValidationState(pictureUrl)}>
+                                <Col smOffset={2} sm={8}>
+                                    <ControlLabel>Picture URL</ControlLabel>
+                                    <FormControl
+                                        name='pictureUrl'
+                                        placeholder='https://some/your/picture.png'
+                                        value={pictureUrl}
+                                        onChange={this.handleChange}
+                                    />
+                                    <HelpBlock style={style.helpBlock}>
+                                        {getUrlValidationState(pictureUrl) === 'error' && 'URL should be valid'}
+                                    </HelpBlock>
+                                    To create a URL to your picture:
+                                    <ol>
+                                        <li>
+                                            Go to <a href="http://funkyimg.com/" target="_blank" rel='noopener noreferrer'>FunkyImg</a> or <a href="https://postimages.org/" target="_blank" rel='noopener noreferrer'>PostImage</a>
+                                        </li>
+                                        <li>Upload your picture</li>
+                                        <li>Get Direct Link</li>
+                                    </ol>
+                                </Col>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Col smOffset={2} sm={8}>
+                                    <Button
+                                        bsStyle='primary'
+                                        className='pull-right'
+                                        disabled={this.props.user.pictureUrl === pictureUrl}
+                                        onClick={() => this.savePicture()}
+                                    >
+                                        Save
+                                    </Button>
+                                </Col>
+                            </FormGroup>
+                        </Well>
+
 
                         <h4 style={{marginBottom: 10}}>Change username and email:</h4>
 

@@ -8,6 +8,7 @@ const UserSchema = new Schema({
     email: String,
     password: String,
     online: Boolean,
+    pictureUrl: String,
     lastTime: Number
 }, {
     versionKey: false
