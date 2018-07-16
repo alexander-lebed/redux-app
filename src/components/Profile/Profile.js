@@ -118,14 +118,32 @@ class Profile extends React.Component<Props, State> {
                                     <HelpBlock style={style.helpBlock}>
                                         {getUrlValidationState(pictureUrl) === 'error' && 'URL should be valid'}
                                     </HelpBlock>
-                                    To create a URL to your picture:
-                                    <ol>
-                                        <li>
-                                            Go to <a href="http://funkyimg.com/" target="_blank" rel='noopener noreferrer'>FunkyImg</a> or <a href="https://postimages.org/" target="_blank" rel='noopener noreferrer'>PostImage</a>
-                                        </li>
-                                        <li>Upload your picture</li>
-                                        <li>Get <strong>Direct Link</strong> (Прямая ссылка)</li>
-                                    </ol>
+                                    <div style={{color: 'grey', fontSize: 15}}>
+                                        To create a URL to your picture:
+                                        <ol>
+                                            <li>
+                                                Go to{' '}
+                                                <a
+                                                    href="http://funkyimg.com/"
+                                                    style={{fontWeight: 'bold'}}
+                                                    target="_blank"
+                                                    rel='noopener noreferrer'
+                                                >
+                                                    FunkyImg
+                                                </a> or{' '}
+                                                <a
+                                                    href="https://postimages.org/"
+                                                    style={{fontWeight: 'bold'}}
+                                                    target="_blank"
+                                                    rel='noopener noreferrer'
+                                                >
+                                                    PostImage
+                                                </a>
+                                            </li>
+                                            <li><strong>Upload</strong> a picture (preferably square)</li>
+                                            <li>Get <strong>Direct Link</strong> (Прямая ссылка)</li>
+                                        </ol>
+                                    </div>
                                 </Col>
                             </FormGroup>
 
