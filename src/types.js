@@ -1,5 +1,6 @@
 // @flow
 import type { Element } from 'react';
+import type { TranslationType } from './lang/en';
 
 export type Action = {type: string, payload: any};
 export type State = any;
@@ -47,3 +48,6 @@ export type Location = {
     temp?: number,
     text?: string
 }
+
+export type Locale = 'en' | 'ru';
+export type Translation = TranslationType;

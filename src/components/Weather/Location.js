@@ -2,22 +2,24 @@
 import React from 'react';
 import { Row, Col, Glyphicon } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
-import type { Location as LocationType } from '../../types';
+import type { Location as LocationType, Translation } from '../../types';
 
 
 type Props = {
     location: LocationType,
+    translation: Translation,
     onDelete: (id: string) => void
 }
 
 export const Location = (props: Props) => {
-    const { location, onDelete } = props;
+    const { location, onDelete, translation } = props;
+    const {WEATHER, COMMON} = translation;
     let tempInfo = '';
     if (location.temp) {
         const degreesInCelsius = Math.round((location.temp - 32) / 1.8);
         tempInfo = <span><strong>{degreesInCelsius}</strong>°C</span>;
     } else {
-        tempInfo = 'not available';
+        tempInfo = WEATHER.NOT_AVAILABLE;
     }
     return (
         <Row style={{paddingTop: 5, paddingBottom: 5}}>
@@ -31,7 +33,7 @@ export const Location = (props: Props) => {
                     glyph="trash"
                     className="pull-right"
                     style={{marginRight: 10, color: 'grey'}}
-                    title="Remove Location"
+                    title={COMMON.DELETE}
                     onClick={onDelete}
                 />
             </Col>

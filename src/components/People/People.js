@@ -8,12 +8,13 @@ import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { deleteUser } from '../../redux/reducers/users';
 import ConfirmationModal from '../common/ConfirmationModal';
-import type { User } from '../../types';
+import type { User, Translation } from '../../types';
 
 type Props = {
     history: Object;
     user: User,
     users: Map<string, User>,
+    translation: Translation,
     deleteUser: Function
 }
 
@@ -59,7 +60,8 @@ export class People extends React.Component<Props, State> {
     isAdmin = () => this.props.user.email === 'alexanderlebed999@gmail.com';
 
     render() {
-        let {users} = this.props;
+        let {users, translation} = this.props;
+        const {PEOPLE, COMMON} = translation;
         users = users.toArray();
         if (this.state.searchText) {
             users = users.filter(e => e.username.toLowerCase().indexOf(this.state.searchText.toLowerCase()) !== -1)
@@ -73,7 +75,7 @@ export class People extends React.Component<Props, State> {
                                 <InputGroup>
                                     <FormControl
                                         type='text'
-                                        placeholder='Search people'
+                                        placeholder={PEOPLE.SEARCH_PEOPLE}
                                         value={this.state.searchText}
                                         onChange={e => this.setState({searchText: e.target.value})}
                                     />
@@ -84,7 +86,7 @@ export class People extends React.Component<Props, State> {
                             </FormGroup>
                         </Col>
                     </Row>
-                    {users.length === 0 ? <div className='text-center'>No results</div> :
+                    {users.length === 0 ? <div className='text-center'>{COMMON.NO_RESULTS}</div> :
                         <Table>
                             <tbody>
                                 {users.map(user => {
@@ -119,7 +121,7 @@ export class People extends React.Component<Props, State> {
                                                                 bsStyle='danger'
                                                                 onClick={() => this.showDeleteConfirmation(user._id)}
                                                             >
-                                                                Delete
+                                                                {COMMON.DELETE}
                                                             </Button>
                                                             }
                                                             <Button
@@ -127,7 +129,7 @@ export class People extends React.Component<Props, State> {
                                                                 bsSize='small'
                                                                 onClick={() => this.goToConversationWith([user._id])}
                                                             >
-                                                                Write a message
+                                                                {translation.MESSAGES.WRITE_MESSAGE}
                                                             </Button>
                                                         </ButtonToolbar>
                                                     </Col>
@@ -141,8 +143,8 @@ export class People extends React.Component<Props, State> {
                     }
                     {this.state.deleteUserId &&
                         <ConfirmationModal
-                            title={'Delete confirmation'}
-                            body={'Are you sure you want to delete this user?'}
+                            title={COMMON.DELETE_CONFIRMATION}
+                            body={PEOPLE.DELETE_CONFIRMATION}
                             onConfirm={() => this.deleteUser()}
                             onCancel={() => this.hideDeleteConfirmation()}
                         />
@@ -163,7 +165,8 @@ const style = {
 export default connect(
     state => ({
         user: state.authentication.user,
-        users: state.users.users
+        users: state.users.users,
+        translation: state.translation
     }),
     { deleteUser }
 )(People);

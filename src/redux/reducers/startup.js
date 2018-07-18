@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { initTranslation } from './translation';
 import { getUsers } from './users';
 import { login, online } from './authentication';
 import { getConversationsByUser } from './conversations';
@@ -53,6 +54,8 @@ export function initApp() {
         dispatch({
             type: actions.START_INIT
         });
+
+        dispatch(initTranslation());
 
         await dispatch(getUsers());
 

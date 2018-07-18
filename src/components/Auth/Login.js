@@ -5,9 +5,11 @@ import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Bu
 import encryptPassword from '../../helpers/encryptPassword';
 import { login } from '../../redux/reducers/authentication';
 import { success, error } from '../../redux/reducers/alerts';
+import type { Translation } from '../../types';
 
 type Props = {
     history: Object,
+    translation: Translation,
     login: Function,
     success: Function,
     error: Function
@@ -44,6 +46,7 @@ class Login extends React.Component<Props, State> {
 
     render() {
         const {email, password} = this.state;
+        const {translation} = this.props;
         return (
             <Row style={{marginTop: 100, marginLeft: 0, marginRight: 0}}>
                 <Col smOffset={3} sm={6}>
@@ -92,12 +95,12 @@ class Login extends React.Component<Props, State> {
                                         type='submit'
                                         bsStyle='primary'
                                     >
-                                        Log in
+                                        {translation.ACCOUNT.LOG_IN}
                                     </Button>
                                     <Button
                                         href='/register'
                                     >
-                                        Register
+                                        {translation.ACCOUNT.SIGN_UP}
                                     </Button>
                                 </ButtonToolbar>
                             </Col>
@@ -110,7 +113,9 @@ class Login extends React.Component<Props, State> {
 }
 
 export default connect(
-    () => ({}),
+    (state) => ({
+        translation: state.translation
+    }),
     {
         login, success, error
     }

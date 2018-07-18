@@ -8,13 +8,14 @@ import { MAIN_COLOR } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
 import ConfirmationModal from '../common/ConfirmationModal';
-import type { User, Conversation as ConversationType } from '../../types';
+import type { User, Conversation as ConversationType, Translation } from '../../types';
 
 type Props = {
     history: Object,
     user: User,
     users: Map<string, User>,
     conversations: Array<ConversationType>,
+    translation: Translation,
     getConversationsByUser: Function,
     deleteConversation: Function
 }
@@ -62,12 +63,13 @@ class Conversations extends React.Component<Props, State> {
     };
 
     render() {
-        const {user, users, conversations} = this.props;
+        const {user, users, conversations, translation} = this.props;
+        const {CONVERSATIONS} = translation;
         let content = [];
         if (conversations.length === 0) {
             content = (
                 <div className='text-center'>
-                    {'You don\'t have any conversations yet'}
+                    {CONVERSATIONS.NO_CONVERSATIONS}
                 </div>
             )
         } else {
@@ -136,14 +138,14 @@ class Conversations extends React.Component<Props, State> {
                                     }
                                 </Col>
                                 <Col xs={2} style={style.convRight}>
-                                    {/* Last message time and ability to remove message */}
+                                    {/* Last message time and ability to delete message */}
                                     <span>
                                         {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
                                         {timestampToHumanDate(conv.timestamp)}
                                         <Glyphicon
-                                            id='remove'
+                                            id='delete'
                                             glyph='trash'
-                                            title='Remove conversation'
+                                            title={CONVERSATIONS.DELETE}
                                             className='cursor'
                                             style={{paddingLeft: 10}}
                                             onClick={() => this.showDeleteConfirmation(conv._id)}
@@ -168,11 +170,11 @@ class Conversations extends React.Component<Props, State> {
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
                     <h4 style={{marginBottom: 20}} className='text-center'>
-                        Conversations
+                        {CONVERSATIONS.CONVERSATIONS}
                         <Button
                             id='create-conversation'
                             bsSize='small'
-                            title='Create new conversation'
+                            title={CONVERSATIONS.CREATE}
                             style={{border: 'none'}}
                             className='pull-right btn-circle-glyphicon'
                             onClick={() => this.createConversation()}
@@ -184,8 +186,8 @@ class Conversations extends React.Component<Props, State> {
 
                     {this.state.deleteConversationId &&
                         <ConfirmationModal
-                            title={'Delete confirmation'}
-                            body={'This will delete conversation for all participants. Are you sure?'}
+                            title={translation.COMMON.DELETE_CONFIRMATION}
+                            body={CONVERSATIONS.DELETE_CONFIRMATION}
                             onConfirm={() => this.deleteConversation()}
                             onCancel={() => this.hideDeleteConfirmation()}
                         />
@@ -236,7 +238,8 @@ export default connect(
     state => ({
         user: state.authentication.user,
         users: state.users.users,
-        conversations: state.conversations.conversations
+        conversations: state.conversations.conversations,
+        translation: state.translation
     }),
     { getConversationsByUser, deleteConversation }
 )(Conversations);

@@ -5,12 +5,13 @@ import { Map } from 'immutable';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 import { MAIN_COLOR } from '../../constants';
-import type { User } from '../../types';
+import type { User, Translation } from '../../types';
 
 type Props = {
     history: Object;
     user: User,
-    users: Map<string, User>
+    users: Map<string, User>,
+    translation: Translation,
 }
 
 type State = {
@@ -43,7 +44,8 @@ export class CreateConversation extends React.Component<Props, State> {
 
     render() {
         const {participants, searchText} = this.state;
-        let {users, user, history} = this.props;
+        let {users, user, translation, history} = this.props;
+        const {CONVERSATIONS} = translation;
 
         users = users.toArray();
         users = users.filter(e => e._id !== user._id);
@@ -57,14 +59,14 @@ export class CreateConversation extends React.Component<Props, State> {
                         <Col xs={12} sm={7} style={{float: 'right', marginBottom: 10}}>
                             <ButtonToolbar className='pull-right'>
                                 <Button onClick={() => history.push('/conversations')}>
-                                    Cancel
+                                    {translation.COMMON.CANCEL}
                                 </Button>
                                 <Button
                                     bsStyle='primary'
                                     disabled={participants.length === 0}
                                     onClick={() => history.push(`/conversation?${queryString.stringify({userIds: participants})}`)}
                                 >
-                                    Create conversation
+                                    {CONVERSATIONS.CREATE}
                                 </Button>
                             </ButtonToolbar>
                         </Col>
@@ -73,7 +75,7 @@ export class CreateConversation extends React.Component<Props, State> {
                                 <InputGroup>
                                     <FormControl
                                         type='text'
-                                        placeholder='Search participants'
+                                        placeholder={CONVERSATIONS.SEARCH_PARTICIPANTS}
                                         value={searchText}
                                         onChange={e => this.setState({searchText: e.target.value})}
                                     />
@@ -84,7 +86,7 @@ export class CreateConversation extends React.Component<Props, State> {
                             </FormGroup>
                         </Col>
                     </Row>
-                    {users.length === 0 ? <div className='text-center'>No results</div> :
+                    {users.length === 0 ? <div className='text-center'>{translation.COMMON.NO_RESULTS}</div> :
                         <Table hover>
                             <tbody>
                                 {users.map(user => {
@@ -124,7 +126,8 @@ export class CreateConversation extends React.Component<Props, State> {
 export default connect(
     state => ({
         user: state.authentication.user,
-        users: state.users.users
+        users: state.users.users,
+        translation: state.translation
     }),
     { }
 )(CreateConversation);

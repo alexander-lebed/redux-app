@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux';
 // import type { Node } from 'react';
 import { Modal, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
 
@@ -35,14 +36,14 @@ class ConfirmationModal extends React.Component<void, void> {
                             disabled={this.props.inProgress}
                             onClick={this.props.onConfirm}
                         >
-                            Yes
+                            {this.props.translation.COMMON.YES}
                         </Button>
                         <Button
                             id='cancel-btn'
                             disabled={this.props.inProgress}
                             onClick={this.props.onCancel}
                         >
-                            Cancel
+                            {this.props.translation.COMMON.CANCEL}
                         </Button>
                     </ButtonToolbar>
                 </Modal.Footer>
@@ -51,4 +52,8 @@ class ConfirmationModal extends React.Component<void, void> {
     }
 }
 
-export default ConfirmationModal;
+export default connect(
+    (state) => ({
+        translation: state.translation
+    }), {}
+)(ConfirmationModal)

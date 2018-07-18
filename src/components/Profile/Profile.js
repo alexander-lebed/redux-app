@@ -7,12 +7,13 @@ import { editUser, deleteUser } from '../../redux/reducers/users';
 import encryptPassword from '../../helpers/encryptPassword';
 import { getUsernameValidationState, getEmailValidationState, getUrlValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
 import ConfirmationModal from '../common/ConfirmationModal';
-import type { User } from "../../types";
+import type { User, Translation } from "../../types";
 
 type Props = {
     history: Object;
     user: User,
     users: Map<string, User>,
+    translation: Translation,
     editUser: Function,
     deleteUser: Function
 };
@@ -88,13 +89,15 @@ class Profile extends React.Component<Props, State> {
 
     render() {
         const {username, email, pictureUrl, currentPassword, newPassword, confirmNewPassword} = this.state;
+        const {user, translation} = this.props;
+        const {PROFILE_PICTURE, USERNAME_EMAIL, PASSWORD} = translation.ACCOUNT;
         const currentEncryptedPassword = currentPassword ? encryptPassword(currentPassword) : '';
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col mdOffset={3} md={6}>
                     <Form horizontal>
 
-                        <h4 style={{marginBottom: 10}}>Upload profile picture:</h4>
+                        <h4 style={{marginBottom: 10}}>{PROFILE_PICTURE.UPLOAD_PICTURE}</h4>
 
                         <Well bsSize='small'>
                             <Col smOffset={2} sm={8}>
@@ -108,7 +111,7 @@ class Profile extends React.Component<Props, State> {
 
                             <FormGroup controlId='pictureUrl' validationState={getUrlValidationState(pictureUrl)}>
                                 <Col smOffset={2} sm={8}>
-                                    <ControlLabel>Picture URL</ControlLabel>
+                                    <ControlLabel>{PROFILE_PICTURE.PICTURE_URL}</ControlLabel>
                                     <FormControl
                                         name='pictureUrl'
                                         placeholder='https://some/your/picture.png'
@@ -116,32 +119,33 @@ class Profile extends React.Component<Props, State> {
                                         onChange={this.handleChange}
                                     />
                                     <HelpBlock style={style.helpBlock}>
-                                        {getUrlValidationState(pictureUrl) === 'error' && 'URL should be valid'}
+                                        {getUrlValidationState(pictureUrl) === 'error' && PROFILE_PICTURE.ERRORS.INVALID_URL}
                                     </HelpBlock>
                                     <div style={{color: 'grey', fontSize: 15}}>
-                                        To create a URL to your picture:
+                                        {PROFILE_PICTURE.CREATE_PICTURE_URL}
                                         <ol>
                                             <li>
-                                                Go to{' '}
-                                                <a
-                                                    href="http://funkyimg.com/"
-                                                    style={{fontWeight: 'bold'}}
-                                                    target="_blank"
-                                                    rel='noopener noreferrer'
-                                                >
-                                                    FunkyImg
-                                                </a> or{' '}
-                                                <a
-                                                    href="https://postimages.org/"
-                                                    style={{fontWeight: 'bold'}}
-                                                    target="_blank"
-                                                    rel='noopener noreferrer'
-                                                >
-                                                    PostImage
-                                                </a>
+                                                {PROFILE_PICTURE.GO_TO_SOURCE(
+                                                    <a
+                                                        href="http://funkyimg.com/"
+                                                        style={{fontWeight: 'bold'}}
+                                                        target="_blank"
+                                                        rel='noopener noreferrer'
+                                                    >
+                                                        FunkyImg
+                                                    </a>,
+                                                    <a
+                                                        href="https://postimages.org/"
+                                                        style={{fontWeight: 'bold'}}
+                                                        target="_blank"
+                                                        rel='noopener noreferrer'
+                                                    >
+                                                        PostImage
+                                                    </a>
+                                                )}
                                             </li>
-                                            <li><strong>Upload</strong> a picture (preferably square)</li>
-                                            <li>Get <strong>Direct Link</strong> (Прямая ссылка)</li>
+                                            <li>{PROFILE_PICTURE.UPLOAD}</li>
+                                            <li>{PROFILE_PICTURE.GET_LINK}</li>
                                         </ol>
                                     </div>
                                 </Col>
@@ -152,52 +156,52 @@ class Profile extends React.Component<Props, State> {
                                     <Button
                                         bsStyle='primary'
                                         className='pull-right'
-                                        disabled={this.props.user.pictureUrl === pictureUrl}
+                                        disabled={user.pictureUrl === pictureUrl}
                                         onClick={() => this.savePicture()}
                                     >
-                                        Save
+                                        {translation.COMMON.SAVE}
                                     </Button>
                                 </Col>
                             </FormGroup>
                         </Well>
 
 
-                        <h4 style={{marginBottom: 10}}>Change username and email:</h4>
+                        <h4 style={{marginBottom: 10}}>{USERNAME_EMAIL.CHANGE_USERNAME_AND_EMAIL}</h4>
 
                         <Well bsSize='small'>
                             <FormGroup controlId='username'  validationState={this.getUsernameValidationState(username)}>
                                 <Col smOffset={2} sm={8}>
-                                    <ControlLabel>Username</ControlLabel>
+                                    <ControlLabel>{USERNAME_EMAIL.USERNAME}</ControlLabel>
                                     <FormControl
                                         name='username'
-                                        placeholder='Username'
+                                        placeholder={USERNAME_EMAIL.USERNAME}
                                         value={username}
                                         onChange={this.handleChange}
                                     />
                                     <HelpBlock style={style.helpBlock}>
-                                        {getUsernameValidationState(username) === 'error' && 'Username should contain at least 3 characters'}
+                                        {getUsernameValidationState(username) === 'error' && USERNAME_EMAIL.ERRORS.USERNAME_MIN_LENGTH}
                                     </HelpBlock>
                                     <HelpBlock style={style.helpBlock}>
-                                        {this.suchUsernameExist(username) === 'error' && 'User with such username already exist'}
+                                        {this.suchUsernameExist(username) === 'error' && USERNAME_EMAIL.ERRORS.USERNAME_EXIST}
                                     </HelpBlock>
                                 </Col>
                             </FormGroup>
 
                             <FormGroup controlId='email' validationState={this.getEmailValidationState(email)}>
                                 <Col smOffset={2} sm={8}>
-                                    <ControlLabel>Email</ControlLabel>
+                                    <ControlLabel>{USERNAME_EMAIL.EMAIL}</ControlLabel>
                                     <FormControl
                                         name='email'
                                         type='email'
-                                        placeholder='Email'
+                                        placeholder={USERNAME_EMAIL.EMAIL}
                                         value={email}
                                         onChange={this.handleChange}
                                     />
                                     <HelpBlock style={style.helpBlock}>
-                                        {getEmailValidationState(email) === 'error' && 'Email address should be valid'}
+                                        {getEmailValidationState(email) === 'error' && USERNAME_EMAIL.ERRORS.EMAIL_INVALID}
                                     </HelpBlock>
                                     <HelpBlock style={style.helpBlock}>
-                                        {this.suchEmailExist(email) === 'error' && 'User with such email already exist'}
+                                        {this.suchEmailExist(email) === 'error' && USERNAME_EMAIL.ERRORS.EMAIL_EXIST}
                                     </HelpBlock>
                                 </Col>
                             </FormGroup>
@@ -210,60 +214,60 @@ class Profile extends React.Component<Props, State> {
                                         disabled={!this.isBasicFormValid()}
                                         onClick={() => this.saveBasic()}
                                     >
-                                        Save
+                                        {translation.COMMON.SAVE}
                                     </Button>
                                 </Col>
                             </FormGroup>
                         </Well>
 
 
-                        <h4 style={{marginBottom: 10}}>Change password:</h4>
+                        <h4 style={{marginBottom: 10}}>{PASSWORD.CHANGE_PASSWORD}</h4>
 
                         <Well bsSize='small'>
-                            <FormGroup controlId='current-password' validationState={getConfirmPasswordValidationState(this.props.user.password, currentEncryptedPassword)}>
+                            <FormGroup controlId='current-password' validationState={getConfirmPasswordValidationState(user.password, currentEncryptedPassword)}>
                                 <Col smOffset={2} sm={8}>
-                                    <ControlLabel>Current password</ControlLabel>
+                                    <ControlLabel>{PASSWORD.CURRENT_PASSWORD}</ControlLabel>
                                     <FormControl
                                         name='currentPassword'
                                         type='password'
-                                        placeholder='Current password'
+                                        placeholder={PASSWORD.CURRENT_PASSWORD}
                                         value={currentPassword}
                                         onChange={this.handleChange}
                                     />
                                     <HelpBlock style={style.helpBlock}>
-                                        {getConfirmPasswordValidationState(this.props.user.password, currentEncryptedPassword) === 'error' && 'Current password does not match'}
+                                        {getConfirmPasswordValidationState(user.password, currentEncryptedPassword) === 'error' && PASSWORD.ERRORS.CURRENT_PASSWORD_INVALID}
                                     </HelpBlock>
                                 </Col>
                             </FormGroup>
 
                             <FormGroup controlId='new-password' validationState={getPasswordValidationState(newPassword)}>
                                 <Col smOffset={2} sm={8}>
-                                    <ControlLabel>New password</ControlLabel>
+                                    <ControlLabel>{PASSWORD.NEW_PASSWORD}</ControlLabel>
                                     <FormControl
                                         name='newPassword'
                                         type='password'
-                                        placeholder='New password'
+                                        placeholder={PASSWORD.NEW_PASSWORD}
                                         value={newPassword}
                                         onChange={this.handleChange}
                                     />
                                     <HelpBlock style={style.helpBlock}>
-                                        {getPasswordValidationState(newPassword) === 'error' && 'Password should contain at least 5 characters and do not contain spaces'}
+                                        {getPasswordValidationState(newPassword) === 'error' && PASSWORD.ERRORS.NEW_PASSWORD_INVALID}
                                     </HelpBlock>
                                 </Col>
                             </FormGroup>
 
                             <FormGroup controlId='confirm-password' validationState={getConfirmPasswordValidationState(newPassword, confirmNewPassword)}>
                                 <Col smOffset={2} sm={8}>
-                                    <ControlLabel>Confirm new password</ControlLabel>
+                                    <ControlLabel>{PASSWORD.CONFIRM_NEW_PASSWORD}</ControlLabel>
                                     <FormControl
                                         name='confirmNewPassword'
                                         type='password'
-                                        placeholder='Confirm new password'
+                                        placeholder={PASSWORD.CONFIRM_NEW_PASSWORD}
                                         value={confirmNewPassword}
                                         onChange={this.handleChange}
                                     />
                                     <HelpBlock style={style.helpBlock}>
-                                        {getConfirmPasswordValidationState(newPassword, confirmNewPassword) === 'error' && 'Passwords do not match'}
+                                        {getConfirmPasswordValidationState(newPassword, confirmNewPassword) === 'error' && PASSWORD.ERRORS.PASSWORDS_NOT_MATCH}
                                     </HelpBlock>
                                 </Col>
                             </FormGroup>
@@ -276,7 +280,7 @@ class Profile extends React.Component<Props, State> {
                                             disabled={!this.isPasswordFormValid()}
                                             onClick={() => this.savePassword()}
                                         >
-                                            Save
+                                            {translation.COMMON.SAVE}
                                         </Button>
                                     </ButtonToolbar>
                                 </Col>
@@ -289,15 +293,15 @@ class Profile extends React.Component<Props, State> {
                                 style={{marginBottom: 10}}
                                 onClick={() => this.showDeleteConfirmation()}
                             >
-                                <Glyphicon glyph='trash' style={{marginRight: 5}}/> Delete Profile
+                                <Glyphicon glyph='trash' style={{marginRight: 5}}/> {translation.ACCOUNT.DELETE_PROFILE}
                             </Button>
                         </div>
                     </Form>
 
                     {this.state.showDeleteConfirmation &&
                         <ConfirmationModal
-                            title={'Delete confirmation'}
-                            body={'Are you sure you want to delete your profile?'}
+                            title={translation.COMMON.DELETE_CONFIRMATION}
+                            body={translation.ACCOUNT.DELETE_PROFILE_CONFIRMATION}
                             onConfirm={() => this.deleteProfile()}
                             onCancel={() => this.hideDeleteConfirmation()}
                         />
@@ -380,7 +384,8 @@ const style = {
 export default connect(
     (state) => ({
         user: state.authentication.user,
-        users: state.users.users
+        users: state.users.users,
+        translation: state.translation
     }),
     {
         editUser, deleteUser

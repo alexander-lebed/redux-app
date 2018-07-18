@@ -91,10 +91,20 @@ for Mobile device
         padding-top: 5px !important;
         padding-bottom: 5px !important;
     }
+    .lang-text {
+        width: 50% !important;
+        float: left;
+        text-align: center;
+        border: 1px solid lightgrey;
+        padding-top: 5px !important;
+        font-size: 13px;
+        height: 50px;
+    }
     .dropdown-item {
         padding-top: 10px;
         text-align: center;
         font-size: 16px;
+        border: 1px solid lightgrey;
     }
     h4 {
         font-size: 20px;
@@ -121,6 +131,12 @@ for Desktop
 .tab-text {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
+}
+
+.lang-text {
+    width: 30px;
+    padding-top: 5px !important;
+    font-size: 13px;
 }
 
 .profile-picture-wrapper {
@@ -222,7 +238,7 @@ for Desktop
 .dropdown-item {
     padding-top: 5px;
     padding-bottom: 5px;
-    border-bottom: 1px solid #777;
+    border: 1px solid lightgrey;
 }
 
 .help-block {

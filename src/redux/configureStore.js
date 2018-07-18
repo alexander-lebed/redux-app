@@ -9,6 +9,8 @@ import users from './reducers/users';
 import conversations from './reducers/conversations'
 import weather from './reducers/weather';
 import alerts from './reducers/alerts';
+import locale from './reducers/locale';
+import translation from './reducers/translation';
 
 
 export default function configureStore() {
@@ -21,7 +23,9 @@ export default function configureStore() {
                 users,
                 conversations,
                 weather,
-                alerts
+                alerts,
+                locale,
+                translation
             });
             const store = createStore(
                 reducers,
@@ -36,7 +40,7 @@ export default function configureStore() {
             persistStore(
                 store,
                 {
-                    whitelist : ['authentication', 'users', 'weather'],
+                    whitelist : ['authentication', 'users', 'weather', 'locale'],
                     transforms: [immutableTransform()]
                 },
                 () => resolve(store)

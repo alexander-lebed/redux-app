@@ -41,7 +41,7 @@ exports[`<Location/> should render Location 1`] = `
           "marginRight": 10,
         }
       }
-      title="Remove Location"
+      title="Delete"
     />
   </div>
 </div>

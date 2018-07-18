@@ -9,13 +9,14 @@ import queryString from 'query-string';
 import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Glyphicon, Image } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
-import type { User, Conversation as ConversationType, Message } from '../../types';
+import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
 import {MAIN_COLOR} from "../../constants";
 
 type Props = {
     user: User,
     users: Map<string, User>,
     conversation: ConversationType,
+    translation: Translation,
     location: Object,
     getConversation: Function,
     getConversationWithUsers: Function,
@@ -118,13 +119,14 @@ class Conversation extends React.Component<Props, State> {
 
     render() {
         const {showEmoji} = this.state;
+        const {translation} = this.props;
         const messageStyle = showEmoji ? {paddingRight: 0} : {};
         const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
                     <h4 className='text-center' style={{marginBottom: 20}}>
-                        Messages
+                        {translation.MESSAGES.MESSAGES}
                     </h4>
                     {this.renderMessages()}
                     <Row>
@@ -164,7 +166,7 @@ class Conversation extends React.Component<Props, State> {
     };
 
     renderMessage = (message: Message) => {
-        const {user, users, deleteMessage} = this.props;
+        const {user, users, deleteMessage, translation} = this.props;
         const isMessageFromCurrentUser = message.from._id === user._id;
         // $FlowFixMe
         const messageUser: User = users.toArray().find(e => e._id === message.from._id);
@@ -196,9 +198,9 @@ class Conversation extends React.Component<Props, State> {
                     {isMessageFromCurrentUser &&
                     <div>
                         <Glyphicon
-                            id='remove'
+                            id='delete'
                             glyph='remove'
-                            title='Remove message'
+                            title={translation.MESSAGES.DELETE}
                             style={{color: 'grey'}}
                             className='pull-right cursor'
                             onClick={() => deleteMessage(message._id)}
@@ -212,9 +214,10 @@ class Conversation extends React.Component<Props, State> {
 
     renderEmojiPicker = () => {
         const {messageText} = this.state;
+        const {translation} = this.props;
         return (
             <Picker
-                title='pick your emoji…'
+                title={translation.MESSAGES.PICK_EMOJI}
                 emoji='monkey'
                 native={true}
                 onClick={emoji => {
@@ -234,7 +237,7 @@ class Conversation extends React.Component<Props, State> {
                         autoFocus={true}
                         style={style.textControl}
                         rows={4}
-                        placeholder='Write a message...'
+                        placeholder={this.props.translation.MESSAGES.WRITE_MESSAGE}
                         value={this.state.messageText}
                         onKeyPress={this.handleKeyPress}
                         onChange={e => this.setState({messageText: e.target.value})}
@@ -242,7 +245,7 @@ class Conversation extends React.Component<Props, State> {
                     <Row style={{margin: 0}}>
                         <Col xsHidden>
                             <HelpBlock>
-                                Press <strong>Shift+Enter</strong> for next line, <strong>Enter</strong> to send message
+                                {this.props.translation.MESSAGES.WRITE_MESSAGE_INFO}
                             </HelpBlock>
                         </Col>
                     </Row>
@@ -303,7 +306,8 @@ export default connect(
     state => ({
         user: state.authentication.user,
         users: state.users.users,
-        conversation: state.conversations.conversation
+        conversation: state.conversations.conversation,
+        translation: state.translation
     }),
     { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup }
 )(Conversation);

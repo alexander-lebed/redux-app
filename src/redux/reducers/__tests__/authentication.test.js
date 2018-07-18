@@ -24,6 +24,7 @@ describe('Authentication reducer', () => {
         authentication: {
             user: testUser
         },
+        user: testUser,
         users: {
             users: Map({
                 '111': testUser,

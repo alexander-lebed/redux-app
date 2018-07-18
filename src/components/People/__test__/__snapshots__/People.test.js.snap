@@ -103,7 +103,7 @@ exports[`<People/> should match snapshot 1`] = `
                     onClick={[Function]}
                     type="button"
                   >
-                    Write a message
+                    Write a message...
                   </button>
                 </div>
               </div>
@@ -165,7 +165,7 @@ exports[`<People/> should match snapshot 1`] = `
                     onClick={[Function]}
                     type="button"
                   >
-                    Write a message
+                    Write a message...
                   </button>
                 </div>
               </div>
@@ -227,7 +227,7 @@ exports[`<People/> should match snapshot 1`] = `
                     onClick={[Function]}
                     type="button"
                   >
-                    Write a message
+                    Write a message...
                   </button>
                 </div>
               </div>

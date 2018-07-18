@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { Map } from 'immutable';
 import { People } from '../People';
+import translation from '../../../lang/en';
 
 
 describe('<People/>', () => {
@@ -49,6 +50,7 @@ describe('<People/>', () => {
             }
         }),
         deleteUser: jest.fn(),
+        translation: translation,
         history: {}
     };
 

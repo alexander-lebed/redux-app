@@ -42,7 +42,7 @@ exports[`<WeatherList/> should match snapshot 1`] = `
                 <div
                   className="Select-placeholder"
                 >
-                  Search for a city
+                  Search for a location
                 </div>
                 <div
                   className="Select-input"
@@ -160,7 +160,7 @@ exports[`<WeatherList/> should match snapshot 1`] = `
                     "marginRight": 10,
                   }
                 }
-                title="Remove Location"
+                title="Delete"
               />
             </div>
           </div>
@@ -208,7 +208,7 @@ exports[`<WeatherList/> should match snapshot 1`] = `
                     "marginRight": 10,
                   }
                 }
-                title="Remove Location"
+                title="Delete"
               />
             </div>
           </div>

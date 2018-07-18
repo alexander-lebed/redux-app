@@ -8,11 +8,12 @@ import Select from 'react-select';
 import { PLACES_URL } from '../../constants';
 import { updateData } from '../../redux/reducers/weather'
 import Location from './Location';
-import type { State as CurrentData, Location as LocationType } from '../../types';
+import type { State as CurrentData, Location as LocationType, Translation } from '../../types';
 
 
 type Props = {
     locations: Array<LocationType>,
+    translation: Translation,
     updateData: (data: CurrentData) => void
 }
 
@@ -101,8 +102,9 @@ export class WeatherList extends React.Component<Props, State> {
     };
 
     render() {
-        const {locations, updateData} = this.props;
         const {searchList} = this.state;
+        const {locations, updateData, translation} = this.props;
+        const {WEATHER} = translation;
 
         const onAddLocation = (loc) => {
             const location = {
@@ -129,7 +131,7 @@ export class WeatherList extends React.Component<Props, State> {
                                 <Select
                                     name="search-location"
                                     searchable
-                                    placeholder='Search for a city'
+                                    placeholder={WEATHER.SEARCH_LOCATION}
                                     onChange={o => onAddLocation(o.value)}
                                     options={searchList.map(e => {
                                         return {
@@ -143,13 +145,13 @@ export class WeatherList extends React.Component<Props, State> {
                     </Row>
                     <div style={{paddingTop: 15}}>
 
-                        {locations.length === 0 && <div>There are no locations yet.</div>}
+                        {locations.length === 0 && <div>{WEATHER.NO_LOCATIONS}</div>}
 
                         <ul className="weather-list">
                             {locations.filter(l => !l.isDeleted)
                                 .map(l => (
                                     <li key={l.id} className="weather-item">
-                                        <Location location={l} onDelete={() => removeLocation(l.id)} />
+                                        <Location location={l} onDelete={() => removeLocation(l.id)} translation={translation} />
                                     </li>
                                 ))
                             }
@@ -165,6 +167,9 @@ type ContainerProps = {inputChange: Function, children: Node}
 const SelectContainer = (props: ContainerProps) => <div onKeyUp={props.inputChange}>{props.children}</div>;
 
 export default connect(
-    state => ({ locations: state.weather }),
+    state => ({
+        locations: state.weather,
+        translation: state.translation
+    }),
     { updateData }
 )(WeatherList);

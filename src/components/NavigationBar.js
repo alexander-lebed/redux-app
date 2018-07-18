@@ -4,12 +4,16 @@ import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Button, Dropdown, MenuItem, Glyphicon, Badge, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { MAIN_COLOR } from '../constants';
+import { translate } from '../redux/reducers/translation';
 import { logout } from '../redux/reducers/authentication';
-import type { User } from '../types';
+import type { User, Locale, Translation } from '../types';
 
 type Props = {
     user: User,
     conversations: Array<Object>,
+    locale: Locale,
+    translation: Translation,
+    translate: (locale: Locale) => void,
     logout: Function
 }
 
@@ -30,7 +34,7 @@ class NavigationBar extends React.Component<Props, State> {
     };
 
     render() {
-        const {user, conversations = [], logout} = this.props;
+        const {user, conversations = [], logout, locale, translation, translate} = this.props;
         let newMessages = null;
         let accountDropdown = null;
         if (user) {
@@ -42,6 +46,7 @@ class NavigationBar extends React.Component<Props, State> {
                 <Dropdown
                     open={this.state.accountClicked}
                     id='account-menu'
+                    className='pull-left'
                     style={{paddingTop: 10, textAlign: 'center'}}
                 >
                     <div style={{display: 'inline-block'}}>
@@ -68,7 +73,7 @@ class NavigationBar extends React.Component<Props, State> {
                                 className='dropdown-item'
                             >
                                 <Glyphicon glyph='pencil' style={{marginRight: 8}} />
-                                Edit profile
+                                {translation.ACCOUNT.EDIT_PROFILE}
                             </MenuItem>
                         </LinkContainer>
                         <MenuItem
@@ -81,7 +86,7 @@ class NavigationBar extends React.Component<Props, State> {
                             }}
                         >
                             <Glyphicon glyph='log-out' style={{marginRight: 8}} />
-                            Log out
+                            {translation.ACCOUNT.LOG_OUT}
                         </MenuItem>
                     </Dropdown.Menu>
                 </Dropdown>
@@ -106,21 +111,21 @@ class NavigationBar extends React.Component<Props, State> {
                         <LinkContainer key='conversations' to='/conversations' style={messageTabStyle} onClick={() => this.expand(false)}>
                             <NavItem eventKey={1}>
                                 <div className='tab-text'>
-                                    Messages {newMessages}
+                                    {translation.SECTIONS.MESSAGES} {newMessages}
                                 </div>
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer key='people' to='/people' onClick={() => this.expand(false)}>
                             <NavItem eventKey={2}>
                                 <div className='tab-text'>
-                                    People
+                                    {translation.SECTIONS.PEOPLE}
                                 </div>
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer key='weather' to='/weather' onClick={() => this.expand(false)}>
                             <NavItem eventKey={3} >
                                 <div className='tab-text'>
-                                    Weather
+                                    {translation.SECTIONS.WEATHER}
                                 </div>
                             </NavItem>
                         </LinkContainer>
@@ -131,13 +136,21 @@ class NavigationBar extends React.Component<Props, State> {
 
                         {!user &&
                         <LinkContainer key='login' to='/login'>
-                            <NavItem eventKey={4}>
+                            <NavItem eventKey={6}>
                                 <Button bsSize='small' className='mobile-btn'>
-                                    <Glyphicon glyph='log-in' style={{marginRight: 5}} /> Log in
+                                    <Glyphicon glyph='log-in' style={{marginRight: 5}} /> {translation.ACCOUNT.LOG_IN}
                                 </Button>
                             </NavItem>
                         </LinkContainer>
                         }
+
+                        <NavItem eventKey={4} className='lang-text' onSelect={() => {translate('en')}}>
+                            {locale === 'en' ? <u>EN</u> : 'EN'}
+                        </NavItem>
+                        <NavItem eventKey={5} className='lang-text' onSelect={() => {translate('ru')}}>
+                            {locale === 'ru' ? <u>РУС</u> : 'РУС'}
+                        </NavItem>
+
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -150,7 +163,9 @@ const convSubPathnames = ['/conversation'];
 export default connect(
     (state) => ({
         user: state.authentication.user,
-        conversations: state.conversations.conversations
+        conversations: state.conversations.conversations,
+        locale: state.locale,
+        translation: state.translation
     }),
-    { logout }, null, {pure: false}
+    { logout, translate }, null, {pure: false}
 )(NavigationBar);
