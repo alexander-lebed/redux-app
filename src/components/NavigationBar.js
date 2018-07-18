@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Button, Dropdown, MenuItem, Glyphicon, Badge, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { MAIN_COLOR } from '../constants';
 import { translate } from '../redux/reducers/translation';
 import { logout } from '../redux/reducers/authentication';
 import type { User, Locale, Translation } from '../types';
@@ -52,7 +51,7 @@ class NavigationBar extends React.Component<Props, State> {
                     <div style={{display: 'inline-block'}}>
                         <Image
                             circle
-                            style={user.online ? {border: `2px solid ${MAIN_COLOR}`, cursor: 'pointer'} : {cursor: 'pointer'}}
+                            style={{boxShadow: `0 0 2pt 2pt ${this.state.accountClicked ? 'grey' : 'lightgrey'}`, cursor: 'pointer'}}
                             className='account-menu pull-right'
                             src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
                             title={user.username}

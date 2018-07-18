@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
-import { MAIN_COLOR } from '../../constants';
+import { onlineStyle } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { deleteUser } from '../../redux/reducers/users';
 import ConfirmationModal from '../common/ConfirmationModal';
@@ -90,7 +90,7 @@ export class People extends React.Component<Props, State> {
                         <Table>
                             <tbody>
                                 {users.map(user => {
-                                    const imageStyle = user.online ? {border: `2px solid ${MAIN_COLOR}`} : {};
+                                    const imageStyle = user.online ? onlineStyle : {};
                                     return (
                                         <tr key={user._id} id={user._id}>
                                             <td>

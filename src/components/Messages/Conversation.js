@@ -10,7 +10,7 @@ import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Glyphicon, Im
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
-import {MAIN_COLOR} from "../../constants";
+import { onlineStyle } from '../../constants';
 
 type Props = {
     user: User,
@@ -175,7 +175,7 @@ class Conversation extends React.Component<Props, State> {
                 <div className='profile-picture-wrapper'>
                     <Image
                         circle
-                        style={messageUser.online ? {border: `2px solid ${MAIN_COLOR}`} : {}}
+                        style={messageUser.online ? onlineStyle : {}}
                         className='profile-picture'
                         src={messageUser.pictureUrl ? messageUser.pictureUrl : '/default-profile.png'}
                         alt={'Image'}

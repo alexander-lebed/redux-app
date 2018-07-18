@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
-import { MAIN_COLOR } from '../../constants';
+import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
+import { onlineStyle } from '../../constants';
 import type { User, Translation } from '../../types';
 
 type Props = {
@@ -91,17 +91,26 @@ export class CreateConversation extends React.Component<Props, State> {
                             <tbody>
                                 {users.map(user => {
                                     const selected = participants.includes(user._id);
-                                    const glyphStyle = user.online ? {...{color: MAIN_COLOR }, ...{marginRight: 15}} : {marginRight: 15};
                                     return (
                                         <tr key={user._id} id={user._id}>
                                             <td className={selected && 'active'} onClick={() => this.toggleParticipant(user._id)}>
                                                 <Row style={{marginRight: 0}}>
                                                     <Col xs={6}>
-                                                        <Glyphicon glyph='user' style={glyphStyle} />
-                                                        {user.username}
+                                                        <div className='profile-picture-wrapper'>
+                                                            <Image
+                                                                circle
+                                                                style={user.online ? onlineStyle : {}}
+                                                                className='profile-picture'
+                                                                src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                                                                alt={'Image'}
+                                                            />
+                                                        </div>
+                                                        <div style={{color: '#3a3a3a', fontSize: 13, fontWeight: 700}}>
+                                                            {user.username}
+                                                        </div>
                                                     </Col>
                                                     <Col xs={6}>
-                                                        <div className="material-switch pull-right">
+                                                        <div className="material-switch pull-right" style={{marginTop: 12}}>
                                                             <input
                                                                 type="checkbox"
                                                                 checked={selected}
