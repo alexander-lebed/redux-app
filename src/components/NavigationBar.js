@@ -97,7 +97,12 @@ class NavigationBar extends React.Component<Props, State> {
             <Navbar onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        TEST
+                        <Image
+                            style={{padding: '9px 45px 9px 9px', marginTop: 4}}
+                            src='/favicon.png'
+                            title={'Messenger'}
+                            alt={'Messenger'}
+                        />
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
