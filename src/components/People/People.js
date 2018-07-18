@@ -108,7 +108,7 @@ export class People extends React.Component<Props, State> {
                                                         <div>
                                                             {user.username}
                                                             <div style={style.time}>
-                                                                {!user.online && `last seen ${timestampToHumanDate(user.lastTime)}`}
+                                                                {!user.online && `${PEOPLE.LAST_SEEN} ${timestampToHumanDate(user.lastTime)}`}
                                                             </div>
                                                         </div>
                                                     </Col>

@@ -1,5 +1,6 @@
 // @flow
 import _ from 'lodash';
+import moment from 'moment';
 import { setLocale } from './locale';
 import enStrings from '../../lang/en';
 import ruStrings from '../../lang/ru';
@@ -31,6 +32,8 @@ export function translate(locale: Locale) {
     return (dispatch: Dispatch) => {
 
         dispatch(setLocale(locale));
+
+        moment.locale(locale);
 
         if (locale === 'ru') {
             dispatch({

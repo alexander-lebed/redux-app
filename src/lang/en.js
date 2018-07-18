@@ -32,6 +32,7 @@ export type TranslationType = {
     },
     PEOPLE: {
         SEARCH_PEOPLE: string,
+        LAST_SEEN: string,
         DELETE_CONFIRMATION: string
     },
     WEATHER: {
@@ -113,6 +114,7 @@ const translation: TranslationType = {
     },
     PEOPLE: {
         SEARCH_PEOPLE: 'Search people',
+        LAST_SEEN: 'last seen',
         DELETE_CONFIRMATION: 'Are you sure you want to delete this user?'
     },
     WEATHER: {
