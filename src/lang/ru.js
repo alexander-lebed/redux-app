@@ -82,6 +82,11 @@ const translation: Translation = {
         },
         DELETE_PROFILE: 'Удалить профиль',
         DELETE_PROFILE_CONFIRMATION: 'Вы действительно хотите удалить свой профиль?',
+    },
+    DATE: {
+        TODAY: 'сегодня',
+        TOMORROW: 'завтра',
+        YESTERDAY: 'вчера',
     }
 };
 

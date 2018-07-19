@@ -141,7 +141,7 @@ class Conversations extends React.Component<Props, State> {
                                     {/* Last message time and ability to delete message */}
                                     <span>
                                         {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
-                                        {timestampToHumanDate(conv.timestamp)}
+                                        {timestampToHumanDate(conv.timestamp, false, translation)}
                                         <Glyphicon
                                             id='delete'
                                             glyph='trash'

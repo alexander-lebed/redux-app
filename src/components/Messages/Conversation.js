@@ -187,7 +187,7 @@ class Conversation extends React.Component<Props, State> {
                             {message.from.username}
                         </span>
                         <span style={style.time}>
-                            {timestampToHumanDate(message.timestamp, true)}
+                            {timestampToHumanDate(message.timestamp, true, translation)}
                         </span>
                         <Linkify>
                             <div style={style.text}>

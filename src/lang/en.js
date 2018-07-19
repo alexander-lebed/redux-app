@@ -80,6 +80,11 @@ export type TranslationType = {
         },
         DELETE_PROFILE: string,
         DELETE_PROFILE_CONFIRMATION: string,
+    },
+    DATE: {
+        TODAY: string,
+        TOMORROW: string,
+        YESTERDAY: string,
     }
 }
 
@@ -162,6 +167,11 @@ const translation: TranslationType = {
         },
         DELETE_PROFILE: 'Delete Profile',
         DELETE_PROFILE_CONFIRMATION: 'Are you sure you want to delete your profile?',
+    },
+    DATE: {
+        TODAY: 'today',
+        TOMORROW: 'tomorrow',
+        YESTERDAY: 'yesterday',
     }
 };
 
