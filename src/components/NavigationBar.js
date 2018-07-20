@@ -55,7 +55,6 @@ class NavigationBar extends React.Component<Props, State> {
                             className='account-menu pull-right'
                             src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
                             title={user.username}
-                            alt={'Account'}
                             onClick={() => this.setState({accountClicked: !this.state.accountClicked})}
                         />
                     </div>

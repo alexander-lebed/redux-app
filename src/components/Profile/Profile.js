@@ -105,7 +105,6 @@ class Profile extends React.Component<Props, State> {
                                     circle
                                     style={{maxHeight: 150, maxWidth: 300}}
                                     src={pictureUrl ? pictureUrl : '/default-profile.png'}
-                                    alt={'Image'}
                                 />
                             </Col>
 
@@ -156,7 +155,7 @@ class Profile extends React.Component<Props, State> {
                                     <Button
                                         bsStyle='primary'
                                         className='pull-right'
-                                        disabled={user.pictureUrl === pictureUrl}
+                                        disabled={getUrlValidationState(pictureUrl) === 'error' || user.pictureUrl === pictureUrl}
                                         onClick={() => this.savePicture()}
                                     >
                                         {translation.COMMON.SAVE}

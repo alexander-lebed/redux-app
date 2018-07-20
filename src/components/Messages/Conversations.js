@@ -99,7 +99,6 @@ class Conversations extends React.Component<Props, State> {
                                                 style={sender.online ? onlineStyle : {}}
                                                 className='profile-picture'
                                                 src={sender.pictureUrl ? sender.pictureUrl : '/default-profile.png'}
-                                                alt={'Image'}
                                             />
                                             :
                                             <Image
@@ -107,7 +106,6 @@ class Conversations extends React.Component<Props, State> {
                                                 style={senders.some(e => e.online) ? onlineStyle : {}}
                                                 className='profile-picture'
                                                 src='/conversation-group.png'
-                                                alt={'Image'}
                                             />
                                         }
                                     </div>

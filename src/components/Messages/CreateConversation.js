@@ -102,7 +102,6 @@ export class CreateConversation extends React.Component<Props, State> {
                                                                 style={user.online ? onlineStyle : {}}
                                                                 className='profile-picture'
                                                                 src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
-                                                                alt={'Image'}
                                                             />
                                                         </div>
                                                         <div style={{color: '#3a3a3a', fontSize: 13, fontWeight: 700}}>

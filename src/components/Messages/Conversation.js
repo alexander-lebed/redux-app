@@ -178,7 +178,6 @@ class Conversation extends React.Component<Props, State> {
                         style={messageUser.online ? onlineStyle : {}}
                         className='profile-picture'
                         src={messageUser.pictureUrl ? messageUser.pictureUrl : '/default-profile.png'}
-                        alt={'Image'}
                     />
                 </div>
                 <div style={style.top}>

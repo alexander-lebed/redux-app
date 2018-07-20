@@ -154,6 +154,7 @@ for Desktop
 .account-menu {
     max-height: 40px;
     max-width: 40px;
+    font-size: 13px;
 }
 
 .cut-senders-text {

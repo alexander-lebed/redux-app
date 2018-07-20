@@ -102,7 +102,6 @@ export class People extends React.Component<Props, State> {
                                                                 style={imageStyle}
                                                                 className='profile-picture'
                                                                 src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
-                                                                alt={'Image'}
                                                             />
                                                         </div>
                                                         <div>

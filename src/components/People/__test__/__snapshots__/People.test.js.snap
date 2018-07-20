@@ -67,7 +67,6 @@ exports[`<People/> should match snapshot 1`] = `
                   className="profile-picture-wrapper"
                 >
                   <img
-                    alt="Image"
                     className="profile-picture img-circle"
                     src="/default-profile.png"
                     style={
@@ -129,7 +128,6 @@ exports[`<People/> should match snapshot 1`] = `
                   className="profile-picture-wrapper"
                 >
                   <img
-                    alt="Image"
                     className="profile-picture img-circle"
                     src="/default-profile.png"
                     style={
@@ -191,7 +189,6 @@ exports[`<People/> should match snapshot 1`] = `
                   className="profile-picture-wrapper"
                 >
                   <img
-                    alt="Image"
                     className="profile-picture img-circle"
                     src="/default-profile.png"
                     style={
