@@ -128,7 +128,7 @@ export class People extends React.Component<Props, State> {
                                                                 bsSize='small'
                                                                 onClick={() => this.goToConversationWith([user._id])}
                                                             >
-                                                                {translation.MESSAGES.WRITE_MESSAGE}
+                                                                {PEOPLE.WRITE_MESSAGE}
                                                             </Button>
                                                         </ButtonToolbar>
                                                     </Col>

@@ -32,6 +32,7 @@ export type TranslationType = {
     },
     PEOPLE: {
         SEARCH_PEOPLE: string,
+        WRITE_MESSAGE: string,
         LAST_SEEN: string,
         DELETE_CONFIRMATION: string
     },
@@ -119,6 +120,7 @@ const translation: TranslationType = {
     },
     PEOPLE: {
         SEARCH_PEOPLE: 'Search people',
+        WRITE_MESSAGE: 'Write a message',
         LAST_SEEN: 'last seen',
         DELETE_CONFIRMATION: 'Are you sure you want to delete this user?'
     },

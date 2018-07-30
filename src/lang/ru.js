@@ -34,6 +34,7 @@ const translation: Translation = {
     },
     PEOPLE: {
         SEARCH_PEOPLE: 'Поиск людей',
+        WRITE_MESSAGE: 'Написать сообщение',
         LAST_SEEN: 'заходил(а)',
         DELETE_CONFIRMATION: 'Вы действительно хотите удалить этого пользователя?'
     },
