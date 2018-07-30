@@ -38,7 +38,7 @@ const translation: Translation = {
         DELETE_CONFIRMATION: 'Вы действительно хотите удалить этого пользователя?'
     },
     WEATHER: {
-        SEARCH_LOCATION: 'Поиск местоположения',
+        SEARCH_LOCATION: 'Поиск (на английском языке)',
         NO_LOCATIONS: 'Нет выбранных местоположений',
         NOT_AVAILABLE: 'недоступно'
     },

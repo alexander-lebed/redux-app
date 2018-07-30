@@ -10,4 +10,4 @@ export const MAIN_COLOR = '#00b386';
 export const BORDER_COLOR = '#008060';
 
 // export const onlineStyle = {boxShadow: `0 0 3pt 1pt ${MAIN_COLOR}`}; //20px 20px 1pt -14pt
-export const onlineStyle = {boxShadow: `20px 20px 1pt -15pt ${MAIN_COLOR}`}; // 0 0 2pt 2pt lightgrey,
+export const onlineStyle = {boxShadow: `20px 20px 0pt -15pt ${MAIN_COLOR}`}; // 0 0 2pt 2pt lightgrey,
