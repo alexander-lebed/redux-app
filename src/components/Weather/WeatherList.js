@@ -53,7 +53,7 @@ export class WeatherList extends React.Component<Props, State> {
                 const locationName = e.description;
                 const locArr = locationName.split(',');
                 const city = locArr[0];
-                let region, country = '';
+                let region = '', country = '';
                 if (locArr.length === 3) {
                     region = locArr[1].substring(1);
                     country = locArr[2].substring(1);
