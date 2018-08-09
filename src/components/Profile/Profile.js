@@ -1,11 +1,13 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
+import hello from 'hellojs';
 import { Map } from 'immutable';
+import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
+import 'font-awesome/css/font-awesome.min.css';
 import { editUser, deleteUser } from '../../redux/reducers/users';
 import encryptPassword from '../../helpers/encryptPassword';
-import { getUsernameValidationState, getEmailValidationState, getUrlValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
+import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
 import ConfirmationModal from '../common/ConfirmationModal';
 import type { User, Translation } from "../../types";
 
@@ -49,6 +51,16 @@ class Profile extends React.Component<Props, State> {
     handleChange = (event: Object) => {
         const {name, value} = event.target;
         this.setState({[name]: value});
+    };
+
+    loadPictureFromApi = (service: string) => {
+        hello(service).login()
+            .then(() => hello(service).api('me'))
+            .then(user => {
+                this.setState({
+                    pictureUrl: user.thumbnail
+                });
+            })
     };
 
     savePicture = () => {
@@ -108,21 +120,47 @@ class Profile extends React.Component<Props, State> {
                                 />
                             </Col>
 
-                            <FormGroup controlId='pictureUrl' validationState={getUrlValidationState(pictureUrl)}>
+                            <FormGroup style={{marginBottom: 0}}>
                                 <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{PROFILE_PICTURE.PICTURE_URL}</ControlLabel>
+                                    <ControlLabel>{PROFILE_PICTURE.SOCIAL_PICTURE}</ControlLabel>
+                                    <ButtonToolbar>
+                                        <Button
+                                            style={{backgroundColor: '#DD4B39'}}
+                                            className='btn-social'
+                                            onClick={() => this.loadPictureFromApi('google')}
+                                        >
+                                            <i className="fa fa-google-plus pr-1" />
+                                        </Button>
+                                        <Button
+                                            style={{backgroundColor: '#3B5998'}}
+                                            className='btn-social'
+                                            onClick={() => this.loadPictureFromApi('facebook')}
+                                        >
+                                            <i className="fa fa-facebook pr-1" />
+                                        </Button>
+                                        {/*<Button
+                                            style={{backgroundColor: '#FF5500'}}
+                                            className='btn-social'
+                                            onClick={() => this.loadPictureFromApi('soundcloud')}
+                                        >
+                                            <i className="fa fa-soundcloud pr-1" />
+                                        </Button>*/}
+                                    </ButtonToolbar>
+                                </Col>
+                            </FormGroup>
+
+                            <FormGroup controlId='pictureUrl'>
+                                <Col smOffset={2} sm={8}>
+                                    <ControlLabel>{PROFILE_PICTURE.SET_PICTURE_URL}</ControlLabel>
                                     <FormControl
                                         name='pictureUrl'
                                         placeholder='https://some/your/picture.png'
                                         value={pictureUrl}
                                         onChange={this.handleChange}
                                     />
-                                    <HelpBlock style={style.helpBlock}>
-                                        {getUrlValidationState(pictureUrl) === 'error' && PROFILE_PICTURE.ERRORS.INVALID_URL}
-                                    </HelpBlock>
                                     <div style={{color: 'grey', fontSize: 15}}>
                                         {PROFILE_PICTURE.CREATE_PICTURE_URL}
-                                        <ol>
+                                        <ol style={{marginBottom: 0}}>
                                             <li>
                                                 {PROFILE_PICTURE.GO_TO_SOURCE(
                                                     <a
@@ -155,7 +193,7 @@ class Profile extends React.Component<Props, State> {
                                     <Button
                                         bsStyle='primary'
                                         className='pull-right'
-                                        disabled={getUrlValidationState(pictureUrl) === 'error' || user.pictureUrl === pictureUrl}
+                                        disabled={user.pictureUrl === pictureUrl}
                                         onClick={() => this.savePicture()}
                                     >
                                         {translation.COMMON.SAVE}

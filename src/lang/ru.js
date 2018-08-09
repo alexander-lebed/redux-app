@@ -72,14 +72,12 @@ const translation: Translation = {
         },
         PROFILE_PICTURE: {
             UPLOAD_PICTURE: 'Обновить фотографию:',
-            PICTURE_URL: 'Ссылка на фото',
+            SOCIAL_PICTURE: 'Используйте фотограцию из соц.сетей:',
+            SET_PICTURE_URL: 'Или вставьте ссылку на фото',
             CREATE_PICTURE_URL: 'Чтобы создать ссылку:',
-            GO_TO_SOURCE: (source1, source2) => <span>Зайди на {source1} или {source2}</span>,
+            GO_TO_SOURCE: (source1, source2) => <span>Зайдите на {source1} или {source2}</span>,
             UPLOAD: 'Загрузите фото (предпочтительно квадратное)',
-            GET_LINK: 'Скопируйте Прямую ссылку и вставьте в поле выше',
-            ERRORS: {
-                INVALID_URL: 'Ссылка должна быть правильной'
-            }
+            GET_LINK: 'Скопируйте Прямую ссылку и вставьте в поле выше'
         },
         DELETE_PROFILE: 'Удалить профиль',
         DELETE_PROFILE_CONFIRMATION: 'Вы действительно хотите удалить свой профиль?',
