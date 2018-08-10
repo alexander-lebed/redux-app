@@ -7,6 +7,7 @@ import history from './helpers/history';
 import Startup from './components/Startup';
 import PrivateRoute from './components/PrivateRoute';
 import configureStore from './redux/configureStore';
+import Spinner from './components/common/Spinner';
 import NavigationBar from './components/NavigationBar';
 import Login from './components/Auth/Login';
 import Registration from './components/Auth/Registration';
@@ -40,6 +41,7 @@ async function init() {
                                 <PrivateRoute exact path="/people" component={People} />
                                 <PrivateRoute path="/weather" component={WeatherList} />
                                 <PrivateRoute path="/profile" component={Profile} />
+                                <Route exact path="/redirect" component={Spinner} />
                             </Switch>
                         </div>
                     </Router>

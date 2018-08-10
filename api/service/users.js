@@ -45,7 +45,7 @@ router.post('/', function(req, res, next) {
 
 router.put('/:id', function(req, res, next) {
     const query = {_id : req.params.id};
-    const options = {upsert: false, new: true};
+    const options = {upsert: !!req.body.oauth, new: true};
     if (!req.body.lastTime) {
         req.body.lastTime = Date.now();
     }

@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import hello from 'hellojs';
 import { Map } from 'immutable';
+import hello from 'hellojs';
 import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
 import 'font-awesome/css/font-awesome.min.css';
 import { editUser, deleteUser } from '../../redux/reducers/users';
@@ -120,36 +120,7 @@ class Profile extends React.Component<Props, State> {
                                 />
                             </Col>
 
-                            <FormGroup style={{marginBottom: 0}}>
-                                <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{PROFILE_PICTURE.SOCIAL_PICTURE}</ControlLabel>
-                                    <ButtonToolbar>
-                                        <Button
-                                            style={{backgroundColor: '#DD4B39'}}
-                                            className='btn-social'
-                                            onClick={() => this.loadPictureFromApi('google')}
-                                        >
-                                            <i className="fa fa-google-plus pr-1" />
-                                        </Button>
-                                        <Button
-                                            style={{backgroundColor: '#3B5998'}}
-                                            className='btn-social'
-                                            onClick={() => this.loadPictureFromApi('facebook')}
-                                        >
-                                            <i className="fa fa-facebook pr-1" />
-                                        </Button>
-                                        {/*<Button
-                                            style={{backgroundColor: '#FF5500'}}
-                                            className='btn-social'
-                                            onClick={() => this.loadPictureFromApi('soundcloud')}
-                                        >
-                                            <i className="fa fa-soundcloud pr-1" />
-                                        </Button>*/}
-                                    </ButtonToolbar>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup controlId='pictureUrl'>
+                            <FormGroup controlId='pictureUrl' style={{marginBottom: 0}}>
                                 <Col smOffset={2} sm={8}>
                                     <ControlLabel>{PROFILE_PICTURE.SET_PICTURE_URL}</ControlLabel>
                                     <FormControl
@@ -185,6 +156,28 @@ class Profile extends React.Component<Props, State> {
                                             <li>{PROFILE_PICTURE.GET_LINK}</li>
                                         </ol>
                                     </div>
+                                </Col>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Col smOffset={2} sm={8}>
+                                    <ControlLabel>{PROFILE_PICTURE.SOCIAL_PICTURE}</ControlLabel>
+                                    <ButtonToolbar>
+                                        <Button
+                                            style={{backgroundColor: '#DD4B39'}}
+                                            className='btn-social'
+                                            onClick={() => this.loadPictureFromApi('google')}
+                                        >
+                                            <i className="fa fa-google-plus pr-1" />
+                                        </Button>
+                                        <Button
+                                            style={{backgroundColor: '#3B5998'}}
+                                            className='btn-social'
+                                            onClick={() => this.loadPictureFromApi('facebook')}
+                                        >
+                                            <i className="fa fa-facebook pr-1" />
+                                        </Button>
+                                    </ButtonToolbar>
                                 </Col>
                             </FormGroup>
 

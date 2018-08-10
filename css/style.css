@@ -311,7 +311,7 @@ table.glyphicon-hover td:hover .glyphicon {
 }
 
 /* Spinner */
-.glyphicon-spin {
+.spin-icon {
     -webkit-animation: spin 1000ms infinite linear;
     animation: spin 1000ms infinite linear;
 }

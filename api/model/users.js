@@ -9,7 +9,8 @@ const UserSchema = new Schema({
     password: String,
     online: Boolean,
     pictureUrl: String,
-    lastTime: Number
+    lastTime: Number,
+    oauth: String
 }, {
     versionKey: false
 });

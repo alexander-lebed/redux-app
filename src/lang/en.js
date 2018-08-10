@@ -15,6 +15,10 @@ export type TranslationType = {
         NO_RESULTS: string,
         DELETE_CONFIRMATION: string,
     },
+    LOGIN: {
+        INCORRECT_CREDENTIALS: string,
+        OAUTH_ERROR: (service: any) => any,
+    },
     CONVERSATIONS: {
         CONVERSATIONS: string,
         NO_CONVERSATIONS: string,
@@ -44,6 +48,7 @@ export type TranslationType = {
     ACCOUNT: {
         SIGN_UP: string,
         LOG_IN: string,
+        LOG_IN_WITH_OAUTH: string,
         LOG_OUT: string,
         EDIT_PROFILE: string,
         USERNAME_EMAIL: {
@@ -101,6 +106,10 @@ const translation: TranslationType = {
         DELETE_CONFIRMATION: 'Delete confirmation',
         NO_RESULTS: 'No results',
     },
+    LOGIN: {
+        INCORRECT_CREDENTIALS: 'Email or password is incorrect',
+        OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
+    },
     CONVERSATIONS: {
         CONVERSATIONS: 'Conversations',
         NO_CONVERSATIONS: 'You don\'t have any conversations yet',
@@ -130,6 +139,7 @@ const translation: TranslationType = {
     ACCOUNT: {
         SIGN_UP: 'Sign up',
         LOG_IN: 'Log in',
+        LOG_IN_WITH_OAUTH: 'Or log in with:',
         LOG_OUT: 'Log out',
         EDIT_PROFILE: 'Edit profile',
         USERNAME_EMAIL: {
@@ -156,8 +166,8 @@ const translation: TranslationType = {
         },
         PROFILE_PICTURE: {
             UPLOAD_PICTURE: 'Upload profile picture:',
-            SOCIAL_PICTURE: 'Use your social picture from:',
-            SET_PICTURE_URL: 'Or set picture URL',
+            SOCIAL_PICTURE: 'Or use your social picture from:',
+            SET_PICTURE_URL: 'Picture URL',
             CREATE_PICTURE_URL: 'To create a URL to your picture:',
             GO_TO_SOURCE: (source1, source2) => <span>Go to {source1} or {source2}</span>,
             UPLOAD: 'Upload a picture (preferably square)',

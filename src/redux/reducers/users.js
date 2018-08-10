@@ -57,7 +57,7 @@ export function register(username: string, email: string, password: string) {
                     type: actions.ADD_USER,
                     payload: user
                 });
-                const isLoggedIn = await dispatch(login(user.email, user.password));
+                const isLoggedIn = await dispatch(login(user));
                 if (isLoggedIn) {
                     history.push('/');
                 }

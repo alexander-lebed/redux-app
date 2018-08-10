@@ -18,7 +18,8 @@ describe('Authentication reducer', () => {
         email: 'user@mail.com',
         password: 'user-password',
         online: true,
-        lastTime: 1519294933743
+        lastTime: 1519294933743,
+        oauth: ''
     };
     const store = mockStore({
         authentication: {
@@ -34,7 +35,8 @@ describe('Authentication reducer', () => {
                     email: 'alice@gmail.com',
                     password: 'alice-password',
                     online: true,
-                    lastTime: 1518346740388
+                    lastTime: 1518346740388,
+                    oauth: ''
                 },
                 '333': {
                     _id: '333',
@@ -42,7 +44,8 @@ describe('Authentication reducer', () => {
                     email: 'bob@mail.com',
                     password: 'bob-password',
                     online: true,
-                    lastTime: 1518346740388
+                    lastTime: 1518346740388,
+                    oauth: ''
                 }
             })
         }
@@ -58,7 +61,7 @@ describe('Authentication reducer', () => {
         const expectedActions = [
             {type: 'SET_USER', payload: testUser}
         ];
-        const isLoggedIn = await store.dispatch(login('user@mail.com', 'user-password'));
+        const isLoggedIn = await store.dispatch(login({email: 'user@mail.com', password: 'user-password', oauth: ''}));
         expect(isLoggedIn).toBe(true);
         expect(store.getActions()).toEqual(expectedActions);
     });

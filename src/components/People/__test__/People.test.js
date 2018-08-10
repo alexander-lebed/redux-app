@@ -18,7 +18,8 @@ describe('<People/>', () => {
             password: 'password',
             pictureUrl: '',
             online: true,
-            lastTime: 1519294933743
+            lastTime: 1519294933743,
+            oauth: ''
         },
         users: Map({
             '111': {
@@ -28,7 +29,8 @@ describe('<People/>', () => {
                 password: 'user-password',
                 pictureUrl: '',
                 online: true,
-                lastTime: 1519294933743
+                lastTime: 1519294933743,
+                oauth: ''
             },
             '222': {
                 _id: '222',
@@ -37,7 +39,8 @@ describe('<People/>', () => {
                 password: 'alice-password',
                 pictureUrl: '',
                 online: true,
-                lastTime: 1518346740388
+                lastTime: 1518346740388,
+                oauth: ''
             },
             '333': {
                 _id: '333',
@@ -46,7 +49,8 @@ describe('<People/>', () => {
                 password: 'bob-password',
                 pictureUrl: '',
                 online: true,
-                lastTime: 1518346740388
+                lastTime: 1518346740388,
+                oauth: ''
             }
         }),
         deleteUser: jest.fn(),

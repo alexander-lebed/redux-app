@@ -2,7 +2,9 @@
 import {combineReducers} from 'redux';
 import _ from 'lodash';
 import $http from 'axios';
+import hello from 'hellojs';
 import { USERS_URL } from "../../constants";
+import toMongoID from '../../helpers/toMongoID';
 import type { Action, Dispatch, User } from '../../types';
 import { getUsers } from "./users";
 
@@ -25,14 +27,45 @@ export default combineReducers({
 });
 
 
-export function login(email: string, password: string) {
+export function login(user: User) {
     return async (dispatch: Dispatch, getState: Function) => {
-        const users = getState().users.users;
-        const user = users.find(e => e.email === email && e.password === password);
-        if (user) {
-            user.online = true;
+
+        let loggedUser: User;
+        if (user.oauth) {
+            const oAuthService = hello.use(user.oauth);
+
+            loggedUser = await oAuthService.login()
+                .then(() => oAuthService.api('me'))
+                .then(userData => {
+                    const id = toMongoID(userData.id);
+                    let username = _.isString(userData.name) && userData.name;
+                    if (!username) {
+                        username = _.isString(userData.first_name) && userData.first_name.length > 0 ? userData.first_name : 'Username'
+                    }
+                    return {
+                        _id: id,
+                        username: username,
+                        email: userData.email || '',
+                        password: '',
+                        online: true,
+                        pictureUrl: userData.thumbnail,
+                        lastTime: null,
+                        oauth: user.oauth
+                    }
+                })
+                .catch((err) => {
+                    console.log(`--- OAuth login: ${err.error.message}`);
+                    return null;
+                })
+        } else {
+            const users = getState().users.users;
+            loggedUser = users.find(e => e.email === user.email && e.password === user.password);
+        }
+
+        if (loggedUser) {
+            loggedUser.online = true;
             try {
-                const response = await $http.put(`${USERS_URL}/${user._id}`, user);
+                const response = await $http.put(`${USERS_URL}/${loggedUser._id}`, loggedUser);
                 dispatch(setUser(response.data));
                 return true;
             } catch (err) {
@@ -47,10 +80,13 @@ export function login(email: string, password: string) {
 }
 
 export function logout() {
-    return (dispatch: Dispatch, getState: Function) => {
+    return async (dispatch: Dispatch, getState: Function) => {
 
         const user = getState().authentication.user;
         if (user) {
+            if (user.oauth) {
+                await hello(user.oauth).logout();
+            }
             user.online = false;
             user.lastTime = null; // to set the time on server side
             return $http.put(`${USERS_URL}/${user._id}`, user).then(() => {

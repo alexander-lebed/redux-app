@@ -17,6 +17,10 @@ const translation: Translation = {
         NO_RESULTS: 'Нет результатов',
 
     },
+    LOGIN: {
+        INCORRECT_CREDENTIALS: 'Электронная почта или пароль неверны',
+        OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
+    },
     CONVERSATIONS: {
         CONVERSATIONS: 'Сообщения',
         NO_CONVERSATIONS: 'У Вас пока нет сообщений',
@@ -46,6 +50,7 @@ const translation: Translation = {
     ACCOUNT: {
         SIGN_UP: 'Зарегистрироваться',
         LOG_IN: 'Войти',
+        LOG_IN_WITH_OAUTH: 'Или войти через:',
         LOG_OUT: 'Выйти',
         EDIT_PROFILE: 'Изменить профиль',
         USERNAME_EMAIL: {
@@ -72,8 +77,8 @@ const translation: Translation = {
         },
         PROFILE_PICTURE: {
             UPLOAD_PICTURE: 'Обновить фотографию:',
-            SOCIAL_PICTURE: 'Используйте фотограцию из соц.сетей:',
-            SET_PICTURE_URL: 'Или вставьте ссылку на фото',
+            SOCIAL_PICTURE: 'Или используйте фотограцию из соц.сетей:',
+            SET_PICTURE_URL: 'Ссылка на фото',
             CREATE_PICTURE_URL: 'Чтобы создать ссылку:',
             GO_TO_SOURCE: (source1, source2) => <span>Зайдите на {source1} или {source2}</span>,
             UPLOAD: 'Загрузите фото (предпочтительно квадратное)',

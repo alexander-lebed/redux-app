@@ -36,11 +36,20 @@ class Login extends React.Component<Props, State> {
         e.preventDefault();
         const {email, password} = this.state;
         const encryptedPassword = encryptPassword(password);
-        const isLoggedIn = await this.props.login(email, encryptedPassword);
+        const isLoggedIn = await this.props.login({email, password: encryptedPassword, oauth: ''});
         if (isLoggedIn) {
             this.props.history.push('/');
         } else {
-            this.props.error('Email or password is incorrect');
+            this.props.error(this.props.translation.LOGIN.INCORRECT_CREDENTIALS);
+        }
+    };
+
+    oAuthLogin = async (service) => {
+        const isLoggedIn = await this.props.login({oauth: service});
+        if (isLoggedIn) {
+            this.props.history.push('/');
+        } else {
+            this.props.error(this.props.translation.LOGIN.OAUTH_ERROR(service));
         }
     };
 
@@ -106,6 +115,28 @@ class Login extends React.Component<Props, State> {
                             </Col>
                         </FormGroup>
                     </Form>
+
+                    <FormGroup style={{marginBottom: 0}}>
+                        <Col smOffset={2} sm={8}>
+                            <ControlLabel>{translation.ACCOUNT.LOG_IN_WITH_OAUTH}</ControlLabel>
+                            <ButtonToolbar>
+                                <Button
+                                    style={{backgroundColor: '#DD4B39'}}
+                                    className='btn-social'
+                                    onClick={() => this.oAuthLogin('google')}
+                                >
+                                    <i className="fa fa-google-plus pr-1" />
+                                </Button>
+                                <Button
+                                    style={{backgroundColor: '#3B5998'}}
+                                    className='btn-social'
+                                    onClick={() => this.oAuthLogin('facebook')}
+                                >
+                                    <i className="fa fa-facebook pr-1" />
+                                </Button>
+                            </ButtonToolbar>
+                        </Col>
+                    </FormGroup>
                 </Col>
             </Row>
         )

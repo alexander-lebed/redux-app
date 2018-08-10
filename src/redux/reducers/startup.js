@@ -58,11 +58,12 @@ export function initApp() {
 
         dispatch(initTranslation());
 
-        // OAuth (tutorial https://tests4geeks.com/oauth2-javascript-tutorial)
         hello.init({
             google: '949472211637-1593m31t8lmrvrf6cec1kobmajjli70m.apps.googleusercontent.com',
             facebook: '203639747170364',
-            soundcloud: 'a3e059563d7fd3372b49b37f00a00bcf' // setup client ID https://auth0.com/docs/connections/social/soundcloud
+        }, {
+            redirect_uri: '/redirect',
+            scope: 'email'
         });
 
         await dispatch(getUsers());
@@ -70,7 +71,7 @@ export function initApp() {
         let currentUser = getState().authentication.user;
         // login user
         if (currentUser) {
-            const isLoggedIn = await dispatch(login(currentUser.email, currentUser.password));
+            const isLoggedIn = await dispatch(login(currentUser));
             if (!isLoggedIn) {
                 dispatch(Alert.error('Please re-login'));
             }

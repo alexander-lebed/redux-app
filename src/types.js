@@ -13,7 +13,8 @@ export type User = {
     password: string,
     online: boolean,
     pictureUrl: string,
-    lastTime: number | null
+    lastTime: number | null,
+    oauth: string | null
 }
 
 export type Alert = {
