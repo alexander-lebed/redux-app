@@ -5,6 +5,7 @@ import { getUsers } from './users';
 import { login, online } from './authentication';
 import { getConversationsByUser } from './conversations';
 import { Alert } from './alerts';
+import receiveMessageDataURI from '../../../audio';
 import { DOCUMENT_TITLE } from "../../constants";
 
 const actions = {
@@ -160,6 +161,10 @@ const showDesktopNotifications = (conversations, dispatch, getState) => {
             .then(() => {
                 const blockedNotifications = getState().startup.blockedNotifications;
                 if (!blockedNotifications.includes(messageHash)) {
+                    // $FlowFixMe
+                    const sound = new Audio(receiveMessageDataURI);
+                    sound.play();
+
                     const messagesArr = unreadMessages.map(e => e.text);
                     const senders = [...new Set(unreadMessages.map(e => e.from.username))];
                     const title = `Message from ${senders.join(', ')}`;
