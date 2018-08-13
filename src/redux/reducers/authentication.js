@@ -54,12 +54,12 @@ export function login(user: User) {
                     }
                 })
                 .catch((err) => {
-                    console.log(`--- OAuth login: ${err.error.message}`);
+                    console.log(`--- OAuth login error: ${err.error.message}`);
                     return null;
                 })
         } else {
             const users = getState().users.users;
-            loggedUser = users.find(e => e.email === user.email && e.password === user.password);
+            loggedUser = users.filter(e => !e.oauth).find(e => e.email === user.email && e.password === user.password);
         }
 
         if (loggedUser) {

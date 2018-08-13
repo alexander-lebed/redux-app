@@ -21,7 +21,7 @@ const initUsers: Map<string, User> = Map({});
 const users = (state = initUsers, action: Action) => {
     switch (action.type) {
         case actions.ADD_USER: {
-            return state.set(action.payload.email, action.payload);
+            return state.set(action.payload._id, action.payload);
         }
         case actions.SET_USERS: {
             return _.clone(action.payload);
@@ -39,7 +39,7 @@ export function register(username: string, email: string, password: string) {
     return async (dispatch: Dispatch, getState: Function) => {
 
         const users = getState().users.users;
-        const registeredUser = users.get(email);
+        const registeredUser = users.filter(e => !e.oauth).find(e => e.email === email);
         const encryptedPassword = encryptPassword(password);
 
         if (!registeredUser) {
@@ -75,7 +75,7 @@ export function getUsers() {
         $http.get(USERS_URL)
             .then(response => {
                 const sorted = _.orderBy(response.data, ['username']);
-                const dataObj = _.keyBy(sorted, 'email');
+                const dataObj = _.keyBy(sorted, '_id');
                 const payload = Map(dataObj);
                 dispatch({
                     type: actions.SET_USERS, payload

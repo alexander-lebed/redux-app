@@ -366,8 +366,8 @@ class Profile extends React.Component<Props, State> {
     suchUsernameExist = (username: string) => {
         if (!username) {
             return null;
-        }
-        const otherUsers = this.props.users.filter(u => this.props.user._id !== u._id);
+        } // .filter(e => !e.oauth)
+        const otherUsers = this.props.users.filter(e => !e.oauth && this.props.user._id !== e._id);
         return otherUsers.some(u => u.username === username) ? 'error' : 'success'
     };
 
@@ -375,7 +375,7 @@ class Profile extends React.Component<Props, State> {
         if (!email) {
             return null;
         }
-        const otherUsers = this.props.users.filter(u => this.props.user._id !== u._id);
+        const otherUsers = this.props.users.filter(e => !e.oauth && this.props.user._id !== e._id);
         return otherUsers.some(u => u.email === email) ? 'error' : 'success'
     };
 

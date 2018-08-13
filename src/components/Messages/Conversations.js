@@ -126,10 +126,10 @@ class Conversations extends React.Component<Props, State> {
                                     {/* Last message details */}
                                     {lastMessage &&
                                     <Row style={style.message} onClick={() => this.goToConversation(conv._id)}>
-                                        <Col xs={2} className='text-right' style={{paddingRight: 0}}>
+                                        <Col xs={12} sm={2} className='user-from-text' style={{paddingRight: 0}}>
                                             {lastMessage.from.username}:
                                         </Col>
-                                        <Col xs={8}>
+                                        <Col xs={12} sm={8}>
                                             <div style={textStyle}>{lastMessage.text}</div>
                                         </Col>
                                     </Row>
