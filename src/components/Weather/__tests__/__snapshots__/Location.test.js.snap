@@ -38,6 +38,7 @@ exports[`<Location/> should render Location 1`] = `
       style={
         Object {
           "color": "grey",
+          "cursor": "pointer",
           "marginRight": 10,
         }
       }

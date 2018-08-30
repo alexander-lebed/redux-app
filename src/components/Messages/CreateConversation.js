@@ -104,7 +104,7 @@ export class CreateConversation extends React.Component<Props, State> {
                                                                 src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
                                                             />
                                                         </div>
-                                                        <div style={{color: '#3a3a3a', fontSize: 13, fontWeight: 700}}>
+                                                        <div style={{fontSize: 13, fontWeight: 700}}>
                                                             {user.username}
                                                         </div>
                                                     </Col>

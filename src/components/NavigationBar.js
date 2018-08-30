@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Button, Dropdown, MenuItem, Glyphicon, Badge, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { ThemeChooser } from 'react-bootstrap-theme-switcher';
 import { translate } from '../redux/reducers/translation';
 import { logout } from '../redux/reducers/authentication';
 import type { User, Locale, Translation } from '../types';
@@ -44,8 +45,8 @@ class NavigationBar extends React.Component<Props, State> {
             accountDropdown = (
                 <Dropdown
                     open={this.state.accountClicked}
-                    id='account-menu'
-                    className='pull-left'
+                    id='account-dropdown'
+                    className='pull-left account-dropdown'
                     style={{paddingTop: 10, textAlign: 'center'}}
                 >
                     <div style={{display: 'inline-block'}}>
@@ -68,16 +69,16 @@ class NavigationBar extends React.Component<Props, State> {
                                     this.setState({accountClicked: false})
                                 }}>
                                 <MenuItem
-                                    eventKey={4.1}
+                                    eventKey={1.1}
                                     className='dropdown-item'
                                 >
-                                    <Glyphicon glyph='pencil' style={{marginRight: 8}} />
+                                    <i className="fa fa-pencil" style={{marginRight: 8}} />
                                     {translation.ACCOUNT.EDIT_PROFILE}
                                 </MenuItem>
                             </LinkContainer>
                         }
                         <MenuItem
-                            eventKey={4.2}
+                            eventKey={1.2}
                             className='dropdown-item'
                             onSelect={() => {
                                 logout();
@@ -94,7 +95,7 @@ class NavigationBar extends React.Component<Props, State> {
         }
         const messageTabStyle = convSubPathnames.includes(window.location.pathname) ? {borderBottom: '1px solid #777'} : {};
         return (
-            <Navbar onToggle={this.expand} expanded={this.state.expanded}>
+            <Navbar style={{borderTop: 'none'}} onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Image
@@ -136,21 +137,22 @@ class NavigationBar extends React.Component<Props, State> {
 
                         {!user &&
                         <LinkContainer key='login' to='/login'>
-                            <NavItem eventKey={6}>
+                            <NavItem eventKey={1}>
                                 <Button bsSize='small' className='mobile-btn'>
                                     <Glyphicon glyph='log-in' style={{marginRight: 5}} /> {translation.ACCOUNT.LOG_IN}
                                 </Button>
                             </NavItem>
                         </LinkContainer>
                         }
-
-                        <NavItem eventKey={4} className='lang-text' onSelect={() => {translate('en')}}>
+                        <NavItem eventKey={2} className='lang-text' style={{border: 'none'}} onSelect={() => {translate('en')}}>
                             {locale === 'en' ? <u>EN</u> : 'EN'}
                         </NavItem>
-                        <NavItem eventKey={5} className='lang-text' onSelect={() => {translate('ru')}}>
+                        <NavItem eventKey={3} className='lang-text' style={{border: 'none'}} onSelect={() => {translate('ru')}}>
                             {locale === 'ru' ? <u>РУС</u> : 'РУС'}
                         </NavItem>
-
+                        <NavItem eventKey={4} className='theme-menu' style={{border: 'none', height: 50}}>
+                            <ThemeChooser />
+                        </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

@@ -77,7 +77,7 @@ class Conversations extends React.Component<Props, State> {
                 const convMessages = conv.messages.filter(e => !e.deleted);
                 const newMessages = convMessages.filter(m => !m.read && m.from._id !== user._id);
                 const lastMessage = convMessages.length > 0 ? convMessages[convMessages.length - 1] : null;
-                const textStyle = lastMessage && !lastMessage.read ? {...style.text, ...{backgroundColor: '#edf0f5'}} : style.text;
+                const textClass = lastMessage && !lastMessage.read ? 'unread-message' : '';
 
                 const convUserIds =  conv.users.map(u => u._id);
                 let senders: Array<User> = users.toArray().filter(u => convUserIds.includes(u._id));
@@ -130,7 +130,7 @@ class Conversations extends React.Component<Props, State> {
                                             {lastMessage.from.username}:
                                         </Col>
                                         <Col xs={12} sm={8}>
-                                            <div style={textStyle}>{lastMessage.text}</div>
+                                            <div className={textClass} style={style.text}>{lastMessage.text}</div>
                                         </Col>
                                     </Row>
                                     }
@@ -221,7 +221,6 @@ const style = {
         WebkitBoxOrient: 'vertical',
         WebkitLineClamp: 3, // N number of lines to show
         lineHeight: 1.3   // X fallback
-        // maxHeight: 3.462    // N * X
     },
     cutSendersText: {
         textOverflow: 'ellipsis',

@@ -129,7 +129,7 @@ class Profile extends React.Component<Props, State> {
                                         value={pictureUrl}
                                         onChange={this.handleChange}
                                     />
-                                    <div style={{color: 'grey', fontSize: 15}}>
+                                    <div style={{fontSize: 15}}>
                                         {PROFILE_PICTURE.CREATE_PICTURE_URL}
                                         <ol style={{marginBottom: 0}}>
                                             <li>

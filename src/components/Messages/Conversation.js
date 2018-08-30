@@ -148,13 +148,13 @@ class Conversation extends React.Component<Props, State> {
         const messages = this.props.conversation.messages || [];
         const orderedMessages = _.orderBy(messages.filter(e => !e.deleted), 'timestamp');
         return (
-            <div style={style.scrollableTable} ref={(e) => {this.scrollableTable = e}}>
+            <div style={style.scrollableTable} className="custom-scrollbar" ref={(e) => {this.scrollableTable = e}}>
                 <Table className='glyphicon-hover'>
                     <tbody>
                         {orderedMessages.map((message, index) => {
-                            const rowStyle = !message.read ? {backgroundColor: '#edf0f5'} : {};
+                            const rowClass = !message.read ? 'unread-message' : '';
                             return (
-                                <tr key={index} style={rowStyle}>
+                                <tr key={index} className={rowClass}>
                                     <td>{this.renderMessage(message)}</td>
                                 </tr>
                             )
@@ -276,7 +276,6 @@ const style = {
         fontSize: 13
     },
     from: {
-        color: '#3a3a3a',
         fontSize: 13,
         fontWeight: 700
     },
@@ -285,7 +284,6 @@ const style = {
         paddingLeft: 15
     },
     text: {
-        color: '#3a3a3a',
         fontSize: 13,
         paddingTop: 5,
         whiteSpace: 'pre-wrap'

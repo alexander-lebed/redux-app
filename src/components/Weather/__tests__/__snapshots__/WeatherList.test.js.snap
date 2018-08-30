@@ -157,6 +157,7 @@ exports[`<WeatherList/> should match snapshot 1`] = `
                 style={
                   Object {
                     "color": "grey",
+                    "cursor": "pointer",
                     "marginRight": 10,
                   }
                 }
@@ -205,6 +206,7 @@ exports[`<WeatherList/> should match snapshot 1`] = `
                 style={
                   Object {
                     "color": "grey",
+                    "cursor": "pointer",
                     "marginRight": 10,
                   }
                 }

@@ -8,12 +8,20 @@ html, body, input, button {
     font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
 }
 
+.btn {
+    background-image: none !important;
+}
+
 .btn-primary {
     background-color: var(--main-color) !important;
     border-color: var(--main-border-color) !important;
 }
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-border-color) !important;
+}
 
-.has-success .control-label,
+.has-success .control-label, .label-success,
 .has-success .help-block,
 .has-success .form-control .form-control-feedback {
     color: var(--main-color) !important;
@@ -24,12 +32,11 @@ html, body, input, button {
     border-color: var(--main-border-color);
 }
 .label-success {
-    background-color: var(--main-color)
+    background-color: var(--main-color) !important;
 }
 
 .btn {
     min-width: 100px !important;
-    /*border-radius: 0 !important;*/
 }
 
 .btn-link {
@@ -37,12 +44,13 @@ html, body, input, button {
 }
 
 .btn-social {
-    color: #fff;
-    width: 40px;
-    height: 40px;
+    background-image: none !important;
+    color: #fff !important;
+    width: 40px !important;
+    height: 40px !important;
     min-width: 40px !important;
     min-height: 40px !important;
-    border-radius: 50%;
+    border-radius: 50% !important;
 }
 
 .btn-circle-glyphicon {
@@ -80,6 +88,13 @@ textarea:focus {
     vertical-align: middle;
 }
 
+.unread-message {
+    background-color: #EFEEEE;
+}
+
+::-webkit-scrollbar-track {
+    background: pink;
+}
 
 /*
 for Mobile device
@@ -96,6 +111,10 @@ for Mobile device
         width: 100%;
         min-height: 40px;
     }
+    .account-dropdown {
+        padding-top: 0 !important;
+        padding-bottom: 10px !important;
+    }
     .tab-text {
         text-align: center;
         padding-top: 5px !important;
@@ -105,10 +124,17 @@ for Mobile device
         width: 50% !important;
         float: left;
         text-align: center;
-        border: 1px solid lightgrey;
+        border: 1px solid lightgrey !important;
         padding-top: 5px !important;
         font-size: 13px;
         height: 50px;
+    }
+    .theme-menu {
+        height: 50px;
+        width: 100% !important;
+        float: left;
+        padding-top: 5px !important;
+        padding-left: 37% !important;
     }
     .user-from-text {
         text-align: left !important;
@@ -151,6 +177,12 @@ for Desktop
     width: 30px;
     padding-top: 5px !important;
     font-size: 13px;
+}
+li.lang-text a {
+    border: none !important;
+}
+li.lang-text a:hover {
+    background: none !important;
 }
 
 .user-from-text {
@@ -296,11 +328,6 @@ table.glyphicon-hover td:hover .glyphicon {
     border-bottom: solid 1px #eee;
 }
 
-.weather-item:hover {
-    background: #f7f7f7;
-    cursor: pointer;
-}
-
 .cursor {
     cursor: pointer;
 }
@@ -316,6 +343,26 @@ table.glyphicon-hover td:hover .glyphicon {
     height: 50%;
     max-width: 1000px;
     padding: 40px;
+}
+
+#theme-menu {
+    padding-top: 3px;
+    visibility: hidden;
+    background: transparent !important;
+}
+#theme-menu:before {
+    visibility: visible;
+    content: '\F1FC';
+    font-family: 'FontAwesome';
+}
+
+li.theme-menu > a {
+    width: 0;
+    padding-left: 30px !important;
+    border: none !important;
+}
+li.theme-menu > a:hover {
+    background: none !important;
 }
 
 /* Spinner */

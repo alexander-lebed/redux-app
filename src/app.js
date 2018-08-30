@@ -3,6 +3,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ThemeSwitcher } from 'react-bootstrap-theme-switcher';
 import history from './helpers/history';
 import Startup from './components/Startup';
 import PrivateRoute from './components/PrivateRoute';
@@ -19,6 +20,7 @@ import WeatherList from './components/Weather/WeatherList';
 import Profile from './components/Profile/Profile';
 import Alerts from './components/Alerts';
 
+const themes = ['light', 'dark', 'paper'];
 
 async function init() {
     const store = await configureStore();
@@ -26,26 +28,28 @@ async function init() {
     if (app) {
         render(
             <Provider store={store}>
-                <Startup>
-                    <Router history={history}>
-                        <div>
-                            <Alerts />
-                            <NavigationBar />
-                            <Switch>
-                                <Route exact path="/login" component={Login} />
-                                <Route exact path="/register" component={Registration} />
-                                <PrivateRoute exact path="/" component={Conversations} />
-                                <PrivateRoute exact path="/conversations" component={Conversations} />
-                                <PrivateRoute path="/conversation" component={Conversation} /> {/* query: convId or userId */}
-                                <PrivateRoute path="/create-conversation" component={CreateConversation} />
-                                <PrivateRoute exact path="/people" component={People} />
-                                <PrivateRoute path="/weather" component={WeatherList} />
-                                <PrivateRoute path="/profile" component={Profile} />
-                                <Route exact path="/redirect" component={Spinner} />
-                            </Switch>
-                        </div>
-                    </Router>
-                </Startup>
+                <ThemeSwitcher themePath='/themes' storeThemeKey='ui-theme' themes={themes}>
+                    <Startup>
+                        <Router history={history}>
+                            <div>
+                                <Alerts />
+                                <NavigationBar />
+                                <Switch>
+                                    <Route exact path="/login" component={Login} />
+                                    <Route exact path="/register" component={Registration} />
+                                    <PrivateRoute exact path="/" component={Conversations} />
+                                    <PrivateRoute exact path="/conversations" component={Conversations} />
+                                    <PrivateRoute path="/conversation" component={Conversation} />
+                                    <PrivateRoute path="/create-conversation" component={CreateConversation} />
+                                    <PrivateRoute exact path="/people" component={People} />
+                                    <PrivateRoute path="/weather" component={WeatherList} />
+                                    <PrivateRoute path="/profile" component={Profile} />
+                                    <Route exact path="/redirect" component={Spinner} />
+                                </Switch>
+                            </div>
+                        </Router>
+                    </Startup>
+                </ThemeSwitcher>
             </Provider>,
             app
         );

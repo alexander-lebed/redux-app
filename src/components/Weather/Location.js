@@ -32,7 +32,7 @@ export const Location = (props: Props) => {
                 <Glyphicon
                     glyph="trash"
                     className="pull-right"
-                    style={{marginRight: 10, color: 'grey'}}
+                    style={{marginRight: 10, color: 'grey', cursor: 'pointer'}}
                     title={COMMON.DELETE}
                     onClick={onDelete}
                 />
