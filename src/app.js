@@ -28,7 +28,7 @@ async function init() {
     if (app) {
         render(
             <Provider store={store}>
-                <ThemeSwitcher themePath='/themes' storeThemeKey='ui-theme' themes={themes}>
+                <ThemeSwitcher themePath='themes' storeThemeKey='ui-theme' themes={themes}>
                     <Startup>
                         <Router history={history}>
                             <div>
