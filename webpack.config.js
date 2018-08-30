@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     context: __dirname,
@@ -14,14 +13,6 @@ module.exports = {
     },
     devtool: 'source-map',
     plugins: [
-        // new CopyWebpackPlugin(
-        //     [{
-        //         context: 'node_modules/react-bootstrap-theme-switcher/themes/',
-        //         from: '**/*',
-        //         to: 'themes/'
-        //     }],
-        //     {copyUnmodified: true}
-        // ),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('development'),
