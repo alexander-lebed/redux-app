@@ -135,14 +135,6 @@ class Profile extends React.Component<Props, State> {
                                             <li>
                                                 {PROFILE_PICTURE.GO_TO_SOURCE(
                                                     <a
-                                                        href="http://funkyimg.com/"
-                                                        style={{fontWeight: 'bold'}}
-                                                        target="_blank"
-                                                        rel='noopener noreferrer'
-                                                    >
-                                                        FunkyImg
-                                                    </a>,
-                                                    <a
                                                         href="https://postimages.org/"
                                                         style={{fontWeight: 'bold'}}
                                                         target="_blank"

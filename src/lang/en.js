@@ -169,8 +169,8 @@ const translation: TranslationType = {
             SOCIAL_PICTURE: 'Or use your social picture from:',
             SET_PICTURE_URL: 'Picture URL',
             CREATE_PICTURE_URL: 'To create a URL to your picture:',
-            GO_TO_SOURCE: (source1, source2) => <span>Go to {source1} or {source2}</span>,
-            UPLOAD: 'Upload a picture (preferably square)',
+            GO_TO_SOURCE: (source) => <span>Go to {source}</span>,
+            UPLOAD: 'Choose an image (preferably square)',
             GET_LINK: 'Copy-paste Direct Link'
         },
         DELETE_PROFILE: 'Delete Profile',
