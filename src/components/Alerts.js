@@ -93,7 +93,7 @@ const styles = {
     },
     alerts: {
         position: 'fixed',
-        top: 40,
+        top: 75,
         left: '50%',
         transform: 'translateX(-50%)',
         width: '50%',
