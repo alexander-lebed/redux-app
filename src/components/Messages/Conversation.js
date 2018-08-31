@@ -147,8 +147,8 @@ class Conversation extends React.Component<Props, State> {
     renderMessages = () => {
         const messages = this.props.conversation.messages || [];
         const orderedMessages = _.orderBy(messages.filter(e => !e.deleted), 'timestamp');
-        return (
-            <div style={style.scrollableTable} className="custom-scrollbar" ref={(e) => {this.scrollableTable = e}}>
+        return ( // className="custom-scrollbar"
+            <div style={style.scrollableTable} ref={(e) => {this.scrollableTable = e}}>
                 <Table className='glyphicon-hover'>
                     <tbody>
                         {orderedMessages.map((message, index) => {
