@@ -167,19 +167,22 @@ class Conversations extends React.Component<Props, State> {
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
-                    <h4 style={{marginBottom: 20}} className='text-center'>
-                        {CONVERSATIONS.CONVERSATIONS}
+                    <div style={{display: 'table', width: '100%', marginBottom: 15}}>
+                        <h4 style={{display: 'table-cell',  width: '100%', verticalAlign: 'middle'}} className='text-center'>
+                            {CONVERSATIONS.CONVERSATIONS}
+                        </h4>
                         <Button
                             id='create-conversation'
                             bsSize='small'
                             title={CONVERSATIONS.CREATE}
-                            style={{border: 'none'}}
+                            style={{border: 'none', display: 'table-cell', verticalAlign: 'middle'}}
                             className='pull-right btn-circle-glyphicon'
                             onClick={() => this.createConversation()}
                         >
                             <Glyphicon glyph='plus' />
                         </Button>
-                    </h4>
+                    </div>
+
                     {content}
 
                     {this.state.deleteConversationId &&

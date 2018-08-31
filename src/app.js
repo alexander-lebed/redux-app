@@ -34,18 +34,20 @@ async function init() {
                             <div>
                                 <Alerts />
                                 <NavigationBar />
-                                <Switch>
-                                    <Route exact path="/login" component={Login} />
-                                    <Route exact path="/register" component={Registration} />
-                                    <PrivateRoute exact path="/" component={Conversations} />
-                                    <PrivateRoute exact path="/conversations" component={Conversations} />
-                                    <PrivateRoute path="/conversation" component={Conversation} />
-                                    <PrivateRoute path="/create-conversation" component={CreateConversation} />
-                                    <PrivateRoute exact path="/people" component={People} />
-                                    <PrivateRoute path="/weather" component={WeatherList} />
-                                    <PrivateRoute path="/profile" component={Profile} />
-                                    <Route exact path="/redirect" component={Spinner} />
-                                </Switch>
+                                <div className='main-content'>
+                                    <Switch>
+                                        <Route exact path="/login" component={Login} />
+                                        <Route exact path="/register" component={Registration} />
+                                        <PrivateRoute exact path="/" component={Conversations} />
+                                        <PrivateRoute exact path="/conversations" component={Conversations} />
+                                        <PrivateRoute path="/conversation" component={Conversation} />
+                                        <PrivateRoute path="/create-conversation" component={CreateConversation} />
+                                        <PrivateRoute exact path="/people" component={People} />
+                                        <PrivateRoute path="/weather" component={WeatherList} />
+                                        <PrivateRoute path="/profile" component={Profile} />
+                                        <Route exact path="/redirect" component={Spinner} />
+                                    </Switch>
+                                </div>
                             </div>
                         </Router>
                     </Startup>

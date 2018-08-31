@@ -95,7 +95,7 @@ class NavigationBar extends React.Component<Props, State> {
         }
         const messageTabStyle = convSubPathnames.includes(window.location.pathname) ? {borderBottom: '1px solid #777'} : {};
         return (
-            <Navbar style={{borderTop: 'none'}} onToggle={this.expand} expanded={this.state.expanded}>
+            <Navbar style={{borderTop: 'none'}} fixedTop onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Image
