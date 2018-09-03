@@ -40,7 +40,13 @@ export function login(user: User) {
                     const id = toMongoID(userData.id);
                     let username = _.isString(userData.name) && userData.name;
                     if (!username) {
-                        username = _.isString(userData.first_name) && userData.first_name.length > 0 ? userData.first_name : 'Username'
+                        if (_.isString(userData.first_name) && userData.first_name.length > 0) {
+                            username = userData.first_name;
+                        } else if (userData.email) {
+                            username = userData.email.substring(0, userData.email.indexOf('@'));
+                        } else {
+                            username = 'Username';
+                        }
                     }
                     return {
                         _id: id,
