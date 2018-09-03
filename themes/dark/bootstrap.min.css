@@ -52,6 +52,12 @@ table{background-color:#2e3338;}caption{padding-top:8px;padding-bottom:8px;color
 .navigation-bar {
     height: auto !important;
 }
+.account-menu {
+    box-shadow: 0 0 2pt 2pt #34393D;
+}
+.new-messages-bg {
+    background-color: #50565f;
+}
 .unread-message {
     background-color: #464C54;
 }

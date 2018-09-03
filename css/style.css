@@ -131,7 +131,7 @@ for Mobile device
         min-height: 40px;
     }
     .account-dropdown {
-        padding-top: 0 !important;
+        border: 1px solid lightgrey;
         padding-bottom: 10px !important;
     }
     .tab-text {
@@ -148,11 +148,13 @@ for Mobile device
         font-size: 13px;
         height: 50px;
     }
+    #theme-menu {
+        padding-top: 0 !important;
+    }
     .theme-menu {
-        height: 50px;
         width: 100% !important;
         float: left;
-        padding-top: 5px !important;
+        text-align: center;
         padding-left: 37% !important;
     }
     .user-from-text {
@@ -160,6 +162,9 @@ for Mobile device
         padding-left: 30px !important;
     }
     .dropdown-item {
+        width: 95%;
+        margin: auto;
+        border-radius: 5px;
         padding-top: 10px;
         text-align: center;
         font-size: 16px;
@@ -207,6 +212,10 @@ li.lang-text a:hover {
     background: none !important;
 }
 
+.new-messages-bg {
+    background-color: #edf0f5
+}
+
 .user-from-text {
     text-align: right;
 }
@@ -227,6 +236,12 @@ li.lang-text a:hover {
     max-height: 40px;
     max-width: 40px;
     font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 0 2pt 2pt lightgrey;
+}
+
+.account-menu-clicked {
+    box-shadow: 0 0 2pt 2pt grey !important;
 }
 
 .cut-senders-text {
@@ -311,7 +326,6 @@ li.lang-text a:hover {
 .dropdown-item {
     padding-top: 5px;
     padding-bottom: 5px;
-    border: 1px solid lightgrey;
 }
 
 .help-block {

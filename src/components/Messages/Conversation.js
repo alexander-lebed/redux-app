@@ -188,7 +188,7 @@ class Conversation extends React.Component<Props, State> {
                         <span style={style.time}>
                             {timestampToHumanDate(message.timestamp, true, translation)}
                         </span>
-                        <Linkify>
+                        <Linkify properties={{target: '_blank'}}>
                             <div style={style.text}>
                                 {message.text}
                             </div>

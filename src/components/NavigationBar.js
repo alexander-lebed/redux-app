@@ -52,8 +52,7 @@ class NavigationBar extends React.Component<Props, State> {
                     <div style={{display: 'inline-block'}}>
                         <Image
                             circle
-                            style={{boxShadow: `0 0 2pt 2pt ${this.state.accountClicked ? 'grey' : 'lightgrey'}`, cursor: 'pointer'}}
-                            className='account-menu pull-right'
+                            className={`account-menu pull-right ${this.state.accountClicked ? 'account-menu-clicked' : ''}`}
                             src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
                             title={user.username}
                             onClick={() => this.setState({accountClicked: !this.state.accountClicked})}
@@ -130,6 +129,11 @@ class NavigationBar extends React.Component<Props, State> {
                                 </div>
                             </NavItem>
                         </LinkContainer>
+                        <LinkContainer key='theme' to='#' >
+                            <NavItem eventKey={1} className='hidden-sm hidden-md hidden-lg theme-menu' style={{border: 'none', height: 50}}>
+                                <ThemeChooser />
+                            </NavItem>
+                        </LinkContainer>
                     </Nav>
                     <Nav pullRight>
 
@@ -150,7 +154,7 @@ class NavigationBar extends React.Component<Props, State> {
                         <NavItem eventKey={3} className='lang-text' style={{border: 'none'}} onSelect={() => {translate('ru')}}>
                             {locale === 'ru' ? <u>РУС</u> : 'РУС'}
                         </NavItem>
-                        <NavItem eventKey={4} className='theme-menu' style={{border: 'none', height: 50}}>
+                        <NavItem eventKey={4} className='hidden-xs theme-menu' style={{border: 'none', height: 50}}>
                             <ThemeChooser />
                         </NavItem>
                     </Nav>

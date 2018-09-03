@@ -86,7 +86,7 @@ class Conversations extends React.Component<Props, State> {
                 }
                 const sender = senders[0];
                 return (
-                    <tr key={conv._id} style={newMessages.length > 0 ? {backgroundColor: '#edf0f5'} : {}}>
+                    <tr key={conv._id} className={newMessages.length > 0 ? 'new-messages-bg' : ''}>
                         <td className='cursor' style={style.conversation}>
                             <Row>
                                 <Col xs={10} onClick={() => this.goToConversation(conv._id)}>
