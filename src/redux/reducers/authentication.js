@@ -31,7 +31,13 @@ export function login(user: User) {
     return async (dispatch: Dispatch, getState: Function) => {
 
         let loggedUser: User;
-        if (user.oauth) {
+
+        if (user.oauth && user._id) {
+            // check OAuth user on reload page
+            const users = getState().users.users;
+            loggedUser = users.filter(e => e.oauth).find(e => e._id === user._id && e.email === user.email);
+        } else if (user.oauth) {
+            // use OAuth service for login
             const oAuthService = hello.use(user.oauth);
 
             loggedUser = await oAuthService.login()
