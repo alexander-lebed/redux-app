@@ -92,6 +92,20 @@ textarea:focus {
     background-color: #EFEEEE;
 }
 
+.create-conv-header {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 10px;
+}
+
+.create-conv-header > .search {
+    grid-column: span 5;
+}
+
+.create-conv-header > .buttons {
+    grid-column: span 7;
+}
+
 ::-webkit-scrollbar-track {
     background: pink;
 }
@@ -156,6 +170,13 @@ for Mobile device
         float: left;
         text-align: center;
         padding-left: 37% !important;
+    }
+    .create-conv-header > .search {
+        grid-column: span 12;
+    }
+    .create-conv-header > .buttons {
+        grid-row: 1;
+        grid-column: span 12;
     }
     .user-from-text {
         text-align: left !important;

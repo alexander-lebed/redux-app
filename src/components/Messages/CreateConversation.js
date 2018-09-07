@@ -55,22 +55,8 @@ export class CreateConversation extends React.Component<Props, State> {
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
-                    <Row>
-                        <Col xs={12} sm={7} style={{float: 'right', marginBottom: 10}}>
-                            <ButtonToolbar className='pull-right'>
-                                <Button onClick={() => history.push('/conversations')}>
-                                    {translation.COMMON.CANCEL}
-                                </Button>
-                                <Button
-                                    bsStyle='primary'
-                                    disabled={participants.length === 0}
-                                    onClick={() => history.push(`/conversation?${queryString.stringify({userIds: participants})}`)}
-                                >
-                                    {CONVERSATIONS.CREATE}
-                                </Button>
-                            </ButtonToolbar>
-                        </Col>
-                        <Col xs={12} sm={5} style={{float: 'left'}}>
+                    <div className='create-conv-header'>
+                        <div className='search'>
                             <FormGroup>
                                 <InputGroup>
                                     <FormControl
@@ -84,8 +70,22 @@ export class CreateConversation extends React.Component<Props, State> {
                                     </InputGroup.Addon>
                                 </InputGroup>
                             </FormGroup>
-                        </Col>
-                    </Row>
+                        </div>
+                        <div className='buttons'>
+                            <ButtonToolbar className='pull-right'>
+                                <Button onClick={() => history.push('/conversations')}>
+                                    {translation.COMMON.CANCEL}
+                                </Button>
+                                <Button
+                                    bsStyle='primary'
+                                    disabled={participants.length === 0}
+                                    onClick={() => history.push(`/conversation?${queryString.stringify({userIds: participants})}`)}
+                                >
+                                    {CONVERSATIONS.CREATE}
+                                </Button>
+                            </ButtonToolbar>
+                        </div>
+                    </div>
                     {users.length === 0 ? <div className='text-center'>{translation.COMMON.NO_RESULTS}</div> :
                         <Table hover>
                             <tbody>
