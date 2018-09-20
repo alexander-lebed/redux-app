@@ -19,6 +19,9 @@ import People from './components/People/People';
 import WeatherList from './components/Weather/WeatherList';
 import Profile from './components/Profile/Profile';
 import Alerts from './components/Alerts';
+import '../css/react-select.scss';
+import '../css/emoji-mart.scss';
+import '../css/style.scss';
 
 const themes = ['light', 'dark', 'paper'];
 

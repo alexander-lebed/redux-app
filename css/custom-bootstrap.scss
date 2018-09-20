@@ -1,0 +1,55 @@
+@import 'variables';
+
+.btn {
+  background-image: none !important;
+}
+
+.btn-primary {
+  background-color: $primary-color !important;
+  border-color: $primary-border-color !important;
+}
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
+  background-color: $primary-color !important;
+  border-color: $primary-border-color !important;
+}
+
+.has-success .control-label, .label-success,
+.has-success .help-block,
+.has-success .form-control .form-control-feedback {
+  color: $primary-color !important;
+  border-color: $primary-border-color !important;
+}
+.has-success .form-control:focus {
+  box-shadow: 0 0 5px $primary-color;
+  border-color: $primary-border-color;
+}
+.label-success {
+  background-color: $primary-color !important;
+}
+
+.btn {
+  min-width: 100px !important;
+}
+
+.btn-link {
+  min-width: auto !important;
+}
+
+.modal {
+  text-align: center;
+  padding: 0 0 300px 0 !important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}

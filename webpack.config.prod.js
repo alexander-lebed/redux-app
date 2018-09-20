@@ -50,6 +50,14 @@ module.exports = {
                 ]
             },
             {
+                test: /\.scss$/,
+                use: [
+                    {loader: "style-loader"},
+                    {loader: "css-loader"},
+                    {loader: "sass-loader"}
+                ]
+            },
+            {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 use: 'url-loader?limit=100000'
             }
