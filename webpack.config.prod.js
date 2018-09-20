@@ -21,31 +21,37 @@ module.exports = {
         })
     ],
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
                 exclude: /node_modules/,
-                query: {
-                    presets: ['env', 'react', 'flow']
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env', 'react', 'flow']
+                    }
                 }
+
             },
             {
                 test: /\.js$/,
-                loaders: ['babel-loader'], // add 'eslint-loader' to lint on build
+                use: 'babel-loader', // add 'eslint-loader' to lint on build
                 exclude: /node_modules/
             },
             {
                 test: /\.html$/,
-                loader: 'file-loader?name=[name].[ext]'
+                use: 'file-loader?name=[name].[ext]'
             },
             {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader'
+                use: [
+                    {loader: 'style-loader'},
+                    {loader: 'css-loader'}
+                ]
             },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-                loader: 'url-loader?limit=100000'
+                use: 'url-loader?limit=100000'
             }
         ]
     }
