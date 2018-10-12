@@ -48,8 +48,8 @@ class Conversation extends React.Component<Props, State> {
 
     componentDidMount() {
         this.getConversation();
-        this.interval = setInterval(() => this.getConversation(), 2000); // update conversation every 2 sec
         setTimeout(() => this.scrollConversationToBottom(), 50);
+        setTimeout(() => this.props.markAsRead(), 500);
     }
 
     componentDidUpdate(prevProps: Props) {
@@ -57,6 +57,7 @@ class Conversation extends React.Component<Props, State> {
         const currentMessages = this.props.conversation.messages || [];
         if (prevMessages.length !== currentMessages.length) {
             setTimeout(() => this.scrollConversationToBottom(), 50);
+            setTimeout(() => this.props.markAsRead(), 500);
         }
     }
 
@@ -90,7 +91,6 @@ class Conversation extends React.Component<Props, State> {
             }
             this.props.getConversationWithUsers(participants);
         }
-        setTimeout(this.props.markAsRead, 500);
     };
 
     handleKeyPress = (evt) => {
@@ -98,7 +98,7 @@ class Conversation extends React.Component<Props, State> {
             evt.preventDefault();
             if (this.state.messageText) {
                 const {user, conversation} = this.props;
-                const emptyTime = null; // to set the time on server side
+                const emptyTime = null; // mark as null to set time on backend
                 const message: Message = {
                     from: {_id: user._id, username: user.username},
                     text: this.state.messageText,

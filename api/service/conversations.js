@@ -1,8 +1,31 @@
 const express = require("express");
 const _ = require("lodash");
 const router = express.Router();
+const WebSocket = require('ws');
 const Conversation = require('../model/conversations');
 
+const wss = new WebSocket.Server({ noServer: true });
+const clients = new Map();
+
+wss.on('connection', (ws, request) => {
+    const hash = request.url.substring(request.url.indexOf('?') + 1, request.url.length);
+    // e.g. hash '5a82c91f302f9d_1539251939252' where '5a82c91f302f9d' user ID and '1539251939252' timestamp
+    clients.set(hash, ws); // set user connection
+
+    ws.on('error', (msg) => {
+        console.log(`--- WS 'conversations' error: ${msg}`);
+    });
+
+    ws.on('close', () => {
+        clients.forEach((socket, key) => {
+            if (socket.readyState === WebSocket.CLOSED) {
+                clients.delete(key);
+            }
+        });
+    });
+});
+
+// API:
 // GET all conversations        .../api/conversations
 // GET conversation by id       .../api/conversations?convId={id}
 // GET conversation by user     .../api/conversations?userId={id1}
@@ -10,11 +33,10 @@ const Conversation = require('../model/conversations');
 // PUT conversation             .../api/conversations  +  payload
 // DELETE conversation          .../api/conversations?convId={id}
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
     if (req.query.convId) {
         // get some conversation by its ID
-
-        Conversation.find({'_id': req.query.convId}, function (err, data) {
+        Conversation.find({'_id': req.query.convId}, (err, data) => {
             if (err)
                 return next(err);
             res.json(data)
@@ -22,8 +44,7 @@ router.get('/', function(req, res, next) {
 
     } else if (req.query.userId) {
         // get all conversations for the user
-
-        Conversation.find(function(err, data) {
+        Conversation.find((err, data) => {
             if (err)
                 return next(err);
             const conversations = data.filter(c => c.users.map(u => u._id).includes(req.query.userId));
@@ -32,7 +53,6 @@ router.get('/', function(req, res, next) {
 
     } else if (req.query.userIds) {
         // get some conversation between users
-
         const userIdsArr = req.query.userIds.split(',');
         const findByUsers = (conversation) => {
             const matchQuantity = conversation.users.length === userIdsArr.length;
@@ -40,7 +60,7 @@ router.get('/', function(req, res, next) {
             const matchIds = _.isEqual(convUsers, userIdsArr.sort());
             return matchQuantity && matchIds;
         };
-        Conversation.find(function(err, data) {
+        Conversation.find((err, data) => {
             if (err)
                 return next(err);
             const conversations = data.filter(findByUsers);
@@ -49,8 +69,7 @@ router.get('/', function(req, res, next) {
 
     } else {
         // get all conversation for all users
-
-        Conversation.find(function(err, data) {
+        Conversation.find((err, data) => {
             if (err)
                 return next(err);
             res.json(data)
@@ -58,7 +77,7 @@ router.get('/', function(req, res, next) {
     }
 });
 
-router.put('/', function(req, res, next) {
+router.put('/', (req, res, next) => {
     const payload = req.body;
     const currentTime = Date.now();
 
@@ -77,20 +96,110 @@ router.put('/', function(req, res, next) {
         }
     });
 
-    conv.save(function(err, data) {
-        if (err)
+    conv.save((err, conversation) => {
+        if (err) {
             return next(err);
-        res.json(data);
+        } else {
+            res.json(conversation);
+
+            // broadcast updated conversation & conversationS to affected users
+            Conversation.find((err, allConversations) => {
+                if (err) {
+                    return next(err);
+                } else {
+                    const usersConversations = {};
+                    const targetUserIds = conversation.users.map(u => u._id);
+
+                    targetUserIds.forEach(userId => {
+                        usersConversations[userId] = allConversations.filter(c => c.users.map(u => u._id).includes(userId));
+                    });
+
+                    const connections = [];
+                    clients.forEach((ws, key) => {
+                        const userId = key.substring(0, key.indexOf('_'));
+                        connections.push({userId, ws});
+                    });
+
+                    const userIds = connections.map(e => e.userId);
+
+                    conversation.users.forEach(user => {
+                        if (userIds.includes(user._id)) {
+                            const sockets = connections.filter(e => e.userId === user._id).map(e => e.ws);
+                            sockets.forEach(client => {
+                                if (client.readyState === WebSocket.OPEN) {
+                                    client.send(JSON.stringify({
+                                        conversation: conversation,
+                                        conversations: usersConversations[user._id]
+                                    }));
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+        }
     });
 });
 
-router.delete('/', function(req, res, next) {
+router.delete('/', (req, res, next) => {
     const query = {_id : req.query.convId};
-    Conversation.find(query).remove(function(err, data) {
-        if (err)
+
+    // get conversation to delete
+    Conversation.find(query, (err, data) => {
+        if (err) {
             return next(err);
-        res.json(data);
+        } else {
+            const conversation = data[0];
+
+            // delete conversation
+            Conversation.find(query).remove((err, data) => {
+                if (err) {
+                    return next(err);
+                } else {
+                    res.json(data);
+
+                    // broadcast updated conversationS to affected users
+                    Conversation.find((err, allConversations) => {
+                        if (err) {
+                            return next(err);
+                        } else {
+                            const targetUserIds = conversation.users.map(u => u._id);
+                            const usersConversations = {};
+
+                            targetUserIds.forEach(userId => {
+                                usersConversations[userId] = allConversations.filter(c => c.users.map(u => u._id).includes(userId));
+                            });
+
+                            const connections = [];
+                            clients.forEach((ws, key) => {
+                                const userId = key.substring(0, key.indexOf('_'));
+                                connections.push({userId, ws});
+                            });
+
+                            const userIds = connections.map(e => e.userId);
+
+                            conversation.users.forEach(user => {
+                                if (userIds.includes(user._id)) {
+                                    const sockets = connections.filter(e => e.userId === user._id).map(e => e.ws);
+                                    sockets.forEach(client => {
+                                        if (client.readyState === WebSocket.OPEN) {
+                                            client.send(JSON.stringify({
+                                                conversations: usersConversations[user._id]
+                                            }));
+                                        }
+                                    })
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     });
 });
 
-module.exports = router;
+
+module.exports = {
+    ws: wss,
+    router: router
+};

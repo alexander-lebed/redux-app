@@ -2,10 +2,11 @@
 
 const path = require('path');
 const express = require('express');
+const url = require('url');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const users = require('./api/service/users');
-const conversations = require('./api/service/conversations');
+const userApi = require('./api/service/users');
+const conversationApi = require('./api/service/conversations');
 const places = require('./api/service/places');
 
 const app           = express();
@@ -28,7 +29,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // to prevent errors from Cross Origin Resource Sharing, we will set our headers to allow CORS with middleware like so:
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
@@ -39,23 +40,41 @@ app.use(function(req, res, next) {
 });
 
 // now  we can set the route path & initialize the API
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
     res.json({ message: 'API initialized!'});
 });
 
-router.use('/users', users);
-router.use('/conversations', conversations);
+router.use('/users', userApi.router);
+router.use('/conversations', conversationApi.router);
 router.use('/places', places);
 
 // use our router configuration when we call /api
 app.use('/api', router);
 
 // serve index.html to the client
-app.get('*', function(req, res) {
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'))
 });
 
 // starts the server and listens for requests
-app.listen(port, function() {
+const server = app.listen(port, () => {
     console.log(`Api running on port ${port}`);
+});
+
+// apply web sockets with different paths
+server.on('upgrade', (request, socket, head) => {
+
+    const pathname = url.parse(request.url).pathname;
+
+    if (pathname === '/users') {
+        userApi.ws.handleUpgrade(request, socket, head, (ws) => {
+            userApi.ws.emit('connection', ws, request);
+        });
+    } else if (pathname === '/conversations') {
+        conversationApi.ws.handleUpgrade(request, socket, head, (ws) => {
+            conversationApi.ws.emit('connection', ws, request);
+        });
+    } else {
+        socket.destroy();
+    }
 });

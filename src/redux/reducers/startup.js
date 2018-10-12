@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
 import hello from 'hellojs';
+import { login, online } from './authentication';
 import { initTranslation } from './translation';
 import { getUsers } from './users';
-import { login, online } from './authentication';
-import { getConversationsByUser } from './conversations';
 import { Alert } from './alerts';
 import receiveMessageDataURI from '../../../audio';
-import { DOCUMENT_TITLE } from "../../constants";
 
 const actions = {
     START_INIT: 'START_INIT',
@@ -119,31 +117,7 @@ export function initApp() {
     }
 }
 
-export function updateData() {
-    return (dispatch, getState) => {
-        // refresh users
-        dispatch(getUsers());
-        // refresh user messages
-        const currentUser = getState().authentication.user;
-        if (currentUser) {
-            Promise.resolve()
-                .then(() => dispatch(getConversationsByUser(currentUser._id)))
-                .then(() => {
-                    // update document title
-                    const conversations = getState().conversations.conversations;
-                    const newMessages = conversations.filter(c => c.messages.some(m => !m.read && m.from._id !== currentUser._id));
-                    if (newMessages.length > 0) {
-                        document.title = `${newMessages.length} new message${newMessages.length > 1 ? 's' : ''}`;
-                        showDesktopNotifications(newMessages, dispatch, getState);
-                    } else {
-                        document.title = DOCUMENT_TITLE;
-                    }
-                })
-        }
-    }
-}
-
-const showDesktopNotifications = (conversations, dispatch, getState) => {
+export function showDesktopNotifications(conversations, dispatch, getState) {
     conversations.forEach(c => {
         const convId = c._id;
         const unreadMessages = c.messages.filter(e => !e.read);
@@ -187,4 +161,4 @@ const showDesktopNotifications = (conversations, dispatch, getState) => {
                 }
             });
     });
-};
+}

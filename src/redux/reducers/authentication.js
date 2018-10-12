@@ -3,10 +3,11 @@ import {combineReducers} from 'redux';
 import _ from 'lodash';
 import $http from 'axios';
 import hello from 'hellojs';
-import { USERS_URL } from "../../constants";
+import { USERS_URL } from '../../constants';
 import toMongoID from '../../helpers/toMongoID';
 import type { Action, Dispatch, User } from '../../types';
-import { getUsers } from "./users";
+import { initConversationsWs } from './conversations';
+import { initUsersWs } from './users';
 
 const actions = {
     SET_USER: 'SET_USER'
@@ -77,8 +78,13 @@ export function login(user: User) {
         if (loggedUser) {
             loggedUser.online = true;
             try {
+                // set current user
                 const response = await $http.put(`${USERS_URL}/${loggedUser._id}`, loggedUser);
-                dispatch(setUser(response.data));
+                await dispatch(setUser(response.data));
+
+                // init WebSockets to listen server
+                await dispatch(initUsersWs());
+                await dispatch(initConversationsWs());
                 return true;
             } catch (err) {
                 dispatch(setUser(null));
@@ -116,7 +122,6 @@ export function online(isOnline: boolean) {
             user.lastTime = null; // to set the time on server side
             const response = await $http.put(`${USERS_URL}/${user._id}`, user);
             dispatch(setUser(response.data));
-            dispatch(getUsers());
         }
     }
 }

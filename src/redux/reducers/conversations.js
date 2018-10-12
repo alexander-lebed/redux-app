@@ -3,9 +3,10 @@ import React from 'react';
 import { combineReducers } from 'redux';
 import _ from 'lodash';
 import $http from 'axios';
-import { Alert } from "./alerts";
+import { Alert } from './alerts';
 import generateError from '../../helpers/generateError';
-import { CONVERSATIONS_URL } from "../../constants";
+import { showDesktopNotifications } from './startup';
+import { CONVERSATIONS_URL, DOCUMENT_TITLE } from '../../constants';
 import type { Action, Dispatch } from '../../types';
 
 const actions = {
@@ -101,10 +102,6 @@ export function getConversationWithUsers(userIds: Array<string>) {
                                 type: actions.ADD_CONVERSATION,
                                 payload: response.data
                             });
-                            dispatch({
-                                type: actions.SET_CONVERSATION,
-                                payload: response.data
-                            })
                         })
                 }
             })
@@ -132,20 +129,8 @@ export function markAsRead() {
 }
 
 export function saveConversation(conversation: Object) {
-    return (dispatch: Dispatch, getState: Function) => {
-
-        $http.put(CONVERSATIONS_URL, conversation)
-            .then(response => {
-                dispatch({
-                    type: actions.SET_CONVERSATION,
-                    payload: response.data
-                });
-                // update conversations state
-                const currentUser = getState().authentication.user;
-                if (currentUser) {
-                    dispatch(getConversationsByUser(currentUser._id))
-                }
-            })
+    return () => {
+        $http.put(CONVERSATIONS_URL, conversation);
     }
 }
 
@@ -170,17 +155,11 @@ export function deleteMessage(messageId: string) {
     }
 }
 
-// this method doesn't delete conversation, just mark as deleted
 export function deleteConversation(convId: string) {
-    return async (dispatch: Dispatch, getState: Function) => {
+    return async (dispatch: Dispatch) => {
         try {
             await $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`);
             dispatch(Alert.success('Conversation has been deleted.'));
-            // update conversations state
-            const currentUser = getState().authentication.user;
-            if (currentUser) {
-                dispatch(getConversationsByUser(currentUser._id))
-            }
         } catch (err) {
             const error = (
                 <div>
@@ -190,5 +169,43 @@ export function deleteConversation(convId: string) {
             );
             dispatch(Alert.error(error));
         }
+    }
+}
+
+export function initConversationsWs() {
+    return (dispatch: Dispatch, getState: Function) => {
+
+        const websocket = new WebSocket(`ws://localhost:3000/conversations?${getState().authentication.user._id}_${Date.now()}`);
+
+        websocket.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.conversation) {
+                    dispatch({
+                        type: actions.SET_CONVERSATION,
+                        payload: data.conversation
+                    })
+                }
+                if (data.conversations) {
+                    const sortedConversations = _.orderBy(data.conversations, 'timestamp', 'desc');
+                    dispatch({
+                        type: actions.SET_CONVERSATIONS,
+                        payload: sortedConversations
+                    });
+
+                    // update browser tab title and show notification
+                    const currentUser = getState().authentication.user;
+                    const newMessages = sortedConversations.filter(c => c.messages.some(m => !m.read && m.from._id !== currentUser._id));
+                    if (newMessages.length > 0) {
+                        document.title = `${newMessages.length} new message${newMessages.length > 1 ? 's' : ''}`;
+                        showDesktopNotifications(newMessages, dispatch, getState);
+                    } else {
+                        document.title = DOCUMENT_TITLE;
+                    }
+                }
+            } catch (err) {
+                console.log(`--- WS 'conversations' onmessage error: ${err}`);
+            }
+        };
     }
 }

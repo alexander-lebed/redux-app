@@ -2,13 +2,12 @@
 import React from 'react';
 import type { Node } from 'react';
 import { connect } from "react-redux";
-import { initApp, updateData } from "../redux/reducers/startup";
+import { initApp } from "../redux/reducers/startup";
 
 type Props = {
     loading: boolean,
     children?: Node,
-    initApp: Function,
-    updateData: Function
+    initApp: Function
 }
 
 class Startup extends React.Component<Props, void> {
@@ -17,7 +16,6 @@ class Startup extends React.Component<Props, void> {
 
     componentDidMount() {
         this.props.initApp();
-        this.interval = setInterval(() => this.props.updateData(), 5000);
     }
 
     componentWillUnmount() {
@@ -33,5 +31,5 @@ export default connect(
     (state) => ({
         loading: state.startup.loading
     }),
-    { initApp, updateData }
+    { initApp }
 )(Startup);

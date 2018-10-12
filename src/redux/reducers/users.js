@@ -94,7 +94,6 @@ export function editUser(userId: string, user: User) {
                 const response = await $http.put(`${USERS_URL}/${userId}`, user);
                 await dispatch(setUser(response.data));
                 dispatch(Alert.success('Your profile has been updated.'));
-                dispatch(getUsers());
             } catch (err) {
                 const error = (
                     <div>
@@ -113,7 +112,6 @@ export function deleteUser(userId: string) {
         try {
             await $http.delete(`${USERS_URL}?userId=${userId}`);
             dispatch(Alert.success('User has been deleted.'));
-            dispatch(getUsers());
         } catch (err) {
             const error = (
                 <div>
@@ -126,5 +124,25 @@ export function deleteUser(userId: string) {
     }
 }
 
+export function initUsersWs() {
+    return (dispatch: Dispatch, getState: Function) => {
+
+        const websocket = new WebSocket(`ws://localhost:3000/users?${getState().authentication.user._id}_${Date.now()}`);
+
+        websocket.onmessage = (event) => {
+            try {
+                const users = JSON.parse(event.data);
+                const sorted = _.orderBy(users, ['username']);
+                const dataObj = _.keyBy(sorted, '_id');
+                const payload = Map(dataObj);
+                dispatch({
+                    type: actions.SET_USERS, payload
+                });
+            } catch (err) {
+                console.log(`--- WS 'users' onmessage error: ${err}`);
+            }
+        };
+    }
+}
 
 

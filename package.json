@@ -35,6 +35,7 @@
     "foreman": "^2.0.0",
     "hellojs": "^2.0.0-4",
     "history": "^4.7.2",
+    "http": "^0.0.0",
     "immutable": "^3.8.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
@@ -53,7 +54,8 @@
     "redux": "^3.7.2",
     "redux-persist": "4.10.2",
     "redux-persist-transform-immutable": "4.3.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "ws": "^6.0.0"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.15.0",
