@@ -25,7 +25,8 @@ export type TranslationType = {
         CREATE: string,
         SEARCH_PARTICIPANTS: string,
         DELETE: string,
-        DELETE_CONFIRMATION: string
+        DELETE_CONFIRMATION: string,
+        CONVERSATION_REMOVED: string
     },
     MESSAGES: {
         MESSAGES: string,
@@ -116,7 +117,8 @@ const translation: TranslationType = {
         CREATE: 'Create conversation',
         SEARCH_PARTICIPANTS: 'Search participants',
         DELETE: 'Remove conversation',
-        DELETE_CONFIRMATION: 'This will delete conversation for all participants. Are you sure?'
+        DELETE_CONFIRMATION: 'This will delete conversation for all participants. Are you sure?',
+        CONVERSATION_REMOVED: 'Conversation has been removed'
     },
     MESSAGES: {
         MESSAGES: 'Messages',

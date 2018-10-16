@@ -27,7 +27,8 @@ const translation: Translation = {
         CREATE: 'Создать переписку',
         SEARCH_PARTICIPANTS: 'Поиск участников',
         DELETE: 'Удалить переписку',
-        DELETE_CONFIRMATION: 'Это удалит переписку для всех её участников. Продолжить?'
+        DELETE_CONFIRMATION: 'Это удалит переписку для всех её участников. Продолжить?',
+        CONVERSATION_REMOVED: 'Переписка удалена'
     },
     MESSAGES: {
         MESSAGES: 'Переписка',

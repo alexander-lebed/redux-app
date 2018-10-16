@@ -16,6 +16,7 @@ type Props = {
     user: User,
     users: Map<string, User>,
     conversation: ConversationType,
+    conversations: Array<ConversationType>,
     translation: Translation,
     location: Object,
     getConversation: Function,
@@ -119,15 +120,16 @@ class Conversation extends React.Component<Props, State> {
 
     render() {
         const {showEmoji} = this.state;
-        const {translation} = this.props;
-        const messageStyle = showEmoji ? {paddingRight: 0} : {};
-        const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
-        return (
-            <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
-                    <h4 className='text-center' style={{marginBottom: 20}}>
-                        {translation.MESSAGES.MESSAGES}
-                    </h4>
+        const {conversation, conversations, translation} = this.props;
+
+        const conversationsExist = conversations.some(e => e._id === conversation._id);
+
+        let body = null;
+        if (conversationsExist) {
+            const messageStyle = showEmoji ? {paddingRight: 0} : {};
+            const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
+            body = (
+                <div>
                     {this.renderMessages()}
                     <Row>
                         <Col xs={12} sm={showEmoji ? 7 : 12} className='message-form' style={messageStyle}>
@@ -139,6 +141,22 @@ class Conversation extends React.Component<Props, State> {
                             }
                         </Col>
                     </Row>
+                </div>
+            )
+        } else {
+            body = (
+                <div className='text-center'>
+                    {translation.CONVERSATIONS.CONVERSATION_REMOVED}
+                </div>
+            )
+        }
+        return (
+            <Row style={{marginLeft: 0, marginRight: 0}}>
+                <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
+                    <h4 className='text-center' style={{marginBottom: 20}}>
+                        {translation.MESSAGES.MESSAGES}
+                    </h4>
+                    {body}
                 </Col>
             </Row>
         )
@@ -304,6 +322,7 @@ export default connect(
         user: state.authentication.user,
         users: state.users.users,
         conversation: state.conversations.conversation,
+        conversations: state.conversations.conversations,
         translation: state.translation
     }),
     { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup }

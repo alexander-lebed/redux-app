@@ -97,7 +97,7 @@ export function initApp() {
                 event.preventDefault();
                 if (currentUser && currentUser.online) {
                     dispatch(online(false)); // go user offline on page leave
-                    setTimeout(() => dispatch(online(true)), 1000); // back to online if user click Cancel
+                    setTimeout(() => dispatch(online(true)), 3000); // back to online if user click Cancel
                     return event.returnValue = 'Are you sure you what to leave?';
                 }
                 return null;
