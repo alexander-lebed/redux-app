@@ -6,7 +6,7 @@ import $http from 'axios';
 import { Alert } from './alerts';
 import generateError from '../../helpers/generateError';
 import { showDesktopNotifications } from './startup';
-import { CONVERSATIONS_URL, DOCUMENT_TITLE } from '../../constants';
+import { WS_ADDRESS, CONVERSATIONS_URL, DOCUMENT_TITLE } from '../../constants';
 import type { Action, Dispatch } from '../../types';
 
 const actions = {
@@ -175,7 +175,7 @@ export function deleteConversation(convId: string) {
 export function initConversationsWs() {
     return (dispatch: Dispatch, getState: Function) => {
 
-        const websocket = new WebSocket(`ws://localhost:3000/conversations?${getState().authentication.user._id}_${Date.now()}`);
+        const websocket = new WebSocket(`${WS_ADDRESS}/conversations?${getState().authentication.user._id}_${Date.now()}`);
 
         websocket.onmessage = (event) => {
             try {

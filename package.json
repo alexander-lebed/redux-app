@@ -17,9 +17,6 @@
     "lint-fix": "eslint src --fix --cache",
     "flow": "flow"
   },
-  "engines": {
-    "node": "9.9.0"
-  },
   "jest": {
     "collectCoverage": true,
     "setupTestFrameworkScriptFile": "<rootDir>/src/helpers/configureEnzyme.js"
