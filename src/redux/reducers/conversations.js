@@ -5,8 +5,8 @@ import _ from 'lodash';
 import $http from 'axios';
 import { Alert } from './alerts';
 import generateError from '../../helpers/generateError';
-import { showDesktopNotifications } from './startup';
-import { WS_ADDRESS, CONVERSATIONS_URL, DOCUMENT_TITLE } from '../../constants';
+import { showBrowserNotifications } from './startup';
+import { CONVERSATIONS_URL, DOCUMENT_TITLE } from '../../constants';
 import type { Action, Dispatch } from '../../types';
 
 const actions = {
@@ -175,7 +175,7 @@ export function deleteConversation(convId: string) {
 export function initConversationsWs() {
     return (dispatch: Dispatch, getState: Function) => {
 
-        const websocket = new WebSocket(`${WS_ADDRESS}/conversations?${getState().authentication.user._id}_${Date.now()}`);
+        const websocket = new WebSocket(`${process.env.WS_ADDRESS}/conversations?${getState().authentication.user._id}_${Date.now()}`);
 
         websocket.onmessage = (event) => {
             try {
@@ -198,7 +198,7 @@ export function initConversationsWs() {
                     const newMessages = sortedConversations.filter(c => c.messages.some(m => !m.read && m.from._id !== currentUser._id));
                     if (newMessages.length > 0) {
                         document.title = `${newMessages.length} new message${newMessages.length > 1 ? 's' : ''}`;
-                        showDesktopNotifications(newMessages, dispatch, getState);
+                        showBrowserNotifications(newMessages, dispatch, getState);
                     } else {
                         document.title = DOCUMENT_TITLE;
                     }

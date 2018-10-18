@@ -5,7 +5,7 @@ import $http from 'axios';
 import _ from 'lodash';
 import { Map } from 'immutable';
 import history from "../../helpers/history";
-import { WS_ADDRESS, USERS_URL} from '../../constants';
+import { USERS_URL} from '../../constants';
 import encryptPassword from '../../helpers/encryptPassword';
 import generateError from "../../helpers/generateError";
 import { Alert } from './alerts';
@@ -127,7 +127,7 @@ export function deleteUser(userId: string) {
 export function initUsersWs() {
     return (dispatch: Dispatch, getState: Function) => {
 
-        const websocket = new WebSocket(`${WS_ADDRESS}/users?${getState().authentication.user._id}_${Date.now()}`);
+        const websocket = new WebSocket(`${process.env.WS_ADDRESS}/users?${getState().authentication.user._id}_${Date.now()}`);
 
         websocket.onmessage = (event) => {
             try {

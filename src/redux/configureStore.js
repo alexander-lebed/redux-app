@@ -7,7 +7,6 @@ import startup from './reducers/startup';
 import authentication from './reducers/authentication';
 import users from './reducers/users';
 import conversations from './reducers/conversations'
-import weather from './reducers/weather';
 import alerts from './reducers/alerts';
 import locale from './reducers/locale';
 import translation from './reducers/translation';
@@ -22,7 +21,6 @@ export default function configureStore() {
                 authentication,
                 users,
                 conversations,
-                weather,
                 alerts,
                 locale,
                 translation
@@ -36,15 +34,14 @@ export default function configureStore() {
                 )
             );
             // periodically persist the store
-            // note: use persistStore(...).purge() to reset the store
             persistStore(
                 store,
                 {
-                    whitelist : ['authentication', 'users', 'weather', 'locale'],
+                    whitelist : ['authentication', 'users', 'locale'],
                     transforms: [immutableTransform()]
                 },
                 () => resolve(store)
-            ); // .purge();
+            ); // note: use persistStore(...).purge() to reset the store
         } catch (e) {
             reject(e);
         }

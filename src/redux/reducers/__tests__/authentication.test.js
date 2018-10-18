@@ -11,7 +11,9 @@ const mockStore = configureMockStore(middlewares);
 
 describe('Authentication reducer', () => {
 
+    process.env.WS_ADDRESS = 'ws://localhost:3000';
     const mockAdapter = new MockAdapter($http);
+
     const testUser = {
         _id: '111',
         username:'Current User',
@@ -66,15 +68,13 @@ describe('Authentication reducer', () => {
         expect(store.getActions()).toEqual(expectedActions);
     });
 
-    test('should successfully logout user', () => {
+    test('should successfully logout user', async () => {
         mockAdapter.onPut(USERS_PUT_API).reply(200, testUser);
         const expectedActions = [
             {type: 'SET_USER', payload: null}
         ];
-        store.dispatch(logout())
-            .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
-            })
+        await store.dispatch(logout());
+        expect(store.getActions()).toEqual(expectedActions);
     });
 
     test('should go user offline', async () => {

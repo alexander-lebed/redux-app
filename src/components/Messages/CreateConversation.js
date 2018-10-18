@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
-import { onlineStyle } from '../../constants';
+import { ONLINE_STYLE } from '../../constants';
 import type { User, Translation } from '../../types';
 
 type Props = {
@@ -99,7 +99,7 @@ export class CreateConversation extends React.Component<Props, State> {
                                                         <div className='profile-picture-wrapper'>
                                                             <Image
                                                                 circle
-                                                                style={user.online ? onlineStyle : {}}
+                                                                style={user.online ? ONLINE_STYLE : {}}
                                                                 className='profile-picture'
                                                                 src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
                                                             />

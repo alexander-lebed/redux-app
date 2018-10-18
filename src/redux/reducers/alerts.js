@@ -1,6 +1,6 @@
 // @flow
 import type { Node } from 'react';
-import uid from '../../helpers/id-generator';
+import uid from '../../helpers/idGenerator';
 import type { Dispatch, Action, State, Alert as AlertType } from '../../types';
 
 export const actionTypes = {

@@ -62,7 +62,7 @@ class Login extends React.Component<Props, State> {
 
                     <Row>
                         <Col xsOffset={3} smOffset={2}  xs={9} sm={10}>
-                            <h3 style={{marginBottom: 20}}>Login</h3>
+                            <h3 style={{marginBottom: 20}}>{translation.ACCOUNT.LOG_IN}</h3>
                         </Col>
                     </Row>
 
@@ -84,7 +84,7 @@ class Login extends React.Component<Props, State> {
 
                         <FormGroup controlId='formHorizontalPassword'>
                             <Col componentClass={ControlLabel} xs={3} sm={2}>
-                                Password
+                                {this.props.translation.LOGIN.PASSWORD}
                             </Col>
                             <Col xs={9} sm={10}>
                                 <FormControl
@@ -147,7 +147,5 @@ export default connect(
     (state) => ({
         translation: state.translation
     }),
-    {
-        login, success, error
-    }
+    { login, success, error }
 )(Login)

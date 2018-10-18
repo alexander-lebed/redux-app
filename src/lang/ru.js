@@ -6,7 +6,6 @@ const translation: Translation = {
     SECTIONS: {
         MESSAGES: 'Сообщения',
         PEOPLE: 'Люди',
-        WEATHER: 'Погода'
     },
     COMMON: {
         YES: 'Да',
@@ -15,9 +14,10 @@ const translation: Translation = {
         DELETE: 'Удалить',
         DELETE_CONFIRMATION: 'Подтверждение об удалении',
         NO_RESULTS: 'Нет результатов',
-
     },
     LOGIN: {
+        PASSWORD: 'Пароль',
+        CONFIRM_PASSWORD: 'Подтвердить пароль',
         INCORRECT_CREDENTIALS: 'Электронная почта или пароль неверны',
         OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
     },
@@ -43,13 +43,8 @@ const translation: Translation = {
         LAST_SEEN: 'заходил(а)',
         DELETE_CONFIRMATION: 'Вы действительно хотите удалить этого пользователя?'
     },
-    WEATHER: {
-        SEARCH_LOCATION: 'Поиск (на английском языке)',
-        NO_LOCATIONS: 'Нет выбранных местоположений',
-        NOT_AVAILABLE: 'недоступно'
-    },
     ACCOUNT: {
-        SIGN_UP: 'Зарегистрироваться',
+        SIGN_UP: 'Регистрация',
         LOG_IN: 'Войти',
         LOG_IN_WITH_OAUTH: 'Или войти через:',
         LOG_OUT: 'Выйти',

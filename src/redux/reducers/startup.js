@@ -7,21 +7,8 @@ import { Alert } from './alerts';
 import receiveMessageDataURI from '../../../audio';
 
 const actions = {
-    START_INIT: 'START_INIT',
-    END_INIT: 'END_INIT',
     WINDOW_ACTIVE: 'UPDATE_USER_ACTIVE',
     BLOCKED_MESSAGES: 'BLOCKED_MESSAGES'
-};
-
-const loading = (state = false, action) => {
-    switch (action.type) {
-        case actions.START_INIT:
-            return true;
-        case actions.END_INIT:
-            return false;
-        default:
-            return state;
-    }
 };
 
 const isUserInMessenger = (state = true, action) => {
@@ -43,7 +30,6 @@ const blockedNotifications = (state = [], action) => {
 };
 
 export default combineReducers({
-    loading,
     isUserInMessenger,
     blockedNotifications
 });
@@ -51,25 +37,16 @@ export default combineReducers({
 
 export function initApp() {
     return async (dispatch, getState) => {
-        dispatch({
-            type: actions.START_INIT
-        });
 
         dispatch(initTranslation());
 
-        hello.init({
-            google: '949472211637-1593m31t8lmrvrf6cec1kobmajjli70m.apps.googleusercontent.com',
-            facebook: '203639747170364',
-        }, {
-            redirect_uri: '/redirect',
-            scope: 'email'
-        });
+        initOAuth();
 
         await dispatch(getUsers());
 
         let currentUser = getState().authentication.user;
-        // login user
         if (currentUser) {
+            // re-login user
             const isLoggedIn = await dispatch(login(currentUser));
             if (!isLoggedIn) {
                 dispatch(Alert.error('Please re-login'));
@@ -80,18 +57,18 @@ export function initApp() {
             dispatch({type: actions.BLOCKED_MESSAGES, payload: []});
         };
 
-        const askUserShowNotifications = () => {
+        const askUserToShowNotifications = () => {
             if (Notification && Notification.permission !== 'granted') {
                 Notification.requestPermission();
             }
         };
 
-        const watchUserOnline = () => {
+        const watchIfUserOnline = () => {
             window.addEventListener('focus', () => dispatch({type: actions.WINDOW_ACTIVE, payload: true}));
-            window.addEventListener('blur', () => dispatch({type: actions.WINDOW_ACTIVE, payload: false}));
+            window.addEventListener('blur',  () => dispatch({type: actions.WINDOW_ACTIVE, payload: false}));
         };
 
-        const watchUserLeaveOrReload = () => {
+        const watchWhenUserLeaveOrReload = () => {
             currentUser = getState().authentication.user;
             const confirmLeave = (event) => {
                 event.preventDefault();
@@ -107,17 +84,23 @@ export function initApp() {
         };
 
         clearBrowserNotifications();
-        askUserShowNotifications();
-        watchUserOnline();
-        watchUserLeaveOrReload();
-
-        dispatch({
-            type: actions.END_INIT
-        });
+        askUserToShowNotifications();
+        watchIfUserOnline();
+        watchWhenUserLeaveOrReload();
     }
 }
 
-export function showDesktopNotifications(conversations, dispatch, getState) {
+function initOAuth() {
+    hello.init({
+        google: '949472211637-1593m31t8lmrvrf6cec1kobmajjli70m.apps.googleusercontent.com',
+        facebook: '203639747170364',
+    }, {
+        redirect_uri: '/redirect',
+        scope: 'email'
+    });
+}
+
+export function showBrowserNotifications(conversations, dispatch, getState) {
     conversations.forEach(c => {
         const convId = c._id;
         const unreadMessages = c.messages.filter(e => !e.read);
@@ -126,6 +109,7 @@ export function showDesktopNotifications(conversations, dispatch, getState) {
         Promise.resolve()
             .then(() => {
                 if (getState().startup.isUserInMessenger) {
+                    // save the hash of current unread messages to check it then
                     dispatch({
                         type: actions.BLOCKED_MESSAGES,
                         payload: getState().startup.blockedNotifications.concat(messageHash)
@@ -135,9 +119,10 @@ export function showDesktopNotifications(conversations, dispatch, getState) {
             .then(() => {
                 const blockedNotifications = getState().startup.blockedNotifications;
                 if (!blockedNotifications.includes(messageHash)) {
-                    // $FlowFixMe
-                    const sound = new Audio(receiveMessageDataURI);
-                    sound.play();
+                    // if hash wasn't saved it means user was out of the Messenger => show notification
+
+                    const beepSound = new Audio(receiveMessageDataURI);
+                    beepSound.play();
 
                     const messagesArr = unreadMessages.map(e => e.text);
                     const senders = [...new Set(unreadMessages.map(e => e.from.username))];
@@ -153,7 +138,7 @@ export function showDesktopNotifications(conversations, dispatch, getState) {
                         notification.close();
                     };
 
-                    // do not show the same notification again
+                    // save the hash to not show the same notification again
                     dispatch({
                         type: actions.BLOCKED_MESSAGES,
                         payload: blockedNotifications.concat(messageHash)

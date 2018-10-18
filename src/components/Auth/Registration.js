@@ -3,9 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form, FormGroup, FormControl, ControlLabel, HelpBlock, Button } from 'react-bootstrap';
 import { register } from '../../redux/reducers/users';
-import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
+import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/inputValidation';
+import type { Translation } from '../../types'
 
 type Props = {
+    translation: Translation,
     register: Function
 };
 
@@ -49,13 +51,14 @@ class Login extends React.Component<Props, State> {
 
     render() {
         const {username, email, password, confirmPassword} = this.state;
+        const {translation} = this.props;
         return (
             <Row style={{marginTop: 100, marginLeft: 0, marginRight: 0}}>
                 <Col smOffset={3} sm={6}>
 
                     <Row>
                         <Col xsOffset={3} smOffset={2}  xs={9} sm={10}>
-                            <h3 style={{marginBottom: 20}}>Registration</h3>
+                            <h3 style={{marginBottom: 20}}>{translation.ACCOUNT.SIGN_UP}</h3>
                         </Col>
                     </Row>
 
@@ -97,7 +100,7 @@ class Login extends React.Component<Props, State> {
 
                         <FormGroup controlId='password' validationState={getPasswordValidationState(password)}>
                             <Col componentClass={ControlLabel} xs={3} sm={2}>
-                                Password
+                                {translation.LOGIN.PASSWORD}
                             </Col>
                             <Col xs={9} sm={10}>
                                 <FormControl
@@ -115,7 +118,7 @@ class Login extends React.Component<Props, State> {
 
                         <FormGroup controlId='confirm-password' validationState={getConfirmPasswordValidationState(password, confirmPassword)}>
                             <Col componentClass={ControlLabel} xs={3} sm={2}>
-                                Confirm password
+                                {translation.LOGIN.CONFIRM_PASSWORD}
                             </Col>
                             <Col xs={9} sm={10}>
                                 <FormControl
@@ -138,7 +141,7 @@ class Login extends React.Component<Props, State> {
                                     bsStyle='primary'
                                     disabled={!this.isFormValid()}
                                 >
-                                    Register
+                                    {translation.ACCOUNT.SIGN_UP}
                                 </Button>
                             </Col>
                         </FormGroup>
@@ -157,8 +160,8 @@ const style = {
 };
 
 export default connect(
-    () => ({}),
-    {
-        register
-    }
+    (state) => ({
+        translation: state.translation
+    }),
+    { register }
 )(Login)

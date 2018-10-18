@@ -5,7 +5,6 @@ export type TranslationType = {
     SECTIONS: {
         MESSAGES: string,
         PEOPLE: string,
-        WEATHER: string
     },
     COMMON: {
         YES: string,
@@ -16,6 +15,8 @@ export type TranslationType = {
         DELETE_CONFIRMATION: string,
     },
     LOGIN: {
+        PASSWORD: string,
+        CONFIRM_PASSWORD: string,
         INCORRECT_CREDENTIALS: string,
         OAUTH_ERROR: (service: any) => any,
     },
@@ -40,11 +41,6 @@ export type TranslationType = {
         WRITE_MESSAGE: string,
         LAST_SEEN: string,
         DELETE_CONFIRMATION: string
-    },
-    WEATHER: {
-        SEARCH_LOCATION: string,
-        NO_LOCATIONS: string,
-        NOT_AVAILABLE: string
     },
     ACCOUNT: {
         SIGN_UP: string,
@@ -97,7 +93,6 @@ const translation: TranslationType = {
     SECTIONS: {
         MESSAGES: 'Messages',
         PEOPLE: 'People',
-        WEATHER: 'Weather'
     },
     COMMON: {
         YES: 'Yes',
@@ -108,6 +103,8 @@ const translation: TranslationType = {
         NO_RESULTS: 'No results',
     },
     LOGIN: {
+        PASSWORD: 'Password',
+        CONFIRM_PASSWORD: 'Confirm password',
         INCORRECT_CREDENTIALS: 'Email or password is incorrect',
         OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
     },
@@ -132,11 +129,6 @@ const translation: TranslationType = {
         WRITE_MESSAGE: 'Write a message',
         LAST_SEEN: 'last seen',
         DELETE_CONFIRMATION: 'Are you sure you want to delete this user?'
-    },
-    WEATHER: {
-        SEARCH_LOCATION: 'Search for a location',
-        NO_LOCATIONS: 'There are no locations yet.',
-        NOT_AVAILABLE: 'not available'
     },
     ACCOUNT: {
         SIGN_UP: 'Sign up',

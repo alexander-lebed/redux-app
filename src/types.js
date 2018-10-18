@@ -40,15 +40,5 @@ export type Conversation = {
     timestamp: number | null
 }
 
-export type Location = {
-    id: string,
-    city: string,
-    region: string,
-    country: string,
-    isDeleted?: boolean,
-    temp?: number,
-    text?: string
-}
-
 export type Locale = 'en' | 'ru';
 export type Translation = TranslationType;

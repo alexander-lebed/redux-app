@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import { Map } from 'immutable';
 import { Row, Col, Table, Badge, Glyphicon, Button, Image } from 'react-bootstrap';
-import { MAIN_COLOR, onlineStyle } from '../../constants';
+import { MAIN_COLOR, ONLINE_STYLE } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
 import ConfirmationModal from '../common/ConfirmationModal';
@@ -96,14 +96,14 @@ class Conversations extends React.Component<Props, State> {
                                         {senders.length === 1 ?
                                             <Image
                                                 circle
-                                                style={sender.online ? onlineStyle : {}}
+                                                style={sender.online ? ONLINE_STYLE : {}}
                                                 className='profile-picture'
                                                 src={sender.pictureUrl ? sender.pictureUrl : '/default-profile.png'}
                                             />
                                             :
                                             <Image
                                                 circle
-                                                style={senders.some(e => e.online) ? onlineStyle : {}}
+                                                style={senders.some(e => e.online) ? ONLINE_STYLE : {}}
                                                 className='profile-picture'
                                                 src='/conversation-group.png'
                                             />

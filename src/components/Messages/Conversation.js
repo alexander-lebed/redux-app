@@ -10,7 +10,7 @@ import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Glyphicon, Im
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
-import { onlineStyle } from '../../constants';
+import { ONLINE_STYLE } from '../../constants';
 
 type Props = {
     user: User,
@@ -186,14 +186,13 @@ class Conversation extends React.Component<Props, State> {
     renderMessage = (message: Message) => {
         const {user, users, deleteMessage, translation} = this.props;
         const isMessageFromCurrentUser = message.from._id === user._id;
-        // $FlowFixMe
         const messageUser: User = users.toArray().find(e => e._id === message.from._id);
         return (
             <div>
                 <div className='profile-picture-wrapper'>
                     <Image
                         circle
-                        style={messageUser.online ? onlineStyle : {}}
+                        style={messageUser.online ? ONLINE_STYLE : {}}
                         className='profile-picture'
                         src={messageUser.pictureUrl ? messageUser.pictureUrl : '/default-profile.png'}
                     />

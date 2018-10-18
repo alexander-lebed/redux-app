@@ -16,7 +16,6 @@ import Conversations from './components/Messages/Conversations';
 import Conversation from './components/Messages/Conversation';
 import CreateConversation from './components/Messages/CreateConversation';
 import People from './components/People/People';
-import WeatherList from './components/Weather/WeatherList';
 import Profile from './components/Profile/Profile';
 import Alerts from './components/Alerts';
 import '../css/react-select.scss';
@@ -46,7 +45,6 @@ async function init() {
                                         <PrivateRoute path="/conversation" component={Conversation} />
                                         <PrivateRoute path="/create-conversation" component={CreateConversation} />
                                         <PrivateRoute exact path="/people" component={People} />
-                                        <PrivateRoute path="/weather" component={WeatherList} />
                                         <PrivateRoute path="/profile" component={Profile} />
                                         <Route exact path="/redirect" component={Spinner} />
                                     </Switch>

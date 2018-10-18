@@ -122,15 +122,6 @@ class NavigationBar extends React.Component<Props, State> {
                                 </div>
                             </NavItem>
                         </LinkContainer>
-                        {/*
-                        <LinkContainer key='weather' to='/weather' onClick={() => this.expand(false)}>
-                            <NavItem eventKey={3} >
-                                <div className='tab-text'>
-                                    {translation.SECTIONS.WEATHER}
-                                </div>
-                            </NavItem>
-                        </LinkContainer>
-                        */}
                         <LinkContainer key='theme' to='#' >
                             <NavItem eventKey={1} className='hidden-sm hidden-md hidden-lg theme-menu' style={{border: 'none', height: 50}}>
                                 <ThemeChooser />

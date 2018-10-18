@@ -11,7 +11,7 @@ module.exports = {
         path: path.join(__dirname, 'dist'),
         filename: "[name].js"
     },
-    devtool: 'source-map',
+    devtool: 'eval-source-map',
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {

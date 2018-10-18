@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userApi = require('./api/service/users');
 const conversationApi = require('./api/service/conversations');
-const places = require('./api/service/places');
 
 const app           = express();
 const router        = express.Router();
@@ -46,7 +45,6 @@ router.get('/', (req, res) => {
 
 router.use('/users', userApi.router);
 router.use('/conversations', conversationApi.router);
-router.use('/places', places);
 
 // use our router configuration when we call /api
 app.use('/api', router);

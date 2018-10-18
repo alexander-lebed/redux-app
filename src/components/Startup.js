@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { initApp } from "../redux/reducers/startup";
 
 type Props = {
-    loading: boolean,
     children?: Node,
     initApp: Function
 }
@@ -28,8 +27,6 @@ class Startup extends React.Component<Props, void> {
 }
 
 export default connect(
-    (state) => ({
-        loading: state.startup.loading
-    }),
+    () => ({}),
     { initApp }
 )(Startup);

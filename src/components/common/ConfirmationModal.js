@@ -1,17 +1,21 @@
+// @flow
 import React from 'react'
 import { connect } from 'react-redux';
-// import type { Node } from 'react';
 import { Modal, ButtonToolbar, Button, Glyphicon } from 'react-bootstrap';
+import type { Node } from 'react';
+import type { Translation } from '../../types';
 
-// type Props = {
-//   title: Node | string,
-//   body: Node | string,
-//   onConfirm: Function,
-//   onCancel: Function,
-//   inProgress?: boolean
-// }
+type Props = {
+    title: Node | string,
+    body: Node | string,
+    inProgress?: boolean,
+    translation: Translation,
+    onConfirm: Function,
+    onCancel: Function,
+    inProgress?: boolean
+}
 
-class ConfirmationModal extends React.Component<void, void> {
+class ConfirmationModal extends React.Component<Props, void> {
     render() {
         const Spinner = (
             <div className='text-center'>

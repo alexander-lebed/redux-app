@@ -7,7 +7,7 @@ import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, 
 import 'font-awesome/css/font-awesome.min.css';
 import { editUser, deleteUser } from '../../redux/reducers/users';
 import encryptPassword from '../../helpers/encryptPassword';
-import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/input-validation';
+import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/inputValidation';
 import ConfirmationModal from '../common/ConfirmationModal';
 import type { User, Translation } from "../../types";
 

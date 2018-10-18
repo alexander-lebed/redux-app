@@ -32,7 +32,6 @@ module.exports = {
                         presets: ['env', 'react', 'flow']
                     }
                 }
-
             },
             {
                 test: /\.js$/,
