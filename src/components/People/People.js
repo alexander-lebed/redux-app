@@ -154,13 +154,13 @@ export class People extends React.Component<Props, State> {
                         </Table>
                     }
                     {this.state.clickedUser !== null &&
-                        <Modal show={this.state.clickedUser !== null} onHide={() => this.showUserProfile(null)}>
+                        <Modal show={this.state.clickedUser !== null} className='profile-modal' onHide={() => this.showUserProfile(null)}>
                             <Modal.Header closeButton>
                                 <Modal.Title>{this.state.clickedUser.username}</Modal.Title>
                             </Modal.Header>
                             <Modal.Body style={{textAlign: 'center'}}>
                                 <Image
-                                    style={{maxHeight: 500, maxWidth: 500}}
+                                    className='profile-modal-picture'
                                     src={this.state.clickedUser.pictureUrl ? this.state.clickedUser.pictureUrl : '/default-profile.png'}
                                 />
                             </Modal.Body>

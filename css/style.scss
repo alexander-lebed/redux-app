@@ -148,6 +148,12 @@ for Mobile device
   .emoji-picker {
     padding-left: 15px !important;
   }
+  .profile-modal > .modal-dialog {
+    max-width: 90vw !important;
+  }
+  .profile-modal-picture {
+    max-width: 80vw !important;
+  }
 }
 
 
@@ -190,6 +196,16 @@ li.lang-text a {
 .profile-picture {
   max-height: 50px;
   max-width: 50px;
+}
+
+.profile-modal > .modal-dialog {
+  max-height: 500px;
+  max-width: 500px;
+}
+
+.profile-modal-picture {
+  max-height: 450px;
+  max-width: 450px;
 }
 
 .account-menu {
