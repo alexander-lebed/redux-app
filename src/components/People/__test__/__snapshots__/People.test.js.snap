@@ -65,6 +65,12 @@ exports[`<People/> should match snapshot 1`] = `
               >
                 <div
                   className="profile-picture-wrapper"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                 >
                   <img
                     className="profile-picture img-circle"
@@ -126,6 +132,12 @@ exports[`<People/> should match snapshot 1`] = `
               >
                 <div
                   className="profile-picture-wrapper"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                 >
                   <img
                     className="profile-picture img-circle"
@@ -187,6 +199,12 @@ exports[`<People/> should match snapshot 1`] = `
               >
                 <div
                   className="profile-picture-wrapper"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                 >
                   <img
                     className="profile-picture img-circle"

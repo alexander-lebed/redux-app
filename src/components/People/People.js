@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
+import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
 import { ONLINE_STYLE } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { deleteUser } from '../../redux/reducers/users';
@@ -20,7 +20,8 @@ type Props = {
 
 type State = {
     searchText: string,
-    deleteUserId: string
+    deleteUserId: string,
+    clickedUser: User | null
 }
 
 export class People extends React.Component<Props, State> {
@@ -31,7 +32,8 @@ export class People extends React.Component<Props, State> {
         super(props);
         this.state = {
             searchText: '',
-            deleteUserId: ''
+            deleteUserId: '',
+            clickedUser: null
         }
     }
 
@@ -58,6 +60,13 @@ export class People extends React.Component<Props, State> {
     };
 
     isAdmin = () => this.props.user.email === 'alexanderlebed999@gmail.com';
+
+    showUserProfile = (user: User | null) => {
+        if (user !== null) {
+            console.log(`show ${user.username} modal`);
+        }
+        this.setState({clickedUser: user});
+    };
 
     render() {
         let {users, translation} = this.props;
@@ -96,7 +105,11 @@ export class People extends React.Component<Props, State> {
                                             <td>
                                                 <Row>
                                                     <Col xs={12} sm={6} style={{paddingTop: 5}}>
-                                                        <div className='profile-picture-wrapper'>
+                                                        <div
+                                                            className='profile-picture-wrapper'
+                                                            style={{cursor: 'pointer'}}
+                                                            onClick={() => this.showUserProfile(user)}
+                                                        >
                                                             <Image
                                                                 circle
                                                                 style={imageStyle}
@@ -139,6 +152,19 @@ export class People extends React.Component<Props, State> {
                                 })}
                             </tbody>
                         </Table>
+                    }
+                    {this.state.clickedUser !== null &&
+                        <Modal show={this.state.clickedUser !== null} onHide={() => this.showUserProfile(null)}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>{this.state.clickedUser.username}</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body style={{textAlign: 'center'}}>
+                                <Image
+                                    style={{maxHeight: 500, maxWidth: 500}}
+                                    src={this.state.clickedUser.pictureUrl ? this.state.clickedUser.pictureUrl : '/default-profile.png'}
+                                />
+                            </Modal.Body>
+                        </Modal>
                     }
                     {this.state.deleteUserId &&
                         <ConfirmationModal
