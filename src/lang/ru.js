@@ -14,6 +14,7 @@ const translation: Translation = {
         DELETE: 'Удалить',
         DELETE_CONFIRMATION: 'Подтверждение об удалении',
         NO_RESULTS: 'Нет результатов',
+        LOADING: 'Загрузка...'
     },
     LOGIN: {
         PASSWORD: 'Пароль',

@@ -9,12 +9,14 @@ import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
 import ConfirmationModal from '../common/ConfirmationModal';
 import type { User, Conversation as ConversationType, Translation } from '../../types';
+import Spinner from "../common/Spinner";
 
 type Props = {
     history: Object,
     user: User,
     users: Map<string, User>,
     conversations: Array<ConversationType>,
+    loadingAllConversations: boolean,
     translation: Translation,
     getConversationsByUser: Function,
     deleteConversation: Function
@@ -63,10 +65,17 @@ class Conversations extends React.Component<Props, State> {
     };
 
     render() {
-        const {user, users, conversations, translation} = this.props;
+        const {user, users, conversations, loadingAllConversations, translation} = this.props;
         const {CONVERSATIONS} = translation;
         let content = [];
-        if (conversations.length === 0) {
+
+        if (loadingAllConversations) {
+            content = (
+                <div style={{paddingTop: '50vh'}}>
+                    <Spinner />
+                </div>
+            )
+        } else if (conversations.length === 0) {
             content = (
                 <div className='text-center'>
                     {CONVERSATIONS.NO_CONVERSATIONS}
@@ -168,7 +177,7 @@ class Conversations extends React.Component<Props, State> {
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
                     <div style={{display: 'table', width: '100%', marginBottom: 15}}>
-                        <h4 style={{display: 'table-cell',  width: '100%', verticalAlign: 'middle'}} className='text-center'>
+                        <h4 style={{display: 'table-cell',  width: '100%', verticalAlign: 'middle', paddingTop: 6, paddingBottom: 6}} className='text-center'>
                             {CONVERSATIONS.CONVERSATIONS}
                         </h4>
                         <Button
@@ -238,6 +247,7 @@ export default connect(
         user: state.authentication.user,
         users: state.users.users,
         conversations: state.conversations.conversations,
+        loadingAllConversations: state.conversations.loadingAllConversations,
         translation: state.translation
     }),
     { getConversationsByUser, deleteConversation }

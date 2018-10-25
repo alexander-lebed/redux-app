@@ -8,6 +8,7 @@ import { Map } from 'immutable';
 import queryString from 'query-string';
 import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
+import Spinner from '../common/Spinner';
 import PeopleSelector from '../common/PeopleSelector';
 import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import { success } from '../../redux/reducers/alerts';
@@ -19,6 +20,8 @@ type Props = {
     users: Map<string, User>,
     conversation: ConversationType,
     conversations: Array<ConversationType>,
+    loadingAllConversations: boolean,
+    loadingConversation: boolean,
     translation: Translation,
     location: Object,
     getConversation: Function,
@@ -140,12 +143,19 @@ class Conversation extends React.Component<Props, State> {
 
     render() {
         const {showEmoji} = this.state;
-        const {conversation, conversations, translation} = this.props;
+        const {conversation, conversations, loadingAllConversations, loadingConversation, translation} = this.props;
 
         const conversationsExist = conversations.some(e => e._id === conversation._id);
+        const isLoading = loadingAllConversations || loadingConversation;
 
         let body = null;
-        if (conversationsExist) {
+        if (isLoading) {
+            body = (
+                <div style={{paddingTop: '50vh'}}>
+                    <Spinner />
+                </div>
+            )
+        } else if (conversationsExist) {
             const messageStyle = showEmoji ? {paddingRight: 0} : {};
             const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
             body = (
@@ -174,9 +184,10 @@ class Conversation extends React.Component<Props, State> {
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
                     <div style={{display: 'table', width: '100%', marginBottom: 15}}>
-                        <h4 style={{display: 'table-cell',  width: '100%', verticalAlign: 'middle'}} className='text-center'>
+                        <h4 style={{display: 'table-cell',  width: '100%', verticalAlign: 'middle', paddingTop: 6, paddingBottom: 6}} className='text-center'>
                             {translation.MESSAGES.MESSAGES}
                         </h4>
+                        {conversationsExist &&
                         <Button
                             id='create-conversation'
                             title={translation.MESSAGES.ADD_PEOPLE}
@@ -186,6 +197,7 @@ class Conversation extends React.Component<Props, State> {
                         >
                             <i className="fa fa-user-plus fa-lg" />
                         </Button>
+                        }
                     </div>
 
                     {body}
@@ -378,6 +390,8 @@ export default connect(
         users: state.users.users,
         conversation: state.conversations.conversation,
         conversations: state.conversations.conversations,
+        loadingAllConversations: state.conversations.loadingAllConversations,
+        loadingConversation: state.conversations.loadingConversation,
         translation: state.translation
     }),
     { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup, success }

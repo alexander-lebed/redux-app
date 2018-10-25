@@ -13,6 +13,7 @@ export type TranslationType = {
         DELETE: string,
         NO_RESULTS: string,
         DELETE_CONFIRMATION: string,
+        LOADING: string,
     },
     LOGIN: {
         PASSWORD: string,
@@ -104,6 +105,7 @@ const translation: TranslationType = {
         DELETE: 'Delete',
         DELETE_CONFIRMATION: 'Delete confirmation',
         NO_RESULTS: 'No results',
+        LOADING: 'Loading...'
     },
     LOGIN: {
         PASSWORD: 'Password',

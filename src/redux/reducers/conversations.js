@@ -38,9 +38,31 @@ const conversation = (state = {}, action: Action) => {
     }
 };
 
+const loadingAllConversations = (state = true, action: Action) => {
+    switch (action.type) {
+        case actions.SET_CONVERSATIONS: {
+            return false;
+        }
+        default:
+            return state;
+    }
+};
+
+const loadingConversation = (state = true, action: Action) => {
+    switch (action.type) {
+        case actions.SET_CONVERSATION: {
+            return false;
+        }
+        default:
+            return state;
+    }
+};
+
 export default combineReducers({
     conversations,
-    conversation
+    conversation,
+    loadingAllConversations,
+    loadingConversation
 });
 
 
