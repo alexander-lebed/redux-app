@@ -6,9 +6,11 @@ import Linkify from 'react-linkify';
 import _ from 'lodash';
 import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Glyphicon, Image } from 'react-bootstrap';
+import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
+import PeopleSelector from '../common/PeopleSelector';
 import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
+import { success } from '../../redux/reducers/alerts';
 import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
 import { ONLINE_STYLE } from '../../constants';
 
@@ -24,10 +26,12 @@ type Props = {
     markAsRead: Function,
     deleteMessage: Function,
     saveConversation: Function,
-    conversationCleanup: Function
+    conversationCleanup: Function,
+    success: Function
 }
 
 type State = {
+    showModal: boolean,
     messageText: string,
     showEmoji: boolean
 };
@@ -41,6 +45,7 @@ class Conversation extends React.Component<Props, State> {
     constructor(params: Props) {
         super(params);
         this.state = {
+            showModal: false,
             messageText: '',
             showEmoji: false
         };
@@ -83,14 +88,14 @@ class Conversation extends React.Component<Props, State> {
         if (convId) {
             this.props.getConversation(convId);
         } else if (userIds) {
-            let participants = [];
+            let members = [];
             if (Array.isArray(userIds)) {
-                participants = userIds.concat(this.props.user._id);
+                members = userIds.concat(this.props.user._id);
             } else {
                 const isConvWithOneself = this.props.user._id === userIds;
-                participants = isConvWithOneself ? [userIds] : [this.props.user._id, userIds];
+                members = isConvWithOneself ? [userIds] : [this.props.user._id, userIds];
             }
-            this.props.getConversationWithUsers(participants);
+            this.props.getConversationWithUsers(members);
         }
     };
 
@@ -116,6 +121,21 @@ class Conversation extends React.Component<Props, State> {
                 setTimeout(() => this.scrollConversationToBottom(), 50);
             }
         }
+    };
+
+    showAddPeopleModal = (show: boolean) => {
+        this.setState({
+            showModal: show
+        })
+    };
+
+    addPeopleToConversation = (people: Array<User>) => {
+        const {conversation, saveConversation, success, translation} = this.props;
+        const users = people.map(e => ({_id: e._id, username: e.username}));
+        conversation.users = conversation.users.concat(users);
+        saveConversation(conversation);
+        this.showAddPeopleModal(false);
+        success(translation.MESSAGES.MEMBERS_ADDED(users.map(e => e.username)));
     };
 
     render() {
@@ -153,10 +173,46 @@ class Conversation extends React.Component<Props, State> {
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
-                    <h4 className='text-center' style={{marginBottom: 20}}>
-                        {translation.MESSAGES.MESSAGES}
-                    </h4>
+                    <div style={{display: 'table', width: '100%', marginBottom: 15}}>
+                        <h4 style={{display: 'table-cell',  width: '100%', verticalAlign: 'middle'}} className='text-center'>
+                            {translation.MESSAGES.MESSAGES}
+                        </h4>
+                        <Button
+                            id='create-conversation'
+                            title={translation.MESSAGES.ADD_PEOPLE}
+                            style={{border: 'none', display: 'table-cell', verticalAlign: 'middle'}}
+                            className='pull-right btn-circle-icon'
+                            onClick={() => this.showAddPeopleModal(true)}
+                        >
+                            <i className="fa fa-user-plus fa-lg" />
+                        </Button>
+                    </div>
+
                     {body}
+
+                    {conversation.users &&
+                    <Modal
+                        bsSize='large'
+                        show={this.state.showModal}
+                        className='add-people-modal'
+                        onHide={() => this.showAddPeopleModal(false)}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>{translation.MESSAGES.ADD_PEOPLE}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <PeopleSelector
+                                excludeUserIds={conversation.users.map(e => e._id)}
+                                submitButtonText={translation.MESSAGES.ADD_PEOPLE}
+                                onSubmit={(people) => this.addPeopleToConversation(people)}
+                                onCancel={() => this.showAddPeopleModal(false)}
+                            />
+                        </Modal.Body>
+                        <Modal.Footer style={{textAlign: 'center', color: 'red'}}>
+                            {translation.MESSAGES.NEW_MEMBERS_NOTE}
+                        </Modal.Footer>
+                    </Modal>
+                    }
                 </Col>
             </Row>
         )
@@ -324,5 +380,5 @@ export default connect(
         conversations: state.conversations.conversations,
         translation: state.translation
     }),
-    { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup }
+    { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup, success }
 )(Conversation);

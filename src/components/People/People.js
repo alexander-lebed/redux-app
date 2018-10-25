@@ -62,9 +62,6 @@ export class People extends React.Component<Props, State> {
     isAdmin = () => this.props.user.email === 'alexanderlebed999@gmail.com';
 
     showUserProfile = (user: User | null) => {
-        if (user !== null) {
-            console.log(`show ${user.username} modal`);
-        }
         this.setState({clickedUser: user});
     };
 
@@ -153,8 +150,12 @@ export class People extends React.Component<Props, State> {
                             </tbody>
                         </Table>
                     }
-                    {this.state.clickedUser !== null &&
-                        <Modal show={this.state.clickedUser !== null} className='profile-modal' onHide={() => this.showUserProfile(null)}>
+                    {this.state.clickedUser &&
+                        <Modal
+                            show={this.state.clickedUser !== null}
+                            className='profile-modal'
+                            onHide={() => this.showUserProfile(null)}
+                        >
                             <Modal.Header closeButton>
                                 <Modal.Title>{this.state.clickedUser.username}</Modal.Title>
                             </Modal.Header>

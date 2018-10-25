@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import hello from 'hellojs';
 import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
-import 'font-awesome/css/font-awesome.min.css';
 import { editUser, deleteUser } from '../../redux/reducers/users';
 import encryptPassword from '../../helpers/encryptPassword';
 import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/inputValidation';

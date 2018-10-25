@@ -25,17 +25,20 @@ const translation: Translation = {
         CONVERSATIONS: 'Сообщения',
         NO_CONVERSATIONS: 'У Вас пока нет сообщений',
         CREATE: 'Создать переписку',
-        SEARCH_PARTICIPANTS: 'Поиск участников',
+        SEARCH_PEOPLE: 'Поиск участников',
         DELETE: 'Удалить переписку',
         DELETE_CONFIRMATION: 'Это удалит переписку для всех её участников. Продолжить?',
         CONVERSATION_REMOVED: 'Переписка удалена'
     },
     MESSAGES: {
         MESSAGES: 'Переписка',
+        ADD_PEOPLE: 'Добавить участника',
         WRITE_MESSAGE: 'Напишите сообщение...',
         WRITE_MESSAGE_INFO: <span>Зажмите <strong>Shift+Enter</strong> для перехода на след. линию, <strong>Enter</strong> для отправки сообщения</span>,
         PICK_EMOJI: 'выберите смайлик…',
-        DELETE: 'Удалить сообщение'
+        DELETE: 'Удалить сообщение',
+        NEW_MEMBERS_NOTE: 'Новые участники будут видеть всю историю сообщений',
+        MEMBERS_ADDED: (usernames: Array<string>) => <span>{usernames.join(', ')} {usernames.length === 1 ? ' был(а) добавлен(а)' : ' были добавлены'}</span>
     },
     PEOPLE: {
         SEARCH_PEOPLE: 'Поиск людей',

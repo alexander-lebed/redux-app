@@ -173,13 +173,12 @@ class Conversations extends React.Component<Props, State> {
                         </h4>
                         <Button
                             id='create-conversation'
-                            bsSize='small'
                             title={CONVERSATIONS.CREATE}
                             style={{border: 'none', display: 'table-cell', verticalAlign: 'middle'}}
-                            className='pull-right btn-circle-glyphicon'
+                            className='pull-right btn-circle-icon'
                             onClick={() => this.createConversation()}
                         >
-                            <Glyphicon glyph='plus' />
+                            <i className="fa fa-comments fa-lg" />
                         </Button>
                     </div>
 

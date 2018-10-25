@@ -16,7 +16,7 @@ html, body, input, button {
   border-radius: 50% !important;
 }
 
-.btn-circle-glyphicon {
+.btn-circle-icon {
   width: 32px !important;
   min-width: 32px !important;
   height: 32px !important;
@@ -43,11 +43,11 @@ textarea:focus {
 }
 
 .create-conv-header > .search {
-  grid-column: span 5;
+  grid-column: span 6;
 }
 
 .create-conv-header > .buttons {
-  grid-column: span 7;
+  grid-column: span 6;
 }
 
 ::-webkit-scrollbar-track {
@@ -72,7 +72,7 @@ for Mobile device
     min-width: 120px !important;
     height: 40px !important;
   }
-  .btn-circle-glyphicon {
+  .btn-circle-icon {
     min-width: 40px !important;
     height: 40px !important;
     border-radius: 20px !important;
@@ -148,7 +148,7 @@ for Mobile device
   .emoji-picker {
     padding-left: 15px !important;
   }
-  .profile-modal > .modal-dialog {
+  .profile-modal .add-people-modal > .modal-dialog {
     max-width: 90vw !important;
   }
   .profile-modal-picture {
@@ -198,7 +198,12 @@ li.lang-text a {
   max-width: 50px;
 }
 
+.add-people-modal > .modal-body {
+  min-height: 400px;
+}
+
 .profile-modal > .modal-dialog {
+  margin-top: 50px;
   max-height: 500px;
   max-width: 500px;
 }

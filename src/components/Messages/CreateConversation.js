@@ -1,132 +1,33 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
-import { ONLINE_STYLE } from '../../constants';
+import PeopleSelector from '../common/PeopleSelector';
 import type { User, Translation } from '../../types';
 
 type Props = {
     history: Object;
     user: User,
-    users: Map<string, User>,
     translation: Translation,
 }
 
-type State = {
-    searchText: string,
-    participants: Array<string>
-}
+export class CreateConversation extends React.Component<Props, void> {
 
-export class CreateConversation extends React.Component<Props, State> {
-    state: State;
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            searchText: '',
-            participants: []
-        }
-    }
-
-    toggleParticipant = (userId: string) => {
-        const {participants} = this.state;
-        if (participants.includes(userId)) {
-            this.setState({
-                participants: participants.filter(id => id !== userId)
-            })
-        } else {
-            this.setState({
-                participants: participants.concat(userId)
-            })
-        }
+    createConversation = (members: Array<User>) => {
+        const url = `/conversation?${queryString.stringify({userIds: members.map(e => e._id)})}`;
+        this.props.history.push(url);
     };
 
     render() {
-        const {participants, searchText} = this.state;
-        let {users, user, translation, history} = this.props;
+        let {user, translation, history} = this.props;
         const {CONVERSATIONS} = translation;
-
-        users = users.toArray();
-        users = users.filter(e => e._id !== user._id);
-        if (searchText) {
-            users = users.filter(e => e.username.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
-        }
         return (
-            <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
-                    <div className='create-conv-header'>
-                        <div className='search'>
-                            <FormGroup>
-                                <InputGroup>
-                                    <FormControl
-                                        type='text'
-                                        placeholder={CONVERSATIONS.SEARCH_PARTICIPANTS}
-                                        value={searchText}
-                                        onChange={e => this.setState({searchText: e.target.value})}
-                                    />
-                                    <InputGroup.Addon>
-                                        <Glyphicon glyph='search' />
-                                    </InputGroup.Addon>
-                                </InputGroup>
-                            </FormGroup>
-                        </div>
-                        <div className='buttons'>
-                            <ButtonToolbar className='pull-right'>
-                                <Button onClick={() => history.push('/conversations')}>
-                                    {translation.COMMON.CANCEL}
-                                </Button>
-                                <Button
-                                    bsStyle='primary'
-                                    disabled={participants.length === 0}
-                                    onClick={() => history.push(`/conversation?${queryString.stringify({userIds: participants})}`)}
-                                >
-                                    {CONVERSATIONS.CREATE}
-                                </Button>
-                            </ButtonToolbar>
-                        </div>
-                    </div>
-                    {users.length === 0 ? <div className='text-center'>{translation.COMMON.NO_RESULTS}</div> :
-                        <Table hover>
-                            <tbody>
-                                {users.map(user => {
-                                    const selected = participants.includes(user._id);
-                                    return (
-                                        <tr key={user._id} id={user._id}>
-                                            <td className={selected && 'active'} onClick={() => this.toggleParticipant(user._id)}>
-                                                <Row style={{marginRight: 0}}>
-                                                    <Col xs={6}>
-                                                        <div className='profile-picture-wrapper'>
-                                                            <Image
-                                                                circle
-                                                                style={user.online ? ONLINE_STYLE : {}}
-                                                                className='profile-picture'
-                                                                src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
-                                                            />
-                                                        </div>
-                                                        <div style={{fontSize: 13, fontWeight: 700}}>
-                                                            {user.username}
-                                                        </div>
-                                                    </Col>
-                                                    <Col xs={6}>
-                                                        <div className="material-switch pull-right" style={{marginTop: 12}}>
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={selected}
-                                                            />
-                                                            <label className="label-success" />
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </Table>
-                    }
-                </Col>
-            </Row>
+            <PeopleSelector
+                excludeUserIds={[user._id]}
+                submitButtonText={CONVERSATIONS.CREATE}
+                onSubmit={(people) => this.createConversation(people)}
+                onCancel={() => history.push('/conversations')}
+            />
         )
     }
 }
@@ -134,7 +35,6 @@ export class CreateConversation extends React.Component<Props, State> {
 export default connect(
     state => ({
         user: state.authentication.user,
-        users: state.users.users,
         translation: state.translation
     }),
     { }

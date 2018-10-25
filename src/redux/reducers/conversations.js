@@ -156,10 +156,11 @@ export function deleteMessage(messageId: string) {
 }
 
 export function deleteConversation(convId: string) {
-    return async (dispatch: Dispatch) => {
+    return async (dispatch: Dispatch, getState: Function) => {
         try {
             await $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`);
-            dispatch(Alert.success('Conversation has been deleted.'));
+            const successMessage = getState().translation.CONVERSATIONS.CONVERSATION_REMOVED;
+            dispatch(Alert.success(successMessage));
         } catch (err) {
             const error = (
                 <div>

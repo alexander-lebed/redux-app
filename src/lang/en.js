@@ -24,17 +24,20 @@ export type TranslationType = {
         CONVERSATIONS: string,
         NO_CONVERSATIONS: string,
         CREATE: string,
-        SEARCH_PARTICIPANTS: string,
+        SEARCH_PEOPLE: string,
         DELETE: string,
         DELETE_CONFIRMATION: string,
         CONVERSATION_REMOVED: string
     },
     MESSAGES: {
         MESSAGES: string,
+        ADD_PEOPLE: string,
         WRITE_MESSAGE: string,
         WRITE_MESSAGE_INFO: any,
         PICK_EMOJI: string,
-        DELETE: string
+        DELETE: string,
+        NEW_MEMBERS_NOTE: string,
+        MEMBERS_ADDED: string
     },
     PEOPLE: {
         SEARCH_PEOPLE: string,
@@ -112,17 +115,20 @@ const translation: TranslationType = {
         CONVERSATIONS: 'Conversations',
         NO_CONVERSATIONS: 'You don\'t have any conversations yet',
         CREATE: 'Create conversation',
-        SEARCH_PARTICIPANTS: 'Search participants',
+        SEARCH_PEOPLE: 'Search people',
         DELETE: 'Remove conversation',
         DELETE_CONFIRMATION: 'This will delete conversation for all participants. Are you sure?',
         CONVERSATION_REMOVED: 'Conversation has been removed'
     },
     MESSAGES: {
         MESSAGES: 'Messages',
+        ADD_PEOPLE: 'Add people',
         WRITE_MESSAGE: 'Write a message...',
         WRITE_MESSAGE_INFO: <span>Press <strong>Shift+Enter</strong> for next line, <strong>Enter</strong> to send message</span>,
         PICK_EMOJI: 'pick your emoji…',
-        DELETE: 'Remove message'
+        DELETE: 'Remove message',
+        NEW_MEMBERS_NOTE: 'Note: new members will see the whole message history',
+        MEMBERS_ADDED: (usernames: Array<string>) => <span>{usernames.join(', ')} {usernames.length === 1 ? ' has' : ' have'} been added</span>
     },
     PEOPLE: {
         SEARCH_PEOPLE: 'Search people',
