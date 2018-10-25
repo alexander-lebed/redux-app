@@ -128,7 +128,7 @@ class NavigationBar extends React.Component<Props, State> {
                             </NavItem>
                         </LinkContainer>
                     </Nav>
-                    <Nav pullRight style={{paddingRight: 80}}>
+                    <Nav pullRight className='menu-right'>
 
                         {accountDropdown}
 

@@ -97,6 +97,9 @@ for Mobile device
     padding-top: 5px !important;
     padding-bottom: 5px !important;
   }
+  .menu-right {
+    padding-right: 0 !important;
+  }
   .lang-text {
     width: 50% !important;
     float: left;
@@ -176,6 +179,10 @@ for Desktop
 li.lang-text a {
   border: none !important;
   background: transparent !important;
+}
+
+.menu-right {
+  padding-right: 80px;
 }
 
 .new-messages-bg {
