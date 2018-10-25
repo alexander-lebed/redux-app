@@ -111,14 +111,14 @@ class NavigationBar extends React.Component<Props, State> {
                         <LinkContainer key='conversations' to='/conversations' style={messageTabStyle} onClick={() => this.expand(false)}>
                             <NavItem eventKey={1}>
                                 <div className='tab-text'>
-                                    {translation.SECTIONS.MESSAGES} {newMessages}
+                                    {translation.NAVIGATION.MESSAGES} {newMessages}
                                 </div>
                             </NavItem>
                         </LinkContainer>
                         <LinkContainer key='people' to='/people' onClick={() => this.expand(false)}>
                             <NavItem eventKey={2}>
                                 <div className='tab-text'>
-                                    {translation.SECTIONS.PEOPLE}
+                                    {translation.NAVIGATION.PEOPLE}
                                 </div>
                             </NavItem>
                         </LinkContainer>
@@ -147,7 +147,12 @@ class NavigationBar extends React.Component<Props, State> {
                         <NavItem eventKey={3} className='lang-text' style={{border: 'none'}} onSelect={() => {translate('ru')}}>
                             {locale === 'ru' ? <u>РУС</u> : 'РУС'}
                         </NavItem>
-                        <NavItem eventKey={4} className='hidden-xs theme-menu' style={{border: 'none', height: 50}}>
+                        <NavItem
+                            eventKey={4}
+                            title={translation.NAVIGATION.CHOOSE_THEME}
+                            className='hidden-xs theme-menu'
+                            style={{border: 'none', height: 50}}
+                        >
                             <ThemeChooser />
                         </NavItem>
                     </Nav>

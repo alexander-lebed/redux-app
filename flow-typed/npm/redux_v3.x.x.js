@@ -20,7 +20,7 @@ declare module 'redux' {
   };
 
   declare export type Store<S, A, D = Dispatch<A>> = {
-    // rewrite MiddlewareAPI members in order to get nicer error messages (intersections produce long messages)
+    // rewrite MiddlewareAPI members in order to get nicer error messages (interNAVIGATION produce long messages)
     dispatch: D;
     getState(): S;
     subscribe(listener: () => void): () => void;

@@ -2,11 +2,13 @@
 import React from 'react';
 
 export type TranslationType = {
-    SECTIONS: {
+    NAVIGATION: {
         MESSAGES: string,
         PEOPLE: string,
+        CHOOSE_THEME: string
     },
     COMMON: {
+        SUBMIT: string,
         YES: string,
         CANCEL: string,
         SAVE: string,
@@ -28,17 +30,18 @@ export type TranslationType = {
         SEARCH_PEOPLE: string,
         DELETE: string,
         DELETE_CONFIRMATION: string,
-        CONVERSATION_REMOVED: string
+        CONVERSATION_NOT_FOUND: string
     },
     MESSAGES: {
         MESSAGES: string,
-        ADD_PEOPLE: string,
+        MANAGE_MEMBERS: string,
         WRITE_MESSAGE: string,
         WRITE_MESSAGE_INFO: any,
         PICK_EMOJI: string,
         DELETE: string,
         NEW_MEMBERS_NOTE: string,
-        MEMBERS_ADDED: string
+        MEMBERS_EDITED: string,
+        YOU_NOT_MEMBER: string
     },
     PEOPLE: {
         SEARCH_PEOPLE: string,
@@ -94,11 +97,13 @@ export type TranslationType = {
 }
 
 const translation: TranslationType = {
-    SECTIONS: {
+    NAVIGATION: {
         MESSAGES: 'Messages',
         PEOPLE: 'People',
+        CHOOSE_THEME: 'Choose theme'
     },
     COMMON: {
+        SUBMIT: 'Submit',
         YES: 'Yes',
         CANCEL: 'Cancel',
         SAVE: 'Save',
@@ -120,17 +125,18 @@ const translation: TranslationType = {
         SEARCH_PEOPLE: 'Search people',
         DELETE: 'Remove conversation',
         DELETE_CONFIRMATION: 'This will delete conversation for all participants. Are you sure?',
-        CONVERSATION_REMOVED: 'Conversation has been removed'
+        CONVERSATION_NOT_FOUND: 'Conversation is not found'
     },
     MESSAGES: {
         MESSAGES: 'Messages',
-        ADD_PEOPLE: 'Add people',
+        MANAGE_MEMBERS: 'Manage members',
         WRITE_MESSAGE: 'Write a message...',
         WRITE_MESSAGE_INFO: <span>Press <strong>Shift+Enter</strong> for next line, <strong>Enter</strong> to send message</span>,
         PICK_EMOJI: 'pick your emoji…',
         DELETE: 'Remove message',
         NEW_MEMBERS_NOTE: 'Note: new members will see the whole message history',
-        MEMBERS_ADDED: (usernames: Array<string>) => <span>{usernames.join(', ')} {usernames.length === 1 ? ' has' : ' have'} been added</span>
+        MEMBERS_EDITED: (usernames: Array<string>) => <span>In this conversation {usernames.join(', ')}</span>,
+        YOU_NOT_MEMBER: 'You have been removed from this conversation'
     },
     PEOPLE: {
         SEARCH_PEOPLE: 'Search people',

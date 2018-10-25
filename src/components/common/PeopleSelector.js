@@ -1,14 +1,16 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { Map } from 'immutable';
 import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
 import { ONLINE_STYLE } from '../../constants';
 import type { User, Translation } from '../../types';
 
 type Props = {
-    excludeUserIds: Array<string>,
-    submitButtonText: string,
+    excludedUserIds?: Array<string>,
+    selectedUserIds?: Array<string>,
+    submitButtonText?: string,
     onSubmit: (people: Array<User>) => void,
     onCancel: Function,
     // redux props
@@ -23,11 +25,22 @@ type State = {
 
 export class PeopleSelector extends React.Component<Props, State> {
     state: State;
+    static defaultProps = {
+        excludedUserIds: [],
+        selectedUserIds: [],
+        submitButtonText: ''
+    };
     constructor(props: Props) {
         super(props);
+        const {selectedUserIds, users} = props;
+
+        let selectedUsers = [];
+        if (selectedUserIds.length > 0) {
+            selectedUsers = users.toArray().filter(e => selectedUserIds.includes(e._id));
+        }
         this.state = {
             searchText: '',
-            people: []
+            people: selectedUsers
         }
     }
 
@@ -46,14 +59,15 @@ export class PeopleSelector extends React.Component<Props, State> {
 
     render() {
         const {people, searchText} = this.state;
-        let {users, excludeUserIds, submitButtonText, onSubmit, onCancel, translation} = this.props;
+        let {users, excludedUserIds, submitButtonText, onSubmit, onCancel, translation} = this.props;
         const {CONVERSATIONS} = translation;
 
         users = users.toArray();
-        users = users.filter(e => !excludeUserIds.includes(e._id));
+        users = users.filter(e => !excludedUserIds.includes(e._id));
         if (searchText) {
             users = users.filter(e => e.username.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
         }
+        users = _.orderBy(users, ['username']);
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
@@ -83,7 +97,7 @@ export class PeopleSelector extends React.Component<Props, State> {
                                     disabled={people.length === 0}
                                     onClick={() => onSubmit(people)}
                                 >
-                                    {submitButtonText}
+                                    {submitButtonText || translation.COMMON.SUBMIT}
                                 </Button>
                             </ButtonToolbar>
                         </div>

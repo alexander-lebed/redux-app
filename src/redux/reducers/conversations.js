@@ -12,7 +12,8 @@ import type { Action, Dispatch } from '../../types';
 const actions = {
     ADD_CONVERSATION: 'ADD_CONVERSATION',
     SET_CONVERSATIONS: 'SET_CONVERSATIONS',
-    SET_CONVERSATION: 'SET_CONVERSATION'
+    SET_CONVERSATION: 'SET_CONVERSATION',
+    CONVERSATION_LOADING: 'CONVERSATION_LOADING'
 };
 
 const conversations = (state = [], action: Action) => {
@@ -38,20 +39,23 @@ const conversation = (state = {}, action: Action) => {
     }
 };
 
-const loadingAllConversations = (state = true, action: Action) => {
+const isConversationsLoaded = (state = false, action: Action) => {
     switch (action.type) {
         case actions.SET_CONVERSATIONS: {
-            return false;
+            return true;
         }
         default:
             return state;
     }
 };
 
-const loadingConversation = (state = true, action: Action) => {
+const isConversationLoaded = (state = false, action: Action) => {
     switch (action.type) {
-        case actions.SET_CONVERSATION: {
+        case actions.CONVERSATION_LOADING: {
             return false;
+        }
+        case actions.SET_CONVERSATION: {
+            return true;
         }
         default:
             return state;
@@ -61,8 +65,8 @@ const loadingConversation = (state = true, action: Action) => {
 export default combineReducers({
     conversations,
     conversation,
-    loadingAllConversations,
-    loadingConversation
+    isConversationsLoaded,
+    isConversationLoaded
 });
 
 
@@ -80,6 +84,9 @@ export function getConversationsByUser(userId: string) {
 
 export function getConversation(convId: string) {
     return (dispatch: Dispatch) => {
+        dispatch({
+            type: actions.CONVERSATION_LOADING
+        });
         $http.get(`${CONVERSATIONS_URL}?convId=${convId}`)
             .then(response => {
                 const conversation = response.data[0];
@@ -97,6 +104,8 @@ export function getConversation(convId: string) {
  */
 export function getConversationWithUsers(userIds: Array<string>) {
     return (dispatch: Dispatch, getState: Function) => {
+
+        dispatch({type: actions.CONVERSATION_LOADING});
 
         $http.get(`${CONVERSATIONS_URL}?userIds=${userIds.join(',')}`)
             .then(response => {
@@ -181,7 +190,7 @@ export function deleteConversation(convId: string) {
     return async (dispatch: Dispatch, getState: Function) => {
         try {
             await $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`);
-            const successMessage = getState().translation.CONVERSATIONS.CONVERSATION_REMOVED;
+            const successMessage = getState().translation.CONVERSATIONS.CONVERSATION_NOT_FOUND;
             dispatch(Alert.success(successMessage));
         } catch (err) {
             const error = (

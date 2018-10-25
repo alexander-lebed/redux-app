@@ -16,7 +16,7 @@ type Props = {
     user: User,
     users: Map<string, User>,
     conversations: Array<ConversationType>,
-    loadingAllConversations: boolean,
+    isConversationsLoaded: boolean,
     translation: Translation,
     getConversationsByUser: Function,
     deleteConversation: Function
@@ -65,11 +65,11 @@ class Conversations extends React.Component<Props, State> {
     };
 
     render() {
-        const {user, users, conversations, loadingAllConversations, translation} = this.props;
+        const {user, users, conversations, isConversationsLoaded, translation} = this.props;
         const {CONVERSATIONS} = translation;
         let content = [];
 
-        if (loadingAllConversations) {
+        if (!isConversationsLoaded) {
             content = (
                 <div style={{paddingTop: '50vh'}}>
                     <Spinner />
@@ -183,7 +183,6 @@ class Conversations extends React.Component<Props, State> {
                         <Button
                             id='create-conversation'
                             title={CONVERSATIONS.CREATE}
-                            style={{border: 'none', display: 'table-cell', verticalAlign: 'middle'}}
                             className='pull-right btn-circle-icon'
                             onClick={() => this.createConversation()}
                         >
@@ -247,7 +246,7 @@ export default connect(
         user: state.authentication.user,
         users: state.users.users,
         conversations: state.conversations.conversations,
-        loadingAllConversations: state.conversations.loadingAllConversations,
+        isConversationsLoaded: state.conversations.isConversationsLoaded,
         translation: state.translation
     }),
     { getConversationsByUser, deleteConversation }

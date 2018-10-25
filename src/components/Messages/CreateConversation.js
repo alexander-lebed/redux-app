@@ -23,7 +23,7 @@ export class CreateConversation extends React.Component<Props, void> {
         const {CONVERSATIONS} = translation;
         return (
             <PeopleSelector
-                excludeUserIds={[user._id]}
+                excludedUserIds={[user._id]}
                 submitButtonText={CONVERSATIONS.CREATE}
                 onSubmit={(people) => this.createConversation(people)}
                 onCancel={() => history.push('/conversations')}

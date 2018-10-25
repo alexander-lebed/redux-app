@@ -10,7 +10,7 @@ import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Button, Glyph
 import { timestampToHumanDate } from '../../helpers/time';
 import Spinner from '../common/Spinner';
 import PeopleSelector from '../common/PeopleSelector';
-import { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
+import { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import { success } from '../../redux/reducers/alerts';
 import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
 import { ONLINE_STYLE } from '../../constants';
@@ -20,10 +20,11 @@ type Props = {
     users: Map<string, User>,
     conversation: ConversationType,
     conversations: Array<ConversationType>,
-    loadingAllConversations: boolean,
-    loadingConversation: boolean,
+    isConversationsLoaded: boolean,
+    isConversationLoaded: boolean,
     translation: Translation,
     location: Object,
+    getConversationsByUser: Function,
     getConversation: Function,
     getConversationWithUsers: Function,
     markAsRead: Function,
@@ -56,6 +57,9 @@ class Conversation extends React.Component<Props, State> {
     }
 
     componentDidMount() {
+        if (!this.props.isConversationsLoaded) {
+            this.props.getConversationsByUser(this.props.user._id);
+        }
         this.getConversation();
         setTimeout(() => this.scrollConversationToBottom(), 50);
         setTimeout(() => this.props.markAsRead(), 500);
@@ -126,27 +130,27 @@ class Conversation extends React.Component<Props, State> {
         }
     };
 
-    showAddPeopleModal = (show: boolean) => {
+    showMembersModal = (show: boolean) => {
         this.setState({
             showModal: show
         })
     };
 
-    addPeopleToConversation = (people: Array<User>) => {
+    manageMembers = (people: Array<User>) => {
         const {conversation, saveConversation, success, translation} = this.props;
         const users = people.map(e => ({_id: e._id, username: e.username}));
-        conversation.users = conversation.users.concat(users);
+        conversation.users = users;
         saveConversation(conversation);
-        this.showAddPeopleModal(false);
-        success(translation.MESSAGES.MEMBERS_ADDED(users.map(e => e.username)));
+        this.showMembersModal(false);
+        success(translation.MESSAGES.MEMBERS_EDITED(users.map(e => e.username)));
     };
 
     render() {
         const {showEmoji} = this.state;
-        const {conversation, conversations, loadingAllConversations, loadingConversation, translation} = this.props;
+        const {user, conversation, conversations, isConversationsLoaded, isConversationLoaded, translation} = this.props;
 
         const conversationsExist = conversations.some(e => e._id === conversation._id);
-        const isLoading = loadingAllConversations || loadingConversation;
+        const isLoading = !isConversationsLoaded || !isConversationLoaded;
 
         let body = null;
         if (isLoading) {
@@ -156,27 +160,34 @@ class Conversation extends React.Component<Props, State> {
                 </div>
             )
         } else if (conversationsExist) {
-            const messageStyle = showEmoji ? {paddingRight: 0} : {};
-            const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
-            body = (
-                <div>
-                    {this.renderMessages()}
-                    <Row>
-                        <Col xs={12} sm={showEmoji ? 7 : 12} className='message-form' style={messageStyle}>
-                            {this.renderMessageForm()}
-                        </Col>
-                        <Col xs={12} sm={showEmoji ? 5 : 12} className='emoji-picker' style={emojiStyle}>
-                            {showEmoji &&
-                            this.renderEmojiPicker()
-                            }
-                        </Col>
-                    </Row>
-                </div>
-            )
+            const userIsMember = conversation.users.map(e => e._id).includes(user._id);
+            if (userIsMember) {
+                const messageStyle = showEmoji ? {paddingRight: 0} : {};
+                const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
+                body = (
+                    <div>
+                        {this.renderMessages()}
+                        <Row>
+                            <Col xs={12} sm={showEmoji ? 7 : 12} className='message-form' style={messageStyle}>
+                                {this.renderMessageForm()}
+                            </Col>
+                            <Col xs={12} sm={showEmoji ? 5 : 12} className='emoji-picker' style={emojiStyle}>
+                                {showEmoji && this.renderEmojiPicker()}
+                            </Col>
+                        </Row>
+                    </div>
+                );
+            } else {
+                body = (
+                    <div className='text-center'>
+                        {translation.MESSAGES.YOU_NOT_MEMBER}
+                    </div>
+                );
+            }
         } else {
             body = (
                 <div className='text-center'>
-                    {translation.CONVERSATIONS.CONVERSATION_REMOVED}
+                    {translation.CONVERSATIONS.CONVERSATION_NOT_FOUND}
                 </div>
             )
         }
@@ -190,12 +201,11 @@ class Conversation extends React.Component<Props, State> {
                         {conversationsExist &&
                         <Button
                             id='create-conversation'
-                            title={translation.MESSAGES.ADD_PEOPLE}
-                            style={{border: 'none', display: 'table-cell', verticalAlign: 'middle'}}
+                            title={translation.MESSAGES.MANAGE_MEMBERS}
                             className='pull-right btn-circle-icon'
-                            onClick={() => this.showAddPeopleModal(true)}
+                            onClick={() => this.showMembersModal(true)}
                         >
-                            <i className="fa fa-user-plus fa-lg" />
+                            <i className="fa fa-users fa-lg" />
                         </Button>
                         }
                     </div>
@@ -207,17 +217,16 @@ class Conversation extends React.Component<Props, State> {
                         bsSize='large'
                         show={this.state.showModal}
                         className='add-people-modal'
-                        onHide={() => this.showAddPeopleModal(false)}
+                        onHide={() => this.showMembersModal(false)}
                     >
                         <Modal.Header closeButton>
-                            <Modal.Title>{translation.MESSAGES.ADD_PEOPLE}</Modal.Title>
+                            <Modal.Title>{translation.MESSAGES.MANAGE_MEMBERS}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <PeopleSelector
-                                excludeUserIds={conversation.users.map(e => e._id)}
-                                submitButtonText={translation.MESSAGES.ADD_PEOPLE}
-                                onSubmit={(people) => this.addPeopleToConversation(people)}
-                                onCancel={() => this.showAddPeopleModal(false)}
+                                selectedUserIds={conversation.users.map(e => e._id)}
+                                onSubmit={(people) => this.manageMembers(people)}
+                                onCancel={() => this.showMembersModal(false)}
                             />
                         </Modal.Body>
                         <Modal.Footer style={{textAlign: 'center', color: 'red'}}>
@@ -390,9 +399,9 @@ export default connect(
         users: state.users.users,
         conversation: state.conversations.conversation,
         conversations: state.conversations.conversations,
-        loadingAllConversations: state.conversations.loadingAllConversations,
-        loadingConversation: state.conversations.loadingConversation,
+        isConversationsLoaded: state.conversations.isConversationsLoaded,
+        isConversationLoaded: state.conversations.isConversationLoaded,
         translation: state.translation
     }),
-    { getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup, success }
+    { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup, success }
 )(Conversation);

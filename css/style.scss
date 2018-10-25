@@ -17,6 +17,8 @@ html, body, input, button {
 }
 
 .btn-circle-icon {
+  display: table-cell;
+  vertical-align: middle;
   width: 32px !important;
   min-width: 32px !important;
   height: 32px !important;

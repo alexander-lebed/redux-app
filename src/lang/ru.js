@@ -3,11 +3,13 @@ import React from 'react';
 import type { Translation } from '../types';
 
 const translation: Translation = {
-    SECTIONS: {
+    NAVIGATION: {
         MESSAGES: 'Сообщения',
         PEOPLE: 'Люди',
+        CHOOSE_THEME: 'Выберите тему'
     },
     COMMON: {
+        SUBMIT: 'Применить',
         YES: 'Да',
         CANCEL: 'Отмена',
         SAVE: 'Сохранить',
@@ -26,20 +28,21 @@ const translation: Translation = {
         CONVERSATIONS: 'Сообщения',
         NO_CONVERSATIONS: 'У Вас пока нет сообщений',
         CREATE: 'Создать переписку',
-        SEARCH_PEOPLE: 'Поиск участников',
+        SEARCH_PEOPLE: 'Поиск людей',
         DELETE: 'Удалить переписку',
         DELETE_CONFIRMATION: 'Это удалит переписку для всех её участников. Продолжить?',
-        CONVERSATION_REMOVED: 'Переписка удалена'
+        CONVERSATION_NOT_FOUND: 'Переписка не найдена'
     },
     MESSAGES: {
         MESSAGES: 'Переписка',
-        ADD_PEOPLE: 'Добавить участника',
+        MANAGE_MEMBERS: 'Изменить участников',
         WRITE_MESSAGE: 'Напишите сообщение...',
         WRITE_MESSAGE_INFO: <span>Зажмите <strong>Shift+Enter</strong> для перехода на след. линию, <strong>Enter</strong> для отправки сообщения</span>,
         PICK_EMOJI: 'выберите смайлик…',
         DELETE: 'Удалить сообщение',
         NEW_MEMBERS_NOTE: 'Новые участники будут видеть всю историю сообщений',
-        MEMBERS_ADDED: (usernames: Array<string>) => <span>{usernames.join(', ')} {usernames.length === 1 ? ' был(а) добавлен(а)' : ' были добавлены'}</span>
+        MEMBERS_EDITED: (usernames: Array<string>) => <span>В этой переписке {usernames.join(', ')}</span>,
+        YOU_NOT_MEMBER: 'Вы были удалены из этой переписке'
     },
     PEOPLE: {
         SEARCH_PEOPLE: 'Поиск людей',
