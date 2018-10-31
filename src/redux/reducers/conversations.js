@@ -100,7 +100,7 @@ export function getConversation(convId: string) {
 
 /**
  * Note:
- * If there is no conversation with specified users, it creates a new one.
+ * If there is no conversation with specified users, it mocks a new one.
  */
 export function getConversationWithUsers(userIds: Array<string>) {
     return (dispatch: Dispatch, getState: Function) => {
@@ -110,14 +110,13 @@ export function getConversationWithUsers(userIds: Array<string>) {
         $http.get(`${CONVERSATIONS_URL}?userIds=${userIds.join(',')}`)
             .then(response => {
                 let conversation = response.data[0];
-
                 if (conversation) {
                     dispatch({
                         type: actions.SET_CONVERSATION,
-                        payload: conversation || {}
+                        payload: conversation
                     })
                 } else {
-                    // create new
+                    // mock new conversation
 
                     const allUsers = getState().users.users;
                     const convUsers = allUsers.toArray().filter(u => userIds.includes(u._id)).map(u => ({_id: u._id, username: u.username}));
@@ -126,14 +125,14 @@ export function getConversationWithUsers(userIds: Array<string>) {
                         messages: [],
                         timestamp: null // to set the time on server side
                     };
-
-                    $http.put(CONVERSATIONS_URL, conversation)
-                        .then(response => {
-                            dispatch({
-                                type: actions.ADD_CONVERSATION,
-                                payload: response.data
-                            });
-                        })
+                    dispatch({
+                        type: actions.ADD_CONVERSATION,
+                        payload: conversation
+                    });
+                    dispatch({
+                        type: actions.SET_CONVERSATION,
+                        payload: conversation
+                    });
                 }
             })
     }
@@ -191,7 +190,7 @@ export function deleteConversation(convId: string) {
         const CONVERSATIONS = getState().translation.CONVERSATIONS;
         try {
             await $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`);
-            dispatch(Alert.success(CONVERSATIONS.CONVERSATION_NOT_FOUND));
+            dispatch(Alert.success(CONVERSATIONS.DELETE_CONFIRMATION_SUCCESS));
         } catch (err) {
             const error = (
                 <div>

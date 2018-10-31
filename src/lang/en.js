@@ -33,6 +33,7 @@ export type TranslationType = {
         SEARCH_PEOPLE: string,
         DELETE: string,
         DELETE_CONFIRMATION: string,
+        DELETE_CONFIRMATION_SUCCESS: string,
         DELETE_CONFIRMATION_ERROR: string,
         CONVERSATION_NOT_FOUND: string
     },
@@ -136,6 +137,7 @@ const translation: TranslationType = {
         SEARCH_PEOPLE: 'Search people',
         DELETE: 'Remove conversation',
         DELETE_CONFIRMATION: 'This will delete conversation for all participants. Are you sure?',
+        DELETE_CONFIRMATION_SUCCESS: 'Conversation has been deleted',
         DELETE_CONFIRMATION_ERROR: 'Error on delete conversation:',
         CONVERSATION_NOT_FOUND: 'Conversation is not found'
     },

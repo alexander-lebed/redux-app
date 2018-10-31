@@ -34,6 +34,7 @@ const translation: Translation = {
         SEARCH_PEOPLE: 'Поиск людей',
         DELETE: 'Удалить переписку',
         DELETE_CONFIRMATION: 'Это удалит переписку для всех её участников. Продолжить?',
+        DELETE_CONFIRMATION_SUCCESS: 'Переписка была удаленв',
         DELETE_CONFIRMATION_ERROR: 'Ошибка при удалении переписки:',
         CONVERSATION_NOT_FOUND: 'Переписка не найдена'
     },
