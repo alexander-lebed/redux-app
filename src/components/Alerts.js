@@ -41,8 +41,7 @@ export class Alert extends React.Component<AlertProps, void> {
                 <Button
                     onClick={this.hideNotification}
                     bsStyle='link'
-                    style={styles.closeBtn}
-                    className='pull-right close'
+                    className='pull-right alert-close-btn close'
                 >
                     <Glyphicon glyph='remove' style={{fontSize: 18}} />
                 </Button>
@@ -64,7 +63,7 @@ type Props = StoreProps & {
 export class Alerts extends React.Component<Props, void> {
     render () {
         return (
-            <div style={styles.alerts}>
+            <div className='alerts-container'>
                 {this.props.alerts.map((n) =>
                     <Alert key={n.uid} {...n} dispatch={this.props.dispatch} />
                 )}
@@ -84,22 +83,6 @@ export default connect(
 const styles = {
     alert: {
         position: 'relative',
-        borderRadius: 3
-    },
-    closeBtn: {
-        position: 'absolute',
-        top: 10,
-        right: 10
-    },
-    alerts: {
-        position: 'fixed',
-        top: 75,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: '50%',
-        maxWidth: 800,
-        zIndex: 999,
-        fontSize: 14,
-        fontFamily: '-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif'
+        borderRadius: 0
     }
 };

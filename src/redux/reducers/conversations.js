@@ -188,14 +188,14 @@ export function deleteMessage(messageId: string) {
 
 export function deleteConversation(convId: string) {
     return async (dispatch: Dispatch, getState: Function) => {
+        const CONVERSATIONS = getState().translation.CONVERSATIONS;
         try {
             await $http.delete(`${CONVERSATIONS_URL}?convId=${convId}`);
-            const successMessage = getState().translation.CONVERSATIONS.CONVERSATION_NOT_FOUND;
-            dispatch(Alert.success(successMessage));
+            dispatch(Alert.success(CONVERSATIONS.CONVERSATION_NOT_FOUND));
         } catch (err) {
             const error = (
                 <div>
-                    <strong>Error on delete conversation:</strong>
+                    <strong>{CONVERSATIONS.DELETE_CONFIRMATION_ERROR}</strong>
                     <div>{generateError(err)}</div>
                 </div>
             );

@@ -4,15 +4,14 @@ import { connect } from 'react-redux';
 import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from 'react-bootstrap';
 import encryptPassword from '../../helpers/encryptPassword';
 import { login } from '../../redux/reducers/authentication';
-import { success, error } from '../../redux/reducers/alerts';
+import { alertError } from '../../redux/reducers/alerts';
 import type { Translation } from '../../types';
 
 type Props = {
     history: Object,
     translation: Translation,
     login: Function,
-    success: Function,
-    error: Function
+    alertError: Function
 };
 
 type State = {
@@ -40,7 +39,7 @@ class Login extends React.Component<Props, State> {
         if (isLoggedIn) {
             this.props.history.push('/');
         } else {
-            this.props.error(this.props.translation.LOGIN.INCORRECT_CREDENTIALS);
+            this.props.alertError(this.props.translation.AUTH.INCORRECT_CREDENTIALS);
         }
     };
 
@@ -49,7 +48,7 @@ class Login extends React.Component<Props, State> {
         if (isLoggedIn) {
             this.props.history.push('/');
         } else {
-            this.props.error(this.props.translation.LOGIN.OAUTH_ERROR(service));
+            this.props.alertError(this.props.translation.AUTH.OAUTH_ERROR(service));
         }
     };
 
@@ -84,7 +83,7 @@ class Login extends React.Component<Props, State> {
 
                         <FormGroup controlId='formHorizontalPassword'>
                             <Col componentClass={ControlLabel} xs={3} sm={2}>
-                                {this.props.translation.LOGIN.PASSWORD}
+                                {this.props.translation.AUTH.PASSWORD}
                             </Col>
                             <Col xs={9} sm={10}>
                                 <FormControl
@@ -147,5 +146,5 @@ export default connect(
     (state) => ({
         translation: state.translation
     }),
-    { login, success, error }
+    { login, alertError }
 )(Login)

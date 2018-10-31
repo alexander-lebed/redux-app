@@ -39,6 +39,7 @@ export function register(username: string, email: string, password: string) {
     return async (dispatch: Dispatch, getState: Function) => {
 
         const users = getState().users.users;
+        const translation = getState().translation;
         const registeredUser = users.filter(e => !e.oauth).find(e => e.email === email);
         const encryptedPassword = encryptPassword(password);
 
@@ -62,10 +63,10 @@ export function register(username: string, email: string, password: string) {
                     history.push('/');
                 }
             } catch (err) {
-                dispatch(Alert.error(`Error on register user: ${err.toString()}`));
+                dispatch(Alert.error(translation.AUTH.SIGN_UP_ERROR(err.toString())));
             }
         } else {
-            dispatch(Alert.error(`User with ${email} email already exist`));
+            dispatch(Alert.error(translation.AUTH.USER_WITH_EMAIL_ALREADY_EXIST(email)));
         }
     }
 }
@@ -93,11 +94,11 @@ export function editUser(userId: string, user: User) {
             try {
                 const response = await $http.put(`${USERS_URL}/${userId}`, user);
                 await dispatch(setUser(response.data));
-                dispatch(Alert.success('Your profile has been updated.'));
+                dispatch(Alert.success(getState().translation.ACCOUNT.PROFILE_UPDATED));
             } catch (err) {
                 const error = (
                     <div>
-                        <strong>Error on update profile:</strong>
+                        <strong>{getState().translation.ACCOUNT.EDIT_PROFILE_ERROR}</strong>
                         <div>{generateError(err)}</div>
                     </div>
                 );
@@ -108,14 +109,14 @@ export function editUser(userId: string, user: User) {
 }
 
 export function deleteUser(userId: string) {
-    return async (dispatch: Dispatch) => {
+    return async (dispatch: Dispatch, getState: Function) => {
         try {
             await $http.delete(`${USERS_URL}?userId=${userId}`);
-            dispatch(Alert.success('User has been deleted.'));
+            dispatch(Alert.success(getState().translation.PEOPLE.USER_DELETED));
         } catch (err) {
             const error = (
                 <div>
-                    <strong>Error on delete user:</strong>
+                    <strong>{getState().translation.PEOPLE.USER_DELETE_ERROR}</strong>
                     <div>{generateError(err)}</div>
                 </div>
             );

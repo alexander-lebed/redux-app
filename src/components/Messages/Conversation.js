@@ -11,7 +11,7 @@ import { timestampToHumanDate } from '../../helpers/time';
 import Spinner from '../common/Spinner';
 import PeopleSelector from '../common/PeopleSelector';
 import { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
-import { success } from '../../redux/reducers/alerts';
+import { alertSuccess } from '../../redux/reducers/alerts';
 import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
 import { ONLINE_STYLE } from '../../constants';
 
@@ -31,7 +31,7 @@ type Props = {
     deleteMessage: Function,
     saveConversation: Function,
     conversationCleanup: Function,
-    success: Function
+    alertSuccess: Function
 }
 
 type State = {
@@ -137,12 +137,12 @@ class Conversation extends React.Component<Props, State> {
     };
 
     manageMembers = (people: Array<User>) => {
-        const {conversation, saveConversation, success, translation} = this.props;
+        const {conversation, saveConversation, alertSuccess, translation} = this.props;
         const users = people.map(e => ({_id: e._id, username: e.username}));
         conversation.users = users;
         saveConversation(conversation);
         this.showMembersModal(false);
-        success(translation.MESSAGES.MEMBERS_EDITED(users.map(e => e.username)));
+        alertSuccess(translation.MESSAGES.MEMBERS_EDITED(users.map(e => e.username)));
     };
 
     render() {
@@ -403,5 +403,5 @@ export default connect(
         isConversationLoaded: state.conversations.isConversationLoaded,
         translation: state.translation
     }),
-    { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup, success }
+    { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup, alertSuccess }
 )(Conversation);

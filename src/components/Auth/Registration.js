@@ -100,7 +100,7 @@ class Login extends React.Component<Props, State> {
 
                         <FormGroup controlId='password' validationState={getPasswordValidationState(password)}>
                             <Col componentClass={ControlLabel} xs={3} sm={2}>
-                                {translation.LOGIN.PASSWORD}
+                                {translation.AUTH.PASSWORD}
                             </Col>
                             <Col xs={9} sm={10}>
                                 <FormControl
@@ -118,7 +118,7 @@ class Login extends React.Component<Props, State> {
 
                         <FormGroup controlId='confirm-password' validationState={getConfirmPasswordValidationState(password, confirmPassword)}>
                             <Col componentClass={ControlLabel} xs={3} sm={2}>
-                                {translation.LOGIN.CONFIRM_PASSWORD}
+                                {translation.AUTH.CONFIRM_PASSWORD}
                             </Col>
                             <Col xs={9} sm={10}>
                                 <FormControl

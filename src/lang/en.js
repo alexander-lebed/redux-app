@@ -17,10 +17,13 @@ export type TranslationType = {
         DELETE_CONFIRMATION: string,
         LOADING: string,
     },
-    LOGIN: {
+    AUTH: {
         PASSWORD: string,
         CONFIRM_PASSWORD: string,
         INCORRECT_CREDENTIALS: string,
+        PLEASE_RELOGIN: string,
+        USER_WITH_EMAIL_ALREADY_EXIST: (email: any) => any,
+        SIGN_UP_ERROR: (error: any) => any,
         OAUTH_ERROR: (service: any) => any,
     },
     CONVERSATIONS: {
@@ -30,6 +33,7 @@ export type TranslationType = {
         SEARCH_PEOPLE: string,
         DELETE: string,
         DELETE_CONFIRMATION: string,
+        DELETE_CONFIRMATION_ERROR: string,
         CONVERSATION_NOT_FOUND: string
     },
     MESSAGES: {
@@ -47,7 +51,9 @@ export type TranslationType = {
         SEARCH_PEOPLE: string,
         WRITE_MESSAGE: string,
         LAST_SEEN: string,
-        DELETE_CONFIRMATION: string
+        DELETE_CONFIRMATION: string,
+        USER_DELETED: string,
+        USER_DELETE_ERROR: string
     },
     ACCOUNT: {
         SIGN_UP: string,
@@ -55,6 +61,8 @@ export type TranslationType = {
         LOG_IN_WITH_OAUTH: string,
         LOG_OUT: string,
         EDIT_PROFILE: string,
+        EDIT_PROFILE_ERROR: string,
+        PROFILE_UPDATED: string,
         USERNAME_EMAIL: {
             CHANGE_USERNAME_AND_EMAIL: string,
             USERNAME: string,
@@ -112,10 +120,13 @@ const translation: TranslationType = {
         NO_RESULTS: 'No results',
         LOADING: 'Loading...'
     },
-    LOGIN: {
+    AUTH: {
         PASSWORD: 'Password',
         CONFIRM_PASSWORD: 'Confirm password',
         INCORRECT_CREDENTIALS: 'Email or password is incorrect',
+        PLEASE_RELOGIN: 'Please re-login',
+        USER_WITH_EMAIL_ALREADY_EXIST: (email) => <span>User with {email} email already exist</span>,
+        SIGN_UP_ERROR: (error) => <span>Error on sign up user: {error}</span>,
         OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
     },
     CONVERSATIONS: {
@@ -125,6 +136,7 @@ const translation: TranslationType = {
         SEARCH_PEOPLE: 'Search people',
         DELETE: 'Remove conversation',
         DELETE_CONFIRMATION: 'This will delete conversation for all participants. Are you sure?',
+        DELETE_CONFIRMATION_ERROR: 'Error on delete conversation:',
         CONVERSATION_NOT_FOUND: 'Conversation is not found'
     },
     MESSAGES: {
@@ -142,7 +154,9 @@ const translation: TranslationType = {
         SEARCH_PEOPLE: 'Search people',
         WRITE_MESSAGE: 'Write a message',
         LAST_SEEN: 'last seen',
-        DELETE_CONFIRMATION: 'Are you sure you want to delete this user?'
+        DELETE_CONFIRMATION: 'Are you sure you want to delete this user?',
+        USER_DELETED: 'User has been deleted',
+        USER_DELETE_ERROR: 'Error on delete user:',
     },
     ACCOUNT: {
         SIGN_UP: 'Sign up',
@@ -150,6 +164,8 @@ const translation: TranslationType = {
         LOG_IN_WITH_OAUTH: 'Or log in with:',
         LOG_OUT: 'Log out',
         EDIT_PROFILE: 'Edit profile',
+        EDIT_PROFILE_ERROR: 'Error on update profile:',
+        PROFILE_UPDATED: 'Your profile has been updated',
         USERNAME_EMAIL: {
             CHANGE_USERNAME_AND_EMAIL: 'Change username and email:',
             USERNAME: 'Username',

@@ -49,7 +49,7 @@ export function initApp() {
             // re-login user
             const isLoggedIn = await dispatch(login(currentUser));
             if (!isLoggedIn) {
-                dispatch(Alert.error('Please re-login'));
+                dispatch(Alert.error(getState().translation.AUTH.PLEASE_RELOGIN));
             }
         }
 

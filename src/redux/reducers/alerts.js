@@ -41,7 +41,7 @@ const alerts = (state: Array<AlertType> = [], action: Action): State => {
 export default alerts;
 
 
-export const success = (message: string | Node, timeout?: number = 3000) => {
+export const alertSuccess = (message: string | Node, timeout?: number = 3000) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: actionTypes.SHOW_SUCCESS,
@@ -53,7 +53,7 @@ export const success = (message: string | Node, timeout?: number = 3000) => {
     }
 };
 
-export const error = (message: string | Node, timeout?: number = 5000) => {
+export const alertError = (message: string | Node, timeout?: number = 5000) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: actionTypes.SHOW_ERROR,
@@ -66,6 +66,6 @@ export const error = (message: string | Node, timeout?: number = 5000) => {
 };
 
 export const Alert = {
-    success,
-    error
+    success: alertSuccess,
+    error: alertError
 };

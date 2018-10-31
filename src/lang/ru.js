@@ -18,11 +18,14 @@ const translation: Translation = {
         NO_RESULTS: 'Нет результатов',
         LOADING: 'Загрузка...'
     },
-    LOGIN: {
+    AUTH: {
         PASSWORD: 'Пароль',
         CONFIRM_PASSWORD: 'Подтвердить пароль',
         INCORRECT_CREDENTIALS: 'Электронная почта или пароль неверны',
-        OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
+        PLEASE_RELOGIN: 'Пожалуйста войдите еще раз',
+        USER_WITH_EMAIL_ALREADY_EXIST: (email) => <span>Пользоветель с эл.почтой {email} уже существует</span>,
+        SIGN_UP_ERROR: (error) => <span>Ошибка при регистриции пользователя: {error}</span>,
+        OAUTH_ERROR: (service) => <span>Ошибка при входе с помощью {service}</span>
     },
     CONVERSATIONS: {
         CONVERSATIONS: 'Сообщения',
@@ -31,6 +34,7 @@ const translation: Translation = {
         SEARCH_PEOPLE: 'Поиск людей',
         DELETE: 'Удалить переписку',
         DELETE_CONFIRMATION: 'Это удалит переписку для всех её участников. Продолжить?',
+        DELETE_CONFIRMATION_ERROR: 'Ошибка при удалении переписки:',
         CONVERSATION_NOT_FOUND: 'Переписка не найдена'
     },
     MESSAGES: {
@@ -48,7 +52,9 @@ const translation: Translation = {
         SEARCH_PEOPLE: 'Поиск людей',
         WRITE_MESSAGE: 'Написать сообщение',
         LAST_SEEN: 'заходил(а)',
-        DELETE_CONFIRMATION: 'Вы действительно хотите удалить этого пользователя?'
+        DELETE_CONFIRMATION: 'Вы действительно хотите удалить этого пользователя?',
+        USER_DELETED: 'Пользователь был удален',
+        USER_DELETE_ERROR: 'Ошибка при удалении пользователя:'
     },
     ACCOUNT: {
         SIGN_UP: 'Регистрация',
@@ -56,6 +62,8 @@ const translation: Translation = {
         LOG_IN_WITH_OAUTH: 'Или войти через:',
         LOG_OUT: 'Выйти',
         EDIT_PROFILE: 'Изменить профиль',
+        EDIT_PROFILE_ERROR: 'Ошибка при изменении профиля:',
+        PROFILE_UPDATED: 'Твой профиль был обновлен',
         USERNAME_EMAIL: {
             CHANGE_USERNAME_AND_EMAIL: 'Изменить имя и электронную почту:',
             USERNAME: 'Имя',
