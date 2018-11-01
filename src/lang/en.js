@@ -22,8 +22,8 @@ export type TranslationType = {
         CONFIRM_PASSWORD: string,
         INCORRECT_CREDENTIALS: string,
         PLEASE_RELOGIN: string,
-        USER_WITH_EMAIL_ALREADY_EXIST: (email: any) => any,
-        SIGN_UP_ERROR: (error: any) => any,
+        USER_WITH_EMAIL_ALREADY_EXIST: (email: string) => string,
+        SIGN_UP_ERROR: (error: string) => string,
         OAUTH_ERROR: (service: any) => any,
     },
     CONVERSATIONS: {
@@ -39,6 +39,7 @@ export type TranslationType = {
     },
     MESSAGES: {
         MESSAGES: string,
+        MESSAGE_FROM: (senders: string) => string,
         MANAGE_MEMBERS: string,
         WRITE_MESSAGE: string,
         WRITE_MESSAGE_INFO: any,
@@ -126,8 +127,8 @@ const translation: TranslationType = {
         CONFIRM_PASSWORD: 'Confirm password',
         INCORRECT_CREDENTIALS: 'Email or password is incorrect',
         PLEASE_RELOGIN: 'Please re-login',
-        USER_WITH_EMAIL_ALREADY_EXIST: (email) => <span>User with {email} email already exist</span>,
-        SIGN_UP_ERROR: (error) => <span>Error on sign up user: {error}</span>,
+        USER_WITH_EMAIL_ALREADY_EXIST: (email) => `User with ${email} email already exist`,
+        SIGN_UP_ERROR: (error) => `Error on sign up user: ${error}`,
         OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
     },
     CONVERSATIONS: {
@@ -143,6 +144,7 @@ const translation: TranslationType = {
     },
     MESSAGES: {
         MESSAGES: 'Messages',
+        MESSAGE_FROM: (senders) => `Message from ${senders}`,
         MANAGE_MEMBERS: 'Manage members',
         WRITE_MESSAGE: 'Write a message...',
         WRITE_MESSAGE_INFO: <span>Press <strong>Shift+Enter</strong> for next line, <strong>Enter</strong> to send message</span>,

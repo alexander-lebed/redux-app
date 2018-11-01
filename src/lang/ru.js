@@ -23,8 +23,8 @@ const translation: Translation = {
         CONFIRM_PASSWORD: 'Подтвердить пароль',
         INCORRECT_CREDENTIALS: 'Электронная почта или пароль неверны',
         PLEASE_RELOGIN: 'Пожалуйста войдите еще раз',
-        USER_WITH_EMAIL_ALREADY_EXIST: (email) => <span>Пользоветель с эл.почтой {email} уже существует</span>,
-        SIGN_UP_ERROR: (error) => <span>Ошибка при регистриции пользователя: {error}</span>,
+        USER_WITH_EMAIL_ALREADY_EXIST: (email) => `Пользоветель с эл.почтой ${email} уже существует`,
+        SIGN_UP_ERROR: (error) => `Ошибка при регистриции пользователя: ${error}`,
         OAUTH_ERROR: (service) => <span>Ошибка при входе с помощью {service}</span>
     },
     CONVERSATIONS: {
@@ -40,6 +40,7 @@ const translation: Translation = {
     },
     MESSAGES: {
         MESSAGES: 'Переписка',
+        MESSAGE_FROM: (senders) => `Сообщение от ${senders}`,
         MANAGE_MEMBERS: 'Изменить участников',
         WRITE_MESSAGE: 'Напишите сообщение...',
         WRITE_MESSAGE_INFO: <span>Зажмите <strong>Shift+Enter</strong> для перехода на след. линию, <strong>Enter</strong> для отправки сообщения</span>,

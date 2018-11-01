@@ -126,7 +126,7 @@ export function showBrowserNotifications(conversations, dispatch, getState) {
 
                     const messagesArr = unreadMessages.map(e => e.text);
                     const senders = [...new Set(unreadMessages.map(e => e.from.username))];
-                    const title = `Message from ${senders.join(', ')}`;
+                    const title = getState().translation.MESSAGES.MESSAGE_FROM(senders.join(', '));
                     const notification = new Notification(title, {
                         tag: convId,
                         icon: 'favicon.png',

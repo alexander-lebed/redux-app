@@ -63,6 +63,19 @@ for Mobile device
   html, body, input, button {
     font-size: 20px;
   }
+  h4 {
+    font-size: 20px;
+    margin: 0;
+  }
+  div, span {
+    font-size: 16px !important;
+  }
+  .mobile-hidden {
+    display: none !important;
+  }
+  .desktop-hidden {
+    display: block !important;
+  }
   .alerts-container {
     width: 96% !important;
     max-width: 400px !important;
@@ -145,13 +158,6 @@ for Mobile device
     font-size: 16px;
     border: 1px solid lightgrey;
   }
-  h4 {
-    font-size: 20px;
-    margin: 0;
-  }
-  div, span {
-    font-size: 16px !important;
-  }
   .cut-senders-text {
     width: 200px !important;
   }
@@ -173,6 +179,12 @@ for Mobile device
 /*
 for Desktop
 */
+.mobile-hidden {
+  display: block;
+}
+.desktop-hidden {
+  display: none;
+}
 .alerts-container {
   position: fixed;
   top: 75px;
@@ -265,6 +277,12 @@ li.lang-text a {
   width: 300px;
   height: 1.4em;
   white-space: nowrap
+}
+
+.message-preview {
+  color: grey;
+  font-size: 13px;
+  padding-top: 5px;
 }
 
 /* Switch checkbox */

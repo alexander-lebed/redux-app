@@ -98,53 +98,51 @@ class Conversations extends React.Component<Props, State> {
                     <tr key={conv._id} className={newMessages.length > 0 ? 'new-messages-bg' : ''}>
                         <td className='cursor' style={style.conversation}>
                             <Row>
-                                <Col xs={10} onClick={() => this.goToConversation(conv._id)}>
-
-                                    {/* Sender profile picture */}
-                                    <div className='profile-picture-wrapper'>
+                                <Col xs={7} sm={10} onClick={() => this.goToConversation(conv._id)}>
+                                    {/* Sender info */}
+                                    <div>
+                                        <div className='profile-picture-wrapper'>
+                                            {senders.length === 1 ?
+                                                <Image
+                                                    circle
+                                                    style={sender.online ? ONLINE_STYLE : {}}
+                                                    className='profile-picture'
+                                                    src={sender.pictureUrl ? sender.pictureUrl : '/default-profile.png'}
+                                                />
+                                                :
+                                                <Image
+                                                    circle
+                                                    style={senders.some(e => e.online) ? ONLINE_STYLE : {}}
+                                                    className='profile-picture'
+                                                    src='/conversation-group.png'
+                                                />
+                                            }
+                                        </div>
                                         {senders.length === 1 ?
-                                            <Image
-                                                circle
-                                                style={sender.online ? ONLINE_STYLE : {}}
-                                                className='profile-picture'
-                                                src={sender.pictureUrl ? sender.pictureUrl : '/default-profile.png'}
-                                            />
+                                            <strong>{sender.username}</strong>
                                             :
-                                            <Image
-                                                circle
-                                                style={senders.some(e => e.online) ? ONLINE_STYLE : {}}
-                                                className='profile-picture'
-                                                src='/conversation-group.png'
-                                            />
+                                            <div className='cut-senders-text'>
+                                                {senders.map(sender => (
+                                                    <strong key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
+                                                        {sender.username}
+                                                    </strong>
+                                                )).reduce((prev, curr) => [prev, ', ', curr])}
+                                            </div>
                                         }
                                     </div>
-
-                                    {/* Sender name */}
-                                    {senders.length === 1 ?
-                                        <strong>{sender.username}</strong>
-                                        :
-                                        <div className='cut-senders-text'>
-                                            {senders.map(sender => (
-                                                <strong key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
-                                                    {sender.username}
-                                                </strong>
-                                            )).reduce((prev, curr) => [prev, ', ', curr])}
-                                        </div>
-                                    }
-
-                                    {/* Last message details */}
+                                    {/* Last message details for desktop only */}
                                     {lastMessage &&
-                                    <Row style={style.message} onClick={() => this.goToConversation(conv._id)}>
-                                        <Col xs={12} sm={2} className='user-from-text' style={{paddingRight: 0}}>
+                                    <Row className='message-preview mobile-hidden' onClick={() => this.goToConversation(conv._id)}>
+                                        <Col xs={4} sm={2} className='user-from-text' style={{paddingRight: 0}}>
                                             {lastMessage.from.username}:
                                         </Col>
-                                        <Col xs={12} sm={8}>
+                                        <Col xs={8} sm={8}>
                                             <div className={textClass} style={style.text}>{lastMessage.text}</div>
                                         </Col>
                                     </Row>
                                     }
                                 </Col>
-                                <Col xs={2} style={style.convRight}>
+                                <Col xs={5} sm={2} style={style.convRight}>
                                     {/* Last message time and ability to delete message */}
                                     <span>
                                         {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
@@ -160,6 +158,17 @@ class Conversations extends React.Component<Props, State> {
                                     </span>
                                 </Col>
                             </Row>
+                            {/* Last message details for mobile only */}
+                            {lastMessage &&
+                            <Row className='message-preview desktop-hidden' onClick={() => this.goToConversation(conv._id)}>
+                                <Col xs={4} sm={2} className='user-from-text' style={{paddingRight: 0}}>
+                                    {lastMessage.from.username}:
+                                </Col>
+                                <Col xs={8} sm={8}>
+                                    <div className={textClass} style={style.text}>{lastMessage.text}</div>
+                                </Col>
+                            </Row>
+                            }
                         </td>
                     </tr>
                 )
@@ -214,11 +223,6 @@ const style = {
         color: 'grey',
         textAlign: 'right',
         fontSize: 13
-    },
-    message: {
-        color: 'grey',
-        fontSize: 13,
-        marginTop: 5
     },
     text: {
         paddingTop: 3,
