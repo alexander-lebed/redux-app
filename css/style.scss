@@ -145,10 +145,6 @@ for Mobile device
     grid-row: 1;
     grid-column: span 12;
   }
-  .user-from-text {
-    text-align: left !important;
-    padding-left: 30px !important;
-  }
   .dropdown-item {
     width: 95%;
     margin: auto;
@@ -229,6 +225,8 @@ li.lang-text a {
 }
 
 .user-from-text {
+  padding-top: 2px;
+  padding-right: 0 !important;
   text-align: right;
 }
 

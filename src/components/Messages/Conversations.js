@@ -161,10 +161,10 @@ class Conversations extends React.Component<Props, State> {
                             {/* Last message details for mobile only */}
                             {lastMessage &&
                             <Row className='message-preview desktop-hidden' onClick={() => this.goToConversation(conv._id)}>
-                                <Col xs={4} sm={2} className='user-from-text' style={{paddingRight: 0}}>
+                                <Col xs={4} sm={2} className='user-from-text'>
                                     {lastMessage.from.username}:
                                 </Col>
-                                <Col xs={8} sm={8}>
+                                <Col xs={8} sm={8} style={{paddingLeft: 5}}>
                                     <div className={textClass} style={style.text}>{lastMessage.text}</div>
                                 </Col>
                             </Row>
@@ -228,7 +228,6 @@ const style = {
         paddingTop: 3,
         paddingBottom: 3,
         paddingLeft: 5,
-        marginLeft: 5,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         display: '-webkit-box',
