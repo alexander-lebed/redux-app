@@ -70,6 +70,9 @@ for Mobile device
   div, span {
     font-size: 16px !important;
   }
+  .navbar-collapse.in {
+    overflow-y: unset !important;
+  }
   .mobile-hidden {
     display: none !important;
   }
@@ -112,8 +115,9 @@ for Mobile device
     min-height: 40px;
   }
   .account-dropdown {
-    border: 1px solid lightgrey;
-    padding-bottom: 10px !important;
+    padding-top: 5px !important;
+    border: 1px groove lightgrey;
+    border-radius: 5px;
   }
   .tab-text {
     text-align: center;
@@ -127,16 +131,36 @@ for Mobile device
     width: 50% !important;
     float: left;
     text-align: center;
-    border: 1px solid lightgrey !important;
-    padding-top: 5px !important;
     font-size: 13px;
     height: 50px;
   }
+  .lang-text > a {
+    height: 20px !important;
+    padding: 0 !important;
+  }
   .theme-menu {
     width: 100% !important;
-    float: left;
+    padding-left: 0 !important;
     text-align: center;
-    padding-left: 25% !important;
+  }
+  li.theme-menu > a {
+    padding: 0 !important;
+  }
+  li.theme-menu > a > div > ul > li > a {
+    width: 100vw !important;
+    text-align: center !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+  #theme-menu {
+    height: 50px !important;
+    width: 100vw !important;
+    border: none !important;
+  }
+  #theme-menu:before {
+    content: none !important;
+    font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+    padding-top: 15px !important;
   }
   .create-conv-header > .search {
     grid-column: span 12;
@@ -145,14 +169,14 @@ for Mobile device
     grid-row: 1;
     grid-column: span 12;
   }
+  .dropdown-menu {
+    padding: 0 !important;
+  }
   .dropdown-item {
-    width: 95%;
     margin: auto;
-    border-radius: 5px;
-    padding-top: 10px;
     text-align: center;
-    font-size: 16px;
-    border: 1px solid lightgrey;
+    font-size: 14px;
+    border-top: 1px groove lightgrey;
   }
   .cut-senders-text {
     width: 200px !important;
@@ -257,6 +281,10 @@ li.lang-text a {
   max-width: 450px;
 }
 
+.account-dropdown {
+  padding-top: 10px;
+}
+
 .account-menu {
   max-height: 40px;
   max-width: 40px;
@@ -267,6 +295,29 @@ li.lang-text a {
 
 .account-menu-clicked {
   box-shadow: 0 0 2pt 2pt grey !important;
+}
+
+.dropdown-menu {
+  padding: 0;
+}
+
+.dropdown-menu>.active>a {
+  color: #555;
+  text-decoration: none;
+  background-color: #e7e7e7;
+  outline: 0;
+}
+
+.dropdown-menu>.active>a:hover {
+  color: #555;
+  text-decoration: none;
+  background-color: #e7e7e7;
+  outline: 0;
+}
+
+.dropdown-item {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .cut-senders-text {
@@ -282,6 +333,95 @@ li.lang-text a {
   font-size: 13px;
   padding-top: 5px;
 }
+
+.inner-addon {
+  position: relative;
+  color: grey;
+}
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+.left-addon .glyphicon  {
+  left:  0;
+}
+.right-addon .glyphicon {
+  right: 0;
+}
+.left-addon input  {
+  padding-left:  30px;
+}
+.right-addon input {
+  padding-right: 30px;
+}
+
+
+.help-block {
+  font-size: small !important;
+}
+
+table.glyphicon-hover .glyphicon {
+  visibility: hidden;
+}
+table.glyphicon-hover td:hover .glyphicon {
+  visibility: visible;
+}
+
+
+.cursor {
+  cursor: pointer;
+}
+
+.center-page {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  max-width: 1000px;
+  padding: 40px;
+}
+
+.theme-menu {
+  padding-left: 20px;
+}
+
+li.theme-menu > a {
+  width: 0;
+  border: none !important;
+  background: transparent !important;
+}
+
+li.theme-menu > a:hover {
+  background: transparent !important;
+}
+
+li.theme-menu > a > div > ul {
+  left: 0 !important;
+}
+
+#theme-menu {
+  height: 27px;
+  padding: 0;
+  position: relative;
+}
+
+#theme-menu:before {
+  content: '\F1FC';
+  font-family: 'FontAwesome';
+  padding-top: 2px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+}
+
 
 /* Switch checkbox */
 .material-switch > input[type="checkbox"] {
@@ -327,117 +467,6 @@ li.lang-text a {
   left: 20px;
 }
 
-
-.inner-addon {
-  position: relative;
-  color: grey;
-}
-.inner-addon .glyphicon {
-  position: absolute;
-  padding: 10px;
-  pointer-events: none;
-}
-.left-addon .glyphicon  {
-  left:  0;
-}
-.right-addon .glyphicon {
-  right: 0;
-}
-.left-addon input  {
-  padding-left:  30px;
-}
-.right-addon input {
-  padding-right: 30px;
-}
-
-
-.dropdown-menu {
-  padding: 0;
-}
-.dropdown-item {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.help-block {
-  font-size: small !important;
-}
-
-table.glyphicon-hover .glyphicon {
-  visibility: hidden;
-}
-table.glyphicon-hover td:hover .glyphicon {
-  visibility: visible;
-}
-
-.dropdown-menu>.active>a {
-  color: #555;
-  text-decoration: none;
-  background-color: #e7e7e7;
-  outline: 0;
-}
-
-.dropdown-menu>.active>a:hover {
-  color: #555;
-  text-decoration: none;
-  background-color: #e7e7e7;
-  outline: 0;
-}
-
-.weather-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-.weather-item {
-  padding: 0.25em;
-  border-bottom: solid 1px #eee;
-}
-
-.cursor {
-  cursor: pointer;
-}
-
-.center-page {
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 50%;
-  height: 50%;
-  max-width: 1000px;
-  padding: 40px;
-}
-
-#theme-menu {
-  height: 27px !important;
-  padding: 0;
-  position: relative;
-}
-#theme-menu:before {
-  content: '\F1FC';
-  font-family: 'FontAwesome';
-  padding-top: 2px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: inherit;
-}
-
-li.theme-menu > a {
-  width: 0;
-  padding-left: 30px !important;
-  border: none !important;
-  background: transparent !important;
-}
-li.theme-menu > a:hover {
-  background: transparent !important;
-}
 
 /* Spinner */
 .spin-icon {

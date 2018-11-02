@@ -47,7 +47,7 @@ class NavigationBar extends React.Component<Props, State> {
                     open={this.state.accountClicked}
                     id='account-dropdown'
                     className='pull-left account-dropdown'
-                    style={{paddingTop: 10, textAlign: 'center'}}
+                    style={{textAlign: 'center'}}
                 >
                     <div style={{display: 'inline-block'}}>
                         <Image
@@ -71,7 +71,7 @@ class NavigationBar extends React.Component<Props, State> {
                                     eventKey={1.1}
                                     className='dropdown-item'
                                 >
-                                    <i className="fa fa-pencil" style={{marginRight: 8}} />
+                                    <i className="fa fa-pencil hidden-xs" style={{marginRight: 8}} />
                                     {translation.ACCOUNT.EDIT_PROFILE}
                                 </MenuItem>
                             </LinkContainer>
@@ -85,7 +85,7 @@ class NavigationBar extends React.Component<Props, State> {
                                 this.setState({accountClicked: false});
                             }}
                         >
-                            <Glyphicon glyph='log-out' style={{marginRight: 8}} />
+                            <Glyphicon glyph='log-out hidden-xs' style={{marginRight: 8}} />
                             {translation.ACCOUNT.LOG_OUT}
                         </MenuItem>
                     </Dropdown.Menu>
@@ -93,6 +93,8 @@ class NavigationBar extends React.Component<Props, State> {
             )
         }
         const messageTabStyle = convSubPathnames.includes(window.location.pathname) ? {borderBottom: '1px solid #777'} : {};
+        const en = locale === 'en' ? <u>EN</u> : 'EN';
+        const ru = locale === 'ru' ? <u>РУС</u> : 'РУС';
         return (
             <Navbar style={{borderTop: 'none'}} fixedTop onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
@@ -142,16 +144,29 @@ class NavigationBar extends React.Component<Props, State> {
                         </LinkContainer>
                         }
                         <NavItem eventKey={2} className='lang-text' style={{border: 'none'}} onSelect={() => {translate('en')}}>
-                            {locale === 'en' ? <u>EN</u> : 'EN'}
+                            {/* for desktop */}
+                            <div className='hidden-xs'>
+                                {en}
+                            </div>
+                            {/* for mobile */}
+                            <Button className='hidden-sm hidden-md hidden-lg' block>
+                                {en}
+                            </Button>
                         </NavItem>
                         <NavItem eventKey={3} className='lang-text' style={{border: 'none'}} onSelect={() => {translate('ru')}}>
-                            {locale === 'ru' ? <u>РУС</u> : 'РУС'}
+                            {/* for desktop */}
+                            <div className='hidden-xs'>
+                                {ru}
+                            </div>
+                            {/* for mobile */}
+                            <Button className='hidden-sm hidden-md hidden-lg' block>
+                                {ru}
+                            </Button>
                         </NavItem>
                         <NavItem
                             eventKey={4}
                             title={translation.NAVIGATION.CHOOSE_THEME}
                             className='hidden-xs theme-menu'
-                            style={{border: 'none', height: 50}}
                         >
                             <ThemeChooser />
                         </NavItem>

@@ -136,7 +136,7 @@ class Conversations extends React.Component<Props, State> {
                                         <Col xs={4} sm={2} className='user-from-text' style={{paddingRight: 0}}>
                                             {lastMessage.from.username}:
                                         </Col>
-                                        <Col xs={8} sm={8}>
+                                        <Col xs={8} sm={8} style={{paddingLeft: 10}}>
                                             <div className={textClass} style={style.text}>{lastMessage.text}</div>
                                         </Col>
                                     </Row>
@@ -164,7 +164,7 @@ class Conversations extends React.Component<Props, State> {
                                 <Col xs={4} sm={2} className='user-from-text'>
                                     {lastMessage.from.username}:
                                 </Col>
-                                <Col xs={8} sm={8} style={{paddingLeft: 5}}>
+                                <Col xs={8} sm={8} style={{paddingLeft: 10}}>
                                     <div className={textClass} style={style.text}>{lastMessage.text}</div>
                                 </Col>
                             </Row>
