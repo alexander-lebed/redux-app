@@ -3,6 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
     context: __dirname,
+    mode: 'development',
     entry: {
         javascript: './src/app.js',
         html: './index.html'
