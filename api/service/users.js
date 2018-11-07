@@ -1,8 +1,30 @@
 const express = require("express");
 const router = express.Router();
 const WebSocket = require('ws');
+const nodemailer = require('nodemailer');
 const User = require('../model/users');
 
+// SMTP transport
+const transporter = nodemailer.createTransport({
+    pool: true,
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'wtalk.messenger@gmail.com',
+        pass: 'WTalk12345',
+    }
+});
+// verify connection
+transporter.verify((error) => {
+    if (error) {
+        console.log(`--- SMTP server error: ${error}`);
+    } else {
+        console.log('--- SMTP server is ready');
+    }
+});
+
+// WebSocket
 const wss = new WebSocket.Server({ noServer: true });
 const clients = new Map();
 
@@ -30,20 +52,6 @@ wss.on('connection', (ws, request) => {
 // POST user        .../api/users  +  payload
 // PUT user         .../api/users/{id}  +  payload
 // DELETE user      .../api/users/{id}
-
-const broadcastAllUsers = () => {
-    User.find((err, users) => {
-        if (err) {
-            console.log(`--- error on broadcast all users: ${err}`);
-        } else {
-            clients.forEach(client => {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify(users));
-                }
-            })
-        }
-    });
-};
 
 router.get('/', (req, res, next) => {
     if (req.query.userId) {
@@ -78,6 +86,7 @@ router.post('/', (req, res, next) => {
             return next(err);
         } else {
             res.json(data);
+            sendEmail(payload);
             broadcastAllUsers();
         }
     });
@@ -111,7 +120,100 @@ router.delete('/', (req, res, next) => {
     });
 });
 
+
 module.exports = {
     ws: wss,
     router: router
+};
+
+
+const broadcastAllUsers = () => {
+    User.find((err, users) => {
+        if (err) {
+            console.log(`--- error on broadcast all users: ${err}`);
+        } else {
+            clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify(users));
+                }
+            })
+        }
+    });
+};
+
+const sendEmail = (user) => {
+    const mailOptions = {
+        from: '"WTalk Messenger" <wtalk.messenger@gmail.com>',
+        to: user.email,
+        subject: 'Sign up on WTalk messenger',
+        html: getSignUpHTML(user.username)
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log(`--- Email sent: ${info.messageId}`);
+    });
+};
+
+const getSignUpHTML = (username) => {
+    return `<div style="background:#f1f1f1;height:100%;line-height:1.6;;width:100%!important">
+<table style="width:100%" bgcolor="#f1f1f1">
+	<tbody>
+		<tr>
+		<td style="clear:both!important;display:block!important;margin:0 auto;max-width:600px!important;padding:0;" valign="top">
+			<div style="display:block;margin:0 auto;max-width:600px;padding:10px">
+				<div style="margin-bottom: 10px">
+				    <table width="100%" cellPadding="0" cellSpacing="0">
+				        <tbody>
+				        	<tr>
+					            <td style="text-align:center;" align="center" valign="top">
+					                <a href="https://wtalk.herokuapp.com" target="_blank">
+					                	<img src="https://i.postimg.cc/MpWqP6FW/favicon.png" height="80" alt="WTalk">
+					                </a>
+					            </td>
+				        	</tr>
+				    	</tbody>
+					</table>
+				</div>
+			<table width="100%" cellPadding="0" cellSpacing="0" style="background:#fff;border-radius:3px;border:1px solid #e9e9e9;width:100%" bgcolor="#fff">
+			    <tbody>
+			    	<tr>
+			        <td style="margin:0;padding:30px;" valign="top">
+			            <table width="100%" cellPadding="0" cellSpacing="0" style="">
+			                <tbody>
+			                	<tr>
+			                		<td valign="top">
+				                        <h2 style="font-size:24px;font-weight:400;line-height:1.4;">
+				                        	Hello ${username},
+				                        </h2>
+				                        Thank you for signing up at <a href="https://wtalk.herokuapp.com" target="_blank">WTalk</a>.
+				                    </td>
+				                </tr>
+			            	</tbody>
+			            </table>
+			        </td>
+			    	</tr>
+				</tbody>
+			</table>
+
+			<div style="clear:both;color:grey;width:100%">
+			    <table width="100%">
+			        <tbody>
+			        	<tr>
+						<td style="font-size:12px;margin:0;padding:20px 0;text-align:center;" align="center" valign="top">
+							Have questions? Please contact us at <a href="mailto:wtalk.messenger@gmail.com" style="color:#00b386;text-decoration:underline" target="_blank">wtalk.messenger@gmail.com</a>
+							<br>
+							<a href="https://wtalk.herokuapp.com" style="color:#00b386;font-size:12px;text-decoration:underline" target="_blank">WTalk.herokuapp.com</a> - Simple Web Messenger
+			            </td>
+				        </tr>
+				    </tbody>
+				</table>
+			</div>
+		</div>
+		</td>
+		</tr>
+	</tbody>
+</table>
+</div>`
 };

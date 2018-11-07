@@ -19,6 +19,7 @@
   },
   "jest": {
     "collectCoverage": true,
+    "testURL": "http://localhost/",
     "setupTestFrameworkScriptFile": "<rootDir>/src/helpers/configureEnzyme.js"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "mongoose": "5.0.17",
+    "nodemailer": "^4.6.8",
     "query-string": "^5.0.1",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
