@@ -61,8 +61,8 @@ class Conversation extends React.Component<Props, State> {
             this.props.getConversationsByUser(this.props.user._id);
         }
         this.getConversation();
-        setTimeout(() => this.scrollConversationToBottom(), 50);
-        setTimeout(() => this.props.markAsRead(), 500);
+        setTimeout(() => this.scrollConversationToBottom(), 500);
+        setTimeout(() => this.props.markAsRead(), 800);
     }
 
     componentDidUpdate(prevProps: Props) {
