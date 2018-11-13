@@ -16,6 +16,9 @@
     "jest": true
   },
   "settings": {
+    "react": {
+      "version": "16.3.2"
+    },
     "flowtype": {
       "onlyFilesWithFlowAnnotation": true
     }

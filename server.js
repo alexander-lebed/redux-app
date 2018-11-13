@@ -10,13 +10,16 @@ const conversationApi = require('./api/service/conversations');
 
 const app           = express();
 const router        = express.Router();
-const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger'; // mongodb://localhost/gorodovoydb
+const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/messenger';
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000;
 
 console.log(`--- ${isDevelopment ? 'development' : 'production'} mode`);
 
-mongoose.connect(mongoDB);
+mongoose.connect(mongoDB, { // reconnect if internet connection was interrupted
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 1000
+});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -27,20 +30,20 @@ if (!isDevelopment) {
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-// to prevent errors from Cross Origin Resource Sharing, we will set our headers to allow CORS with middleware like so:
+// set headers to allow Cross Origin Resource Sharing
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
-    //and remove caching so we get the most recent data
+    // remove caching to get the most recent data
     res.setHeader('Cache-Control', 'no-cache');
     next();
 });
 
-// now  we can set the route path & initialize the API
+// set route path & initialize API
 router.get('/', (req, res) => {
-    res.json({ message: 'API initialized!'});
+    res.json({ message: 'API initialized'});
 });
 
 router.use('/users', userApi.router);
@@ -54,7 +57,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'))
 });
 
-// starts the server and listens for requests
+// start the server and listen for requests
 const server = app.listen(port, () => {
     console.log(`Api running on port ${port}`);
 });

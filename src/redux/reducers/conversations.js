@@ -206,9 +206,10 @@ export function deleteConversation(convId: string) {
 export function initConversationsWs() {
     return (dispatch: Dispatch, getState: Function) => {
 
-        const websocket = new WebSocket(`${process.env.WS_ADDRESS}/conversations?${getState().authentication.user._id}_${Date.now()}`);
+        const hash = `${getState().authentication.user._id}_${Date.now()}`;
+        const webSocket = new WebSocket(`${process.env.WS_ADDRESS}/conversations?${hash}`);
 
-        websocket.onmessage = (event) => {
+        webSocket.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
                 if (data.conversation) {

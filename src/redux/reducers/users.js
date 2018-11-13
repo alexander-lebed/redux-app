@@ -128,9 +128,10 @@ export function deleteUser(userId: string) {
 export function initUsersWs() {
     return (dispatch: Dispatch, getState: Function) => {
 
-        const websocket = new WebSocket(`${process.env.WS_ADDRESS}/users?${getState().authentication.user._id}_${Date.now()}`);
+        const hash = `${getState().authentication.user._id}_${Date.now()}`;
+        const webSocket = new WebSocket(`${process.env.WS_ADDRESS}/users?${hash}`);
 
-        websocket.onmessage = (event) => {
+        webSocket.onmessage = (event) => {
             try {
                 const users = JSON.parse(event.data);
                 const sorted = _.orderBy(users, ['username']);

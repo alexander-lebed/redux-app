@@ -103,6 +103,9 @@ export type TranslationType = {
         TODAY: string,
         TOMORROW: string,
         YESTERDAY: string,
+    },
+    OTHER: {
+        NO_CONNECTION: string
     }
 }
 
@@ -208,6 +211,9 @@ const translation: TranslationType = {
         TODAY: 'today',
         TOMORROW: 'tomorrow',
         YESTERDAY: 'yesterday',
+    },
+    OTHER: {
+        NO_CONNECTION: 'It seems that you are offline. Please check your internet connection'
     }
 };
 

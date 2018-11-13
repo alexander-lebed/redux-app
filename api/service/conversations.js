@@ -4,6 +4,10 @@ const router = express.Router();
 const WebSocket = require('ws');
 const Conversation = require('../model/conversations');
 
+/*
+WebSocket note:
+We update relevant WS clients on any update of current conversation or his conversation list
+*/
 const wss = new WebSocket.Server({ noServer: true });
 const clients = new Map();
 
@@ -116,7 +120,7 @@ router.put('/', (req, res, next) => {
 
                     const connections = [];
                     clients.forEach((ws, key) => {
-                        const userId = key.substring(0, key.indexOf('_'));
+                        const userId = key.substring(0, key.indexOf('_')); // get user ID from hash
                         connections.push({userId, ws});
                     });
 

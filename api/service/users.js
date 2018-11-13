@@ -24,7 +24,10 @@ transporter.verify((error) => {
     }
 });
 
-// WebSocket
+/*
+WebSocket note:
+We update all WS clients on any user update
+*/
 const wss = new WebSocket.Server({ noServer: true });
 const clients = new Map();
 

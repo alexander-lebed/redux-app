@@ -1,6 +1,6 @@
 ## Web Messenger
 
-MERN (MongoDB, Express, React, Node.js) + react-redux, react-router
+MERN (MongoDB, Express, React, Node.js)
 
 
 

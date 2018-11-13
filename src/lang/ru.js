@@ -104,6 +104,9 @@ const translation: Translation = {
         TODAY: 'сегодня',
         TOMORROW: 'завтра',
         YESTERDAY: 'вчера',
+    },
+    OTHER: {
+        NO_CONNECTION: 'Пожалуйста проверьте соединение с интернетом'
     }
 };
 
