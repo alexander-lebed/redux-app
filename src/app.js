@@ -17,6 +17,7 @@ import Conversation from './components/Messages/Conversation';
 import CreateConversation from './components/Messages/CreateConversation';
 import People from './components/People/People';
 import Profile from './components/Profile/Profile';
+import PageNotFound from './components/PageNotFound';
 import Alerts from './components/Alerts';
 import '../css/react-select.scss';
 import '../css/emoji-mart.scss';
@@ -47,6 +48,7 @@ async function init() {
                                         <PrivateRoute exact path="/people" component={People} />
                                         <PrivateRoute path="/profile" component={Profile} />
                                         <Route exact path="/redirect" component={Spinner} />
+                                        <Route component={PageNotFound} />
                                     </Switch>
                                 </div>
                             </div>

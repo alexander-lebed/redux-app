@@ -14,9 +14,9 @@ type Props = {
 }
 
 /*
-Load required data
-Authorize user
-Alert if no connection
+    1. Load required data
+    2. Authorize user
+    3. Alert if no connection
  */
 class Startup extends React.Component<Props, void> {
 

@@ -106,7 +106,9 @@ const translation: Translation = {
         YESTERDAY: 'вчера',
     },
     OTHER: {
-        NO_CONNECTION: 'Пожалуйста проверьте соединение с интернетом'
+        NO_CONNECTION: 'Пожалуйста проверьте соединение с интернетом',
+        HOME: 'Главную',
+        PAGE_NOT_FOUND: (homeLink) => <span>Я не могу найти то, что вы ищете. Может перейдем на {homeLink} страницу?</span>
     }
 };
 

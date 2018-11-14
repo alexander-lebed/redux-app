@@ -105,7 +105,9 @@ export type TranslationType = {
         YESTERDAY: string,
     },
     OTHER: {
-        NO_CONNECTION: string
+        NO_CONNECTION: string,
+        HOME: string,
+        PAGE_NOT_FOUND: (homeLink: any) => any
     }
 }
 
@@ -213,7 +215,9 @@ const translation: TranslationType = {
         YESTERDAY: 'yesterday',
     },
     OTHER: {
-        NO_CONNECTION: 'It seems that you are offline. Please check your internet connection'
+        NO_CONNECTION: 'It seems that you are offline. Please check your internet connection',
+        HOME: 'Home',
+        PAGE_NOT_FOUND: (homeLink) => <span>I couldn't find what you are looking for. How about going to the {homeLink} page?</span>
     }
 };
 
