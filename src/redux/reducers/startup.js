@@ -119,7 +119,7 @@ export function showBrowserNotifications(conversations, dispatch, getState) {
             .then(() => {
                 const blockedNotifications = getState().startup.blockedNotifications;
                 if (!blockedNotifications.includes(messageHash)) {
-                    // if hash wasn't saved it means user was out of the Messenger => show notification
+                    // if hash wasn't saved it means user was out of the messenger => show notification
 
                     const beepSound = new Audio(receiveMessageDataURI);
                     beepSound.play();

@@ -1,5 +1,5 @@
 
-export const DOCUMENT_TITLE = 'Messenger';
+export const DOCUMENT_TITLE = 'WTalk';
 
 export const USERS_URL = process.env.API_HOST + '/users';
 export const CONVERSATIONS_URL = process.env.API_HOST + '/conversations';

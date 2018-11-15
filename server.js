@@ -41,15 +41,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// set route path & initialize API
-router.get('/', (req, res) => {
-    res.json({ message: 'API initialized'});
-});
-
 router.use('/users', userApi.router);
 router.use('/conversations', conversationApi.router);
-
-// use our router configuration when we call /api
+// use router configuration for API
 app.use('/api', router);
 
 // serve index.html to the client
@@ -59,7 +53,7 @@ app.get('*', (req, res) => {
 
 // start the server and listen for requests
 const server = app.listen(port, () => {
-    console.log(`--- Api running on port ${port}`);
+    console.log(`--- API running on port ${port}`);
 });
 
 // apply web sockets with different paths
