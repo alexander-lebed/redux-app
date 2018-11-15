@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js outdated
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\ImageMagick-7.0.3-Q16;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Java\jdk1.8.0_51\bin;D:\app\user\product\11.2.0\client_1\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;d:\dev\tool\maven\\bin;d:\dev\tool\ant\\bin;C:\Program Files\TortoiseSVN\bin;c:\Ruby200-x64\bin;C:\Program Files\MongoDB\Server\3.0\bin;C:\Program Files (x86)\Heroku\bin;C:\Program Files (x86)\git\cmd;C:\Program Files\MongoDB\Server\3.2\bin;C:\Users\user\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\TortoiseHg\;C:\PHP7;C:\Program Files\Git\cmd;C:\Gradle\gradle-4.2\bin;C:\Users\user\AppData\Local\Programs\Python\Python36;C:\Users\user\AppData\Local\Programs\Python\Python36\Lib;C:\Users\user\AppData\Local\Programs\Python\Python36\DLLs;C:\Program Files\MongoDB\Server\3.4\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\ProgramData\chocolatey\bin;;C:\WINDOWS\System32\OpenSSH\;C:\Ruby24-x64\bin;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Users\user\AppData\Roaming\npm;C:\Users\user\AppData\Roaming\nvm;C:\PHP7;C:\Program Files\Heroku\bin;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Users\user\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\user\AppData\Local\Yarn\bin;
+  C:\Users\user\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\user\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\ImageMagick-7.0.3-Q16;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Java\jdk1.8.0_51\bin;D:\app\user\product\11.2.0\client_1\bin;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;D:\dev\tool\maven\bin;D:\dev\tool\ant\bin;C:\Program Files\TortoiseSVN\bin;C:\Ruby200-x64\bin;C:\Program Files\MongoDB\Server\3.0\bin;C:\Program Files (x86)\Heroku\bin;C:\Program Files (x86)\git\cmd;C:\Program Files\MongoDB\Server\3.2\bin;C:\Users\user\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\TortoiseHg;C:\PHP7;C:\Program Files\Git\cmd;C:\Gradle\gradle-4.2\bin;C:\Users\user\AppData\Local\Programs\Python\Python36;C:\Users\user\AppData\Local\Programs\Python\Python36\Lib;C:\Users\user\AppData\Local\Programs\Python\Python36\DLLs;C:\Program Files\MongoDB\Server\3.4\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit;C:\ProgramData\chocolatey\bin;C:\WINDOWS\System32\OpenSSH;C:\Ruby24-x64\bin;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Users\user\AppData\Roaming\npm;C:\Users\user\AppData\Roaming\nvm;C:\PHP7;C:\Program Files\Heroku\bin;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Users\user\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\user\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.3.2
@@ -15,7 +15,7 @@ Platform:
 
 npm manifest: 
   {
-    "name": "web-messenger",
+    "name": "wtalk-messenger",
     "version": "1.0.0",
     "description": "Web Messanger (MERN and Redux)",
     "main": "index.js",
@@ -23,7 +23,7 @@ npm manifest:
     "license": "UNLICENSED",
     "scripts": {
       "build": "webpack --progress --colors --watch",
-      "postinstall": "IF %NODE_ENV% == production (webpack --config webpack.config.prod.js --progress --optimize-minimize)",
+      "postinstall": "webpack --config webpack.config.prod.js --progress --optimize-minimize",
       "start": "node server.js",
       "dev": "nf start -j Procfile.dev",
       "start-ui": "webpack-dev-server --open",
@@ -33,20 +33,18 @@ npm manifest:
       "lint-fix": "eslint src --fix --cache",
       "flow": "flow"
     },
-    "engines": {
-      "node": "9.9.0",
-    },
-      "jest": {
+    "jest": {
       "collectCoverage": true,
+      "testURL": "http://localhost/",
       "setupTestFrameworkScriptFile": "<rootDir>/src/helpers/configureEnzyme.js"
     },
     "dependencies": {
       "axios": "^0.18.0",
       "crypto-js": "^3.1.9-1",
-      "emoji-mart": "^2.6.0",
+      "emoji-mart": "^2.8.1",
       "express": "^4.16.3",
       "font-awesome": "^4.7.0",
-      "foreman": "^2.0.0",
+      "foreman": "3.0.1",
       "hellojs": "^2.0.0-4",
       "history": "^4.7.2",
       "http": "^0.0.0",
@@ -54,13 +52,15 @@ npm manifest:
       "lodash": "^4.17.10",
       "moment": "^2.22.1",
       "mongoose": "5.0.17",
+      "nodemailer": "^4.6.8",
       "query-string": "^5.0.1",
-      "react": "^16.3.2",
+      "react": "^16.6.3",
       "react-bootstrap": "^0.32.1",
       "react-bootstrap-theme-switcher": "^1.0.7",
-      "react-dom": "^16.3.2",
+      "react-detect-offline": "^2.1.2",
+      "react-dom": "^16.6.3",
       "react-linkify": "^0.2.2",
-      "react-redux": "^5.0.7",
+      "react-redux": "^5.1.0",
       "react-router": "^4.2.0",
       "react-router-bootstrap": "^0.24.4",
       "react-router-dom": "^4.2.2",
@@ -90,7 +90,7 @@ npm manifest:
       "body-parser": "^1.18.2",
       "css-loader": "^1.0.1",
       "enzyme": "^3.3.0",
-      "enzyme-adapter-react-16": "^1.1.1",
+      "enzyme-adapter-react-16": "^1.6.0",
       "eslint": "^4.19.1",
       "eslint-loader": "^1.9.0",
       "eslint-plugin-flowtype": "^2.46.3",
@@ -98,20 +98,20 @@ npm manifest:
       "eslint-plugin-jsx-a11y": "^6.0.3",
       "eslint-plugin-react": "^7.7.0",
       "file-loader": "^1.1.11",
-      "flow-bin": "^0.71.0",
+      "flow-bin": "^0.71.0",yarn
       "flow-typed": "^2.4.0",
       "jest": "^22.4.3",
       "node-sass": "^4.9.3",
       "nodemon": "1.17.4",
-      "react-test-renderer": "^16.3.2",
+      "react-test-renderer": "^16.6.3",
       "redux-mock-store": "^1.5.1",
       "sass-loader": "^7.1.0",
       "sinon": "^4.4.0",
       "style-loader": "^0.22.0",
       "url-loader": "^1.0.1",
-      "webpack": "^4.25.0",
+      "webpack": "^4.25.1",
       "webpack-cli": "^3.1.2",
-      "webpack-dev-server": "2.11.1"
+      "webpack-dev-server": "3.1.10"
     }
   }
 
@@ -490,6 +490,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-2.0.0.tgz#c36aeccba563b89ceb556f3690f0b1d9e3547f7f"
     dependencies:
       string-width "^2.0.0"
+  
+  ansi-colors@^3.0.0:
+    version "3.2.1"
+    resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-3.2.1.tgz#9638047e4213f3428a11944a7d4b31cba0a3ff95"
   
   ansi-escapes@^3.0.0:
     version "3.1.0"
@@ -1927,7 +1931,7 @@ Lockfile:
     dependencies:
       delayed-stream "~1.0.0"
   
-  commander@^2.11.0:
+  commander@^2.11.0, commander@^2.15.1:
     version "2.19.0"
     resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
   
@@ -1938,12 +1942,6 @@ Lockfile:
   commander@~2.17.1:
     version "2.17.1"
     resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
-  
-  commander@~2.9.0:
-    version "2.9.0"
-    resolved "http://registry.npmjs.org/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
-    dependencies:
-      graceful-readlink ">= 1.0.0"
   
   commondir@^1.0.1:
     version "1.0.1"
@@ -2233,7 +2231,7 @@ Lockfile:
     version "0.1.4"
     resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   
-  debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
+  debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
     version "2.6.9"
     resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
     dependencies:
@@ -2245,7 +2243,7 @@ Lockfile:
     dependencies:
       ms "2.0.0"
   
-  debug@^3.1.0:
+  debug@^3.1.0, debug@^3.2.5:
     version "3.2.6"
     resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
     dependencies:
@@ -2282,6 +2280,13 @@ Lockfile:
   deep-is@~0.1.3:
     version "0.1.3"
     resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
+  
+  default-gateway@^2.6.0:
+    version "2.7.2"
+    resolved "https://registry.yarnpkg.com/default-gateway/-/default-gateway-2.7.2.tgz#b7ef339e5e024b045467af403d50348db4642d0f"
+    dependencies:
+      execa "^0.10.0"
+      ip-regex "^2.1.0"
   
   default-require-extensions@^1.0.0:
     version "1.0.0"
@@ -2535,9 +2540,9 @@ Lockfile:
       minimalistic-assert "^1.0.0"
       minimalistic-crypto-utils "^1.0.0"
   
-  emoji-mart@^2.6.0:
-    version "2.8.1"
-    resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-2.8.1.tgz#4ffcb807237989a953085c80a6553d21f1effc62"
+  emoji-mart@^2.8.1:
+    version "2.9.1"
+    resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-2.9.1.tgz#7796bb8a3eed2238763faaa5236f6b817aff565e"
   
   emoji-regex@^6.5.1:
     version "6.5.1"
@@ -2569,25 +2574,26 @@ Lockfile:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   
-  enzyme-adapter-react-16@^1.1.1:
-    version "1.6.0"
-    resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.6.0.tgz#3fca28d3c32f3ff427495380fe2dd51494689073"
+  enzyme-adapter-react-16@^1.6.0:
+    version "1.7.0"
+    resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.7.0.tgz#90344395a89624edbe7f0e443bc19fef62bf1f9f"
     dependencies:
-      enzyme-adapter-utils "^1.8.0"
+      enzyme-adapter-utils "^1.9.0"
       function.prototype.name "^1.1.0"
       object.assign "^4.1.0"
       object.values "^1.0.4"
       prop-types "^15.6.2"
-      react-is "^16.5.2"
+      react-is "^16.6.1"
       react-test-renderer "^16.0.0-0"
   
-  enzyme-adapter-utils@^1.8.0:
-    version "1.8.1"
-    resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.8.1.tgz#a927d840ce2c14b42892a533aec836809d4e022b"
+  enzyme-adapter-utils@^1.9.0:
+    version "1.9.0"
+    resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.9.0.tgz#3997c20f3387fdcd932b155b3740829ea10aa86c"
     dependencies:
       function.prototype.name "^1.1.0"
       object.assign "^4.1.0"
       prop-types "^15.6.2"
+      semver "^5.6.0"
   
   enzyme@^3.3.0:
     version "3.7.0"
@@ -2860,10 +2866,6 @@ Lockfile:
       stream-combiner "^0.2.2"
       through "^2.3.8"
   
-  eventemitter3@1.x.x:
-    version "1.2.0"
-    resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
-  
   eventemitter3@^3.0.0:
     version "3.1.0"
     resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
@@ -2872,11 +2874,11 @@ Lockfile:
     version "1.1.1"
     resolved "http://registry.npmjs.org/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
   
-  eventsource@0.1.6:
-    version "0.1.6"
-    resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-0.1.6.tgz#0acede849ed7dd1ccc32c811bb11b944d4f29232"
+  eventsource@^1.0.7:
+    version "1.0.7"
+    resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-1.0.7.tgz#8fbc72c93fcd34088090bc0a4e64f4b5cee6d8d0"
     dependencies:
-      original ">=0.0.5"
+      original "^1.0.0"
   
   evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
     version "1.0.3"
@@ -3067,7 +3069,7 @@ Lockfile:
     dependencies:
       websocket-driver ">=0.5.1"
   
-  faye-websocket@~0.11.0:
+  faye-websocket@~0.11.1:
     version "0.11.1"
     resolved "https://registry.yarnpkg.com/faye-websocket/-/faye-websocket-0.11.1.tgz#f0efe18c4f56e4f40afc7e06c719fd5ee6188f38"
     dependencies:
@@ -3250,14 +3252,14 @@ Lockfile:
     dependencies:
       for-in "^1.0.1"
   
-  foreman@^2.0.0:
-    version "2.0.0"
-    resolved "http://registry.npmjs.org/foreman/-/foreman-2.0.0.tgz#00acd20f9dbbe2f79d04697bcca2a77ee00ee031"
+  foreman@3.0.1:
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/foreman/-/foreman-3.0.1.tgz#805f28afc5a4bbaf08dbb1f5018c557dcbb8a410"
     dependencies:
-      commander "~2.9.0"
-      http-proxy "~1.11.1"
+      commander "^2.15.1"
+      http-proxy "^1.17.0"
       mustache "^2.2.1"
-      shell-quote "~1.4.2"
+      shell-quote "^1.6.1"
   
   forever-agent@~0.6.1:
     version "0.6.1"
@@ -3513,10 +3515,6 @@ Lockfile:
     version "4.1.15"
     resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   
-  "graceful-readlink@>= 1.0.0":
-    version "1.0.1"
-    resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
-  
   growly@^1.3.0:
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
@@ -3654,7 +3652,7 @@ Lockfile:
     version "2.5.5"
     resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   
-  hoist-non-react-statics@^3.0.0:
+  hoist-non-react-statics@^3.1.0:
     version "3.1.0"
     resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.1.0.tgz#42414ccdfff019cd2168168be998c7b3bd5245c0"
     dependencies:
@@ -3725,29 +3723,22 @@ Lockfile:
       agent-base "4"
       debug "3.1.0"
   
-  http-proxy-middleware@~0.17.4:
-    version "0.17.4"
-    resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-0.17.4.tgz#642e8848851d66f09d4f124912846dbaeb41b833"
+  http-proxy-middleware@~0.18.0:
+    version "0.18.0"
+    resolved "http://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-0.18.0.tgz#0987e6bb5a5606e5a69168d8f967a87f15dd8aab"
     dependencies:
       http-proxy "^1.16.2"
-      is-glob "^3.1.0"
-      lodash "^4.17.2"
-      micromatch "^2.3.11"
+      is-glob "^4.0.0"
+      lodash "^4.17.5"
+      micromatch "^3.1.9"
   
-  http-proxy@^1.16.2:
+  http-proxy@^1.16.2, http-proxy@^1.17.0:
     version "1.17.0"
     resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.17.0.tgz#7ad38494658f84605e2f6db4436df410f4e5be9a"
     dependencies:
       eventemitter3 "^3.0.0"
       follow-redirects "^1.0.0"
       requires-port "^1.0.0"
-  
-  http-proxy@~1.11.1:
-    version "1.11.3"
-    resolved "http://registry.npmjs.org/http-proxy/-/http-proxy-1.11.3.tgz#1915dc888751e2a6bf3c2abfcb1808fa86c72353"
-    dependencies:
-      eventemitter3 "1.x.x"
-      requires-port "0.x.x"
   
   http-signature@~1.2.0:
     version "1.2.0"
@@ -3894,11 +3885,12 @@ Lockfile:
       strip-ansi "^4.0.0"
       through "^2.3.6"
   
-  internal-ip@1.2.0:
-    version "1.2.0"
-    resolved "https://registry.yarnpkg.com/internal-ip/-/internal-ip-1.2.0.tgz#ae9fbf93b984878785d50a8de1b356956058cf5c"
+  internal-ip@^3.0.1:
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/internal-ip/-/internal-ip-3.0.1.tgz#df5c99876e1d2eb2ea2d74f520e3f669a00ece27"
     dependencies:
-      meow "^3.3.0"
+      default-gateway "^2.6.0"
+      ipaddr.js "^1.5.2"
   
   interpret@^1.1.0:
     version "1.1.0"
@@ -3918,6 +3910,10 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   
+  ip-regex@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-2.1.0.tgz#fa78bf5d2e6913c911ce9f819ee5146bb6d844e9"
+  
   ip@^1.1.0, ip@^1.1.5:
     version "1.1.5"
     resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -3925,6 +3921,10 @@ Lockfile:
   ipaddr.js@1.8.0:
     version "1.8.0"
     resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.8.0.tgz#eaa33d6ddd7ace8f7f6fe0c9ca0440e706738b1e"
+  
+  ipaddr.js@^1.5.2:
+    version "1.8.1"
+    resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.8.1.tgz#fa4b79fa47fd3def5e3b159825161c0a519c9427"
   
   is-accessor-descriptor@^0.1.6:
     version "0.1.6"
@@ -4862,7 +4862,7 @@ Lockfile:
     version "4.1.1"
     resolved "https://registry.yarnpkg.com/lodash.tail/-/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
   
-  lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.10:
+  lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.10:
     version "4.17.11"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   
@@ -4983,7 +4983,7 @@ Lockfile:
       errno "^0.1.3"
       readable-stream "^2.0.1"
   
-  meow@^3.3.0, meow@^3.7.0:
+  meow@^3.7.0:
     version "3.7.0"
     resolved "http://registry.npmjs.org/meow/-/meow-3.7.0.tgz#72cb668b425228290abbfa856892587308a801fb"
     dependencies:
@@ -5034,7 +5034,7 @@ Lockfile:
       parse-glob "^3.0.4"
       regex-cache "^0.4.2"
   
-  micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.8:
+  micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.8, micromatch@^3.1.9:
     version "3.1.10"
     resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.10.tgz#70859bc95c9840952f359a068a3fc49f9ecfac23"
     dependencies:
@@ -5073,11 +5073,7 @@ Lockfile:
     version "1.4.1"
     resolved "https://registry.yarnpkg.com/mime/-/mime-1.4.1.tgz#121f9ebc49e3766f311a76e1fa1c8003c4b03aa6"
   
-  mime@^1.5.0:
-    version "1.6.0"
-    resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
-  
-  mime@^2.0.3:
+  mime@^2.0.3, mime@^2.3.1:
     version "2.3.1"
     resolved "https://registry.yarnpkg.com/mime/-/mime-2.3.1.tgz#b1621c54d63b97c47d3cfe7f7215f7d64517c369"
   
@@ -5424,6 +5420,10 @@ Lockfile:
       stdout-stream "^1.4.0"
       "true-case-path" "^1.0.2"
   
+  nodemailer@^4.6.8:
+    version "4.6.8"
+    resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-4.6.8.tgz#f82fb407828bf2e76d92acc34b823d83e774f89c"
+  
   nodemon@1.17.4:
     version "1.17.4"
     resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.17.4.tgz#243ff9c69ffbf1175f2460f9b023f35a072c15e9"
@@ -5655,7 +5655,7 @@ Lockfile:
       type-check "~0.3.2"
       wordwrap "~1.0.0"
   
-  original@>=0.0.5:
+  original@^1.0.0:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/original/-/original-1.0.2.tgz#e442a61cffe1c5fd20a65f3261c26663b303f25f"
     dependencies:
@@ -6235,14 +6235,18 @@ Lockfile:
       uncontrollable "^5.0.0"
       warning "^3.0.0"
   
-  react-dom@^16.3.2:
-    version "16.6.0"
-    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.6.0.tgz#6375b8391e019a632a89a0988bce85f0cc87a92f"
+  react-detect-offline@^2.1.2:
+    version "2.1.2"
+    resolved "https://registry.yarnpkg.com/react-detect-offline/-/react-detect-offline-2.1.2.tgz#1827b1db88c8ae40ca70dfd995dfb0aff702126b"
+  
+  react-dom@^16.6.3:
+    version "16.6.3"
+    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.6.3.tgz#8fa7ba6883c85211b8da2d0efeffc9d3825cccc0"
     dependencies:
       loose-envify "^1.1.0"
       object-assign "^4.1.1"
       prop-types "^15.6.2"
-      scheduler "^0.10.0"
+      scheduler "^0.11.2"
   
   react-input-autosize@^2.1.2:
     version "2.2.1"
@@ -6250,9 +6254,13 @@ Lockfile:
     dependencies:
       prop-types "^15.5.8"
   
-  react-is@^16.3.2, react-is@^16.5.2, react-is@^16.6.0:
+  react-is@^16.3.2, react-is@^16.6.0:
     version "16.6.0"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.0.tgz#456645144581a6e99f6816ae2bd24ee94bdd0c01"
+  
+  react-is@^16.6.1, react-is@^16.6.3:
+    version "16.6.3"
+    resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.3.tgz#d2d7462fcfcbe6ec0da56ad69047e47e56e7eac0"
   
   react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
     version "3.0.4"
@@ -6283,12 +6291,12 @@ Lockfile:
     dependencies:
       warning "^3.0.0"
   
-  react-redux@^5.0.7:
-    version "5.1.0"
-    resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.1.0.tgz#948b1e2686473d1999092bcfb32d0dc43d33f667"
+  react-redux@^5.1.0:
+    version "5.1.1"
+    resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.1.1.tgz#88e368682c7fa80e34e055cd7ac56f5936b0f52f"
     dependencies:
       "@babel/runtime" "^7.1.2"
-      hoist-non-react-statics "^3.0.0"
+      hoist-non-react-statics "^3.1.0"
       invariant "^2.2.4"
       loose-envify "^1.1.0"
       prop-types "^15.6.1"
@@ -6332,7 +6340,7 @@ Lockfile:
       prop-types "^15.5.8"
       react-input-autosize "^2.1.2"
   
-  react-test-renderer@^16.0.0-0, react-test-renderer@^16.3.2:
+  react-test-renderer@^16.0.0-0:
     version "16.6.0"
     resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.6.0.tgz#fe490096bed55c3f4e92c023da3b89f9d03fceb3"
     dependencies:
@@ -6340,6 +6348,15 @@ Lockfile:
       prop-types "^15.6.2"
       react-is "^16.6.0"
       scheduler "^0.10.0"
+  
+  react-test-renderer@^16.6.3:
+    version "16.6.3"
+    resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.6.3.tgz#5f3a1a7d5c3379d46f7052b848b4b72e47c89f38"
+    dependencies:
+      object-assign "^4.1.1"
+      prop-types "^15.6.2"
+      react-is "^16.6.3"
+      scheduler "^0.11.2"
   
   react-transition-group@^2.0.0, react-transition-group@^2.2.0:
     version "2.5.0"
@@ -6350,14 +6367,14 @@ Lockfile:
       prop-types "^15.6.2"
       react-lifecycles-compat "^3.0.4"
   
-  react@^16.3.2:
-    version "16.6.0"
-    resolved "https://registry.yarnpkg.com/react/-/react-16.6.0.tgz#b34761cfaf3e30f5508bc732fb4736730b7da246"
+  react@^16.6.3:
+    version "16.6.3"
+    resolved "https://registry.yarnpkg.com/react/-/react-16.6.3.tgz#25d77c91911d6bbdd23db41e70fb094cc1e0871c"
     dependencies:
       loose-envify "^1.1.0"
       object-assign "^4.1.1"
       prop-types "^15.6.2"
-      scheduler "^0.10.0"
+      scheduler "^0.11.2"
   
   read-pkg-up@^1.0.1:
     version "1.0.1"
@@ -6639,10 +6656,6 @@ Lockfile:
       resolve-from "^2.0.0"
       semver "^5.1.0"
   
-  requires-port@0.x.x:
-    version "0.0.1"
-    resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-0.0.1.tgz#4b4414411d9df7c855995dd899a8c78a2951c16d"
-  
   requires-port@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
@@ -6804,6 +6817,13 @@ Lockfile:
       loose-envify "^1.1.0"
       object-assign "^4.1.1"
   
+  scheduler@^0.11.2:
+    version "0.11.2"
+    resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.11.2.tgz#a8db5399d06eba5abac51b705b7151d2319d33d3"
+    dependencies:
+      loose-envify "^1.1.0"
+      object-assign "^4.1.1"
+  
   schema-utils@^0.4.4, schema-utils@^0.4.5:
     version "0.4.7"
     resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.4.7.tgz#ba74f597d2be2ea880131746ee17d0a093c68187"
@@ -6842,7 +6862,7 @@ Lockfile:
     dependencies:
       semver "^5.0.3"
   
-  "semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0:
+  "semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
     version "5.6.0"
     resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   
@@ -6948,9 +6968,9 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   
-  shell-quote@~1.4.2:
-    version "1.4.3"
-    resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.4.3.tgz#952c44e0b1ed9013ef53958179cc643e8777466b"
+  shell-quote@^1.6.1:
+    version "1.6.1"
+    resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.6.1.tgz#f4781949cce402697127430ea3b3c5476f481767"
     dependencies:
       array-filter "~0.0.0"
       array-map "~0.0.0"
@@ -7022,16 +7042,16 @@ Lockfile:
       source-map-resolve "^0.5.0"
       use "^3.1.0"
   
-  sockjs-client@1.1.4:
-    version "1.1.4"
-    resolved "https://registry.yarnpkg.com/sockjs-client/-/sockjs-client-1.1.4.tgz#5babe386b775e4cf14e7520911452654016c8b12"
+  sockjs-client@1.3.0:
+    version "1.3.0"
+    resolved "https://registry.yarnpkg.com/sockjs-client/-/sockjs-client-1.3.0.tgz#12fc9d6cb663da5739d3dc5fb6e8687da95cb177"
     dependencies:
-      debug "^2.6.6"
-      eventsource "0.1.6"
-      faye-websocket "~0.11.0"
-      inherits "^2.0.1"
+      debug "^3.2.5"
+      eventsource "^1.0.7"
+      faye-websocket "~0.11.1"
+      inherits "^2.0.3"
       json3 "^3.3.2"
-      url-parse "^1.1.8"
+      url-parse "^1.4.3"
   
   sockjs@0.3.19:
     version "0.3.19"
@@ -7430,10 +7450,6 @@ Lockfile:
     version "1.0.3"
     resolved "https://registry.yarnpkg.com/thunky/-/thunky-1.0.3.tgz#f5df732453407b09191dae73e2a8cc73f381a826"
   
-  time-stamp@^2.0.0:
-    version "2.2.0"
-    resolved "https://registry.yarnpkg.com/time-stamp/-/time-stamp-2.2.0.tgz#917e0a66905688790ec7bbbde04046259af83f57"
-  
   timed-out@^4.0.0:
     version "4.0.1"
     resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-4.0.1.tgz#f32eacac5a175bea25d7fab565ab3ed8741ef56f"
@@ -7736,7 +7752,7 @@ Lockfile:
     dependencies:
       prepend-http "^1.0.1"
   
-  url-parse@^1.1.8, url-parse@^1.4.3:
+  url-parse@^1.4.3:
     version "1.4.3"
     resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
     dependencies:
@@ -7890,22 +7906,20 @@ Lockfile:
       v8-compile-cache "^2.0.2"
       yargs "^12.0.2"
   
-  webpack-dev-middleware@1.12.2:
-    version "1.12.2"
-    resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-1.12.2.tgz#f8fc1120ce3b4fc5680ceecb43d777966b21105e"
+  webpack-dev-middleware@3.4.0:
+    version "3.4.0"
+    resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-3.4.0.tgz#1132fecc9026fd90f0ecedac5cbff75d1fb45890"
     dependencies:
       memory-fs "~0.4.1"
-      mime "^1.5.0"
-      path-is-absolute "^1.0.0"
+      mime "^2.3.1"
       range-parser "^1.0.3"
-      time-stamp "^2.0.0"
+      webpack-log "^2.0.0"
   
-  webpack-dev-server@2.11.1:
-    version "2.11.1"
-    resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.11.1.tgz#6f9358a002db8403f016e336816f4485384e5ec0"
+  webpack-dev-server@3.1.10:
+    version "3.1.10"
+    resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-3.1.10.tgz#507411bee727ee8d2fdffdc621b66a64ab3dea2b"
     dependencies:
       ansi-html "0.0.7"
-      array-includes "^3.0.3"
       bonjour "^3.5.0"
       chokidar "^2.0.0"
       compression "^1.5.2"
@@ -7914,23 +7928,32 @@ Lockfile:
       del "^3.0.0"
       express "^4.16.2"
       html-entities "^1.2.0"
-      http-proxy-middleware "~0.17.4"
-      import-local "^1.0.0"
-      internal-ip "1.2.0"
+      http-proxy-middleware "~0.18.0"
+      import-local "^2.0.0"
+      internal-ip "^3.0.1"
       ip "^1.1.5"
       killable "^1.0.0"
       loglevel "^1.4.1"
       opn "^5.1.0"
       portfinder "^1.0.9"
+      schema-utils "^1.0.0"
       selfsigned "^1.9.1"
       serve-index "^1.7.2"
       sockjs "0.3.19"
-      sockjs-client "1.1.4"
+      sockjs-client "1.3.0"
       spdy "^3.4.1"
       strip-ansi "^3.0.0"
       supports-color "^5.1.0"
-      webpack-dev-middleware "1.12.2"
-      yargs "6.6.0"
+      webpack-dev-middleware "3.4.0"
+      webpack-log "^2.0.0"
+      yargs "12.0.2"
+  
+  webpack-log@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/webpack-log/-/webpack-log-2.0.0.tgz#5b7928e0637593f119d32f6227c1e0ac31e1b47f"
+    dependencies:
+      ansi-colors "^3.0.0"
+      uuid "^3.3.2"
   
   webpack-sources@^1.1.0, webpack-sources@^1.3.0:
     version "1.3.0"
@@ -7939,9 +7962,9 @@ Lockfile:
       source-list-map "^2.0.0"
       source-map "~0.6.1"
   
-  webpack@^4.25.0:
-    version "4.25.0"
-    resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.25.0.tgz#16dc8a35ab56d520c6fa609fbcd200f39e6c3a86"
+  webpack@^4.25.1:
+    version "4.25.1"
+    resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.25.1.tgz#4f459fbaea0f93440dc86c89f771bb3a837cfb6d"
     dependencies:
       "@webassemblyjs/ast" "1.7.11"
       "@webassemblyjs/helper-module-context" "1.7.11"
@@ -8137,12 +8160,6 @@ Lockfile:
       camelcase "^3.0.0"
       lodash.assign "^4.0.6"
   
-  yargs-parser@^4.2.0:
-    version "4.2.1"
-    resolved "http://registry.npmjs.org/yargs-parser/-/yargs-parser-4.2.1.tgz#29cceac0dc4f03c6c87b4a9f217dd18c9f74871c"
-    dependencies:
-      camelcase "^3.0.0"
-  
   yargs-parser@^5.0.0:
     version "5.0.0"
     resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-5.0.0.tgz#275ecf0d7ffe05c77e64e7c86e4cd94bf0e1228a"
@@ -8155,23 +8172,22 @@ Lockfile:
     dependencies:
       camelcase "^4.1.0"
   
-  yargs@6.6.0:
-    version "6.6.0"
-    resolved "http://registry.npmjs.org/yargs/-/yargs-6.6.0.tgz#782ec21ef403345f830a808ca3d513af56065208"
+  yargs@12.0.2, yargs@^12.0.2:
+    version "12.0.2"
+    resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.2.tgz#fe58234369392af33ecbef53819171eff0f5aadc"
     dependencies:
-      camelcase "^3.0.0"
-      cliui "^3.2.0"
-      decamelize "^1.1.1"
+      cliui "^4.0.0"
+      decamelize "^2.0.0"
+      find-up "^3.0.0"
       get-caller-file "^1.0.1"
-      os-locale "^1.4.0"
-      read-pkg-up "^1.0.1"
+      os-locale "^3.0.0"
       require-directory "^2.1.1"
       require-main-filename "^1.0.1"
       set-blocking "^2.0.0"
-      string-width "^1.0.2"
-      which-module "^1.0.0"
-      y18n "^3.2.1"
-      yargs-parser "^4.2.0"
+      string-width "^2.0.0"
+      which-module "^2.0.0"
+      y18n "^3.2.1 || ^4.0.0"
+      yargs-parser "^10.1.0"
   
   yargs@^10.0.3:
     version "10.1.2"
@@ -8189,23 +8205,6 @@ Lockfile:
       which-module "^2.0.0"
       y18n "^3.2.1"
       yargs-parser "^8.1.0"
-  
-  yargs@^12.0.2:
-    version "12.0.2"
-    resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.2.tgz#fe58234369392af33ecbef53819171eff0f5aadc"
-    dependencies:
-      cliui "^4.0.0"
-      decamelize "^2.0.0"
-      find-up "^3.0.0"
-      get-caller-file "^1.0.1"
-      os-locale "^3.0.0"
-      require-directory "^2.1.1"
-      require-main-filename "^1.0.1"
-      set-blocking "^2.0.0"
-      string-width "^2.0.0"
-      which-module "^2.0.0"
-      y18n "^3.2.1 || ^4.0.0"
-      yargs-parser "^10.1.0"
   
   yargs@^4.2.0:
     version "4.8.1"
@@ -8245,7 +8244,7 @@ Lockfile:
       yargs-parser "^5.0.0"
 
 Trace: 
-  SyntaxError: F:\dev\redux-app\package.json: Unexpected token } in JSON at position 685
+  SyntaxError: F:\dev\redux-app\package.json: Unexpected token y in JSON at position 2749
       at JSON.parse (<anonymous>)
       at C:\Program Files (x86)\Yarn\lib\cli.js:770:59
       at Generator.next (<anonymous>)

@@ -59,7 +59,7 @@ app.get('*', (req, res) => {
 
 // start the server and listen for requests
 const server = app.listen(port, () => {
-    console.log(`Api running on port ${port}`);
+    console.log(`--- Api running on port ${port}`);
 });
 
 // apply web sockets with different paths
