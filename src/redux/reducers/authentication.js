@@ -78,11 +78,11 @@ export function login(user: User) {
         if (loggedUser) {
             loggedUser.online = true;
             try {
-                // init WebSockets to listen changes on server
-                await dispatch(initUsersWs());
-                await dispatch(initConversationsWs());
+                // init WebSockets to listen back-end changes
+                await dispatch(initUsersWs(loggedUser._id));
+                await dispatch(initConversationsWs(loggedUser._id));
 
-                // save user in database
+                // save user on back-end
                 const response = await $http.put(`${USERS_URL}/${loggedUser._id}`, loggedUser);
                 await dispatch(setUser(response.data));
                 return true;

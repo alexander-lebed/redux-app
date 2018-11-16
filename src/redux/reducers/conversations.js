@@ -203,10 +203,10 @@ export function deleteConversation(convId: string) {
     }
 }
 
-export function initConversationsWs() {
+export function initConversationsWs(userId: string) {
     return (dispatch: Dispatch, getState: Function) => {
 
-        const hash = `${getState().authentication.user._id}_${Date.now()}`;
+        const hash = `${userId}_${Date.now()}`;
         const webSocket = new WebSocket(`${process.env.WS_ADDRESS}/conversations?${hash}`);
 
         webSocket.onmessage = (event) => {

@@ -125,10 +125,10 @@ export function deleteUser(userId: string) {
     }
 }
 
-export function initUsersWs() {
-    return (dispatch: Dispatch, getState: Function) => {
+export function initUsersWs(userId: string) {
+    return (dispatch: Dispatch) => {
 
-        const hash = `${getState().authentication.user._id}_${Date.now()}`;
+        const hash = `${userId}_${Date.now()}`;
         const webSocket = new WebSocket(`${process.env.WS_ADDRESS}/users?${hash}`);
 
         webSocket.onmessage = (event) => {
