@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "alexander-lebed",
   "license": "UNLICENSED",
+  "engines": {
+    "node": "9.x"
+  },
   "scripts": {
     "build": "webpack --progress --colors --watch",
     "postinstall": "webpack --config webpack.config.prod.js --progress --optimize-minimize",
