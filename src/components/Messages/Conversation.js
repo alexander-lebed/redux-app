@@ -1,17 +1,17 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Picker, Emoji } from 'emoji-mart'
 import Linkify from 'react-linkify';
 import _ from 'lodash';
 import { Map } from 'immutable';
 import queryString from 'query-string';
-import { Row, Col, Table, Form, FormGroup, FormControl, HelpBlock, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
+import { Row, Col, Table, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
 import { timestampToHumanDate } from '../../helpers/time';
-import Spinner from '../common/Spinner';
-import PeopleSelector from '../common/PeopleSelector';
 import { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import { alertSuccess } from '../../redux/reducers/alerts';
+import Spinner from '../common/Spinner';
+import PeopleSelector from '../common/PeopleSelector';
+import MessageForm from './MessageForm';
 import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
 import { ONLINE_STYLE } from '../../constants';
 
@@ -35,9 +35,7 @@ type Props = {
 }
 
 type State = {
-    showModal: boolean,
-    messageText: string,
-    showEmoji: boolean
+    showModal: boolean
 };
 
 class Conversation extends React.Component<Props, State> {
@@ -50,8 +48,6 @@ class Conversation extends React.Component<Props, State> {
         super(params);
         this.state = {
             showModal: false,
-            messageText: '',
-            showEmoji: false
         };
         this.scrollableTable = {};
     }
@@ -61,15 +57,14 @@ class Conversation extends React.Component<Props, State> {
             this.props.getConversationsByUser(this.props.user._id);
         }
         this.getConversation();
-        setTimeout(() => this.scrollConversationToBottom(), 500);
         setTimeout(() => this.props.markAsRead(), 800);
     }
 
     componentDidUpdate(prevProps: Props) {
+        this.scrollConversationToBottom();
         const prevMessages = prevProps.conversation.messages || [];
         const currentMessages = this.props.conversation.messages || [];
         if (prevMessages.length !== currentMessages.length) {
-            setTimeout(() => this.scrollConversationToBottom(), 50);
             setTimeout(() => this.props.markAsRead(), 500);
         }
     }
@@ -106,30 +101,6 @@ class Conversation extends React.Component<Props, State> {
         }
     };
 
-    handleKeyPress = (evt) => {
-        if (evt.key === 'Enter' && !evt.shiftKey) {
-            evt.preventDefault();
-            if (this.state.messageText) {
-                const {user, conversation} = this.props;
-                const emptyTime = null; // mark as null to set time on backend
-                const message: Message = {
-                    from: {_id: user._id, username: user.username},
-                    text: this.state.messageText,
-                    timestamp: emptyTime,
-                    read: false,
-                    deleted: false
-                };
-                conversation.messages.push(message);
-                conversation.timestamp = emptyTime;
-                this.props.saveConversation(conversation);
-                this.setState({
-                    messageText: ''}
-                );
-                setTimeout(() => this.scrollConversationToBottom(), 50);
-            }
-        }
-    };
-
     showMembersModal = (show: boolean) => {
         this.setState({
             showModal: show
@@ -146,7 +117,9 @@ class Conversation extends React.Component<Props, State> {
     };
 
     render() {
-        const {showEmoji} = this.state;
+
+        console.log(`--- RENDER`);
+
         const {user, conversation, conversations, isConversationsLoaded, isConversationLoaded, translation} = this.props;
 
         const conversationsExist = conversations.some(e => e._id === conversation._id);
@@ -162,19 +135,10 @@ class Conversation extends React.Component<Props, State> {
         } else if (conversationsExist) {
             const userIsMember = conversation.users.map(e => e._id).includes(user._id);
             if (userIsMember) {
-                const messageStyle = showEmoji ? {paddingRight: 0} : {};
-                const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
                 body = (
                     <div>
                         {this.renderMessages()}
-                        <Row>
-                            <Col xs={12} sm={showEmoji ? 7 : 12} className='message-form' style={messageStyle}>
-                                {this.renderMessageForm()}
-                            </Col>
-                            <Col xs={12} sm={showEmoji ? 5 : 12} className='emoji-picker' style={emojiStyle}>
-                                {showEmoji && this.renderEmojiPicker()}
-                            </Col>
-                        </Row>
+                        <MessageForm />
                     </div>
                 );
             } else {
@@ -304,56 +268,6 @@ class Conversation extends React.Component<Props, State> {
             </div>
         )
     };
-
-    renderEmojiPicker = () => {
-        const {messageText} = this.state;
-        const {translation} = this.props;
-        return (
-            <Picker
-                title={translation.MESSAGES.PICK_EMOJI}
-                emoji='monkey'
-                native={true}
-                onClick={emoji => {
-                    const text = messageText ? messageText + ` ${emoji.native}` : emoji.native;
-                    this.setState({messageText: text});
-                }}
-            />
-        )
-    };
-
-    renderMessageForm = () => (
-        <Form>
-            <FormGroup controlId='message-form' style={{display: 'flex', marginBottom: 2}}>
-                <div style={{flex: 1}}>
-                    <FormControl
-                        componentClass='textarea'
-                        autoFocus={true}
-                        style={style.textControl}
-                        rows={4}
-                        placeholder={this.props.translation.MESSAGES.WRITE_MESSAGE}
-                        value={this.state.messageText}
-                        onKeyPress={this.handleKeyPress}
-                        onChange={e => this.setState({messageText: e.target.value})}
-                    />
-                    <Row style={{margin: 0}}>
-                        <Col xsHidden>
-                            <HelpBlock>
-                                {this.props.translation.MESSAGES.WRITE_MESSAGE_INFO}
-                            </HelpBlock>
-                        </Col>
-                    </Row>
-                </div>
-                <div className='cursor' style={style.emojiSelect}>
-                    <Emoji
-                        set='twitter'
-                        size={32}
-                        emoji={this.state.showEmoji ? 'grinning' : 'slightly_smiling_face'}
-                        onClick={() => this.setState({showEmoji: !this.state.showEmoji})}
-                    />
-                </div>
-            </FormGroup>
-        </Form>
-    )
 }
 
 const style = {
@@ -381,15 +295,6 @@ const style = {
         fontSize: 13,
         paddingTop: 5,
         whiteSpace: 'pre-wrap'
-    },
-    textControl: {
-        resize: 'none',
-        paddingRight: 60
-    },
-    emojiSelect: {
-        paddingTop: 10,
-        paddingRight: 10,
-        marginLeft: -43
     }
 };
 
