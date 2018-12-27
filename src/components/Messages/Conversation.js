@@ -117,9 +117,6 @@ class Conversation extends React.Component<Props, State> {
     };
 
     render() {
-
-        console.log(`--- RENDER`);
-
         const {user, conversation, conversations, isConversationsLoaded, isConversationLoaded, translation} = this.props;
 
         const conversationsExist = conversations.some(e => e._id === conversation._id);

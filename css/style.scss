@@ -29,11 +29,6 @@ html, body, input, button {
   border-radius: 16px !important;
 }
 
-textarea:focus {
-  box-shadow: 0 0 5px $primary-color !important;
-  border-color: $primary-border-color !important;
-}
-
 .unread-message {
   background-color: #EFEEEE;
 }

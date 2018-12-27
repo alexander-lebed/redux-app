@@ -44,7 +44,6 @@
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-theme-switcher": "^1.0.7",
-    "react-detect-offline": "^2.1.2",
     "react-dom": "^16.6.3",
     "react-linkify": "^0.2.2",
     "react-redux": "^5.1.0",
