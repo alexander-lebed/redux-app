@@ -90,11 +90,7 @@ export type TranslationType = {
         PROFILE_PICTURE: {
             UPLOAD_PICTURE: string,
             SOCIAL_PICTURE: string,
-            SET_PICTURE_URL: string,
-            CREATE_PICTURE_URL: string,
-            GO_TO_SOURCE: (s1: any, s2: any) => any,
-            UPLOAD: string,
-            GET_LINK: string
+            UPLOAD_FAIL: string,
         },
         DELETE_PROFILE: string,
         DELETE_PROFILE_CONFIRMATION: string,
@@ -199,12 +195,8 @@ const translation: TranslationType = {
         },
         PROFILE_PICTURE: {
             UPLOAD_PICTURE: 'Upload profile picture:',
-            SOCIAL_PICTURE: 'Or use your social picture from:',
-            SET_PICTURE_URL: 'Picture URL',
-            CREATE_PICTURE_URL: 'To create a URL to your picture:',
-            GO_TO_SOURCE: (source) => <span>Go to {source}</span>,
-            UPLOAD: 'Choose an image (preferably square)',
-            GET_LINK: 'Copy-paste Direct Link'
+            SOCIAL_PICTURE: 'Or use your social media profile picture:',
+            UPLOAD_FAIL: 'Cannot upload file'
         },
         DELETE_PROFILE: 'Delete Profile',
         DELETE_PROFILE_CONFIRMATION: 'Are you sure you want to delete your profile?',

@@ -190,7 +190,7 @@ class Conversation extends React.Component<Props, State> {
                                 onCancel={() => this.showMembersModal(false)}
                             />
                         </Modal.Body>
-                        <Modal.Footer style={{textAlign: 'center', color: 'red'}}>
+                        <Modal.Footer style={{textAlign: 'center', color: '#e60000'}}>
                             {translation.MESSAGES.NEW_MEMBERS_NOTE}
                         </Modal.Footer>
                     </Modal>

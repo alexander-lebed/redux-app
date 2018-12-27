@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
+import $http from 'axios';
 import hello from 'hellojs';
 import { login, online } from './authentication';
 import { initTranslation } from './translation';
 import { getUsers } from './users';
 import { Alert } from './alerts';
 import receiveMessageDataURI from '../../../audio';
+import { IMGUR_CLIENT_ID } from '../../constants';
 
 const actions = {
     WINDOW_ACTIVE: 'UPDATE_USER_ACTIVE',
@@ -91,6 +93,11 @@ export function initApp() {
 }
 
 function initOAuth() {
+    initSocialMediaOAuth();
+    initImageHostOAuth();
+}
+
+function initSocialMediaOAuth() {
     hello.init({
         google: '949472211637-1593m31t8lmrvrf6cec1kobmajjli70m.apps.googleusercontent.com',
         facebook: '203639747170364',
@@ -98,6 +105,13 @@ function initOAuth() {
         redirect_uri: '/redirect',
         scope: 'email'
     });
+}
+
+function initImageHostOAuth() {
+    $http.get(`https://api.imgur.com/oauth2/authorize?response_type=token&client_id=${IMGUR_CLIENT_ID}`)
+        .catch(err => {
+            console.log(`--- Imgur OAuth error: ${err}`);
+        })
 }
 
 export function showBrowserNotifications(conversations, dispatch, getState) {

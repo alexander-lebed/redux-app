@@ -77,7 +77,7 @@ exports[`<People/> should match snapshot 1`] = `
                     src="/default-profile.png"
                     style={
                       Object {
-                        "boxShadow": "20px 20px 0pt -15pt #00b386",
+                        "boxShadow": "0px 0px 1pt 2pt #00b386",
                       }
                     }
                   />
@@ -144,7 +144,7 @@ exports[`<People/> should match snapshot 1`] = `
                     src="/default-profile.png"
                     style={
                       Object {
-                        "boxShadow": "20px 20px 0pt -15pt #00b386",
+                        "boxShadow": "0px 0px 1pt 2pt #00b386",
                       }
                     }
                   />
@@ -211,7 +211,7 @@ exports[`<People/> should match snapshot 1`] = `
                     src="/default-profile.png"
                     style={
                       Object {
-                        "boxShadow": "20px 20px 0pt -15pt #00b386",
+                        "boxShadow": "0px 0px 1pt 2pt #00b386",
                       }
                     }
                   />

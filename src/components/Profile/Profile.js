@@ -3,11 +3,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import hello from 'hellojs';
+import $http from 'axios';
 import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
 import { editUser, deleteUser } from '../../redux/reducers/users';
 import encryptPassword from '../../helpers/encryptPassword';
 import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/inputValidation';
+import { alertError } from '../../redux/reducers/alerts';
+import Spinner from '../common/Spinner';
 import ConfirmationModal from '../common/ConfirmationModal';
+import { IMGUR_CLIENT_ID } from '../../constants';
 import type { User, Translation } from "../../types";
 
 type Props = {
@@ -16,7 +20,8 @@ type Props = {
     users: Map<string, User>,
     translation: Translation,
     editUser: Function,
-    deleteUser: Function
+    deleteUser: Function,
+    alertError: Function
 };
 
 type State = {
@@ -26,6 +31,7 @@ type State = {
     currentPassword: string,
     newPassword: string,
     confirmNewPassword: string,
+    pictureUploading: boolean,
     showDeleteConfirmation: boolean
 };
 
@@ -43,6 +49,7 @@ class Profile extends React.Component<Props, State> {
             currentPassword: '',
             newPassword: '',
             confirmNewPassword: '',
+            pictureUploading: false,
             showDeleteConfirmation: false
         };
     }
@@ -98,6 +105,36 @@ class Profile extends React.Component<Props, State> {
         this.hideDeleteConfirmation();
     };
 
+    onImageUpload = (files: any) => {
+        this.setState({
+            pictureUploading: true
+        });
+
+        const formData = new FormData();
+        formData.append('image', files[0]);
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Client-ID ${IMGUR_CLIENT_ID}`
+            }
+        };
+
+        $http.post('https://api.imgur.com/3/image', formData, config)
+            .then(response => {
+                const pictureUrl = response.data.data ? response.data.data.link : '';
+                this.setState({
+                    pictureUrl,
+                    pictureUploading: false
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    pictureUploading: false
+                });
+                this.props.alertError(this.props.translation.ACCOUNT.PROFILE_PICTURE.UPLOAD_FAIL);
+            })
+    };
+
     render() {
         const {username, email, pictureUrl, currentPassword, newPassword, confirmNewPassword} = this.state;
         const {user, translation} = this.props;
@@ -112,41 +149,22 @@ class Profile extends React.Component<Props, State> {
 
                         <Well bsSize='small'>
                             <Col smOffset={2} sm={8}>
+                                {this.state.pictureUploading &&
+                                    <Spinner />
+                                }
                                 <Image
-                                    circle
-                                    style={{maxHeight: 150, maxWidth: 300}}
+                                    thumbnail
+                                    style={this.state.pictureUploading ? {...style.picture, opacity: 0.4} : style.picture}
                                     src={pictureUrl ? pictureUrl : '/default-profile.png'}
                                 />
                             </Col>
-
-                            <FormGroup controlId='pictureUrl' style={{marginBottom: 0}}>
+                            <FormGroup controlId='pictureUrl' style={{marginBottom: 5}}>
                                 <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{PROFILE_PICTURE.SET_PICTURE_URL}</ControlLabel>
                                     <FormControl
-                                        name='pictureUrl'
-                                        placeholder='https://some/your/picture.png'
-                                        value={pictureUrl}
-                                        onChange={this.handleChange}
+                                        type='file'
+                                        accept='image/*'
+                                        onChange={(e) => this.onImageUpload(e.target.files)}
                                     />
-                                    <div style={{fontSize: 15}}>
-                                        {PROFILE_PICTURE.CREATE_PICTURE_URL}
-                                        <ol style={{marginBottom: 0}}>
-                                            <li>
-                                                {PROFILE_PICTURE.GO_TO_SOURCE(
-                                                    <a
-                                                        href="https://postimages.org/"
-                                                        style={{fontWeight: 'bold'}}
-                                                        target="_blank"
-                                                        rel='noopener noreferrer'
-                                                    >
-                                                        PostImage
-                                                    </a>
-                                                )}
-                                            </li>
-                                            <li>{PROFILE_PICTURE.UPLOAD}</li>
-                                            <li>{PROFILE_PICTURE.GET_LINK}</li>
-                                        </ol>
-                                    </div>
                                 </Col>
                             </FormGroup>
 
@@ -399,6 +417,14 @@ const style = {
     helpBlock: {
         fontSize: 'medium',
         marginBottom: 0
+    },
+    picture: {
+        maxHeight: 300,
+        maxWidth: 300,
+        display: 'block',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 5
     }
 };
 
@@ -409,6 +435,6 @@ export default connect(
         translation: state.translation
     }),
     {
-        editUser, deleteUser
+        editUser, deleteUser, alertError
     }
 )(Profile)

@@ -91,11 +91,7 @@ const translation: Translation = {
         PROFILE_PICTURE: {
             UPLOAD_PICTURE: 'Обновить фотографию:',
             SOCIAL_PICTURE: 'Или используйте фотограцию из соц.сетей:',
-            SET_PICTURE_URL: 'Ссылка на фото',
-            CREATE_PICTURE_URL: 'Чтобы создать ссылку:',
-            GO_TO_SOURCE: (source) => <span>Зайдите на {source}</span>,
-            UPLOAD: 'Выбирите изображение (предпочтительно квадратное)',
-            GET_LINK: 'Скопируйте и вставьте прямую ссылку (Direct link)'
+            UPLOAD_FAIL: 'Ошибка при загрузке файла'
         },
         DELETE_PROFILE: 'Удалить профиль',
         DELETE_PROFILE_CONFIRMATION: 'Вы действительно хотите удалить свой профиль?',
