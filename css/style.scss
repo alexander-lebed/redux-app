@@ -118,9 +118,8 @@ for Mobile device
     min-height: 40px;
   }
   .account-dropdown {
-    padding-top: 5px !important;
+    padding-top: 8px !important;
     border: 1px groove lightgrey;
-    border-radius: 5px;
   }
   .tab-text {
     text-align: center;
@@ -180,6 +179,10 @@ for Mobile device
     text-align: center;
     font-size: 14px;
     border-top: 1px groove lightgrey;
+  }
+  .dropdown-item > a {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
   }
   .cut-senders-text {
     width: 200px !important;
@@ -318,11 +321,6 @@ li.lang-text a {
   outline: 0;
 }
 
-.dropdown-item {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
 .cut-senders-text {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -411,6 +409,7 @@ li.theme-menu > a > div > ul {
   height: 27px;
   padding: 0;
   position: relative;
+  border-radius: 0;
 }
 
 #theme-menu:before {

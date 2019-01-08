@@ -59,23 +59,21 @@ class NavigationBar extends React.Component<Props, State> {
                         />
                     </div>
                     <Dropdown.Menu>
-                        {(user.oauth && user.oauth.length) ? null :
-                            <LinkContainer
-                                key='profile'
-                                to='/profile'
-                                onClick={() => {
-                                    this.expand(false);
-                                    this.setState({accountClicked: false})
-                                }}>
-                                <MenuItem
-                                    eventKey={1.1}
-                                    className='dropdown-item'
-                                >
-                                    <i className="fa fa-pencil hidden-xs" style={{marginRight: 8}} />
-                                    {translation.ACCOUNT.EDIT_PROFILE}
-                                </MenuItem>
-                            </LinkContainer>
-                        }
+                        <LinkContainer
+                            key='profile'
+                            to='/profile'
+                            onClick={() => {
+                                this.expand(false);
+                                this.setState({accountClicked: false})
+                            }}>
+                            <MenuItem
+                                eventKey={1.1}
+                                className='dropdown-item'
+                            >
+                                <i className="fa fa-pencil hidden-xs" style={{marginRight: 8}} />
+                                {translation.ACCOUNT.EDIT_PROFILE}
+                            </MenuItem>
+                        </LinkContainer>
                         <MenuItem
                             eventKey={1.2}
                             className='dropdown-item'

@@ -145,186 +145,190 @@ class Profile extends React.Component<Props, State> {
                 <Col mdOffset={3} md={6}>
                     <Form horizontal>
 
-                        <h4 style={{marginBottom: 10}}>{PROFILE_PICTURE.UPLOAD_PICTURE}</h4>
+                        {user.oauth ? null :
+                            <div>
+                                <h4 style={{marginBottom: 10}}>{PROFILE_PICTURE.UPLOAD_PICTURE}</h4>
 
-                        <Well bsSize='small'>
-                            <Col smOffset={2} sm={8}>
-                                {this.state.pictureUploading &&
-                                    <Spinner />
-                                }
-                                <Image
-                                    thumbnail
-                                    style={this.state.pictureUploading ? {...style.picture, opacity: 0.4} : style.picture}
-                                    src={pictureUrl ? pictureUrl : '/default-profile.png'}
-                                />
-                            </Col>
-                            <FormGroup controlId='pictureUrl' style={{marginBottom: 5}}>
-                                <Col smOffset={2} sm={8}>
-                                    <FormControl
-                                        type='file'
-                                        accept='image/*'
-                                        onChange={(e) => this.onImageUpload(e.target.files)}
-                                    />
-                                </Col>
-                            </FormGroup>
+                                <Well bsSize='small'>
+                                    <Col smOffset={2} sm={8}>
+                                        {this.state.pictureUploading &&
+                                        <Spinner />
+                                        }
+                                        <Image
+                                            thumbnail
+                                            style={this.state.pictureUploading ? {...style.picture, opacity: 0.4} : style.picture}
+                                            src={pictureUrl ? pictureUrl : '/default-profile.png'}
+                                        />
+                                    </Col>
+                                    <FormGroup controlId='pictureUrl' style={{marginBottom: 5}}>
+                                        <Col smOffset={2} sm={8}>
+                                            <FormControl
+                                                type='file'
+                                                accept='image/*'
+                                                onChange={(e) => this.onImageUpload(e.target.files)}
+                                            />
+                                        </Col>
+                                    </FormGroup>
 
-                            <FormGroup>
-                                <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{PROFILE_PICTURE.SOCIAL_PICTURE}</ControlLabel>
-                                    <ButtonToolbar>
-                                        <Button
-                                            style={{backgroundColor: '#DD4B39'}}
-                                            className='btn-social'
-                                            onClick={() => this.loadPictureFromApi('google')}
-                                        >
-                                            <i className="fa fa-google-plus pr-1" />
-                                        </Button>
-                                        <Button
-                                            style={{backgroundColor: '#3B5998'}}
-                                            className='btn-social'
-                                            onClick={() => this.loadPictureFromApi('facebook')}
-                                        >
-                                            <i className="fa fa-facebook pr-1" />
-                                        </Button>
-                                    </ButtonToolbar>
-                                </Col>
-                            </FormGroup>
+                                    <FormGroup>
+                                        <Col smOffset={2} sm={8}>
+                                            <ControlLabel>{PROFILE_PICTURE.SOCIAL_PICTURE}</ControlLabel>
+                                            <ButtonToolbar>
+                                                <Button
+                                                    style={{backgroundColor: '#DD4B39'}}
+                                                    className='btn-social'
+                                                    onClick={() => this.loadPictureFromApi('google')}
+                                                >
+                                                    <i className="fa fa-google-plus pr-1" />
+                                                </Button>
+                                                <Button
+                                                    style={{backgroundColor: '#3B5998'}}
+                                                    className='btn-social'
+                                                    onClick={() => this.loadPictureFromApi('facebook')}
+                                                >
+                                                    <i className="fa fa-facebook pr-1" />
+                                                </Button>
+                                            </ButtonToolbar>
+                                        </Col>
+                                    </FormGroup>
 
-                            <FormGroup>
-                                <Col smOffset={2} sm={8}>
-                                    <Button
-                                        bsStyle='primary'
-                                        className='pull-right'
-                                        disabled={user.pictureUrl === pictureUrl}
-                                        onClick={() => this.savePicture()}
-                                    >
-                                        {translation.COMMON.SAVE}
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                        </Well>
-
-
-                        <h4 style={{marginBottom: 10}}>{USERNAME_EMAIL.CHANGE_USERNAME_AND_EMAIL}</h4>
-
-                        <Well bsSize='small'>
-                            <FormGroup controlId='username'  validationState={this.getUsernameValidationState(username)}>
-                                <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{USERNAME_EMAIL.USERNAME}</ControlLabel>
-                                    <FormControl
-                                        name='username'
-                                        placeholder={USERNAME_EMAIL.USERNAME}
-                                        value={username}
-                                        onChange={this.handleChange}
-                                    />
-                                    <HelpBlock style={style.helpBlock}>
-                                        {getUsernameValidationState(username) === 'error' && USERNAME_EMAIL.ERRORS.USERNAME_MIN_LENGTH}
-                                    </HelpBlock>
-                                    <HelpBlock style={style.helpBlock}>
-                                        {this.suchUsernameExist(username) === 'error' && USERNAME_EMAIL.ERRORS.USERNAME_EXIST}
-                                    </HelpBlock>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup controlId='email' validationState={this.getEmailValidationState(email)}>
-                                <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{USERNAME_EMAIL.EMAIL}</ControlLabel>
-                                    <FormControl
-                                        name='email'
-                                        type='email'
-                                        placeholder={USERNAME_EMAIL.EMAIL}
-                                        value={email}
-                                        onChange={this.handleChange}
-                                    />
-                                    <HelpBlock style={style.helpBlock}>
-                                        {getEmailValidationState(email) === 'error' && USERNAME_EMAIL.ERRORS.EMAIL_INVALID}
-                                    </HelpBlock>
-                                    <HelpBlock style={style.helpBlock}>
-                                        {this.suchEmailExist(email) === 'error' && USERNAME_EMAIL.ERRORS.EMAIL_EXIST}
-                                    </HelpBlock>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Col smOffset={2} sm={8}>
-                                    <Button
-                                        bsStyle='primary'
-                                        className='pull-right'
-                                        disabled={!this.isBasicFormValid()}
-                                        onClick={() => this.saveBasic()}
-                                    >
-                                        {translation.COMMON.SAVE}
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                        </Well>
+                                    <FormGroup>
+                                        <Col smOffset={2} sm={8}>
+                                            <Button
+                                                bsStyle='primary'
+                                                className='pull-right'
+                                                disabled={user.pictureUrl === pictureUrl}
+                                                onClick={() => this.savePicture()}
+                                            >
+                                                {translation.COMMON.SAVE}
+                                            </Button>
+                                        </Col>
+                                    </FormGroup>
+                                </Well>
 
 
-                        <h4 style={{marginBottom: 10}}>{PASSWORD.CHANGE_PASSWORD}</h4>
+                                <h4 style={{marginBottom: 10}}>{USERNAME_EMAIL.CHANGE_USERNAME_AND_EMAIL}</h4>
 
-                        <Well bsSize='small'>
-                            <FormGroup controlId='current-password' validationState={getConfirmPasswordValidationState(user.password, currentEncryptedPassword)}>
-                                <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{PASSWORD.CURRENT_PASSWORD}</ControlLabel>
-                                    <FormControl
-                                        name='currentPassword'
-                                        type='password'
-                                        placeholder={PASSWORD.CURRENT_PASSWORD}
-                                        value={currentPassword}
-                                        onChange={this.handleChange}
-                                    />
-                                    <HelpBlock style={style.helpBlock}>
-                                        {getConfirmPasswordValidationState(user.password, currentEncryptedPassword) === 'error' && PASSWORD.ERRORS.CURRENT_PASSWORD_INVALID}
-                                    </HelpBlock>
-                                </Col>
-                            </FormGroup>
+                                <Well bsSize='small'>
+                                    <FormGroup controlId='username'  validationState={this.getUsernameValidationState(username)}>
+                                        <Col smOffset={2} sm={8}>
+                                            <ControlLabel>{USERNAME_EMAIL.USERNAME}</ControlLabel>
+                                            <FormControl
+                                                name='username'
+                                                placeholder={USERNAME_EMAIL.USERNAME}
+                                                value={username}
+                                                onChange={this.handleChange}
+                                            />
+                                            <HelpBlock style={style.helpBlock}>
+                                                {getUsernameValidationState(username) === 'error' && USERNAME_EMAIL.ERRORS.USERNAME_MIN_LENGTH}
+                                            </HelpBlock>
+                                            <HelpBlock style={style.helpBlock}>
+                                                {this.suchUsernameExist(username) === 'error' && USERNAME_EMAIL.ERRORS.USERNAME_EXIST}
+                                            </HelpBlock>
+                                        </Col>
+                                    </FormGroup>
 
-                            <FormGroup controlId='new-password' validationState={getPasswordValidationState(newPassword)}>
-                                <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{PASSWORD.NEW_PASSWORD}</ControlLabel>
-                                    <FormControl
-                                        name='newPassword'
-                                        type='password'
-                                        placeholder={PASSWORD.NEW_PASSWORD}
-                                        value={newPassword}
-                                        onChange={this.handleChange}
-                                    />
-                                    <HelpBlock style={style.helpBlock}>
-                                        {getPasswordValidationState(newPassword) === 'error' && PASSWORD.ERRORS.NEW_PASSWORD_INVALID}
-                                    </HelpBlock>
-                                </Col>
-                            </FormGroup>
+                                    <FormGroup controlId='email' validationState={this.getEmailValidationState(email)}>
+                                        <Col smOffset={2} sm={8}>
+                                            <ControlLabel>{USERNAME_EMAIL.EMAIL}</ControlLabel>
+                                            <FormControl
+                                                name='email'
+                                                type='email'
+                                                placeholder={USERNAME_EMAIL.EMAIL}
+                                                value={email}
+                                                onChange={this.handleChange}
+                                            />
+                                            <HelpBlock style={style.helpBlock}>
+                                                {getEmailValidationState(email) === 'error' && USERNAME_EMAIL.ERRORS.EMAIL_INVALID}
+                                            </HelpBlock>
+                                            <HelpBlock style={style.helpBlock}>
+                                                {this.suchEmailExist(email) === 'error' && USERNAME_EMAIL.ERRORS.EMAIL_EXIST}
+                                            </HelpBlock>
+                                        </Col>
+                                    </FormGroup>
 
-                            <FormGroup controlId='confirm-password' validationState={getConfirmPasswordValidationState(newPassword, confirmNewPassword)}>
-                                <Col smOffset={2} sm={8}>
-                                    <ControlLabel>{PASSWORD.CONFIRM_NEW_PASSWORD}</ControlLabel>
-                                    <FormControl
-                                        name='confirmNewPassword'
-                                        type='password'
-                                        placeholder={PASSWORD.CONFIRM_NEW_PASSWORD}
-                                        value={confirmNewPassword}
-                                        onChange={this.handleChange}
-                                    />
-                                    <HelpBlock style={style.helpBlock}>
-                                        {getConfirmPasswordValidationState(newPassword, confirmNewPassword) === 'error' && PASSWORD.ERRORS.PASSWORDS_NOT_MATCH}
-                                    </HelpBlock>
-                                </Col>
-                            </FormGroup>
+                                    <FormGroup>
+                                        <Col smOffset={2} sm={8}>
+                                            <Button
+                                                bsStyle='primary'
+                                                className='pull-right'
+                                                disabled={!this.isBasicFormValid()}
+                                                onClick={() => this.saveBasic()}
+                                            >
+                                                {translation.COMMON.SAVE}
+                                            </Button>
+                                        </Col>
+                                    </FormGroup>
+                                </Well>
 
-                            <FormGroup>
-                                <Col smOffset={2} sm={8}>
-                                    <ButtonToolbar className='pull-right'>
-                                        <Button
-                                            bsStyle='primary'
-                                            disabled={!this.isPasswordFormValid()}
-                                            onClick={() => this.savePassword()}
-                                        >
-                                            {translation.COMMON.SAVE}
-                                        </Button>
-                                    </ButtonToolbar>
-                                </Col>
-                            </FormGroup>
-                        </Well>
+
+                                <h4 style={{marginBottom: 10}}>{PASSWORD.CHANGE_PASSWORD}</h4>
+
+                                <Well bsSize='small'>
+                                    <FormGroup controlId='current-password' validationState={getConfirmPasswordValidationState(user.password, currentEncryptedPassword)}>
+                                        <Col smOffset={2} sm={8}>
+                                            <ControlLabel>{PASSWORD.CURRENT_PASSWORD}</ControlLabel>
+                                            <FormControl
+                                                name='currentPassword'
+                                                type='password'
+                                                placeholder={PASSWORD.CURRENT_PASSWORD}
+                                                value={currentPassword}
+                                                onChange={this.handleChange}
+                                            />
+                                            <HelpBlock style={style.helpBlock}>
+                                                {getConfirmPasswordValidationState(user.password, currentEncryptedPassword) === 'error' && PASSWORD.ERRORS.CURRENT_PASSWORD_INVALID}
+                                            </HelpBlock>
+                                        </Col>
+                                    </FormGroup>
+
+                                    <FormGroup controlId='new-password' validationState={getPasswordValidationState(newPassword)}>
+                                        <Col smOffset={2} sm={8}>
+                                            <ControlLabel>{PASSWORD.NEW_PASSWORD}</ControlLabel>
+                                            <FormControl
+                                                name='newPassword'
+                                                type='password'
+                                                placeholder={PASSWORD.NEW_PASSWORD}
+                                                value={newPassword}
+                                                onChange={this.handleChange}
+                                            />
+                                            <HelpBlock style={style.helpBlock}>
+                                                {getPasswordValidationState(newPassword) === 'error' && PASSWORD.ERRORS.NEW_PASSWORD_INVALID}
+                                            </HelpBlock>
+                                        </Col>
+                                    </FormGroup>
+
+                                    <FormGroup controlId='confirm-password' validationState={getConfirmPasswordValidationState(newPassword, confirmNewPassword)}>
+                                        <Col smOffset={2} sm={8}>
+                                            <ControlLabel>{PASSWORD.CONFIRM_NEW_PASSWORD}</ControlLabel>
+                                            <FormControl
+                                                name='confirmNewPassword'
+                                                type='password'
+                                                placeholder={PASSWORD.CONFIRM_NEW_PASSWORD}
+                                                value={confirmNewPassword}
+                                                onChange={this.handleChange}
+                                            />
+                                            <HelpBlock style={style.helpBlock}>
+                                                {getConfirmPasswordValidationState(newPassword, confirmNewPassword) === 'error' && PASSWORD.ERRORS.PASSWORDS_NOT_MATCH}
+                                            </HelpBlock>
+                                        </Col>
+                                    </FormGroup>
+
+                                    <FormGroup>
+                                        <Col smOffset={2} sm={8}>
+                                            <ButtonToolbar className='pull-right'>
+                                                <Button
+                                                    bsStyle='primary'
+                                                    disabled={!this.isPasswordFormValid()}
+                                                    onClick={() => this.savePassword()}
+                                                >
+                                                    {translation.COMMON.SAVE}
+                                                </Button>
+                                            </ButtonToolbar>
+                                        </Col>
+                                    </FormGroup>
+                                </Well>
+                            </div>
+                        }
 
                         <div className='text-center'>
                             <Button
