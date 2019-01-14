@@ -12,7 +12,7 @@
     "build": "webpack --progress --colors --watch",
     "postinstall": "webpack --config webpack.config.prod.js --progress --optimize-minimize",
     "start": "node server.js",
-    "dev": "nf start -j Procfile.dev",
+    "dev": "concurrently \"webpack --progress --colors --watch\" \"nf start -j Procfile.dev\"",
     "start-ui": "webpack-dev-server --open",
     "start-api": "node server.js",
     "test": "jest --coverage",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "concurrently": "^4.1.0",
     "crypto-js": "^3.1.9-1",
     "emoji-mart": "^2.8.1",
     "express": "^4.16.3",

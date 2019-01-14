@@ -11,18 +11,13 @@ Install project dependencies:
 yarn install
 ```
 
-Build and watch code changes:
-```
-yarn build
-```
-
-Run app (development mode):
+Build and run app in development mode + watch code changes:
 ```
 yarn dev
 ```
 <sup>Go to http://localhost:8082/</sup>
 
-Run app (production mode):
+Run app in production mode:
 ```
 yarn start
 ```

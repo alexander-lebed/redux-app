@@ -98,8 +98,8 @@ class NavigationBar extends React.Component<Props, State> {
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Image
-                            style={{padding: '9px 45px 9px 9px', marginTop: 4}}
-                            src='/favicon.png'
+                            style={{padding: '10px 30px 10px 10px', marginTop: 4}}
+                            src='/brand-logo.png'
                             title={'WTalk Messenger'}
                             alt={'WTalk Messenger'}
                         />
