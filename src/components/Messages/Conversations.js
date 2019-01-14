@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 import { Map } from 'immutable';
-import { Row, Col, Table, Badge, Glyphicon, Button, Image } from 'react-bootstrap';
+import {Row, Col, Table, Badge, Glyphicon, Button, Image, Modal} from 'react-bootstrap';
 import { MAIN_COLOR, ONLINE_STYLE } from '../../constants';
 import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
@@ -23,6 +23,7 @@ type Props = {
 }
 
 type State = {
+    clickedPicture: string,
     deleteConversationId: string
 }
 
@@ -31,6 +32,7 @@ class Conversations extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            clickedPicture: '',
             deleteConversationId: ''
         }
     }
@@ -45,6 +47,18 @@ class Conversations extends React.Component<Props, State> {
 
     createConversation = () => {
         this.props.history.push('/create-conversation');
+    };
+
+    showPictureModal = (url: string) => {
+        this.setState({
+            clickedPicture: url
+        })
+    };
+
+    hidePictureModal = () => {
+        this.setState({
+            clickedPicture: ''
+        })
     };
 
     showDeleteConfirmation = (convId: string) => {
@@ -94,11 +108,17 @@ class Conversations extends React.Component<Props, State> {
                     senders = senders.filter(u => u._id !== user._id); // exclude recipient
                 }
                 const sender = senders[0];
+                let pictureUrl;
+                if (senders.length === 1) {
+                    pictureUrl = sender.pictureUrl ? sender.pictureUrl : '/default-profile.png';
+                } else {
+                    pictureUrl = '/conversation-group.png';
+                }
                 return (
                     <tr key={conv._id} className={newMessages.length > 0 ? 'new-messages-bg' : ''}>
                         <td className='cursor' style={style.conversation}>
                             <Row>
-                                <Col xs={7} sm={10} onClick={() => this.goToConversation(conv._id)}>
+                                <Col xs={7} sm={10}>
                                     {/* Sender info */}
                                     <div>
                                         <div className='profile-picture-wrapper'>
@@ -107,28 +127,32 @@ class Conversations extends React.Component<Props, State> {
                                                     circle
                                                     style={sender.online ? ONLINE_STYLE : {}}
                                                     className='profile-picture'
-                                                    src={sender.pictureUrl ? sender.pictureUrl : '/default-profile.png'}
+                                                    src={pictureUrl}
+                                                    onClick={() => this.showPictureModal(pictureUrl)}
                                                 />
                                                 :
                                                 <Image
                                                     circle
                                                     style={senders.some(e => e.online) ? ONLINE_STYLE : {}}
                                                     className='profile-picture'
-                                                    src='/conversation-group.png'
+                                                    src={pictureUrl}
+                                                    onClick={() => this.showPictureModal(pictureUrl)}
                                                 />
                                             }
                                         </div>
-                                        {senders.length === 1 ?
-                                            <strong>{sender.username}</strong>
-                                            :
-                                            <div className='cut-senders-text'>
-                                                {senders.map(sender => (
-                                                    <strong key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
-                                                        {sender.username}
-                                                    </strong>
-                                                )).reduce((prev, curr) => [prev, ', ', curr])}
-                                            </div>
-                                        }
+                                        <div onClick={() => this.goToConversation(conv._id)}>
+                                            {senders.length === 1 ?
+                                                <strong>{sender.username}</strong>
+                                                :
+                                                <div className='cut-senders-text'>
+                                                    {senders.map(sender => (
+                                                        <strong key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
+                                                            {sender.username}
+                                                        </strong>
+                                                    )).reduce((prev, curr) => [prev, ', ', curr])}
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
                                     {/* Last message details for desktop only */}
                                     {lastMessage &&
@@ -142,7 +166,7 @@ class Conversations extends React.Component<Props, State> {
                                     </Row>
                                     }
                                 </Col>
-                                <Col xs={5} sm={2} style={style.convRight}>
+                                <Col xs={5} sm={2} style={style.convRight} onClick={() => this.goToConversation(conv._id)}>
                                     {/* Last message time and ability to delete message */}
                                     <span>
                                         {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
@@ -200,6 +224,21 @@ class Conversations extends React.Component<Props, State> {
                     </div>
 
                     {content}
+
+                    {this.state.clickedPicture &&
+                        <Modal
+                            show={this.state.clickedPicture !== null}
+                            className='profile-modal'
+                            onHide={this.hidePictureModal}
+                        >
+                            <Modal.Body style={{textAlign: 'center'}}>
+                                <Image
+                                    className='profile-modal-picture'
+                                    src={this.state.clickedPicture}
+                                />
+                            </Modal.Body>
+                        </Modal>
+                    }
 
                     {this.state.deleteConversationId &&
                         <ConfirmationModal

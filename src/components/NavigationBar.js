@@ -97,12 +97,14 @@ class NavigationBar extends React.Component<Props, State> {
             <Navbar style={{borderTop: 'none'}} fixedTop onToggle={this.expand} expanded={this.state.expanded}>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Image
-                            style={{padding: '10px 30px 10px 10px', marginTop: 4}}
-                            src='/brand-logo.png'
-                            title={'WTalk Messenger'}
-                            alt={'WTalk Messenger'}
-                        />
+                        <LinkContainer key='home' to='/'>
+                            <Image
+                                className='brand-logo'
+                                src='/brand-logo.png'
+                                title={'WTalk Messenger'}
+                                alt={'WTalk Messenger'}
+                            />
+                        </LinkContainer>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
