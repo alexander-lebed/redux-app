@@ -159,7 +159,11 @@ export function markAsRead() {
 }
 
 export function saveConversation(conversation: Object) {
-    return () => {
+    return (dispatch: Dispatch) => {
+        dispatch({
+            type: actions.SET_CONVERSATION,
+            payload: conversation
+        });
         $http.put(CONVERSATIONS_URL, conversation);
     }
 }
