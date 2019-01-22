@@ -79,6 +79,9 @@ for Mobile device
   div, span {
     font-size: 16px !important;
   }
+  table {
+    table-layout: fixed;
+  }
   .navbar-collapse.in {
     overflow-y: unset !important;
   }
