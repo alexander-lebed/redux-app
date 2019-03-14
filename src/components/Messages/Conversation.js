@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Linkify from 'react-linkify';
-import _ from 'lodash';
+import orderBy from 'lodash/orderBy';
 import { Map } from 'immutable';
 import queryString from 'query-string';
 import { Row, Col, Table, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
@@ -202,7 +202,7 @@ class Conversation extends React.Component<Props, State> {
 
     renderMessages = () => {
         const messages = this.props.conversation.messages || [];
-        const orderedMessages = _.orderBy(messages.filter(e => !e.deleted), 'timestamp');
+        const orderedMessages = orderBy(messages.filter(e => !e.deleted), 'timestamp');
         return (
             <div style={style.scrollableTable} className="custom-scrollbar" ref={(e) => {this.scrollableTable = e}}>
                 <Table className='glyphicon-hover'>

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
     context: __dirname,
@@ -20,6 +21,9 @@ module.exports = {
                 API_HOST: JSON.stringify('https://wtalk.herokuapp.com/api'),
                 WS_ADDRESS: JSON.stringify('wss://wtalk.herokuapp.com'),
             }
+        }),
+        new MomentLocalesPlugin({
+            localesToKeep: ['es', 'ru'],
         })
     ],
     module: {

@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
 import { combineReducers } from 'redux';
-import _ from 'lodash';
+import clone from 'lodash/clone';
+import orderBy from 'lodash/orderBy';
 import $http from 'axios';
 import { Alert } from './alerts';
 import generateError from '../../helpers/generateError';
@@ -22,7 +23,7 @@ const conversations = (state = [], action: Action) => {
             return state.concat(action.payload);
         }
         case actions.SET_CONVERSATIONS: {
-            return _.clone(action.payload);
+            return clone(action.payload);
         }
         default:
             return state;
@@ -32,7 +33,7 @@ const conversations = (state = [], action: Action) => {
 const conversation = (state = {}, action: Action) => {
     switch (action.type) {
         case actions.SET_CONVERSATION: {
-            return _.clone(action.payload);
+            return clone(action.payload);
         }
         default:
             return state;
@@ -76,7 +77,7 @@ export function getConversationsByUser(userId: string) {
             .then(response => {
                 dispatch({
                     type: actions.SET_CONVERSATIONS,
-                    payload: _.orderBy(response.data, 'timestamp', 'desc')
+                    payload: orderBy(response.data, 'timestamp', 'desc')
                 });
             })
     }
@@ -223,7 +224,7 @@ export function initConversationsWs(userId: string) {
                     })
                 }
                 if (data.conversations) {
-                    const sortedConversations = _.orderBy(data.conversations, 'timestamp', 'desc');
+                    const sortedConversations = orderBy(data.conversations, 'timestamp', 'desc');
                     dispatch({
                         type: actions.SET_CONVERSATIONS,
                         payload: sortedConversations

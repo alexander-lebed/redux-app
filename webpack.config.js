@@ -1,5 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+// todo: remove 'webpack-bundle-analyzer'
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     context: __dirname,
@@ -20,7 +23,11 @@ module.exports = {
                 API_HOST: JSON.stringify('http://localhost:3000/api'),
                 WS_ADDRESS: JSON.stringify('ws://localhost:3000'),
             }
-        })
+        }),
+        new MomentLocalesPlugin({
+            localesToKeep: ['es', 'ru'],
+        }),
+        // new BundleAnalyzerPlugin()
     ],
     module: {
         rules: [

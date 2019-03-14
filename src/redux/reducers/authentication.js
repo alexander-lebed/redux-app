@@ -1,6 +1,7 @@
 // @flow
 import {combineReducers} from 'redux';
-import _ from 'lodash';
+import clone from 'lodash/clone';
+import isString from 'lodash/isString';
 import $http from 'axios';
 import hello from 'hellojs';
 import { USERS_URL } from '../../constants';
@@ -16,7 +17,7 @@ const actions = {
 const user = (state =  null, action: Action) => {
     switch (action.type) {
         case actions.SET_USER: {
-            return _.clone(action.payload);
+            return clone(action.payload);
         }
         default:
             return state;
@@ -45,9 +46,9 @@ export function login(user: User) {
                 .then(() => oAuthService.api('me'))
                 .then(userData => {
                     const id = toMongoID(userData.id);
-                    let username = _.isString(userData.name) && userData.name;
+                    let username = isString(userData.name) && userData.name;
                     if (!username) {
-                        if (_.isString(userData.first_name) && userData.first_name.length > 0) {
+                        if (isString(userData.first_name) && userData.first_name.length > 0) {
                             username = userData.first_name;
                         } else if (userData.email) {
                             username = userData.email.substring(0, userData.email.indexOf('@'));

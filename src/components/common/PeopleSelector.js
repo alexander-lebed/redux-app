@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import orderBy from 'lodash/orderBy';
 import { Map } from 'immutable';
 import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
 import { ONLINE_STYLE } from '../../constants';
@@ -67,7 +67,7 @@ export class PeopleSelector extends React.Component<Props, State> {
         if (searchText) {
             users = users.filter(e => e.username.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
         }
-        users = _.orderBy(users, ['username']);
+        users = orderBy(users, ['username']);
         return (
             <Row style={{marginLeft: 0, marginRight: 0}}>
                 <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>

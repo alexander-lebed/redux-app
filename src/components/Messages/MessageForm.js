@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
-import { Picker, Emoji } from 'emoji-mart'
+import { Picker, Emoji } from 'emoji-mart';
 import { saveConversation } from '../../redux/reducers/conversations';
 import type {Conversation as ConversationType, Message, Translation, User} from '../../types';
 

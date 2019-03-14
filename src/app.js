@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeSwitcher } from 'react-bootstrap-theme-switcher';
+import 'font-awesome/css/font-awesome.min.css';
 import history from './helpers/history';
 import Startup from './components/Startup';
 import PrivateRoute from './components/PrivateRoute';

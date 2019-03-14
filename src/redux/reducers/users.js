@@ -2,7 +2,9 @@
 import React from 'react';
 import { combineReducers } from 'redux';
 import $http from 'axios';
-import _ from 'lodash';
+import clone from 'lodash/clone';
+import keyBy from 'lodash/keyBy';
+import orderBy from 'lodash/orderBy';
 import { Map } from 'immutable';
 import history from "../../helpers/history";
 import { USERS_URL} from '../../constants';
@@ -24,7 +26,7 @@ const users = (state = initUsers, action: Action) => {
             return state.set(action.payload._id, action.payload);
         }
         case actions.SET_USERS: {
-            return _.clone(action.payload);
+            return clone(action.payload);
         }
         default:
             return state;
@@ -75,8 +77,8 @@ export function getUsers() {
     return (dispatch: Dispatch) => {
         $http.get(USERS_URL)
             .then(response => {
-                const sorted = _.orderBy(response.data, ['username']);
-                const dataObj = _.keyBy(sorted, '_id');
+                const sorted = orderBy(response.data, ['username']);
+                const dataObj = keyBy(sorted, '_id');
                 const payload = Map(dataObj);
                 dispatch({
                     type: actions.SET_USERS, payload
@@ -135,8 +137,8 @@ export function initUsersWs(userId: string) {
         webSocket.onmessage = (event) => {
             try {
                 const users = JSON.parse(event.data);
-                const sorted = _.orderBy(users, ['username']);
-                const dataObj = _.keyBy(sorted, '_id');
+                const sorted = orderBy(users, ['username']);
+                const dataObj = keyBy(sorted, '_id');
                 const payload = Map(dataObj);
                 dispatch({
                     type: actions.SET_USERS, payload
