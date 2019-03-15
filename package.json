@@ -5,7 +5,7 @@
   "main": "index.js",
   "author": "alexander-lebed",
   "license": "UNLICENSED",
-  "engines": {
+  "---engines": {
     "node": "11.x"
   },
   "scripts": {
