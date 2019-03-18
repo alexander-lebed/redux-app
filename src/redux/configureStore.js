@@ -1,7 +1,6 @@
 // @flow
 import { compose, applyMiddleware, combineReducers, createStore } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
-import immutableTransform from 'redux-persist-transform-immutable';
 import thunkMiddleware from 'redux-thunk';
 import startup from './reducers/startup';
 import authentication from './reducers/authentication';
@@ -37,8 +36,7 @@ export default function configureStore() {
             persistStore(
                 store,
                 {
-                    whitelist : ['authentication', 'users', 'locale'],
-                    transforms: [immutableTransform()]
+                    whitelist : ['authentication', 'users', 'locale']
                 },
                 () => resolve(store)
             ); // note: use persistStore(...).purge() to reset the store

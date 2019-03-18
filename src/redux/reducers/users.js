@@ -2,14 +2,9 @@
 import React from 'react';
 import { combineReducers } from 'redux';
 import $http from 'axios';
-import clone from 'lodash/clone';
-import keyBy from 'lodash/keyBy';
-import orderBy from 'lodash/orderBy';
-import { Map } from 'immutable';
+import { orderBy, encryptPassword, generateError } from '../../utils';
 import history from "../../helpers/history";
 import { USERS_URL} from '../../constants';
-import encryptPassword from '../../helpers/encryptPassword';
-import generateError from "../../helpers/generateError";
 import { Alert } from './alerts';
 import { login, setUser } from './authentication';
 import type { Action, Dispatch, User } from '../../types';
@@ -19,14 +14,16 @@ const actions = {
     SET_USERS: 'SET_USERS'
 };
 
-const initUsers: Map<string, User> = Map({});
+const initUsers: Array<User> = [];
 const users = (state = initUsers, action: Action) => {
     switch (action.type) {
         case actions.ADD_USER: {
-            return state.set(action.payload._id, action.payload);
+            const users = [...state];
+            users.push(action.payload);
+            return users;
         }
         case actions.SET_USERS: {
-            return clone(action.payload);
+            return Object.assign([], action.payload);
         }
         default:
             return state;
@@ -77,9 +74,7 @@ export function getUsers() {
     return (dispatch: Dispatch) => {
         $http.get(USERS_URL)
             .then(response => {
-                const sorted = orderBy(response.data, ['username']);
-                const dataObj = keyBy(sorted, '_id');
-                const payload = Map(dataObj);
+                const payload = orderBy(response.data, ['username']);
                 dispatch({
                     type: actions.SET_USERS, payload
                 });
@@ -137,9 +132,7 @@ export function initUsersWs(userId: string) {
         webSocket.onmessage = (event) => {
             try {
                 const users = JSON.parse(event.data);
-                const sorted = orderBy(users, ['username']);
-                const dataObj = keyBy(sorted, '_id');
-                const payload = Map(dataObj);
+                const payload = orderBy(users, 'username');
                 dispatch({
                     type: actions.SET_USERS, payload
                 });

@@ -2,11 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Linkify from 'react-linkify';
-import orderBy from 'lodash/orderBy';
-import { Map } from 'immutable';
+import { orderBy, timestampToHumanDate } from '../../utils';
 import queryString from 'query-string';
 import { Row, Col, Table, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
-import { timestampToHumanDate } from '../../helpers/time';
 import { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
 import { alertSuccess } from '../../redux/reducers/alerts';
 import Spinner from '../common/Spinner';
@@ -17,7 +15,7 @@ import { ONLINE_STYLE } from '../../constants';
 
 type Props = {
     user: User,
-    users: Map<string, User>,
+    users: Array<User>,
     conversation: ConversationType,
     conversations: Array<ConversationType>,
     isConversationsLoaded: boolean,
@@ -224,7 +222,7 @@ class Conversation extends React.Component<Props, State> {
     renderMessage = (message: Message) => {
         const {user, users, deleteMessage, translation} = this.props;
         const isMessageFromCurrentUser = message.from._id === user._id;
-        const messageUser: User = users.toArray().find(e => e._id === message.from._id);
+        const messageUser: User = users.find(e => e._id === message.from._id);
         return (
             <div>
                 <div className='profile-picture-wrapper'>

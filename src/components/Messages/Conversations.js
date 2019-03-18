@@ -2,10 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import { Map } from 'immutable';
 import {Row, Col, Table, Badge, Glyphicon, Button, Image, Modal} from 'react-bootstrap';
 import { MAIN_COLOR, ONLINE_STYLE } from '../../constants';
-import { timestampToHumanDate } from '../../helpers/time';
+import { timestampToHumanDate } from '../../utils';
 import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
 import ConfirmationModal from '../common/ConfirmationModal';
 import type { User, Conversation as ConversationType, Translation } from '../../types';
@@ -14,7 +13,7 @@ import Spinner from "../common/Spinner";
 type Props = {
     history: Object,
     user: User,
-    users: Map<string, User>,
+    users: Array<User>,
     conversations: Array<ConversationType>,
     isConversationsLoaded: boolean,
     translation: Translation,
@@ -103,7 +102,7 @@ class Conversations extends React.Component<Props, State> {
                 const textClass = lastMessage && !lastMessage.read ? 'unread-message' : '';
 
                 const convUserIds =  conv.users.map(u => u._id);
-                let senders: Array<User> = users.toArray().filter(u => convUserIds.includes(u._id));
+                let senders: Array<User> = users.filter(u => convUserIds.includes(u._id));
                 if (senders.length > 1) {
                     senders = senders.filter(u => u._id !== user._id); // exclude recipient
                 }

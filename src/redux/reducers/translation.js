@@ -1,5 +1,4 @@
 // @flow
-import clone from 'lodash/clone';
 import moment from 'moment';
 import { setLocale } from './locale';
 import enStrings from '../../lang/en';
@@ -13,7 +12,7 @@ const actions = {
 const strings = (state: Translation = enStrings, action: Action) => {
     switch (action.type) {
         case actions.SET_STRINGS: {
-            return clone(action.payload);
+            return Object.assign({}, action.payload);
         }
         default:
             return state;

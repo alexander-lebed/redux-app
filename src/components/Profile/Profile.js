@@ -1,12 +1,11 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
 import hello from 'hellojs';
 import $http from 'axios';
 import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
 import { editUser, deleteUser } from '../../redux/reducers/users';
-import encryptPassword from '../../helpers/encryptPassword';
+import { encryptPassword } from '../../utils';
 import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/inputValidation';
 import { alertError } from '../../redux/reducers/alerts';
 import Spinner from '../common/Spinner';
@@ -17,7 +16,7 @@ import type { User, Translation } from "../../types";
 type Props = {
     history: Object;
     user: User,
-    users: Map<string, User>,
+    users: Array<User>,
     translation: Translation,
     editUser: Function,
     deleteUser: Function,
@@ -379,7 +378,7 @@ class Profile extends React.Component<Props, State> {
     suchUsernameExist = (username: string) => {
         if (!username) {
             return null;
-        } // .filter(e => !e.oauth)
+        }
         const otherUsers = this.props.users.filter(e => !e.oauth && this.props.user._id !== e._id);
         return otherUsers.some(u => u.username === username) ? 'error' : 'success'
     };

@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from 'react-bootstrap';
-import encryptPassword from '../../helpers/encryptPassword';
+import { encryptPassword } from '../../utils';
 import { login } from '../../redux/reducers/authentication';
 import { alertError } from '../../redux/reducers/alerts';
 import type { Translation } from '../../types';

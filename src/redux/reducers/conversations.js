@@ -1,11 +1,9 @@
 // @flow
 import React from 'react';
 import { combineReducers } from 'redux';
-import clone from 'lodash/clone';
-import orderBy from 'lodash/orderBy';
+import { orderBy, generateError } from '../../utils';
 import $http from 'axios';
 import { Alert } from './alerts';
-import generateError from '../../helpers/generateError';
 import { showBrowserNotifications } from './startup';
 import { CONVERSATIONS_URL, DOCUMENT_TITLE } from '../../constants';
 import type { Action, Dispatch } from '../../types';
@@ -23,7 +21,7 @@ const conversations = (state = [], action: Action) => {
             return state.concat(action.payload);
         }
         case actions.SET_CONVERSATIONS: {
-            return clone(action.payload);
+            return Object.assign([], action.payload);
         }
         default:
             return state;
@@ -33,7 +31,7 @@ const conversations = (state = [], action: Action) => {
 const conversation = (state = {}, action: Action) => {
     switch (action.type) {
         case actions.SET_CONVERSATION: {
-            return clone(action.payload);
+            return Object.assign({}, action.payload);
         }
         default:
             return state;
@@ -120,7 +118,7 @@ export function getConversationWithUsers(userIds: Array<string>) {
                     // mock new conversation
 
                     const allUsers = getState().users.users;
-                    const convUsers = allUsers.toArray().filter(u => userIds.includes(u._id)).map(u => ({_id: u._id, username: u.username}));
+                    const convUsers = allUsers.filter(u => userIds.includes(u._id)).map(u => ({_id: u._id, username: u.username}));
                     conversation = {
                         users: convUsers,
                         messages: [],

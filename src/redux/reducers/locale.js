@@ -1,5 +1,4 @@
 // @flow
-import clone from 'lodash/clone';
 import type { Action, Dispatch, Locale } from '../../types';
 
 const actions = {
@@ -9,7 +8,7 @@ const actions = {
 const locale = (state: Locale = 'en', action: Action) => {
     switch (action.type) {
         case actions.SET_LOCALE: {
-            return clone(action.payload);
+            return String(action.payload);
         }
         default:
             return state;

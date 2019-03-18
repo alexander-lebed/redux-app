@@ -1,11 +1,9 @@
 // @flow
-import {combineReducers} from 'redux';
-import clone from 'lodash/clone';
-import isString from 'lodash/isString';
+import { combineReducers } from 'redux';
 import $http from 'axios';
 import hello from 'hellojs';
 import { USERS_URL } from '../../constants';
-import toMongoID from '../../helpers/toMongoID';
+import { toMongoID } from '../../utils';
 import type { Action, Dispatch, User } from '../../types';
 import { initConversationsWs } from './conversations';
 import { initUsersWs } from './users';
@@ -14,10 +12,10 @@ const actions = {
     SET_USER: 'SET_USER'
 };
 
-const user = (state =  null, action: Action) => {
+const user = (state = null, action: Action) => {
     switch (action.type) {
         case actions.SET_USER: {
-            return clone(action.payload);
+            return action.payload === null ? null : Object.assign({}, action.payload)
         }
         default:
             return state;
@@ -46,9 +44,9 @@ export function login(user: User) {
                 .then(() => oAuthService.api('me'))
                 .then(userData => {
                     const id = toMongoID(userData.id);
-                    let username = isString(userData.name) && userData.name;
+                    let username =  typeof userData.name === 'string' && userData.name;
                     if (!username) {
-                        if (isString(userData.first_name) && userData.first_name.length > 0) {
+                        if (typeof userData.first_name === 'string' && userData.first_name.length > 0) {
                             username = userData.first_name;
                         } else if (userData.email) {
                             username = userData.email.substring(0, userData.email.indexOf('@'));
@@ -111,6 +109,8 @@ export function logout() {
             return $http.put(`${USERS_URL}/${user._id}`, user).then(() => {
                 dispatch(setUser(null));
             });
+        } else {
+            dispatch(setUser(null));
         }
     }
 }

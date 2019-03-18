@@ -1,8 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import orderBy from 'lodash/orderBy';
-import { Map } from 'immutable';
+import { orderBy } from '../../utils';
 import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
 import { ONLINE_STYLE } from '../../constants';
 import type { User, Translation } from '../../types';
@@ -14,7 +13,7 @@ type Props = {
     onSubmit: (people: Array<User>) => void,
     onCancel: Function,
     // redux props
-    users: Map<string, User>,
+    users: Array<User>,
     translation: Translation,
 }
 
@@ -36,7 +35,7 @@ export class PeopleSelector extends React.Component<Props, State> {
 
         let selectedUsers = [];
         if (selectedUserIds.length > 0) {
-            selectedUsers = users.toArray().filter(e => selectedUserIds.includes(e._id));
+            selectedUsers = users.filter(e => selectedUserIds.includes(e._id));
         }
         this.state = {
             searchText: '',
@@ -62,7 +61,6 @@ export class PeopleSelector extends React.Component<Props, State> {
         let {users, excludedUserIds, submitButtonText, onSubmit, onCancel, translation} = this.props;
         const {CONVERSATIONS} = translation;
 
-        users = users.toArray();
         users = users.filter(e => !excludedUserIds.includes(e._id));
         if (searchText) {
             users = users.filter(e => e.username.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)

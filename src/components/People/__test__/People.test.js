@@ -3,7 +3,6 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { Map } from 'immutable';
 import { People } from '../People';
 import translation from '../../../lang/en';
 
@@ -21,8 +20,8 @@ describe('<People/>', () => {
             lastTime: 1519294933743,
             oauth: ''
         },
-        users: Map({
-            '111': {
+        users: [
+            {
                 _id: '111',
                 username:'Current User',
                 email: 'user@mail.com',
@@ -32,7 +31,7 @@ describe('<People/>', () => {
                 lastTime: 1519294933743,
                 oauth: ''
             },
-            '222': {
+            {
                 _id: '222',
                 username:'Alice',
                 email: 'alice@gmail.com',
@@ -42,7 +41,7 @@ describe('<People/>', () => {
                 lastTime: 1518346740388,
                 oauth: ''
             },
-            '333': {
+            {
                 _id: '333',
                 username:'Bob',
                 email: 'bob@mail.com',
@@ -52,7 +51,7 @@ describe('<People/>', () => {
                 lastTime: 1518346740388,
                 oauth: ''
             }
-        }),
+        ],
         deleteUser: jest.fn(),
         translation: translation,
         history: {}

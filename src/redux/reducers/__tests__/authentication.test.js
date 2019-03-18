@@ -2,7 +2,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import $http from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Map } from 'immutable';
 import { USERS_URL } from '../../../constants';
 import { login, online, logout } from '../authentication';
 
@@ -29,9 +28,9 @@ describe('Authentication reducer', () => {
         },
         user: testUser,
         users: {
-            users: Map({
-                '111': testUser,
-                '222': {
+            users: [
+                testUser,
+                {
                     _id: '222',
                     username:'Alice',
                     email: 'alice@gmail.com',
@@ -40,7 +39,7 @@ describe('Authentication reducer', () => {
                     lastTime: 1518346740388,
                     oauth: ''
                 },
-                '333': {
+                {
                     _id: '333',
                     username:'Bob',
                     email: 'bob@mail.com',
@@ -49,7 +48,7 @@ describe('Authentication reducer', () => {
                     lastTime: 1518346740388,
                     oauth: ''
                 }
-            })
+            ]
         }
     });
     const USERS_PUT_API = `${USERS_URL}/${testUser._id}`;

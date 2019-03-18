@@ -1,11 +1,10 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
 import queryString from 'query-string';
 import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
 import { ONLINE_STYLE } from '../../constants';
-import { timestampToHumanDate } from '../../helpers/time';
+import { timestampToHumanDate } from '../../utils';
 import { deleteUser } from '../../redux/reducers/users';
 import ConfirmationModal from '../common/ConfirmationModal';
 import type { User, Translation } from '../../types';
@@ -13,7 +12,7 @@ import type { User, Translation } from '../../types';
 type Props = {
     history: Object;
     user: User,
-    users: Map<string, User>,
+    users: Array<User>,
     translation: Translation,
     deleteUser: Function
 }
@@ -68,7 +67,6 @@ export class People extends React.Component<Props, State> {
     render() {
         let {users, translation} = this.props;
         const {PEOPLE, COMMON} = translation;
-        users = users.toArray();
         if (this.state.searchText) {
             users = users.filter(e => e.username.toLowerCase().indexOf(this.state.searchText.toLowerCase()) !== -1)
         }

@@ -37,8 +37,6 @@
     "hellojs": "^2.0.0-4",
     "history": "^4.7.2",
     "http": "^0.0.0",
-    "immutable": "^3.8.2",
-    "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "mongoose": "5.0.17",
     "nodemailer": "^4.6.8",
@@ -56,7 +54,6 @@
     "react-spinners": "^0.4.8",
     "redux": "^3.7.2",
     "redux-persist": "4.10.2",
-    "redux-persist-transform-immutable": "4.3.0",
     "redux-thunk": "^2.2.0",
     "ws": "^6.0.0"
   },

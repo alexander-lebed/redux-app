@@ -1,6 +1,6 @@
 // @flow
 import type { Node } from 'react';
-import uid from '../../helpers/idGenerator';
+import { idGenerator } from '../../utils';
 import type { Dispatch, Action, State, Alert as AlertType } from '../../types';
 
 export const actionTypes = {
@@ -13,7 +13,7 @@ export const actionTypes = {
 };
 
 const setAlertType = (alertType, alerts, payload) => {
-    const newAlert = {...payload, ...{uid: uid(), type: alertType}};
+    const newAlert = {...payload, ...{uid: idGenerator(), type: alertType}};
     const id = newAlert.uid;
     return alerts.filter(n => n.uid !== id).concat(newAlert);
 };
