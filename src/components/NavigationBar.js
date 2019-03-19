@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, Button, Dropdown, MenuItem, Glyphicon, Badge, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { ThemeChooser } from 'react-bootstrap-theme-switcher';
+// import { ThemeChooser } from 'react-bootstrap-theme-switcher';
 import { translate } from '../redux/reducers/translation';
 import { logout } from '../redux/reducers/authentication';
 import type { User, Locale, Translation } from '../types';
@@ -126,7 +126,7 @@ class NavigationBar extends React.Component<Props, State> {
                         </LinkContainer>
                         <LinkContainer key='theme' to='#' >
                             <NavItem eventKey={1} className='hidden-sm hidden-md hidden-lg theme-menu' style={{border: 'none', height: 50}}>
-                                <ThemeChooser />
+                                {/*<ThemeChooser />*/}
                             </NavItem>
                         </LinkContainer>
                     </Nav>
