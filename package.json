@@ -30,6 +30,7 @@
     "express": "^4.16.3",
     "foreman": "3.0.1",
     "mongoose": "5.0.17",
+    "nodemailer": "^4.6.8",
     "ws": "^6.0.0"
   },
   "devDependencies": {
@@ -74,7 +75,6 @@
     "moment": "^2.22.1",
     "moment-locales-webpack-plugin": "^1.0.7",
     "node-sass": "^4.9.3",
-    "nodemailer": "^4.6.8",
     "nodemon": "1.18.9",
     "query-string": "^5.0.1",
     "react": "^16.6.3",
