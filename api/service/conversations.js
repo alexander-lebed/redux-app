@@ -1,5 +1,4 @@
 const express = require("express");
-const isEqual = require("lodash/isEqual");
 const router = express.Router();
 const WebSocket = require('ws');
 const Conversation = require('../model/conversations');
@@ -57,11 +56,10 @@ router.get('/', (req, res, next) => {
 
     } else if (req.query.userIds) {
         // get some conversation between users
-        const userIdsArr = req.query.userIds.split(',');
+        const queryUserIds = req.query.userIds.split(',');
         const findByUsers = (conversation) => {
-            const matchQuantity = conversation.users.length === userIdsArr.length;
-            const convUsers = conversation.users.map(u => u._id).sort();
-            const matchIds = isEqual(convUsers, userIdsArr.sort());
+            const matchQuantity = conversation.users.length === queryUserIds.length;
+            const matchIds = queryUserIds.sort().toString() === conversation.users.map(u => u._id).sort().toString();
             return matchQuantity && matchIds;
         };
         Conversation.find((err, data) => {
