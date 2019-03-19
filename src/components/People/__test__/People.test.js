@@ -69,7 +69,7 @@ describe('<People/>', () => {
         const wrapper = mount(
             <People {...props} />
         );
-        expect(wrapper.props().users.size).toEqual(3);
+        expect(wrapper.props().users.length).toEqual(3);
     });
 
     xit('should route to conversation', () => {
