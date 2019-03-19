@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-// import { ThemeSwitcher } from 'react-bootstrap-theme-switcher';
+import { ThemeSwitcher } from 'react-bootstrap-theme-switcher';
 import 'font-awesome/css/font-awesome.min.css';
 import history from './helpers/history';
 import Startup from './components/Startup';
@@ -32,7 +32,7 @@ async function init() {
     if (app) {
         render(
             <Provider store={store}>
-                {/*<ThemeSwitcher themePath='themes' storeThemeKey='ui-theme' themes={themes}>*/}
+                <ThemeSwitcher themePath='themes' storeThemeKey='ui-theme' themes={themes}>
                     <Startup>
                         <Router history={history}>
                             <div>
@@ -55,7 +55,7 @@ async function init() {
                             </div>
                         </Router>
                     </Startup>
-                {/*</ThemeSwitcher>*/}
+                </ThemeSwitcher>
             </Provider>,
             app
         );
