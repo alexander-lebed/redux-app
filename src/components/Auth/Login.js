@@ -102,11 +102,13 @@ class Login extends React.Component<Props, State> {
                                     <Button
                                         type='submit'
                                         bsStyle='primary'
+                                        className='btn-xs-block'
                                     >
                                         {translation.ACCOUNT.LOG_IN}
                                     </Button>
                                     <Button
                                         href='/register'
+                                        className='btn-xs-block'
                                     >
                                         {translation.ACCOUNT.SIGN_UP}
                                     </Button>
@@ -116,7 +118,7 @@ class Login extends React.Component<Props, State> {
                     </Form>
 
                     <FormGroup style={{marginBottom: 0}}>
-                        <Col smOffset={2} sm={8}>
+                        <Col xsOffset={3} smOffset={2} xs={9} sm={10}>
                             <ControlLabel>{translation.ACCOUNT.LOG_IN_WITH_OAUTH}</ControlLabel>
                             <ButtonToolbar>
                                 <Button
