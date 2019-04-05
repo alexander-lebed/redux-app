@@ -109,7 +109,6 @@ export function deleteUser(userId: string) {
     return async (dispatch: Dispatch, getState: Function) => {
         try {
             await $http.delete(`${USERS_URL}?userId=${userId}`);
-            await dispatch(setUser(null));
             dispatch(Alert.success(getState().translation.PEOPLE.USER_DELETED));
         } catch (err) {
             const error = (

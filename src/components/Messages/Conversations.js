@@ -2,18 +2,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import {Row, Col, Table, Badge, Glyphicon, Button, Image, Modal} from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Modal from 'react-bootstrap/Modal';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
+import Badge from 'react-bootstrap/Badge';
 import { MAIN_COLOR, ONLINE_STYLE } from '../../constants';
 import { timestampToHumanDate } from '../../utils';
 import { getConversationsByUser, deleteConversation } from '../../redux/reducers/conversations';
 import ConfirmationModal from '../common/ConfirmationModal';
+import Spinner from '../common/Spinner';
 import type { User, Conversation as ConversationType, Translation } from '../../types';
-import Spinner from "../common/Spinner";
 
 type Props = {
     history: Object,
+    // redux props
     user: User,
-    users: Array<User>,
     conversations: Array<ConversationType>,
     isConversationsLoaded: boolean,
     translation: Translation,
@@ -28,6 +36,7 @@ type State = {
 
 class Conversations extends React.Component<Props, State> {
     state: State;
+
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -40,37 +49,20 @@ class Conversations extends React.Component<Props, State> {
         this.props.getConversationsByUser(this.props.user._id);
     }
 
-    goToConversation = (convId: string) => {
-        this.props.history.push(`/conversation?${queryString.stringify({convId})}`);
-    };
+    createConversation = () => this.props.history.push('/create-conversation');
 
-    createConversation = () => {
-        this.props.history.push('/create-conversation');
-    };
+    showPictureModal = (url: string) => this.setState({clickedPicture: url});
 
-    showPictureModal = (url: string) => {
-        this.setState({
-            clickedPicture: url
-        })
-    };
+    hidePictureModal = () =>  this.setState({clickedPicture: ''});
 
-    hidePictureModal = () => {
-        this.setState({
-            clickedPicture: ''
-        })
-    };
-
-    showDeleteConfirmation = (convId: string) => {
+    showDeleteConfirmation = (event, convId: string) => {
+        event.stopPropagation();
         this.setState({
             deleteConversationId: convId
         })
     };
 
-    hideDeleteConfirmation = () => {
-        this.setState({
-            deleteConversationId: ''
-        })
-    };
+    hideDeleteConfirmation = () => this.setState({deleteConversationId: ''});
 
     deleteConversation = () => {
         this.props.deleteConversation(this.state.deleteConversationId);
@@ -78,10 +70,9 @@ class Conversations extends React.Component<Props, State> {
     };
 
     render() {
-        const {user, users, conversations, isConversationsLoaded, translation} = this.props;
-        const {CONVERSATIONS} = translation;
-        let content = [];
+        const {user, conversations, isConversationsLoaded, translation, history} = this.props;
 
+        let content = [];
         if (!isConversationsLoaded) {
             content = (
                 <div style={{paddingTop: '50vh'}}>
@@ -90,141 +81,59 @@ class Conversations extends React.Component<Props, State> {
             )
         } else if (conversations.length === 0) {
             content = (
-                <div className='text-center'>
-                    {CONVERSATIONS.NO_CONVERSATIONS}
-                </div>
+                <Jumbotron className='text-center'>
+                    <p>{translation.CONVERSATIONS.NO_CONVERSATIONS}</p>
+                </Jumbotron>
             )
         } else {
-            const tableBody = conversations.map(conv => {
-                const convMessages = conv.messages.filter(e => !e.deleted);
-                const newMessages = convMessages.filter(m => !m.read && m.from._id !== user._id);
-                const lastMessage = convMessages.length > 0 ? convMessages[convMessages.length - 1] : null;
-                const textClass = lastMessage && !lastMessage.read ? 'unread-message' : '';
-
-                const convUserIds =  conv.users.map(u => u._id);
-                let senders: Array<User> = users.filter(u => convUserIds.includes(u._id));
-                if (senders.length > 1) {
-                    senders = senders.filter(u => u._id !== user._id); // exclude recipient
-                }
-                const sender = senders[0];
-                let pictureUrl;
-                if (senders.length === 1) {
-                    pictureUrl = sender.pictureUrl ? sender.pictureUrl : '/default-profile.png';
-                } else {
-                    pictureUrl = '/conversation-group.png';
-                }
-                return (
-                    <tr key={conv._id} className={newMessages.length > 0 ? 'new-messages-bg' : ''}>
-                        <td className='cursor' style={style.conversation}>
-                            <Row>
-                                <Col xs={7} sm={10}>
-                                    {/* Sender info */}
-                                    <div>
-                                        <div className='profile-picture-wrapper'>
-                                            {senders.length === 1 ?
-                                                <Image
-                                                    circle
-                                                    style={sender.online ? ONLINE_STYLE : {}}
-                                                    className='profile-picture'
-                                                    src={pictureUrl}
-                                                    onClick={() => this.showPictureModal(pictureUrl)}
-                                                />
-                                                :
-                                                <Image
-                                                    circle
-                                                    style={senders.some(e => e.online) ? ONLINE_STYLE : {}}
-                                                    className='profile-picture'
-                                                    src={pictureUrl}
-                                                    onClick={() => this.showPictureModal(pictureUrl)}
-                                                />
-                                            }
-                                        </div>
-                                        <div onClick={() => this.goToConversation(conv._id)}>
-                                            {senders.length === 1 ?
-                                                <strong>{sender.username}</strong>
-                                                :
-                                                <div className='cut-senders-text'>
-                                                    {senders.map(sender => (
-                                                        <strong key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
-                                                            {sender.username}
-                                                        </strong>
-                                                    )).reduce((prev, curr) => [prev, ', ', curr])}
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                    {/* Last message details for desktop only */}
-                                    {lastMessage &&
-                                    <Row className='message-preview mobile-hidden' onClick={() => this.goToConversation(conv._id)}>
-                                        <Col xs={4} sm={2} className='user-from-text' style={{paddingRight: 0}}>
-                                            {lastMessage.from.username}:
-                                        </Col>
-                                        <Col xs={8} sm={8} style={{paddingLeft: 10}}>
-                                            <div className={textClass} style={style.text}>{lastMessage.text}</div>
-                                        </Col>
-                                    </Row>
-                                    }
-                                </Col>
-                                <Col xs={5} sm={2} style={style.convRight} onClick={() => this.goToConversation(conv._id)}>
-                                    {/* Last message time and ability to delete message */}
-                                    <span>
-                                        {newMessages.length > 0 && <Badge style={{marginRight: 15}}>{newMessages.length}</Badge>}
-                                        {timestampToHumanDate(conv.timestamp, false, translation)}
-                                        <Glyphicon
-                                            id='delete'
-                                            glyph='trash'
-                                            title={CONVERSATIONS.DELETE}
-                                            className='cursor'
-                                            style={{paddingLeft: 10}}
-                                            onClick={() => this.showDeleteConfirmation(conv._id)}
-                                        />
-                                    </span>
-                                </Col>
-                            </Row>
-                            {/* Last message details for mobile only */}
-                            {lastMessage &&
-                            <Row className='message-preview desktop-hidden' onClick={() => this.goToConversation(conv._id)}>
-                                <Col xs={4} sm={2} className='user-from-text'>
-                                    {lastMessage.from.username}:
-                                </Col>
-                                <Col xs={8} sm={8} style={{paddingLeft: 10}}>
-                                    <div className={textClass} style={style.text}>{lastMessage.text}</div>
-                                </Col>
-                            </Row>
-                            }
-                        </td>
-                    </tr>
-                )
-            });
-
-            content = (
-                <Table hover className='glyphicon-hover'>
+            content = ( // delete on hover: <Table hover className='fa-hover'>
+                <Table hover>
                     <tbody>
-                        {tableBody}
+                        {conversations.map(conversation => (
+                            <ConversationPreview
+                                key={conversation._id}
+                                userId={user._id}
+                                conversation={conversation}
+                                history={history}
+                                showPictureModal={this.showPictureModal}
+                                showDeleteConfirmation={this.showDeleteConfirmation}
+                            />
+                        ))}
                     </tbody>
                 </Table>
             )
         }
         return (
-            <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
-                    <div style={{display: 'table', width: '100%', marginBottom: 15}}>
-                        <h4 style={{display: 'table-cell',  width: '100%', verticalAlign: 'middle', paddingTop: 6, paddingBottom: 6}} className='text-center'>
-                            {CONVERSATIONS.CONVERSATIONS}
-                        </h4>
-                        <Button
-                            id='create-conversation'
-                            title={CONVERSATIONS.CREATE}
-                            className='pull-right btn-circle-icon'
-                            onClick={() => this.createConversation()}
-                        >
-                            <i className="fa fa-comments fa-lg" />
-                        </Button>
-                    </div>
-
-                    {content}
-
-                    {this.state.clickedPicture &&
+            <Container fluid>
+                <Row>
+                    <Col md={{span: 10, offset: 1}} lg={{span: 8, offset: 2}}>
+                        <div className='header'>
+                            <div style={{color: 'grey'}}>
+                                <i className='fas fa-search' style={{marginRight: 8}} />
+                                {translation.CONVERSATIONS.SEARCH_IN_CONVERSATIONS}
+                            </div>
+                            <Button
+                                variant='outline-success'
+                                className='d-none d-sm-block'
+                                size='sm'
+                                onClick={() => this.createConversation()}
+                            >
+                                <i className='fa fa-comments fa-lg' style={{marginRight: 8}} />
+                                {translation.CONVERSATIONS.NEW_CONVERSATION}
+                            </Button>
+                            <Button
+                                variant='outline-success'
+                                className='d-block d-sm-none btn-mobile-icon'
+                                title={translation.CONVERSATIONS.NEW_CONVERSATION}
+                                onClick={() => this.createConversation()}
+                            >
+                                <i className='fa fa-comments fa-lg' />
+                            </Button>
+                        </div>
+                        {
+                            content
+                        }
+                        {this.state.clickedPicture &&
                         <Modal
                             show={this.state.clickedPicture !== null}
                             className='profile-modal'
@@ -237,58 +146,160 @@ class Conversations extends React.Component<Props, State> {
                                 />
                             </Modal.Body>
                         </Modal>
-                    }
+                        }
 
-                    {this.state.deleteConversationId &&
+                        {this.state.deleteConversationId &&
                         <ConfirmationModal
                             title={translation.COMMON.DELETE_CONFIRMATION}
-                            body={CONVERSATIONS.DELETE_CONFIRMATION}
+                            body={translation.CONVERSATIONS.DELETE_CONFIRMATION}
                             onConfirm={() => this.deleteConversation()}
                             onCancel={() => this.hideDeleteConfirmation()}
                         />
-                    }
-                </Col>
-            </Row>
+                        }
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }
 
-const style = {
-    conversation: {
-        fontSize: 13
-    },
-    convRight: {
-        color: 'grey',
-        textAlign: 'right',
-        fontSize: 13
-    },
-    text: {
-        paddingTop: 3,
-        paddingBottom: 3,
-        paddingLeft: 5,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        display: '-webkit-box',
-        WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: 3, // N number of lines to show
-        lineHeight: 1.3   // X fallback
-    },
-    cutSendersText: {
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-        width: 300,
-        height: '1.4em',
-        whiteSpace: 'nowrap'
-    }
-};
-
 export default connect(
     state => ({
         user: state.authentication.user,
-        users: state.users.users,
         conversations: state.conversations.conversations,
         isConversationsLoaded: state.conversations.isConversationsLoaded,
         translation: state.translation
     }),
     { getConversationsByUser, deleteConversation }
 )(Conversations);
+
+
+type PreviewProps = {
+    userId: string,
+    conversation: ConversationType,
+    history: Object,
+    showPictureModal: Function,
+    showDeleteConfirmation: Function,
+    // redux props
+    users: Array<User>,
+    translation: Translation,
+}
+
+const ConversationPreview = connect(
+    state => ({
+        user: state.authentication.user,
+        users: state.users.users,
+        translation: state.translation
+    }),
+    {  }
+)((props: PreviewProps) => {
+    const {conversation, userId, users, translation, history, showPictureModal, showDeleteConfirmation} = props;
+    const messages = conversation.messages.filter(e => !e.deleted);
+    const unreadMessages = messages.filter(m => !m.read && m.from._id !== userId);
+    const lastMessage = messages.length > 0 ? messages[messages.length - 1] : null;
+    const messageTextClass = lastMessage && !lastMessage.read ? 'unread-message' : '';
+
+    const userIds =  conversation.users.map(u => u._id);
+    let senders: Array<User> = users.filter(u => userIds.includes(u._id));
+    if (senders.length > 1) {
+        senders = senders.filter(u => u._id !== userId); // exclude recipient
+    }
+    const lastSender = senders[0];
+    let pictureUrl;
+    if (senders.length === 1) {
+        pictureUrl = lastSender.pictureUrl ? lastSender.pictureUrl : '/default-profile.png';
+    } else {
+        pictureUrl = '/conversation-group.png';
+    }
+
+    const goToConversation = (convId: string) => {
+        history.push(`/conversation?${queryString.stringify({convId})}`);
+    };
+    return (
+        <tr key={conversation._id} className={unreadMessages.length > 0 ? 'new-messages-bg' : ''}>
+            <td className='conversation-td'>
+                <Row noGutters>
+                    <Col xs={7} sm={10}>
+                        {/* Sender info */}
+                        <div className='profile-picture-wrapper'>
+                            {senders.length === 1 ?
+                                <Image
+                                    roundedCircle
+                                    style={lastSender.online ? ONLINE_STYLE : {}}
+                                    className='profile-picture'
+                                    src={pictureUrl}
+                                    onClick={() => showPictureModal(pictureUrl)}
+                                />
+                                :
+                                <Image
+                                    roundedCircle
+                                    style={senders.some(e => e.online) ? ONLINE_STYLE : {}}
+                                    className='profile-picture'
+                                    src={pictureUrl}
+                                    onClick={() => showPictureModal(pictureUrl)}
+                                />
+                            }
+                        </div>
+                        <div style={{color: '#343a40'}} onClick={() => goToConversation(conversation._id)}>
+                            {senders.length === 1 ?
+                                <strong>
+                                    {lastSender.username}
+                                </strong>
+                                :
+                                <div className='cut-senders-text'>
+                                    {senders.map(sender => (
+                                        <strong key={sender._id} style={sender.online ? {color: MAIN_COLOR} : {}}>
+                                            {sender.username}
+                                        </strong>
+                                    )).reduce((prev, curr) => [prev, ', ', curr])}
+                                </div>
+                            }
+                        </div>
+                        {/* Last message details (desktop only) */}
+                        {lastMessage &&
+                        <Row className='message-preview d-none d-sm-flex' onClick={() => goToConversation(conversation._id)}>
+                            <Col xs={4} sm={2} className='user-from-text' style={{paddingRight: 0}}>
+                                {lastMessage.from.username}:
+                            </Col>
+                            <Col xs={8} sm={8} style={{paddingLeft: 10}}>
+                                <div className={`conversation-text ${messageTextClass}`}>
+                                    {lastMessage.text}
+                                </div>
+                            </Col>
+                        </Row>
+                        }
+                    </Col>
+                    {/* Message time and delete btn */}
+                    <Col xs={5} sm={2} className='conversation-actions' onClick={() => goToConversation(conversation._id)}>
+                        {unreadMessages.length > 0 &&
+                        <Badge  variant='success' style={{marginRight: 15}}>
+                            {unreadMessages.length}
+                        </Badge>
+                        }
+                        {timestampToHumanDate(conversation.timestamp, false, translation)}
+                        <i
+                            className='far fa-trash-alt'
+                            title={translation.CONVERSATIONS.DELETE}
+                            style={{paddingLeft: 10}}
+                            onClick={(event) => showDeleteConfirmation(event, conversation._id)}
+                        />
+                    </Col>
+                </Row>
+                {/* Last message details (mobile only) */}
+                {lastMessage &&
+                <Row className='message-preview d-flex d-sm-none' onClick={() => goToConversation(conversation._id)}>
+                    <Col xs={4} sm={2} className='user-from-text'>
+                        {lastMessage.from.username}:
+                    </Col>
+                    <Col xs={8} sm={8} style={{paddingLeft: 10}}>
+                        <div className={`conversation-text ${messageTextClass}`}>
+                            {lastMessage.text}
+                        </div>
+                    </Col>
+                </Row>
+                }
+            </td>
+        </tr>
+    )
+});
+ConversationPreview.displayName = 'ConversationPreview';

@@ -2,16 +2,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Linkify from 'react-linkify';
-import { orderBy, timestampToHumanDate } from '../../utils';
 import queryString from 'query-string';
-import { Row, Col, Table, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
-import { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button'
+import Image from 'react-bootstrap/Image';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import { alertSuccess } from '../../redux/reducers/alerts';
+import { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
+import { orderBy, timestampToHumanDate } from '../../utils';
+import { ONLINE_STYLE } from '../../constants';
 import Spinner from '../common/Spinner';
 import PeopleSelector from '../common/PeopleSelector';
 import MessageForm from './MessageForm';
 import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
-import { ONLINE_STYLE } from '../../constants';
+
 
 type Props = {
     user: User,
@@ -99,11 +107,7 @@ class Conversation extends React.Component<Props, State> {
         }
     };
 
-    showMembersModal = (show: boolean) => {
-        this.setState({
-            showModal: show
-        })
-    };
+    showMembersModal = (show: boolean) => this.setState({showModal: show});
 
     manageMembers = (people: Array<User>) => {
         const {conversation, saveConversation, alertSuccess, translation} = this.props;
@@ -120,9 +124,9 @@ class Conversation extends React.Component<Props, State> {
         const conversationsExist = conversations.some(e => e._id === conversation._id);
         const isLoading = !isConversationsLoaded || !isConversationLoaded;
 
-        let body = null;
+        let content = null;
         if (isLoading) {
-            body = (
+            content = (
                 <div style={{paddingTop: '50vh'}}>
                     <Spinner />
                 </div>
@@ -130,86 +134,97 @@ class Conversation extends React.Component<Props, State> {
         } else if (conversationsExist) {
             const userIsMember = conversation.users.map(e => e._id).includes(user._id);
             if (userIsMember) {
-                body = (
+                content = (
                     <div>
                         {this.renderMessages()}
                         <MessageForm />
                     </div>
                 );
             } else {
-                body = (
-                    <div className='text-center'>
-                        {translation.MESSAGES.YOU_NOT_MEMBER}
-                    </div>
+                content = (
+                    <Jumbotron className='text-center'>
+                        <p>{translation.MESSAGES.YOU_NOT_MEMBER}</p>
+                    </Jumbotron>
                 );
             }
         } else {
-            body = (
-                <div className='text-center'>
-                    {translation.CONVERSATIONS.CONVERSATION_NOT_FOUND}
-                </div>
+            content = (
+                <Jumbotron className='text-center'>
+                    <p>{translation.CONVERSATIONS.CONVERSATION_NOT_FOUND}</p>
+                </Jumbotron>
             )
         }
         return (
-            <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
-                    <div style={{display: 'table', width: '100%', marginBottom: 15}}>
-                        <h4 style={{display: 'table-cell',  width: '100%', verticalAlign: 'middle', paddingTop: 6, paddingBottom: 6}} className='text-center'>
-                            {translation.MESSAGES.MESSAGES}
-                        </h4>
-                        {conversationsExist &&
-                        <Button
-                            id='create-conversation'
-                            title={translation.MESSAGES.MANAGE_MEMBERS}
-                            className='pull-right btn-circle-icon'
-                            onClick={() => this.showMembersModal(true)}
-                        >
-                            <i className="fa fa-users fa-lg" />
-                        </Button>
+            <Container fluid>
+                <Row>
+                    <Col md={{span: 10, offset: 1}} lg={{span: 8, offset: 2}}>
+                        <div className='header'>
+                            <div style={{color: 'grey'}}>
+                                <i className='fas fa-search' style={{marginRight: 8}} />
+                                {translation.CONVERSATIONS.SEARCH_IN_MESSAGES}
+                            </div>
+                            <Button
+                                variant='outline-dark'
+                                className='d-none d-sm-block'
+                                size='sm'
+                                onClick={() => this.showMembersModal(true)}
+                            >
+                                <i className='fa fa-users fa-lg' style={{marginRight: 8}} />
+                                {translation.MESSAGES.MANAGE_MEMBERS}
+                            </Button>
+                            <Button
+                                variant='outline-dark'
+                                className='d-block d-sm-none btn-mobile-icon'
+                                title={translation.MESSAGES.MANAGE_MEMBERS}
+                                onClick={() => this.showMembersModal(true)}
+                            >
+                                <i className='fa fa-users fa-lg' />
+                            </Button>
+                        </div>
+                        {
+                            content
                         }
-                    </div>
-
-                    {body}
-
-                    {conversation.users &&
-                    <Modal
-                        bsSize='large'
-                        show={this.state.showModal}
-                        className='add-people-modal'
-                        onHide={() => this.showMembersModal(false)}
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>{translation.MESSAGES.MANAGE_MEMBERS}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <PeopleSelector
-                                selectedUserIds={conversation.users.map(e => e._id)}
-                                onSubmit={(people) => this.manageMembers(people)}
-                                onCancel={() => this.showMembersModal(false)}
-                            />
-                        </Modal.Body>
-                        <Modal.Footer style={{textAlign: 'center', color: '#e60000'}}>
-                            {translation.MESSAGES.NEW_MEMBERS_NOTE}
-                        </Modal.Footer>
-                    </Modal>
-                    }
-                </Col>
-            </Row>
+                        {conversation.users &&
+                        <Modal
+                            size='lg'
+                            show={this.state.showModal}
+                            onHide={() => this.showMembersModal(false)}
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>{translation.MESSAGES.MANAGE_MEMBERS}</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <PeopleSelector
+                                    selectedUserIds={conversation.users.map(e => e._id)}
+                                    onSubmit={(people) => this.manageMembers(people)}
+                                    onCancel={() => this.showMembersModal(false)}
+                                />
+                            </Modal.Body>
+                            <Modal.Footer className='manage-people-footer text-danger'>
+                                <i className='fas fa-exclamation-triangle' style={{marginRight: 8}}/> {translation.MESSAGES.NEW_MEMBERS_NOTE}
+                            </Modal.Footer>
+                        </Modal>
+                        }
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 
     renderMessages = () => {
         const messages = this.props.conversation.messages || [];
         const orderedMessages = orderBy(messages.filter(e => !e.deleted), 'timestamp');
-        return (
-            <div style={style.scrollableTable} className="custom-scrollbar" ref={(e) => {this.scrollableTable = e}}>
-                <Table className='glyphicon-hover'>
+        return ( // className='messages-table custom-scrollbar'
+            <div className='messages-table' ref={(e) => {this.scrollableTable = e}}>
+                <Table>
                     <tbody>
                         {orderedMessages.map((message, index) => {
                             const rowClass = !message.read ? 'unread-message' : '';
                             return (
                                 <tr key={index} className={rowClass}>
-                                    <td>{this.renderMessage(message)}</td>
+                                    <td style={{padding: 8}}>
+                                        {this.renderMessage(message)}
+                                    </td>
                                 </tr>
                             )
                         })}
@@ -227,34 +242,33 @@ class Conversation extends React.Component<Props, State> {
             <div>
                 <div className='profile-picture-wrapper'>
                     <Image
-                        circle
+                        roundedCircle
                         style={messageUser.online ? ONLINE_STYLE : {}}
                         className='profile-picture'
                         src={messageUser.pictureUrl ? messageUser.pictureUrl : '/default-profile.png'}
                     />
                 </div>
-                <div style={style.top}>
+                <div className='message-top'>
                     <div>
-                        <span style={style.from}>
+                        <span className='message-from'>
                             {message.from.username}
                         </span>
-                        <span style={style.time}>
+                        <span className='message-time'>
                             {timestampToHumanDate(message.timestamp, true, translation)}
                         </span>
                         <Linkify properties={{target: '_blank'}}>
-                            <div style={style.text}>
+                            <div className='message-text'>
                                 {message.text}
                             </div>
                         </Linkify>
                     </div>
                     {isMessageFromCurrentUser &&
                     <div>
-                        <Glyphicon
+                        <i
                             id='delete'
-                            glyph='remove'
+                            className='far fa-trash-alt pull-right cursor'
                             title={translation.MESSAGES.DELETE}
                             style={{color: 'grey'}}
-                            className='pull-right cursor'
                             onClick={() => deleteMessage(message._id)}
                         />
                     </div>
@@ -264,34 +278,6 @@ class Conversation extends React.Component<Props, State> {
         )
     };
 }
-
-const style = {
-    scrollableTable: {
-        overflowY: 'auto',
-        maxHeight: '60vh',
-        wordBreak: 'break-word',
-        marginBottom: 20
-    },
-    top: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginRight: 0,
-        fontSize: 13
-    },
-    from: {
-        fontSize: 13,
-        fontWeight: 700
-    },
-    time: {
-        color: 'grey',
-        paddingLeft: 15
-    },
-    text: {
-        fontSize: 13,
-        paddingTop: 5,
-        whiteSpace: 'pre-wrap'
-    }
-};
 
 export default connect(
     state => ({

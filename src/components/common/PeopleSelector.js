@@ -1,8 +1,14 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { orderBy } from '../../utils';
-import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
+import { orderBy, timestampToHumanDate } from '../../utils';
 import { ONLINE_STYLE } from '../../constants';
 import type { User, Translation } from '../../types';
 
@@ -59,88 +65,86 @@ export class PeopleSelector extends React.Component<Props, State> {
     render() {
         const {people, searchText} = this.state;
         let {users, excludedUserIds, submitButtonText, onSubmit, onCancel, translation} = this.props;
-        const {CONVERSATIONS} = translation;
-
         users = users.filter(e => !excludedUserIds.includes(e._id));
         if (searchText) {
             users = users.filter(e => e.username.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
         }
         users = orderBy(users, ['username']);
         return (
-            <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={0} smOffset={1} mdOffset={2} xs={12} sm={10} md={8}>
-                    <div className='create-conv-header'>
-                        <div className='search'>
-                            <FormGroup>
-                                <InputGroup>
-                                    <FormControl
-                                        type='text'
-                                        placeholder={CONVERSATIONS.SEARCH_PEOPLE}
-                                        value={searchText}
-                                        onChange={e => this.setState({searchText: e.target.value})}
-                                    />
-                                    <InputGroup.Addon>
-                                        <Glyphicon glyph='search' />
-                                    </InputGroup.Addon>
-                                </InputGroup>
-                            </FormGroup>
-                        </div>
-                        <div className='buttons'>
-                            <ButtonToolbar className='pull-right'>
-                                <Button onClick={onCancel}>
-                                    {translation.COMMON.CANCEL}
-                                </Button>
-                                <Button
-                                    bsStyle='primary'
-                                    disabled={people.length === 0}
-                                    onClick={() => onSubmit(people)}
-                                >
-                                    {submitButtonText || translation.COMMON.SUBMIT}
-                                </Button>
-                            </ButtonToolbar>
-                        </div>
+            <div>
+                <div className='people-select-header'>
+                    <InputGroup size='sm' className='search'>
+                        <InputGroup.Prepend>
+                            <InputGroup.Text id='search'><i className='fas fa-search' /></InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control
+                            placeholder={translation.PEOPLE.SEARCH_PEOPLE}
+                            aria-label='Search people'
+                            aria-describedby='search'
+                            value={searchText}
+                            onChange={e => this.setState({searchText: e.target.value})}
+                        />
+                    </InputGroup>
+                    <div className='actions'>
+                        <Button size='sm' variant='outline-secondary' onClick={onCancel}>
+                            {translation.COMMON.CANCEL}
+                        </Button>
+                        {' '}
+                        <Button
+                            size='sm'
+                            variant='success'
+                            disabled={people.length === 0}
+                            onClick={() => onSubmit(people)}
+                        >
+                            {submitButtonText || translation.COMMON.SUBMIT}
+                        </Button>
                     </div>
-                    {users.length === 0 ? <div className='text-center'>{translation.COMMON.NO_RESULTS}</div> :
-                        <Table hover>
-                            <tbody>
-                                {users.map(user => {
-                                    const selected = people.map(e => e._id).includes(user._id);
-                                    return (
-                                        <tr key={user._id} id={user._id}>
-                                            <td className={selected ? 'active' : ''} onClick={() => this.toggleUser(user)}>
-                                                <Row style={{marginRight: 0}}>
-                                                    <Col xs={6}>
-                                                        <div className='profile-picture-wrapper'>
-                                                            <Image
-                                                                circle
-                                                                style={user.online ? ONLINE_STYLE : {}}
-                                                                className='profile-picture'
-                                                                src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
-                                                            />
-                                                        </div>
-                                                        <div style={{fontSize: 13, fontWeight: 700}}>
+                </div>
+                {users.length === 0 ? <div className='text-center'>{translation.COMMON.NO_RESULTS}</div> :
+                    <Table hover>
+                        <tbody>
+                            {users.map(user => {
+                                const selected = people.map(e => e._id).includes(user._id);
+                                return (
+                                    <tr key={user._id} id={user._id}>
+                                        <td className={selected ? 'active' : ''} style={{padding: 5}} onClick={() => this.toggleUser(user)}>
+                                            <Row noGutters>
+                                                <Col xs={10}>
+                                                    <div className='profile-picture-wrapper'>
+                                                        <Image
+                                                            roundedCircle
+                                                            style={user.online ? ONLINE_STYLE : {}}
+                                                            className='profile-picture'
+                                                            src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                                                        />
+                                                    </div>
+                                                    <div style={{fontSize: 13}}>
+                                                        <span style={{fontWeight: 700}}>
                                                             {user.username}
+                                                        </span>
+                                                        <div style={{color: 'grey'}}>
+                                                            {!user.online && `${translation.PEOPLE.LAST_SEEN} ${timestampToHumanDate(user.lastTime, false, translation)}`}
                                                         </div>
-                                                    </Col>
-                                                    <Col xs={6}>
-                                                        <div className="material-switch pull-right" style={{marginTop: 12}}>
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={selected}
-                                                            />
-                                                            <label className="label-success" />
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </Table>
-                    }
-                </Col>
-            </Row>
+                                                    </div>
+                                                </Col>
+                                                <Col xs={2}>
+                                                    <div className='material-switch pull-right' style={{marginTop: 12}}>
+                                                        <input
+                                                            type='checkbox'
+                                                            checked={selected}
+                                                        />
+                                                        <label className='label-success' />
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </Table>
+                }
+            </div>
         )
     }
 }
@@ -149,6 +153,5 @@ export default connect(
     state => ({
         users: state.users.users,
         translation: state.translation
-    }),
-    { }
+    })
 )(PeopleSelector);

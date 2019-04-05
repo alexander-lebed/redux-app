@@ -12,11 +12,12 @@ const translation: Translation = {
         SUBMIT: 'Применить',
         YES: 'Да',
         CANCEL: 'Отмена',
+        OR: 'Или',
         SAVE: 'Сохранить',
         DELETE: 'Удалить',
         DELETE_CONFIRMATION: 'Подтверждение об удалении',
         NO_RESULTS: 'Нет результатов',
-        LOADING: 'Загрузка...'
+        LOADING: 'Загрузка...',
     },
     AUTH: {
         PASSWORD: 'Пароль',
@@ -28,10 +29,11 @@ const translation: Translation = {
         OAUTH_ERROR: (service) => <span>Ошибка при входе с помощью {service}</span>
     },
     CONVERSATIONS: {
-        CONVERSATIONS: 'Сообщения',
+        SEARCH_IN_CONVERSATIONS: 'Поиск по перепискам...',
+        SEARCH_IN_MESSAGES: 'Поиск по сообщениям...',
+        NEW_CONVERSATION: 'Новая переписка',
         NO_CONVERSATIONS: 'У Вас пока нет сообщений',
         CREATE: 'Создать переписку',
-        SEARCH_PEOPLE: 'Поиск людей',
         DELETE: 'Удалить переписку',
         DELETE_CONFIRMATION: 'Это удалит переписку для всех её участников. Продолжить?',
         DELETE_CONFIRMATION_SUCCESS: 'Переписка была удаленв',
@@ -46,12 +48,13 @@ const translation: Translation = {
         WRITE_MESSAGE_INFO: <span>Зажмите <strong>Shift+Enter</strong> для перехода на след. линию, <strong>Enter</strong> для отправки сообщения</span>,
         PICK_EMOJI: 'выберите смайлик…',
         DELETE: 'Удалить сообщение',
+        NEW_MESSAGE: (messagesCount: number) => `${messagesCount} ${messagesCount > 1 ? 'новых сообщений' : 'новое сообщение'}`,
         NEW_MEMBERS_NOTE: 'Новые участники будут видеть всю историю сообщений',
         MEMBERS_EDITED: (usernames: Array<string>) => <span>В этой переписке {usernames.join(', ')}</span>,
         YOU_NOT_MEMBER: 'Вы были удалены из этой переписке'
     },
     PEOPLE: {
-        SEARCH_PEOPLE: 'Поиск людей',
+        SEARCH_PEOPLE: 'Поиск людей...',
         WRITE_MESSAGE: 'Написать сообщение',
         LAST_SEEN: 'заходил(а)',
         DELETE_CONFIRMATION: 'Вы действительно хотите удалить этого пользователя?',
@@ -60,14 +63,14 @@ const translation: Translation = {
     },
     ACCOUNT: {
         SIGN_UP: 'Регистрация',
+        SIGN_UP_WITH: 'Войдите через',
         LOG_IN: 'Войти',
-        LOG_IN_WITH_OAUTH: 'Или войти через:',
         LOG_OUT: 'Выйти',
         EDIT_PROFILE: 'Изменить профиль',
         EDIT_PROFILE_ERROR: 'Ошибка при изменении профиля:',
         PROFILE_UPDATED: 'Твой профиль был обновлен',
         USERNAME_EMAIL: {
-            CHANGE_USERNAME_AND_EMAIL: 'Изменить имя и электронную почту:',
+            USERNAME_AND_EMAIL: 'Имя и электронная почта',
             USERNAME: 'Имя',
             EMAIL: 'Электронная почта',
             ERRORS: {
@@ -78,7 +81,7 @@ const translation: Translation = {
             }
         },
         PASSWORD: {
-            CHANGE_PASSWORD: 'Изменить пароль:',
+            PASSWORD: 'Пароль',
             CURRENT_PASSWORD: 'Текущий пароль',
             NEW_PASSWORD: 'Новый пароль',
             CONFIRM_NEW_PASSWORD: 'Подтвердить пароль',
@@ -89,7 +92,9 @@ const translation: Translation = {
             }
         },
         PROFILE_PICTURE: {
-            UPLOAD_PICTURE: 'Обновить фотографию:',
+            PROFILE: 'профиль',
+            PICTURE: 'Фотография',
+            OR_USE_FROM: 'Или загрузить с',
             SOCIAL_PICTURE: 'Или используйте фотограцию из соц.сетей:',
             UPLOAD_FAIL: 'Ошибка при загрузке файла'
         },
@@ -104,7 +109,7 @@ const translation: Translation = {
     OTHER: {
         NO_CONNECTION: 'Пожалуйста проверьте соединение с интернетом',
         HOME: 'Главную',
-        PAGE_NOT_FOUND: (homeLink) => <span>Я не могу найти то, что вы ищете. Может перейдем на {homeLink} страницу?</span>
+        PAGE_NOT_FOUND: (homeLink) => <span>Я не могу найти то, что вы ищете.<br/>Может перейдем на {homeLink} страницу?</span>
     }
 };
 

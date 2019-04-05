@@ -11,6 +11,8 @@ export type TranslationType = {
         SUBMIT: string,
         YES: string,
         CANCEL: string,
+        OR: string,
+        VIA: string,
         SAVE: string,
         DELETE: string,
         NO_RESULTS: string,
@@ -27,10 +29,11 @@ export type TranslationType = {
         OAUTH_ERROR: (service: any) => any,
     },
     CONVERSATIONS: {
-        CONVERSATIONS: string,
+        SEARCH_IN_CONVERSATIONS: string,
+        SEARCH_IN_MESSAGES: string,
+        NEW_CONVERSATION: string,
         NO_CONVERSATIONS: string,
         CREATE: string,
-        SEARCH_PEOPLE: string,
         DELETE: string,
         DELETE_CONFIRMATION: string,
         DELETE_CONFIRMATION_SUCCESS: string,
@@ -45,6 +48,7 @@ export type TranslationType = {
         WRITE_MESSAGE_INFO: any,
         PICK_EMOJI: string,
         DELETE: string,
+        NEW_MESSAGE: (messagesCount: number) => string,
         NEW_MEMBERS_NOTE: string,
         MEMBERS_EDITED: string,
         YOU_NOT_MEMBER: string
@@ -59,14 +63,14 @@ export type TranslationType = {
     },
     ACCOUNT: {
         SIGN_UP: string,
+        SIGN_UP_WITH: string,
         LOG_IN: string,
-        LOG_IN_WITH_OAUTH: string,
         LOG_OUT: string,
         EDIT_PROFILE: string,
         EDIT_PROFILE_ERROR: string,
         PROFILE_UPDATED: string,
         USERNAME_EMAIL: {
-            CHANGE_USERNAME_AND_EMAIL: string,
+            USERNAME_AND_EMAIL: string,
             USERNAME: string,
             EMAIL: string,
             ERRORS: {
@@ -77,7 +81,7 @@ export type TranslationType = {
             }
         },
         PASSWORD: {
-            CHANGE_PASSWORD: string,
+            PASSWORD: string,
             CURRENT_PASSWORD: string,
             NEW_PASSWORD: string,
             CONFIRM_NEW_PASSWORD: string,
@@ -88,7 +92,9 @@ export type TranslationType = {
             }
         },
         PROFILE_PICTURE: {
-            UPLOAD_PICTURE: string,
+            PROFILE: string,
+            PICTURE: string,
+            OR_USE_FROM: string,
             SOCIAL_PICTURE: string,
             UPLOAD_FAIL: string,
         },
@@ -117,11 +123,12 @@ const translation: TranslationType = {
         SUBMIT: 'Submit',
         YES: 'Yes',
         CANCEL: 'Cancel',
+        OR: 'Or',
         SAVE: 'Save',
         DELETE: 'Delete',
         DELETE_CONFIRMATION: 'Delete confirmation',
         NO_RESULTS: 'No results',
-        LOADING: 'Loading...'
+        LOADING: 'Loading...',
     },
     AUTH: {
         PASSWORD: 'Password',
@@ -133,12 +140,13 @@ const translation: TranslationType = {
         OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
     },
     CONVERSATIONS: {
-        CONVERSATIONS: 'Conversations',
+        SEARCH_IN_CONVERSATIONS: 'Search in conversations...',
+        SEARCH_IN_MESSAGES: 'Search in messages...',
+        NEW_CONVERSATION: 'New conversation',
         NO_CONVERSATIONS: 'You don\'t have any conversations yet',
         CREATE: 'Create conversation',
-        SEARCH_PEOPLE: 'Search people',
         DELETE: 'Remove conversation',
-        DELETE_CONFIRMATION: 'This will delete conversation for all participants. Are you sure?',
+        DELETE_CONFIRMATION: 'This will delete conversation for all participants. Okay?',
         DELETE_CONFIRMATION_SUCCESS: 'Conversation has been deleted',
         DELETE_CONFIRMATION_ERROR: 'Error on delete conversation:',
         CONVERSATION_NOT_FOUND: 'Conversation is not found'
@@ -151,12 +159,13 @@ const translation: TranslationType = {
         WRITE_MESSAGE_INFO: <span>Press <strong>Shift+Enter</strong> for next line, <strong>Enter</strong> to send message</span>,
         PICK_EMOJI: 'pick your emoji…',
         DELETE: 'Remove message',
-        NEW_MEMBERS_NOTE: 'Note: new members will see the whole message history',
+        NEW_MESSAGE: (messagesCount: number) => `${messagesCount} new message${messagesCount > 1 ? 's' : ''}`,
+        NEW_MEMBERS_NOTE: 'New members will see the whole message history',
         MEMBERS_EDITED: (usernames: Array<string>) => <span>In this conversation {usernames.join(', ')}</span>,
         YOU_NOT_MEMBER: 'You have been removed from this conversation'
     },
     PEOPLE: {
-        SEARCH_PEOPLE: 'Search people',
+        SEARCH_PEOPLE: 'Search people...',
         WRITE_MESSAGE: 'Write a message',
         LAST_SEEN: 'last seen',
         DELETE_CONFIRMATION: 'Are you sure you want to delete this user?',
@@ -165,14 +174,14 @@ const translation: TranslationType = {
     },
     ACCOUNT: {
         SIGN_UP: 'Sign up',
+        SIGN_UP_WITH: 'Sign up with',
         LOG_IN: 'Log in',
-        LOG_IN_WITH_OAUTH: 'Or log in with:',
         LOG_OUT: 'Log out',
         EDIT_PROFILE: 'Edit profile',
         EDIT_PROFILE_ERROR: 'Error on update profile:',
         PROFILE_UPDATED: 'Your profile has been updated',
         USERNAME_EMAIL: {
-            CHANGE_USERNAME_AND_EMAIL: 'Change username and email:',
+            USERNAME_AND_EMAIL: 'Username & Email',
             USERNAME: 'Username',
             EMAIL: 'Email',
             ERRORS: {
@@ -183,7 +192,7 @@ const translation: TranslationType = {
             }
         },
         PASSWORD: {
-            CHANGE_PASSWORD: 'Change password:',
+            PASSWORD: 'Password',
             CURRENT_PASSWORD: 'Current password',
             NEW_PASSWORD: 'New password',
             CONFIRM_NEW_PASSWORD: 'Confirm new password',
@@ -194,7 +203,9 @@ const translation: TranslationType = {
             }
         },
         PROFILE_PICTURE: {
-            UPLOAD_PICTURE: 'Upload profile picture:',
+            PROFILE: 'profile',
+            PICTURE: 'Profile picture',
+            OR_USE_FROM: 'Or use photo from',
             SOCIAL_PICTURE: 'Or use your social media profile picture:',
             UPLOAD_FAIL: 'Cannot upload file'
         },
@@ -209,7 +220,7 @@ const translation: TranslationType = {
     OTHER: {
         NO_CONNECTION: 'It seems that you are offline. Please check your internet connection',
         HOME: 'Home',
-        PAGE_NOT_FOUND: (homeLink) => <span>I couldn't find what you are looking for. How about going to the {homeLink} page?</span>
+        PAGE_NOT_FOUND: (homeLink) => <span>I couldn't find what you are looking for.<br/>How about going to the {homeLink} page?</span>
     }
 };
 

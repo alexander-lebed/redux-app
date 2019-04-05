@@ -1,0 +1,93 @@
+@import '../../css/variables';
+
+.my-navbar {
+  padding: 5px 16px 5px 16px !important;
+}
+
+.brand-logo {
+  height: 35px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.navbar-dropdown > .dropdown-toggle::before, .dropdown-toggle::after {
+  display: none; // remove arrow
+}
+
+.dropdown-menu {
+  padding: 0 !important;
+  left: -88px !important;
+  top: 57px !important;
+  border-radius: 0;
+}
+
+.account-dropdown > a {
+  padding: 6px 8px 0 8px !important;
+}
+
+.account-dropdown > .dropdown-menu {
+  left: -50px !important;
+}
+
+.account-menu {
+  max-height: 40px;
+  max-width: 40px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.lang-icon {
+  text-align: center;
+  font-size: 24px;
+  padding-top: 4px;
+}
+
+.my-alert {
+  border-radius: 0;
+  box-shadow: grey 5px 5px 5px;
+}
+
+
+/*
+for Mobile
+*/
+@media only screen and (max-width: 768px) {
+  .my-navbar-panel {
+    padding-left: 0 !important;
+  }
+  .tab-text {
+    text-align: center;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+  .navbar-dropdown {
+    padding-right: 0 !important;
+  }
+  .my-alert > .close > span {
+    font-size: 26px !important;
+  }
+}
+
+/*
+for Desktop
+*/
+.my-navbar-panel {
+  padding-left: 30px;
+}
+.tab-text {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+.navbar-dropdown {
+  padding-right: 5px;
+}
+.dropdown-item {
+  line-height: 40px;
+  text-align: center;
+  padding: 0; // 4px 0 4px 0;
+  background-color:  white;
+}
+.dropdown-item.active, .dropdown-item:active {
+  text-decoration: none;
+  background-color:  $primary-color; // #e7e7e7;
+}

@@ -1,7 +1,11 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Form, FormGroup, FormControl, ControlLabel, ButtonToolbar, Button } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { encryptPassword } from '../../utils';
 import { login } from '../../redux/reducers/authentication';
 import { alertError } from '../../redux/reducers/alerts';
@@ -43,6 +47,11 @@ class Login extends React.Component<Props, State> {
         }
     };
 
+    signUp = async (e) => {
+        e.preventDefault();
+        this.props.history.push('/register');
+    };
+
     oAuthLogin = async (service) => {
         const isLoggedIn = await this.props.login({oauth: service});
         if (isLoggedIn) {
@@ -56,90 +65,84 @@ class Login extends React.Component<Props, State> {
         const {email, password} = this.state;
         const {translation} = this.props;
         return (
-            <Row style={{marginTop: 100, marginLeft: 0, marginRight: 0}}>
-                <Col smOffset={3} sm={6}>
-
-                    <Row>
-                        <Col xsOffset={3} smOffset={2}  xs={9} sm={10}>
-                            <h3 style={{marginBottom: 20}}>{translation.ACCOUNT.LOG_IN}</h3>
-                        </Col>
-                    </Row>
-
-                    <Form horizontal onSubmit={this.login}>
-                        <FormGroup controlId='formHorizontalEmail'>
-                            <Col componentClass={ControlLabel} xs={3} sm={2}>
-                                Email
-                            </Col>
-                            <Col xs={9} sm={10}>
-                                <FormControl
+            <Container className='auth-container'>
+                <Row>
+                    <Col lg={{span: 6, offset: 3}}>
+                        <h3 style={{marginBottom: 20}}>
+                            {translation.ACCOUNT.LOG_IN}
+                        </h3>
+                        <Form onSubmit={this.login}>
+                            <Form.Group controlId='formHorizontalEmail'>
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control
                                     name='email'
                                     type='email'
                                     placeholder='Email'
                                     value={email}
                                     onChange={this.handleChange}
                                 />
-                            </Col>
-                        </FormGroup>
-
-                        <FormGroup controlId='formHorizontalPassword'>
-                            <Col componentClass={ControlLabel} xs={3} sm={2}>
-                                {this.props.translation.AUTH.PASSWORD}
-                            </Col>
-                            <Col xs={9} sm={10}>
-                                <FormControl
+                            </Form.Group>
+                            <Form.Group controlId='formHorizontalPassword'>
+                                <Form.Label>{this.props.translation.AUTH.PASSWORD}</Form.Label>
+                                <Form.Control
                                     name='password'
                                     type='password'
                                     placeholder='Password'
                                     value={password}
                                     onChange={this.handleChange}
                                 />
-                            </Col>
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Col xsOffset={3} smOffset={2} xs={9} sm={10}>
-                                <ButtonToolbar>
-                                    <Button
-                                        type='submit'
-                                        bsStyle='primary'
-                                        className='btn-xs-block'
-                                    >
-                                        {translation.ACCOUNT.LOG_IN}
-                                    </Button>
-                                    <Button
-                                        href='/register'
-                                        className='btn-xs-block'
-                                    >
-                                        {translation.ACCOUNT.SIGN_UP}
-                                    </Button>
-                                </ButtonToolbar>
-                            </Col>
-                        </FormGroup>
-                    </Form>
-
-                    <FormGroup style={{marginBottom: 0}}>
-                        <Col xsOffset={3} smOffset={2} xs={9} sm={10}>
-                            <ControlLabel>{translation.ACCOUNT.LOG_IN_WITH_OAUTH}</ControlLabel>
-                            <ButtonToolbar>
+                            </Form.Group>
+                            <Form.Group>
                                 <Button
-                                    style={{backgroundColor: '#DD4B39'}}
-                                    className='btn-social'
-                                    onClick={() => this.oAuthLogin('google')}
+                                    type='submit'
+                                    variant='success'
+                                    className='btn-xs-block'
                                 >
-                                    <i className="fa fa-google-plus pr-1" />
+                                    {translation.ACCOUNT.LOG_IN}
                                 </Button>
+                                {' '}
                                 <Button
-                                    style={{backgroundColor: '#3B5998'}}
-                                    className='btn-social'
-                                    onClick={() => this.oAuthLogin('facebook')}
+                                    variant='dark'
+                                    className='btn-xs-block'
+                                    onClick={this.signUp}
                                 >
-                                    <i className="fa fa-facebook pr-1" />
+                                    {translation.ACCOUNT.SIGN_UP}
                                 </Button>
-                            </ButtonToolbar>
-                        </Col>
-                    </FormGroup>
-                </Col>
-            </Row>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <div className='or-wrapper'>
+                                    <hr className='or-hr' />
+                                    <span className='or-span'>{translation.COMMON.OR}</span>
+                                    <hr className='or-hr' />
+                                </div>
+                                <Form.Row>
+                                    <Col xs={12} md={6}>
+                                        <Button
+                                            block
+                                            className='btn-google'
+                                            onClick={() => this.oAuthLogin('google')}
+                                        >
+                                            <i className='fab fa-google' style={{paddingRight: 8}} />
+                                            {translation.ACCOUNT.SIGN_UP_WITH} Google
+                                        </Button>
+                                    </Col>
+                                    <Col xs={12} md={6}>
+                                        <Button
+                                            block
+                                            className='btn-facebook'
+                                            onClick={() => this.oAuthLogin('facebook')}
+                                        >
+                                            <i className="fab fa-facebook-f" style={{paddingRight: 8}} />
+                                            {translation.ACCOUNT.SIGN_UP_WITH} Facebook
+                                        </Button>
+                                    </Col>
+                                </Form.Row>
+                            </Form.Group>
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }

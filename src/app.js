@@ -1,11 +1,10 @@
 // @flow
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { ThemeSwitcher } from 'react-bootstrap-theme-switcher';
+// import { ThemeSwitcher } from 'react-bootstrap-theme-switcher';
 import 'font-awesome/css/font-awesome.min.css';
-import history from './helpers/history';
 import Startup from './components/Startup';
 import PrivateRoute from './components/PrivateRoute';
 import configureStore from './redux/configureStore';
@@ -20,11 +19,8 @@ import People from './components/People/People';
 import Profile from './components/Profile/Profile';
 import PageNotFound from './components/PageNotFound';
 import Alerts from './components/Alerts';
-import '../css/react-select.scss';
-import '../css/emoji-mart.scss';
-import '../css/style.scss';
+import './app.scss';
 
-const themes = ['light', 'dark', 'paper'];
 
 async function init() {
     const store = await configureStore();
@@ -32,30 +28,30 @@ async function init() {
     if (app) {
         render(
             <Provider store={store}>
-                <ThemeSwitcher themePath='themes' storeThemeKey='ui-theme' themes={themes}>
-                    <Startup>
-                        <Router history={history}>
-                            <div>
-                                <Alerts />
-                                <NavigationBar />
-                                <div className='main-content'>
-                                    <Switch>
-                                        <Route exact path="/login" component={Login} />
-                                        <Route exact path="/register" component={Registration} />
-                                        <PrivateRoute exact path="/" component={Conversations} />
-                                        <PrivateRoute exact path="/conversations" component={Conversations} />
-                                        <PrivateRoute path="/conversation" component={Conversation} />
-                                        <PrivateRoute path="/create-conversation" component={CreateConversation} />
-                                        <PrivateRoute exact path="/people" component={People} />
-                                        <PrivateRoute path="/profile" component={Profile} />
-                                        <Route exact path="/redirect" component={Spinner} />
-                                        <Route component={PageNotFound} />
-                                    </Switch>
-                                </div>
+                {/*<ThemeSwitcher themePath='themes' storeThemeKey='ui-theme' themes={['light', 'dark', 'paper']}>*/}
+                <Startup>
+                    <Router>
+                        <div>
+                            <Alerts />
+                            <NavigationBar />
+                            <div className='main-content'>
+                                <Switch>
+                                    <Route exact path="/login" component={Login} />
+                                    <Route exact path="/register" component={Registration} />
+                                    <PrivateRoute exact path="/" component={Conversations} />
+                                    <PrivateRoute exact path="/conversations" component={Conversations} />
+                                    <PrivateRoute path="/conversation" component={Conversation} />
+                                    <PrivateRoute path="/create-conversation" component={CreateConversation} />
+                                    <PrivateRoute exact path="/people" component={People} />
+                                    <PrivateRoute path="/profile" component={Profile} />
+                                    <Route exact path="/redirect" component={Spinner} />
+                                    <Route component={PageNotFound} />
+                                </Switch>
                             </div>
-                        </Router>
-                    </Startup>
-                </ThemeSwitcher>
+                        </div>
+                    </Router>
+                </Startup>
+                {/*</ThemeSwitcher>*/}
             </Provider>,
             app
         );

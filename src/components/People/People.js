@@ -2,7 +2,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import { Row, Col, Table, FormGroup, FormControl, InputGroup, ButtonToolbar, Button, Glyphicon, Image, Modal } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import { ONLINE_STYLE } from '../../constants';
 import { timestampToHumanDate } from '../../utils';
 import { deleteUser } from '../../redux/reducers/users';
@@ -10,7 +19,7 @@ import ConfirmationModal from '../common/ConfirmationModal';
 import type { User, Translation } from '../../types';
 
 type Props = {
-    history: Object;
+    history: Object,
     user: User,
     users: Array<User>,
     translation: Translation,
@@ -36,119 +45,60 @@ export class People extends React.Component<Props, State> {
         }
     }
 
-    showDeleteConfirmation = (userId: string) => {
-        this.setState({
-            deleteUserId: userId
-        })
-    };
+    showUserProfile = (user: User | null) => this.setState({clickedUser: user});
 
-    hideDeleteConfirmation = () => {
-        this.setState({
-            deleteUserId: ''
-        })
-    };
+    showDeleteConfirmation = (userId: string) => this.setState({deleteUserId: userId});
+
+    hideDeleteConfirmation = () => this.setState({deleteUserId: ''});
 
     deleteUser = () => {
         this.props.deleteUser(this.state.deleteUserId);
         this.hideDeleteConfirmation();
     };
 
-    goToConversationWith = (userIds: Array<string>) => {
-        const query = queryString.stringify({userIds});
-        this.props.history.push(`/conversation?${query}`);
-    };
-
-    isAdmin = () => this.props.user.email === 'alexanderlebed999@gmail.com';
-
-    showUserProfile = (user: User | null) => {
-        this.setState({clickedUser: user});
-    };
-
     render() {
-        let {users, translation} = this.props;
+        let {users, history, translation} = this.props;
         const {PEOPLE, COMMON} = translation;
         if (this.state.searchText) {
             users = users.filter(e => e.username.toLowerCase().indexOf(this.state.searchText.toLowerCase()) !== -1)
         }
         return (
-            <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col xsOffset={0} smOffset={1} mdOffset={3} xs={12} sm={10} md={6}>
-                    <Row>
-                        <Col xs={12} sm={6}>
-                            <FormGroup>
-                                <InputGroup>
-                                    <FormControl
-                                        type='text'
+            <Container fluid>
+                <Row>
+                    <Col md={{span: 10, offset: 1}} lg={{span: 8, offset: 2}}>
+                        <Row>
+                            <Col xs={12} sm={6}>
+                                <InputGroup size='sm' style={{paddingBottom: 5}}>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text id='search'><i className='fas fa-search' /></InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <Form.Control
                                         placeholder={PEOPLE.SEARCH_PEOPLE}
+                                        aria-label='Search people'
+                                        aria-describedby='search'
                                         value={this.state.searchText}
                                         onChange={e => this.setState({searchText: e.target.value})}
                                     />
-                                    <InputGroup.Addon>
-                                        <Glyphicon glyph='search' />
-                                    </InputGroup.Addon>
                                 </InputGroup>
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    {users.length === 0 ? <div className='text-center'>{COMMON.NO_RESULTS}</div> :
-                        <Table>
-                            <tbody>
-                                {users.map(user => {
-                                    const imageStyle = user.online ? ONLINE_STYLE : {};
-                                    return (
-                                        <tr key={user._id} id={user._id}>
-                                            <td>
-                                                <Row>
-                                                    <Col xs={12} sm={6} style={{paddingTop: 5}}>
-                                                        <div
-                                                            className='profile-picture-wrapper'
-                                                            style={{cursor: 'pointer'}}
-                                                            onClick={() => this.showUserProfile(user)}
-                                                        >
-                                                            <Image
-                                                                circle
-                                                                style={imageStyle}
-                                                                className='profile-picture'
-                                                                src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
-                                                            />
-                                                        </div>
-                                                        <div>
-                                                            {user.username}
-                                                            <div style={style.time}>
-                                                                {!user.online && `${PEOPLE.LAST_SEEN} ${timestampToHumanDate(user.lastTime, false, translation)}`}
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col xs={12} sm={6}>
-                                                        <ButtonToolbar className='pull-right'>
-                                                            {this.isAdmin() &&
-                                                            <Button
-                                                                id={`remove-user-${user._id}`}
-                                                                bsSize='small'
-                                                                bsStyle='danger'
-                                                                onClick={() => this.showDeleteConfirmation(user._id)}
-                                                            >
-                                                                {COMMON.DELETE}
-                                                            </Button>
-                                                            }
-                                                            <Button
-                                                                id={`write-user-${user._id}`}
-                                                                bsSize='small'
-                                                                onClick={() => this.goToConversationWith([user._id])}
-                                                            >
-                                                                {PEOPLE.WRITE_MESSAGE}
-                                                            </Button>
-                                                        </ButtonToolbar>
-                                                    </Col>
-                                                </Row>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </Table>
-                    }
-                    {this.state.clickedUser &&
+                            </Col>
+                        </Row>
+                        {users.length === 0
+                            ?  <Jumbotron className='text-center'>{COMMON.NO_RESULTS}</Jumbotron>
+                            : <Table>
+                                <tbody>
+                                    {users.map(user => (
+                                        <UserRow
+                                            key={user._id}
+                                            history={history}
+                                            user={user}
+                                            showUserProfile={u => this.showUserProfile(u)}
+                                            showDeleteConfirmation={userId => this.showDeleteConfirmation(userId)}
+                                        />
+                                    ))}
+                                </tbody>
+                            </Table>
+                        }
+                        {this.state.clickedUser &&
                         <Modal
                             show={this.state.clickedUser !== null}
                             className='profile-modal'
@@ -164,27 +114,21 @@ export class People extends React.Component<Props, State> {
                                 />
                             </Modal.Body>
                         </Modal>
-                    }
-                    {this.state.deleteUserId &&
+                        }
+                        {this.state.deleteUserId &&
                         <ConfirmationModal
                             title={COMMON.DELETE_CONFIRMATION}
                             body={PEOPLE.DELETE_CONFIRMATION}
                             onConfirm={() => this.deleteUser()}
                             onCancel={() => this.hideDeleteConfirmation()}
                         />
-                    }
-                </Col>
-            </Row>
+                        }
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }
-
-const style = {
-    time: {
-        color: 'grey',
-        fontSize: 13
-    }
-};
 
 export default connect(
     state => ({
@@ -194,3 +138,83 @@ export default connect(
     }),
     { deleteUser }
 )(People);
+
+
+type UserRowProps = {
+    history: Object,
+    user: User,
+    showUserProfile: Function,
+    showDeleteConfirmation: Function,
+    loggedUser: User,
+    translation: Translation,
+}
+
+const UserRow = connect(
+    state => ({
+        loggedUser: state.authentication.user,
+        translation: state.translation
+    })
+)((props: UserRowProps) => {
+
+    const {user, loggedUser, showUserProfile, showDeleteConfirmation, history, translation} = props;
+
+    const isAdmin = loggedUser.email === 'alexanderlebed999@gmail.com';
+    const imageStyle = user.online ? ONLINE_STYLE : {};
+
+    const goToConversationWith = (userIds: Array<string>) => {
+        const query = queryString.stringify({userIds});
+        history.push(`/conversation?${query}`);
+    };
+    return (
+        <tr key={user._id} id={user._id}>
+            <td style={{padding: 10}}>
+                <Row>
+                    <Col xs={12} sm={6}>
+                        <div
+                            className='profile-picture-wrapper'
+                            style={{cursor: 'pointer'}}
+                            onClick={() => showUserProfile(user)}
+                        >
+                            <Image
+                                roundedCircle
+                                style={imageStyle}
+                                className='profile-picture'
+                                src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                            />
+                        </div>
+                        <div>
+                            {user.username}
+                            <div style={{color: 'grey', fontSize: 13}}>
+                                {!user.online && `${translation.PEOPLE.LAST_SEEN} ${timestampToHumanDate(user.lastTime, false, translation)}`}
+                            </div>
+                        </div>
+                    </Col>
+                    <Col xs={12} sm={6}>
+                        <div className='pull-right pt-1 pt-sm-2'>
+                            {isAdmin &&
+                            <React.Fragment>
+                                <Button
+                                    size='sm'
+                                    variant='outline-danger'
+                                    onClick={() => showDeleteConfirmation(user._id)}
+                                >
+                                    <i className='far fa-trash-alt' style={{marginRight: 5}} /> {translation.COMMON.DELETE}
+                                </Button>
+                                {' '}
+                            </React.Fragment>
+                            }
+                            <Button
+                                size='sm'
+                                variant='outline-dark'
+                                onClick={() => goToConversationWith([user._id])}
+                            >
+                                <i className='far fa-paper-plane' style={{marginRight: 5}} /> {translation.PEOPLE.WRITE_MESSAGE}
+                            </Button>
+                        </div>
+                    </Col>
+                </Row>
+            </td>
+        </tr>
+    )
+});
+UserRow.displayName = 'UserRow';

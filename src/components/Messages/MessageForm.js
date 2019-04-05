@@ -1,8 +1,10 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Form, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import { Picker, Emoji } from 'emoji-mart';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 import { saveConversation } from '../../redux/reducers/conversations';
 import type {Conversation as ConversationType, Message, Translation, User} from '../../types';
 
@@ -53,11 +55,7 @@ export class MessageForm extends React.Component<Props, State> {
         }
     };
 
-    onEmojiClick() {
-        this.setState({
-            showEmoji: !this.state.showEmoji
-        })
-    }
+    onEmojiClick = () => this.setState({showEmoji: !this.state.showEmoji});
 
     render () {
         const { translation } = this.props;
@@ -65,30 +63,26 @@ export class MessageForm extends React.Component<Props, State> {
         const messageStyle = showEmoji ? {paddingRight: 0} : {};
         const emojiStyle = showEmoji ? {paddingLeft: 0} : {};
         return (
-            <Row>
-                <Col xs={12} sm={showEmoji ? 7 : 12} className='message-form' style={messageStyle}>
+            <Row noGutters>
+                <Col xs={12} sm={showEmoji ? 7 : 12} style={messageStyle}>
                     <Form>
-                        <FormGroup controlId='message-form' style={{display: 'flex', marginBottom: 2}}>
+                        <Form.Group controlId='message-form' className='message-form' style={{display: 'flex', marginBottom: 2}}>
                             <div style={{flex: 1}}>
-                                <FormControl
-                                    componentClass='textarea'
+                                <Form.Control
+                                    as='textarea'
                                     autoFocus={true}
-                                    style={style.textControl}
+                                    className='text-area'
                                     rows={4}
                                     placeholder={this.props.translation.MESSAGES.WRITE_MESSAGE}
                                     value={this.state.messageText}
                                     onKeyPress={this.handleKeyPress}
                                     onChange={e => this.setState({messageText: e.target.value})}
                                 />
-                                <Row style={{margin: 0}}>
-                                    <Col xsHidden>
-                                        <HelpBlock>
-                                            {this.props.translation.MESSAGES.WRITE_MESSAGE_INFO}
-                                        </HelpBlock>
-                                    </Col>
-                                </Row>
+                                <Form.Text className='text-muted d-none d-sm-block'>
+                                    {this.props.translation.MESSAGES.WRITE_MESSAGE_INFO}
+                                </Form.Text>
                             </div>
-                            <div className='cursor' style={style.emojiSelect}>
+                            <div className='emoji-select-area'>
                                 <Emoji
                                     set='twitter'
                                     size={32}
@@ -96,38 +90,26 @@ export class MessageForm extends React.Component<Props, State> {
                                     onClick={() => this.onEmojiClick()}
                                 />
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Form>
                 </Col>
-                <Col xs={12} sm={showEmoji ? 5 : 12} className='emoji-picker' style={emojiStyle}>
+                <Col xs={12} sm={showEmoji ? 5 : 12} style={emojiStyle}>
                     {showEmoji &&
-                        <Picker
-                            title={translation.MESSAGES.PICK_EMOJI}
-                            emoji='monkey'
-                            native={true}
-                            onClick={emoji => {
-                                const text = messageText ? messageText + ` ${emoji.native}` : emoji.native;
-                                this.setState({messageText: text});
-                            }}
-                        />
+                    <Picker
+                        title={translation.MESSAGES.PICK_EMOJI}
+                        emoji='monkey'
+                        native={true}
+                        onClick={emoji => {
+                            const text = messageText ? messageText + ` ${emoji.native}` : emoji.native;
+                            this.setState({messageText: text});
+                        }}
+                    />
                     }
                 </Col>
             </Row>
         )
     }
 }
-
-const style = {
-    textControl: {
-        resize: 'none',
-        paddingRight: 60
-    },
-    emojiSelect: {
-        paddingTop: 10,
-        paddingRight: 10,
-        marginLeft: -43
-    }
-};
 
 export default connect(
     state => ({

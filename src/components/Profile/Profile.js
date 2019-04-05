@@ -3,15 +3,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import hello from 'hellojs';
 import $http from 'axios';
-import { Row, Col, Well, Form, FormGroup, FormControl, ControlLabel, HelpBlock, ButtonToolbar, Button, Glyphicon, Image } from 'react-bootstrap';
-import { editUser, deleteUser } from '../../redux/reducers/users';
-import { encryptPassword } from '../../utils';
-import { getUsernameValidationState, getEmailValidationState, getPasswordValidationState, getConfirmPasswordValidationState } from '../../helpers/inputValidation';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Image from 'react-bootstrap/Image';
+import Button from 'react-bootstrap/Button';
 import { alertError } from '../../redux/reducers/alerts';
+import { editUser, deleteUser } from '../../redux/reducers/users';
+import { setUser } from '../../redux/reducers/authentication';
+import { encryptPassword } from '../../utils';
+import { isUsernameInvalid, isEmailInvalid, isPasswordInvalid, isConfirmPasswordInvalid } from '../../helpers/inputValidation';
 import Spinner from '../common/Spinner';
 import ConfirmationModal from '../common/ConfirmationModal';
 import { IMGUR_CLIENT_ID } from '../../constants';
-import type { User, Translation } from "../../types";
+import type { User, Translation } from '../../types';
 
 type Props = {
     history: Object;
@@ -20,6 +27,7 @@ type Props = {
     translation: Translation,
     editUser: Function,
     deleteUser: Function,
+    setUser: Function,
     alertError: Function
 };
 
@@ -35,7 +43,6 @@ type State = {
 };
 
 class Profile extends React.Component<Props, State> {
-
     state: State;
 
     constructor(props: Props) {
@@ -86,20 +93,13 @@ class Profile extends React.Component<Props, State> {
         this.props.editUser(user._id, {password: encryptPassword(newPassword)});
     };
 
-    showDeleteConfirmation = () => {
-        this.setState({
-            showDeleteConfirmation: true
-        })
-    };
+    showDeleteConfirmation = () => this.setState({showDeleteConfirmation: true});
 
-    hideDeleteConfirmation = () => {
-        this.setState({
-            showDeleteConfirmation: false
-        })
-    };
+    hideDeleteConfirmation = () => this.setState({showDeleteConfirmation: false});
 
     deleteProfile = () => {
         this.props.deleteUser(this.props.user._id);
+        this.props.setUser(null); // remove logged user from store
         this.props.history.push('/login');
         this.hideDeleteConfirmation();
     };
@@ -108,7 +108,6 @@ class Profile extends React.Component<Props, State> {
         this.setState({
             pictureUploading: true
         });
-
         const formData = new FormData();
         formData.append('image', files[0]);
         const config = {
@@ -117,7 +116,6 @@ class Profile extends React.Component<Props, State> {
                 'Authorization': `Client-ID ${IMGUR_CLIENT_ID}`
             }
         };
-
         $http.post('https://api.imgur.com/3/image', formData, config)
             .then(response => {
                 const pictureUrl = response.data.data ? response.data.data.link : '';
@@ -140,239 +138,206 @@ class Profile extends React.Component<Props, State> {
         const {PROFILE_PICTURE, USERNAME_EMAIL, PASSWORD} = translation.ACCOUNT;
         const currentEncryptedPassword = currentPassword ? encryptPassword(currentPassword) : '';
         return (
-            <Row style={{marginLeft: 0, marginRight: 0}}>
-                <Col mdOffset={3} md={6}>
-                    <Form horizontal>
+            <Container fluid>
+                <Row>
+                    <Col md={{span: 8, offset: 2}} lg={{span: 6, offset: 3}}>
+                        <Form>
+                            {user.oauth ? null :
+                                <React.Fragment>
 
-                        {user.oauth ? null :
-                            <div>
-                                <h4 style={{marginBottom: 10}}>{PROFILE_PICTURE.UPLOAD_PICTURE}</h4>
-
-                                <Well bsSize='small'>
-                                    <Col smOffset={2} sm={8}>
-                                        {this.state.pictureUploading &&
-                                        <Spinner />
-                                        }
+                                    <MyJumbotron header={PROFILE_PICTURE.PICTURE}>
                                         <Image
                                             thumbnail
-                                            style={this.state.pictureUploading ? {...style.picture, opacity: 0.4} : style.picture}
+                                            className='user-picture'
+                                            style={this.state.pictureUploading ? {opacity: 0.4} : {}}
                                             src={pictureUrl ? pictureUrl : '/default-profile.png'}
                                         />
-                                    </Col>
-                                    <FormGroup controlId='pictureUrl' style={{marginBottom: 5}}>
-                                        <Col smOffset={2} sm={8}>
-                                            <FormControl
+                                        <Form.Group controlId='pictureUrl' style={{marginBottom: 5}}>
+                                            <Form.Control
                                                 type='file'
                                                 accept='image/*'
                                                 onChange={(e) => this.onImageUpload(e.target.files)}
                                             />
-                                        </Col>
-                                    </FormGroup>
+                                            {
+                                                this.state.pictureUploading && <Spinner />
+                                            }
+                                            <div className='or-wrapper'>
+                                                <hr className='or-hr' />
+                                                <span className='or-span'>{PROFILE_PICTURE.OR_USE_FROM}</span>
+                                                <hr className='or-hr' />
+                                            </div>
+                                            <Form.Row>
+                                                <Col xs={12} md={6}>
+                                                    <Button
+                                                        block
+                                                        size='sm'
+                                                        className='btn-google'
+                                                        onClick={() => this.loadPictureFromApi('google')}
+                                                    >
+                                                        <i className='fab fa-google' style={{paddingRight: 8}} />
+                                                        Google {PROFILE_PICTURE.PROFILE}
+                                                    </Button>
+                                                </Col>
+                                                <Col xs={12} md={6}>
+                                                    <Button
+                                                        block
+                                                        size='sm'
+                                                        className='btn-facebook'
+                                                        onClick={() => this.loadPictureFromApi('facebook')}
+                                                    >
+                                                        <i className='fab fa-facebook-f' style={{paddingRight: 8}} />
+                                                        Facebook {PROFILE_PICTURE.PROFILE}
+                                                    </Button>
+                                                </Col>
+                                            </Form.Row>
+                                        </Form.Group>
 
-                                    <FormGroup>
-                                        <Col smOffset={2} sm={8}>
-                                            <ControlLabel>{PROFILE_PICTURE.SOCIAL_PICTURE}</ControlLabel>
-                                            <ButtonToolbar>
-                                                <Button
-                                                    style={{backgroundColor: '#DD4B39'}}
-                                                    className='btn-social'
-                                                    onClick={() => this.loadPictureFromApi('google')}
-                                                >
-                                                    <i className="fa fa-google-plus pr-1" />
-                                                </Button>
-                                                <Button
-                                                    style={{backgroundColor: '#3B5998'}}
-                                                    className='btn-social'
-                                                    onClick={() => this.loadPictureFromApi('facebook')}
-                                                >
-                                                    <i className="fa fa-facebook pr-1" />
-                                                </Button>
-                                            </ButtonToolbar>
-                                        </Col>
-                                    </FormGroup>
-
-                                    <FormGroup>
-                                        <Col smOffset={2} sm={8}>
+                                        <div className='pt-1 d-inline-block'>
                                             <Button
-                                                bsStyle='primary'
-                                                className='pull-right'
+                                                variant={user.pictureUrl === pictureUrl ? 'outline-success' : 'success'}
                                                 disabled={user.pictureUrl === pictureUrl}
                                                 onClick={() => this.savePicture()}
                                             >
                                                 {translation.COMMON.SAVE}
                                             </Button>
-                                        </Col>
-                                    </FormGroup>
-                                </Well>
+                                        </div>
+                                    </MyJumbotron>
 
 
-                                <h4 style={{marginBottom: 10}}>{USERNAME_EMAIL.CHANGE_USERNAME_AND_EMAIL}</h4>
-
-                                <Well bsSize='small'>
-                                    <FormGroup controlId='username'  validationState={this.getUsernameValidationState(username)}>
-                                        <Col smOffset={2} sm={8}>
-                                            <ControlLabel>{USERNAME_EMAIL.USERNAME}</ControlLabel>
-                                            <FormControl
+                                    <MyJumbotron header={USERNAME_EMAIL.USERNAME_AND_EMAIL}>
+                                        <Form.Group controlId='username'>
+                                            <Form.Label>{USERNAME_EMAIL.USERNAME}</Form.Label>
+                                            <Form.Control
                                                 name='username'
                                                 placeholder={USERNAME_EMAIL.USERNAME}
+                                                isInvalid={isUsernameInvalid(username) || this.suchUsernameExist(username)}
                                                 value={username}
                                                 onChange={this.handleChange}
                                             />
-                                            <HelpBlock style={style.helpBlock}>
-                                                {getUsernameValidationState(username) === 'error' && USERNAME_EMAIL.ERRORS.USERNAME_MIN_LENGTH}
-                                            </HelpBlock>
-                                            <HelpBlock style={style.helpBlock}>
-                                                {this.suchUsernameExist(username) === 'error' && USERNAME_EMAIL.ERRORS.USERNAME_EXIST}
-                                            </HelpBlock>
-                                        </Col>
-                                    </FormGroup>
+                                            <Form.Control.Feedback type='invalid'>
+                                                {isUsernameInvalid(username) && USERNAME_EMAIL.ERRORS.USERNAME_MIN_LENGTH}
+                                                {this.suchUsernameExist(username) && USERNAME_EMAIL.ERRORS.USERNAME_EXIST}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
 
-                                    <FormGroup controlId='email' validationState={this.getEmailValidationState(email)}>
-                                        <Col smOffset={2} sm={8}>
-                                            <ControlLabel>{USERNAME_EMAIL.EMAIL}</ControlLabel>
-                                            <FormControl
+                                        <Form.Group controlId='email'>
+                                            <Form.Label>{USERNAME_EMAIL.EMAIL}</Form.Label>
+                                            <Form.Control
                                                 name='email'
                                                 type='email'
                                                 placeholder={USERNAME_EMAIL.EMAIL}
+                                                isInvalid={isEmailInvalid(email) || this.suchEmailExist(email)}
                                                 value={email}
                                                 onChange={this.handleChange}
                                             />
-                                            <HelpBlock style={style.helpBlock}>
-                                                {getEmailValidationState(email) === 'error' && USERNAME_EMAIL.ERRORS.EMAIL_INVALID}
-                                            </HelpBlock>
-                                            <HelpBlock style={style.helpBlock}>
-                                                {this.suchEmailExist(email) === 'error' && USERNAME_EMAIL.ERRORS.EMAIL_EXIST}
-                                            </HelpBlock>
-                                        </Col>
-                                    </FormGroup>
+                                            <Form.Control.Feedback type='invalid'>
+                                                {isEmailInvalid(email) && USERNAME_EMAIL.ERRORS.EMAIL_INVALID}
+                                                {this.suchEmailExist(email) && USERNAME_EMAIL.ERRORS.EMAIL_EXIST}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
 
-                                    <FormGroup>
-                                        <Col smOffset={2} sm={8}>
+                                        <div className='pt-1 d-inline-block'>
                                             <Button
-                                                bsStyle='primary'
-                                                className='pull-right'
-                                                disabled={!this.isBasicFormValid()}
+                                                variant={this.isBasicFormInvalid() ? 'outline-success' : 'success'}
+                                                disabled={this.isBasicFormInvalid()}
                                                 onClick={() => this.saveBasic()}
                                             >
                                                 {translation.COMMON.SAVE}
                                             </Button>
-                                        </Col>
-                                    </FormGroup>
-                                </Well>
+                                        </div>
+                                    </MyJumbotron>
 
 
-                                <h4 style={{marginBottom: 10}}>{PASSWORD.CHANGE_PASSWORD}</h4>
-
-                                <Well bsSize='small'>
-                                    <FormGroup controlId='current-password' validationState={getConfirmPasswordValidationState(user.password, currentEncryptedPassword)}>
-                                        <Col smOffset={2} sm={8}>
-                                            <ControlLabel>{PASSWORD.CURRENT_PASSWORD}</ControlLabel>
-                                            <FormControl
+                                    <MyJumbotron header={PASSWORD.PASSWORD}>
+                                        <Form.Group controlId='current-password'>
+                                            <Form.Label>{PASSWORD.CURRENT_PASSWORD}</Form.Label>
+                                            <Form.Control
                                                 name='currentPassword'
                                                 type='password'
                                                 placeholder={PASSWORD.CURRENT_PASSWORD}
+                                                isInvalid={isConfirmPasswordInvalid(user.password, currentEncryptedPassword)}
                                                 value={currentPassword}
                                                 onChange={this.handleChange}
                                             />
-                                            <HelpBlock style={style.helpBlock}>
-                                                {getConfirmPasswordValidationState(user.password, currentEncryptedPassword) === 'error' && PASSWORD.ERRORS.CURRENT_PASSWORD_INVALID}
-                                            </HelpBlock>
-                                        </Col>
-                                    </FormGroup>
+                                            <Form.Control.Feedback type='invalid'>
+                                                {PASSWORD.ERRORS.CURRENT_PASSWORD_INVALID}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
 
-                                    <FormGroup controlId='new-password' validationState={getPasswordValidationState(newPassword)}>
-                                        <Col smOffset={2} sm={8}>
-                                            <ControlLabel>{PASSWORD.NEW_PASSWORD}</ControlLabel>
-                                            <FormControl
+                                        <Form.Group controlId='new-password'>
+                                            <Form.Label>{PASSWORD.NEW_PASSWORD}</Form.Label>
+                                            <Form.Control
                                                 name='newPassword'
                                                 type='password'
                                                 placeholder={PASSWORD.NEW_PASSWORD}
+                                                isInvalid={isPasswordInvalid(newPassword)}
                                                 value={newPassword}
                                                 onChange={this.handleChange}
                                             />
-                                            <HelpBlock style={style.helpBlock}>
-                                                {getPasswordValidationState(newPassword) === 'error' && PASSWORD.ERRORS.NEW_PASSWORD_INVALID}
-                                            </HelpBlock>
-                                        </Col>
-                                    </FormGroup>
+                                            <Form.Control.Feedback type='invalid'>
+                                                {PASSWORD.ERRORS.NEW_PASSWORD_INVALID}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
 
-                                    <FormGroup controlId='confirm-password' validationState={getConfirmPasswordValidationState(newPassword, confirmNewPassword)}>
-                                        <Col smOffset={2} sm={8}>
-                                            <ControlLabel>{PASSWORD.CONFIRM_NEW_PASSWORD}</ControlLabel>
-                                            <FormControl
+                                        <Form.Group controlId='confirm-password'>
+                                            <Form.Label>{PASSWORD.CONFIRM_NEW_PASSWORD}</Form.Label>
+                                            <Form.Control
                                                 name='confirmNewPassword'
                                                 type='password'
                                                 placeholder={PASSWORD.CONFIRM_NEW_PASSWORD}
+                                                isInvalid={isConfirmPasswordInvalid(newPassword, confirmNewPassword)}
                                                 value={confirmNewPassword}
                                                 onChange={this.handleChange}
                                             />
-                                            <HelpBlock style={style.helpBlock}>
-                                                {getConfirmPasswordValidationState(newPassword, confirmNewPassword) === 'error' && PASSWORD.ERRORS.PASSWORDS_NOT_MATCH}
-                                            </HelpBlock>
-                                        </Col>
-                                    </FormGroup>
+                                            <Form.Control.Feedback type='invalid'>
+                                                {PASSWORD.ERRORS.PASSWORDS_NOT_MATCH}
+                                            </Form.Control.Feedback>
+                                        </Form.Group>
 
-                                    <FormGroup>
-                                        <Col smOffset={2} sm={8}>
-                                            <ButtonToolbar className='pull-right'>
-                                                <Button
-                                                    bsStyle='primary'
-                                                    disabled={!this.isPasswordFormValid()}
-                                                    onClick={() => this.savePassword()}
-                                                >
-                                                    {translation.COMMON.SAVE}
-                                                </Button>
-                                            </ButtonToolbar>
-                                        </Col>
-                                    </FormGroup>
-                                </Well>
+                                        <div className='pt-1 d-inline-block'>
+                                            <Button
+                                                variant={this.isPasswordFormInvalid() ? 'outline-success' : 'success'}
+                                                disabled={this.isPasswordFormInvalid()}
+                                                onClick={() => this.savePassword()}
+                                            >
+                                                {translation.COMMON.SAVE}
+                                            </Button>
+                                        </div>
+                                    </MyJumbotron>
+
+                                </React.Fragment>
+                            }
+
+                            <div className='text-center' style={{marginBottom: 10}}>
+                                <Button
+                                    variant='outline-danger'
+                                    onClick={() => this.showDeleteConfirmation()}
+                                >
+                                    <i className='fas fa-trash' style={{marginRight: 5}} /> {translation.ACCOUNT.DELETE_PROFILE}
+                                </Button>
                             </div>
-                        }
+                        </Form>
 
-                        <div className='text-center'>
-                            <Button
-                                bsStyle='danger'
-                                style={{marginBottom: 10}}
-                                onClick={() => this.showDeleteConfirmation()}
-                            >
-                                <Glyphicon glyph='trash' style={{marginRight: 5}}/> {translation.ACCOUNT.DELETE_PROFILE}
-                            </Button>
-                        </div>
-                    </Form>
-
-                    {this.state.showDeleteConfirmation &&
+                        {this.state.showDeleteConfirmation &&
                         <ConfirmationModal
                             title={translation.COMMON.DELETE_CONFIRMATION}
                             body={translation.ACCOUNT.DELETE_PROFILE_CONFIRMATION}
                             onConfirm={() => this.deleteProfile()}
                             onCancel={() => this.hideDeleteConfirmation()}
                         />
-                    }
-                </Col>
-            </Row>
+                        }
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 
-    isBasicFormValid = () => {
+    isBasicFormInvalid = () => {
         const {user} = this.props;
         const {username, email} = this.state;
-        const validationStates = [
-            this.getUsernameValidationState(username),
-            this.getEmailValidationState(email),
-            user.username === username && user.email === email ? 'error' : 'success'
-        ];
-        return validationStates.every(e => e === 'success');
-    };
-
-    getUsernameValidationState = (username) => {
-        const validationStates = [
-            getUsernameValidationState(username),
-            this.suchUsernameExist(username)
-        ];
-        if (validationStates.every(e => e === null)) {
-            return null;
-        }
-        return validationStates.every(e => e === 'success') ? 'success' : 'error';
+        return isUsernameInvalid(username) || this.suchUsernameExist(username) ||
+            isEmailInvalid(email) || this.suchEmailExist(email) ||
+            user.username === username && user.email === email;
     };
 
     suchUsernameExist = (username: string) => {
@@ -380,7 +345,7 @@ class Profile extends React.Component<Props, State> {
             return null;
         }
         const otherUsers = this.props.users.filter(e => !e.oauth && this.props.user._id !== e._id);
-        return otherUsers.some(u => u.username === username) ? 'error' : 'success'
+        return otherUsers.some(u => u.username === username);
     };
 
     suchEmailExist = (email: string) => {
@@ -388,48 +353,22 @@ class Profile extends React.Component<Props, State> {
             return null;
         }
         const otherUsers = this.props.users.filter(e => !e.oauth && this.props.user._id !== e._id);
-        return otherUsers.some(u => u.email === email) ? 'error' : 'success'
+        return otherUsers.some(u => u.email === email);
     };
 
-    getEmailValidationState  = (email: string) => {
-        const validationStates = [
-            getEmailValidationState(email),
-            this.suchEmailExist(email)
-        ];
-        if (validationStates.every(e => e === null)) {
-            return null;
-        }
-        return validationStates.every(e => e === 'success') ? 'success' : 'error';
-    };
-
-    isPasswordFormValid = () => {
+    isPasswordFormInvalid = () => {
         const {user} = this.props;
         const {currentPassword, newPassword, confirmNewPassword} = this.state;
+        if (!newPassword || !confirmNewPassword) {
+            return true;
+        }
         const currentEncryptedPassword = currentPassword ? encryptPassword(currentPassword) : '';
-        const validationStates = [
-            getConfirmPasswordValidationState(user.password, currentEncryptedPassword),
-            getPasswordValidationState(newPassword),
-            getConfirmPasswordValidationState(newPassword, confirmNewPassword),
-            user.password === newPassword ? 'error' : 'success'
-        ];
-        return validationStates.every(e => e === 'success');
+        return isConfirmPasswordInvalid(user.password, currentEncryptedPassword) ||
+            isPasswordInvalid(newPassword) ||
+            isConfirmPasswordInvalid(newPassword, confirmNewPassword) ||
+            user.password === newPassword;
     };
 }
-
-const style = {
-    helpBlock: {
-        fontSize: 'medium',
-        marginBottom: 0
-    },
-    picture: {
-        maxHeight: 300,
-        maxWidth: 300,
-        display: 'block',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginBottom: 5
-    }
-};
 
 export default connect(
     (state) => ({
@@ -438,6 +377,29 @@ export default connect(
         translation: state.translation
     }),
     {
-        editUser, deleteUser, alertError
+        editUser, deleteUser, setUser, alertError
     }
 )(Profile)
+
+
+type MyJumbotronProps = {
+    header: string | React.Node,
+    children: React.Node
+}
+
+const MyJumbotron = (props: MyJumbotronProps) => {
+    const header = (
+        <React.Fragment>
+            <h5 className='text-center text-dark'>
+                {props.header}
+            </h5>
+            <hr style={{margin: '0 0 10px 0'}} />
+        </React.Fragment>
+    );
+    return (
+        <Jumbotron className='my-jumbotron'>
+            {header}
+            {props.children}
+        </Jumbotron>
+    )
+};

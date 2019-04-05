@@ -207,7 +207,7 @@ const getSignUpHTML = (username) => {
 						<td style="font-size:12px;margin:0;padding:20px 0;text-align:center;" align="center" valign="top">
 							Have questions? Please reply to this email.
 							<br>
-							<a href="https://wtalk.herokuapp.com" style="color:#00b386;font-size:12px;text-decoration:underline" target="_blank">WTalk.herokuapp.com</a> - Simple Web Messenger
+							<a href="https://wtalk.herokuapp.com" style="color:#28a745;font-size:12px;text-decoration:underline" target="_blank">WTalk.com</a> - Simple Web Messenger
 			            </td>
 				        </tr>
 				    </tbody>

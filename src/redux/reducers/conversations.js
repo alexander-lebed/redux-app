@@ -1,8 +1,9 @@
 // @flow
 import React from 'react';
 import { combineReducers } from 'redux';
-import { orderBy, generateError } from '../../utils';
+
 import $http from 'axios';
+import { orderBy, generateError } from '../../utils';
 import { Alert } from './alerts';
 import { showBrowserNotifications } from './startup';
 import { CONVERSATIONS_URL, DOCUMENT_TITLE } from '../../constants';
@@ -230,9 +231,10 @@ export function initConversationsWs(userId: string) {
 
                     // update browser tab title and show notification
                     const currentUser = getState().authentication.user;
+                    const translation = getState().translation;
                     const newMessages = sortedConversations.filter(c => c.messages.some(m => !m.read && m.from._id !== currentUser._id));
                     if (newMessages.length > 0) {
-                        document.title = `${newMessages.length} new message${newMessages.length > 1 ? 's' : ''}`;
+                        document.title = translation.MESSAGES.NEW_MESSAGE(newMessages.length);
                         showBrowserNotifications(newMessages, dispatch, getState);
                     } else {
                         document.title = DOCUMENT_TITLE;

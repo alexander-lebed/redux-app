@@ -4,28 +4,28 @@
   background-image: none !important;
 }
 
-.btn-primary {
-  background-color: $primary-color !important;
-  border-color: $primary-border-color !important;
-}
-.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
-  background-color: $primary-color !important;
-  border-color: $primary-border-color !important;
-}
-
-.has-success .control-label, .label-success,
-.has-success .help-block,
-.has-success .form-control .form-control-feedback {
-  color: $primary-color !important;
-  border-color: $primary-border-color !important;
-}
-.has-success .form-control:focus {
-  box-shadow: 0 0 5px $primary-color;
-  border-color: $primary-border-color;
-}
-.label-success {
-  background-color: $primary-color !important;
-}
+//.btn-primary {
+//  background-color: $primary-color !important;
+//  border-color: $primary-border-color !important;
+//}
+//.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
+//  background-color: $primary-color !important;
+//  border-color: $primary-border-color !important;
+//}
+//
+//.has-success .control-label, .label-success,
+//.has-success .help-block,
+//.has-success .form-control .form-control-feedback {
+//  color: $primary-color !important;
+//  border-color: $primary-border-color !important;
+//}
+//.has-success .form-control:focus {
+//  box-shadow: 0 0 5px $primary-color;
+//  border-color: $primary-border-color;
+//}
+//.label-success {
+//  background-color: $primary-color !important;
+//}
 
 .btn {
   min-width: 100px !important;

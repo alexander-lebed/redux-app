@@ -1,11 +1,12 @@
 // @flow
 import React from 'react';
-import { DotLoader } from 'react-spinners';
-import { MAIN_COLOR } from '../../constants';
+import BSpinner from 'react-bootstrap/Spinner';
 
 const Spinner = () => (
-    <div className='center-vertical-horizontal'>
-        <DotLoader color={MAIN_COLOR} />
+    <div className='centered'>
+        <BSpinner animation='border' variant='dark'>
+            <span className="sr-only">Loading...</span>
+        </BSpinner>
     </div>
 );
 

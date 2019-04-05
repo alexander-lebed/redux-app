@@ -1,9 +1,31 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Alert as BSAlert, Button, Glyphicon } from 'react-bootstrap';
+import BSAlert from 'react-bootstrap/Alert';
 import { actionTypes } from '../redux/reducers/alerts';
-import type { Alert as AlertType } from "../types";
+import type { Alert as AlertType } from '../types';
+
+type Props = {
+    alerts: Array<AlertType>,
+    dispatch: Function
+}
+
+const Alerts = (props: Props) => {
+    return (
+        <div className='alerts-container'>
+            {props.alerts.map((n) =>
+                <Alert key={n.uid} {...n} dispatch={props.dispatch} />
+            )}
+        </div>
+    )
+};
+Alerts.displayName = 'Alerts';
+
+export default connect(
+    state => ({
+        alerts: state.alerts
+    }),
+)(Alerts)
 
 
 type AlertProps = AlertType & {
@@ -36,53 +58,15 @@ export class Alert extends React.Component<AlertProps, void> {
 
     render () {
         return (
-            <BSAlert bsStyle={this.props.type} style={styles.alert}>
+            <BSAlert
+                dismissible
+                variant={this.props.type}
+                className='my-alert'
+                onClose={this.hideNotification}
+            >
                 {this.props.message}
-                <Button
-                    onClick={this.hideNotification}
-                    bsStyle='link'
-                    className='pull-right alert-close-btn close'
-                >
-                    <Glyphicon glyph='remove' style={{fontSize: 18}} />
-                </Button>
             </BSAlert>
         )
     }
 }
 Alert.displayName = 'Alert';
-
-
-type StoreProps = {
-    alerts: Array<AlertType>
-}
-
-type Props = StoreProps & {
-    dispatch: Function
-}
-
-export class Alerts extends React.Component<Props, void> {
-    render () {
-        return (
-            <div className='alerts-container'>
-                {this.props.alerts.map((n) =>
-                    <Alert key={n.uid} {...n} dispatch={this.props.dispatch} />
-                )}
-            </div>
-        )
-    }
-}
-Alerts.displayName = 'Alerts';
-
-export default connect(
-    (state): StoreProps => ({
-        alerts: state.alerts
-    }),
-)(Alerts)
-
-
-const styles = {
-    alert: {
-        position: 'relative',
-        borderRadius: 0
-    }
-};

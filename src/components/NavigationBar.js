@@ -1,11 +1,17 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, Button, Dropdown, MenuItem, Glyphicon, Badge, Image } from 'react-bootstrap';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Button from 'react-bootstrap/Button';
+import Badge from 'react-bootstrap/Badge';
+import Image from 'react-bootstrap/Image';
 import { LinkContainer } from 'react-router-bootstrap';
-import { ThemeChooser } from 'react-bootstrap-theme-switcher';
+// import { ThemeChooser } from 'react-bootstrap-theme-switcher';
 import { translate } from '../redux/reducers/translation';
 import { logout } from '../redux/reducers/authentication';
+import { MAIN_COLOR } from '../constants';
 import type { User, Locale, Translation } from '../types';
 
 type Props = {
@@ -40,25 +46,29 @@ class NavigationBar extends React.Component<Props, State> {
         if (user) {
             const unreadConversations = conversations.filter(c => c.messages.some(m => !m.read && m.from._id !== user._id));
             newMessages = unreadConversations.length > 0 && (
-                <Badge>{unreadConversations.length}</Badge>
+                <Badge variant='success'>{unreadConversations.length}</Badge>
+            );
+            const accountPicture = (
+                <div style={{display: 'inline-block'}} onClick={() => this.setState({accountClicked: !this.state.accountClicked})}>
+                    <Image
+                        roundedCircle
+                        className='account-menu d-none d-sm-block pull-right'
+                        style={this.state.accountClicked ? {boxShadow: `0 0 2pt 2pt ${MAIN_COLOR}`} : {}}
+                        src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                        title={user.username}
+                    />
+                    <div className='d-block d-sm-none'>{user.username}</div>
+                </div>
             );
             accountDropdown = (
-                <Dropdown
-                    open={this.state.accountClicked}
-                    id='account-dropdown'
-                    className='pull-left account-dropdown'
+                <NavDropdown
+                    className='navbar-dropdown account-dropdown pull-left'
                     style={{textAlign: 'center'}}
+                    drop='left'
+                    title={accountPicture}
+                    open={this.state.accountClicked}
                 >
-                    <div style={{display: 'inline-block'}}>
-                        <Image
-                            circle
-                            className={`account-menu pull-right ${this.state.accountClicked ? 'account-menu-clicked' : ''}`}
-                            src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
-                            title={user.username}
-                            onClick={() => this.setState({accountClicked: !this.state.accountClicked})}
-                        />
-                    </div>
-                    <Dropdown.Menu>
+                    <NavDropdown.Item eventKey='/profile'>
                         <LinkContainer
                             key='profile'
                             to='/profile'
@@ -66,118 +76,129 @@ class NavigationBar extends React.Component<Props, State> {
                                 this.expand(false);
                                 this.setState({accountClicked: false})
                             }}>
-                            <MenuItem
-                                eventKey={1.1}
-                                className='dropdown-item'
-                            >
-                                <i className="fa fa-pencil hidden-xs" style={{marginRight: 8}} />
+                            <div className='dropdown-item'>
                                 {translation.ACCOUNT.EDIT_PROFILE}
-                            </MenuItem>
+                            </div>
                         </LinkContainer>
-                        <MenuItem
-                            eventKey={1.2}
-                            className='dropdown-item'
-                            onSelect={() => {
-                                logout();
-                                this.expand(false);
-                                this.setState({accountClicked: false});
-                            }}
-                        >
-                            <Glyphicon glyph='log-out hidden-xs' style={{marginRight: 8}} />
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                        onSelect={() => {
+                            logout();
+                            this.expand(false);
+                            this.setState({accountClicked: false});
+                        }}
+                    >
+                        <div className='dropdown-item'>
                             {translation.ACCOUNT.LOG_OUT}
-                        </MenuItem>
-                    </Dropdown.Menu>
-                </Dropdown>
-            )
+                        </div>
+                    </NavDropdown.Item>
+                </NavDropdown>
+            );
         }
-        const messageTabStyle = convSubPathnames.includes(window.location.pathname) ? {borderBottom: '1px solid #777'} : {};
-        const en = locale === 'en' ? <u>EN</u> : 'EN';
-        const ru = locale === 'ru' ? <u>РУС</u> : 'РУС';
+        let activeTab = window.location.pathname;
+        if ('/conversation' === activeTab) {
+            activeTab = '/conversations';
+        }
         return (
-            <Navbar style={{borderTop: 'none'}} fixedTop onToggle={this.expand} expanded={this.state.expanded}>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <LinkContainer key='home' to='/'>
-                            <Image
-                                className='brand-logo'
-                                src='/brand-logo.png'
-                                title={'WTalk Messenger'}
-                                alt={'WTalk Messenger'}
-                            />
-                        </LinkContainer>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Nav>
-                        <LinkContainer key='conversations' to='/conversations' style={messageTabStyle} onClick={() => this.expand(false)}>
-                            <NavItem eventKey={1}>
-                                <div className='tab-text'>
+            <Navbar
+                fixed='top'
+                expand='sm'
+                bg='dark'
+                variant='dark'
+                className='my-navbar'
+                expanded={this.state.expanded}
+                onToggle={() => this.expand(!this.state.expanded)}
+            >
+                <Navbar.Brand>
+                    <LinkContainer key='home' to='/'>
+                        <Image
+                            className='brand-logo'
+                            src='/brand-logo.png'
+                            title={'WTalk Messenger'}
+                            alt={'WTalk Messenger'}
+                        />
+                    </LinkContainer>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls='basic-navbar-nav' />
+                <Navbar.Collapse id='basic-navbar-nav' className='my-navbar-panel'>
+                    <Nav activeKey={activeTab} onSelect={() => {}} className='mr-auto'>
+                        <Nav.Link eventKey='/conversations'>
+                            <LinkContainer key='conversations' to='/conversations' className='tab-text' onClick={() => this.expand(false)}>
+                                <div>
                                     {translation.NAVIGATION.MESSAGES} {newMessages}
                                 </div>
-                            </NavItem>
-                        </LinkContainer>
-                        <LinkContainer key='people' to='/people' onClick={() => this.expand(false)}>
-                            <NavItem eventKey={2}>
+                            </LinkContainer>
+                        </Nav.Link>
+                        <Nav.Link eventKey='/people'>
+                            <LinkContainer key='people' to='/people' onClick={() => this.expand(false)}>
                                 <div className='tab-text'>
                                     {translation.NAVIGATION.PEOPLE}
                                 </div>
-                            </NavItem>
-                        </LinkContainer>
-                        <LinkContainer key='theme' to='#' >
-                            <NavItem eventKey={1} className='hidden-sm hidden-md hidden-lg theme-menu' style={{border: 'none', height: 50}}>
-                                <ThemeChooser />
-                            </NavItem>
-                        </LinkContainer>
+                            </LinkContainer>
+                        </Nav.Link>
                     </Nav>
-                    <Nav pullRight className='menu-right'>
-
-                        {accountDropdown}
-
-                        {!user &&
-                        <LinkContainer key='login' to='/login'>
-                            <NavItem eventKey={1}>
-                                <Button bsSize='small' className='mobile-btn'>
-                                    <Glyphicon glyph='log-in' style={{marginRight: 5}} /> {translation.ACCOUNT.LOG_IN}
-                                </Button>
-                            </NavItem>
-                        </LinkContainer>
+                    <Nav>
+                        {user &&
+                        <React.Fragment>
+                            {
+                                accountDropdown
+                            }
+                            {/*
+                            <Nav.Item
+                                title={translation.NAVIGATION.CHOOSE_THEME}
+                                className='hidden-xs theme-menu'
+                            >
+                                <Nav.Link eventKey='theme-desktop'>
+                                    <ThemeChooser />
+                                </Nav.Link>
+                            </Nav.Item>
+                            ------
+                            <Nav.Item className='hidden-sm hidden-md hidden-lg theme-menu' style={{border: 'none', height: 50}}>
+                                <LinkContainer key='theme' to='#' >
+                                    <Nav.Link eventKey='theme-mobile'>
+                                        <ThemeChooser />
+                                    </Nav.Link>
+                                </LinkContainer>
+                            </Nav.Item>
+                            */}
+                        </React.Fragment>
                         }
-                        <NavItem eventKey={2} className='lang-text' style={{border: 'none'}} onSelect={() => {translate('en')}}>
-                            {/* for desktop */}
-                            <div className='hidden-xs'>
-                                {en}
-                            </div>
-                            {/* for mobile */}
-                            <Button className='hidden-sm hidden-md hidden-lg' block>
-                                {en}
-                            </Button>
-                        </NavItem>
-                        <NavItem eventKey={3} className='lang-text' style={{border: 'none'}} onSelect={() => {translate('ru')}}>
-                            {/* for desktop */}
-                            <div className='hidden-xs'>
-                                {ru}
-                            </div>
-                            {/* for mobile */}
-                            <Button className='hidden-sm hidden-md hidden-lg' block>
-                                {ru}
-                            </Button>
-                        </NavItem>
-                        <NavItem
-                            eventKey={4}
-                            title={translation.NAVIGATION.CHOOSE_THEME}
-                            className='hidden-xs theme-menu'
+                        {!user &&
+                        <Nav.Link eventKey='/login' style={{paddingTop: 10, paddingBottom: 9}}>
+                            <LinkContainer key='login' to='/login'>
+                                <div>
+                                    <Button variant='outline-success' size='sm' className='mobile-btn'>
+                                        <i className='fas fa-sign-in-alt' style={{marginRight: 5}} /> {translation.ACCOUNT.LOG_IN}
+                                    </Button>
+                                </div>
+                            </LinkContainer>
+                        </Nav.Link>
+                        }
+                        <NavDropdown
+                            className='navbar-dropdown'
+                            style={{textAlign: 'center', paddingLeft: 5}}
+                            drop='left'
+                            title={
+                                <i className='fas fa-language lang-icon' />
+                            }
                         >
-                            <ThemeChooser />
-                        </NavItem>
+                            <NavDropdown.Item eventKey='en' onSelect={() => {translate('en')}}>
+                                <div className={`dropdown-item ${locale === 'en' ? 'active' : ''}`}>
+                                    EN
+                                </div>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item eventKey='en' onSelect={() => {translate('ru')}}>
+                                <div className={`dropdown-item ${locale === 'ru' ? 'active' : ''}`}>
+                                    РУС
+                                </div>
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
         )
     }
 }
-
-const convSubPathnames = ['/conversation'];
 
 export default connect(
     (state) => ({
