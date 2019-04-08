@@ -10,12 +10,10 @@
     "yarn": "^1.3.2"
   },
   "scripts": {
-    "build": "webpack --progress --colors --config webpack.config.prod.js",
-    "postinstall": "webpack --progress --optimize-minimize",
     "start": "node server.js",
     "dev": "concurrently \"webpack --progress --colors --watch\" \"nf start -j Procfile.dev\"",
     "start-ui": "webpack-dev-server --open",
-    "start-api": "node server.js",
+    "start-api": "node --inspect server.js",
     "test": "jest --coverage",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix --cache",
