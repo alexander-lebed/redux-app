@@ -22,6 +22,8 @@ const translation: Translation = {
     AUTH: {
         PASSWORD: 'Пароль',
         CONFIRM_PASSWORD: 'Подтвердить пароль',
+        SHOW_PASSWORD: 'Показать пароль',
+        HIDE_PASSWORD: 'Скрыть пароль',
         INCORRECT_CREDENTIALS: 'Электронная почта или пароль неверны',
         PLEASE_RELOGIN: 'Пожалуйста войдите еще раз',
         USER_WITH_EMAIL_ALREADY_EXIST: (email) => `Пользоветель с эл.почтой ${email} уже существует`,

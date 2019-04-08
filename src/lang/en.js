@@ -22,6 +22,8 @@ export type TranslationType = {
     AUTH: {
         PASSWORD: string,
         CONFIRM_PASSWORD: string,
+        SHOW_PASSWORD: string,
+        HIDE_PASSWORD: string,
         INCORRECT_CREDENTIALS: string,
         PLEASE_RELOGIN: string,
         USER_WITH_EMAIL_ALREADY_EXIST: (email: string) => string,
@@ -133,6 +135,8 @@ const translation: TranslationType = {
     AUTH: {
         PASSWORD: 'Password',
         CONFIRM_PASSWORD: 'Confirm password',
+        SHOW_PASSWORD: 'Show password',
+        HIDE_PASSWORD: 'Hide password',
         INCORRECT_CREDENTIALS: 'Email or password is incorrect',
         PLEASE_RELOGIN: 'Please re-login',
         USER_WITH_EMAIL_ALREADY_EXIST: (email) => `User with ${email} email already exist`,

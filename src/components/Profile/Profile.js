@@ -38,6 +38,7 @@ type State = {
     currentPassword: string,
     newPassword: string,
     confirmNewPassword: string,
+    showPassword: boolean,
     pictureUploading: boolean,
     showDeleteConfirmation: boolean
 };
@@ -55,6 +56,7 @@ class Profile extends React.Component<Props, State> {
             currentPassword: '',
             newPassword: '',
             confirmNewPassword: '',
+            showPassword: false,
             pictureUploading: false,
             showDeleteConfirmation: false
         };
@@ -133,7 +135,7 @@ class Profile extends React.Component<Props, State> {
     };
 
     render() {
-        const {username, email, pictureUrl, currentPassword, newPassword, confirmNewPassword} = this.state;
+        const {username, email, pictureUrl, currentPassword, newPassword, confirmNewPassword, showPassword} = this.state;
         const {user, translation} = this.props;
         const {PROFILE_PICTURE, USERNAME_EMAIL, PASSWORD} = translation.ACCOUNT;
         const currentEncryptedPassword = currentPassword ? encryptPassword(currentPassword) : '';
@@ -264,11 +266,11 @@ class Profile extends React.Component<Props, State> {
                                             </Form.Control.Feedback>
                                         </Form.Group>
 
-                                        <Form.Group controlId='new-password'>
+                                        <Form.Group controlId='new-password' className='mb-1'>
                                             <Form.Label>{PASSWORD.NEW_PASSWORD}</Form.Label>
                                             <Form.Control
                                                 name='newPassword'
-                                                type='password'
+                                                type={showPassword ? 'text' : 'password'}
                                                 placeholder={PASSWORD.NEW_PASSWORD}
                                                 isInvalid={isPasswordInvalid(newPassword)}
                                                 value={newPassword}
@@ -277,6 +279,13 @@ class Profile extends React.Component<Props, State> {
                                             <Form.Control.Feedback type='invalid'>
                                                 {PASSWORD.ERRORS.NEW_PASSWORD_INVALID}
                                             </Form.Control.Feedback>
+                                        </Form.Group>
+
+                                        <Form.Group controlId='showPassword' style={{fontSize: '90%', color: 'grey'}}>
+                                            <div className='cursor' onClick={() => this.setState({showPassword: !showPassword})}>
+                                                <i className={`${showPassword ? 'far fa-eye-slash' : 'far fa-eye'} pr-1`} />
+                                                {showPassword ? this.props.translation.AUTH.HIDE_PASSWORD : this.props.translation.AUTH.SHOW_PASSWORD}
+                                            </div>
                                         </Form.Group>
 
                                         <Form.Group controlId='confirm-password'>

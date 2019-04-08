@@ -20,14 +20,16 @@ type Props = {
 
 type State = {
     email: string,
-    password: string
+    password: string,
+    showPassword: boolean
 };
 
 class Login extends React.Component<Props, State> {
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        showPassword: false
     };
 
     handleChange = (event: Object) => {
@@ -62,7 +64,7 @@ class Login extends React.Component<Props, State> {
     };
 
     render() {
-        const {email, password} = this.state;
+        const {email, password, showPassword} = this.state;
         const {translation} = this.props;
         return (
             <Container className='auth-container'>
@@ -82,15 +84,21 @@ class Login extends React.Component<Props, State> {
                                     onChange={this.handleChange}
                                 />
                             </Form.Group>
-                            <Form.Group controlId='formHorizontalPassword'>
+                            <Form.Group controlId='formHorizontalPassword' className='mb-1'>
                                 <Form.Label>{this.props.translation.AUTH.PASSWORD}</Form.Label>
                                 <Form.Control
                                     name='password'
-                                    type='password'
+                                    type={showPassword ? 'text' : 'password'}
                                     placeholder='Password'
                                     value={password}
                                     onChange={this.handleChange}
                                 />
+                            </Form.Group>
+                            <Form.Group controlId='showPassword' style={{fontSize: '90%', color: 'grey'}}>
+                                <div className='cursor' onClick={() => this.setState({showPassword: !showPassword})}>
+                                    <i className={`${showPassword ? 'far fa-eye-slash' : 'far fa-eye'} pr-1`} />
+                                    {showPassword ? this.props.translation.AUTH.HIDE_PASSWORD : this.props.translation.AUTH.SHOW_PASSWORD}
+                                </div>
                             </Form.Group>
                             <Form.Group>
                                 <Button
@@ -133,7 +141,7 @@ class Login extends React.Component<Props, State> {
                                             className='btn-facebook'
                                             onClick={() => this.oAuthLogin('facebook')}
                                         >
-                                            <i className="fab fa-facebook-f" style={{paddingRight: 8}} />
+                                            <i className='fab fa-facebook-f' style={{paddingRight: 8}} />
                                             {translation.ACCOUNT.SIGN_UP_WITH} Facebook
                                         </Button>
                                     </Col>
