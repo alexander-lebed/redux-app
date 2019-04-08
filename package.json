@@ -14,8 +14,6 @@
     "heroku-postbuild": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
     "start": "node server.js",
     "dev": "concurrently \"webpack --progress --colors --watch\" \"nf start -j Procfile.dev\"",
-    "start-ui": "webpack-dev-server --open",
-    "start-api": "node --inspect server.js",
     "test": "jest --coverage",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix --cache",
