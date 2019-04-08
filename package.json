@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "webpack --progress --colors",
-    "heroku-postbuild": "echo Skip build on Heroku",
+    "heroku-postbuild": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
     "start": "node server.js",
     "dev": "concurrently \"webpack --progress --colors --watch\" \"nf start -j Procfile.dev\"",
     "start-ui": "webpack-dev-server --open",
