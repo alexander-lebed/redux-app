@@ -38,7 +38,7 @@ type State = {
     currentPassword: string,
     newPassword: string,
     confirmNewPassword: string,
-    showPassword: boolean,
+    showPasswords: boolean,
     pictureUploading: boolean,
     showDeleteConfirmation: boolean
 };
@@ -56,7 +56,7 @@ class Profile extends React.Component<Props, State> {
             currentPassword: '',
             newPassword: '',
             confirmNewPassword: '',
-            showPassword: false,
+            showPasswords: false,
             pictureUploading: false,
             showDeleteConfirmation: false
         };
@@ -135,7 +135,7 @@ class Profile extends React.Component<Props, State> {
     };
 
     render() {
-        const {username, email, pictureUrl, currentPassword, newPassword, confirmNewPassword, showPassword} = this.state;
+        const {username, email, pictureUrl, currentPassword, newPassword, confirmNewPassword, showPasswords} = this.state;
         const {user, translation} = this.props;
         const {PROFILE_PICTURE, USERNAME_EMAIL, PASSWORD} = translation.ACCOUNT;
         const currentEncryptedPassword = currentPassword ? encryptPassword(currentPassword) : '';
@@ -251,11 +251,11 @@ class Profile extends React.Component<Props, State> {
 
 
                                     <MyJumbotron header={PASSWORD.PASSWORD}>
-                                        <Form.Group controlId='current-password'>
+                                        <Form.Group controlId='current-password' className='mb-1'>
                                             <Form.Label>{PASSWORD.CURRENT_PASSWORD}</Form.Label>
                                             <Form.Control
                                                 name='currentPassword'
-                                                type='password'
+                                                type={showPasswords ? 'text' : 'password'}
                                                 placeholder={PASSWORD.CURRENT_PASSWORD}
                                                 isInvalid={isConfirmPasswordInvalid(user.password, currentEncryptedPassword)}
                                                 value={currentPassword}
@@ -266,11 +266,18 @@ class Profile extends React.Component<Props, State> {
                                             </Form.Control.Feedback>
                                         </Form.Group>
 
-                                        <Form.Group controlId='new-password' className='mb-1'>
+                                        <Form.Group controlId='showPassword' style={{fontSize: '90%', color: 'grey'}}>
+                                            <div className='cursor' onClick={() => this.setState({showPasswords: !showPasswords})}>
+                                                <i className={`${showPasswords ? 'far fa-eye-slash' : 'far fa-eye'} pr-1`} />
+                                                {showPasswords ? this.props.translation.AUTH.HIDE_PASSWORDS : this.props.translation.AUTH.SHOW_PASSWORDS}
+                                            </div>
+                                        </Form.Group>
+
+                                        <Form.Group controlId='new-password'>
                                             <Form.Label>{PASSWORD.NEW_PASSWORD}</Form.Label>
                                             <Form.Control
                                                 name='newPassword'
-                                                type={showPassword ? 'text' : 'password'}
+                                                type={showPasswords ? 'text' : 'password'}
                                                 placeholder={PASSWORD.NEW_PASSWORD}
                                                 isInvalid={isPasswordInvalid(newPassword)}
                                                 value={newPassword}
@@ -281,18 +288,11 @@ class Profile extends React.Component<Props, State> {
                                             </Form.Control.Feedback>
                                         </Form.Group>
 
-                                        <Form.Group controlId='showPassword' style={{fontSize: '90%', color: 'grey'}}>
-                                            <div className='cursor' onClick={() => this.setState({showPassword: !showPassword})}>
-                                                <i className={`${showPassword ? 'far fa-eye-slash' : 'far fa-eye'} pr-1`} />
-                                                {showPassword ? this.props.translation.AUTH.HIDE_PASSWORD : this.props.translation.AUTH.SHOW_PASSWORD}
-                                            </div>
-                                        </Form.Group>
-
                                         <Form.Group controlId='confirm-password'>
                                             <Form.Label>{PASSWORD.CONFIRM_NEW_PASSWORD}</Form.Label>
                                             <Form.Control
                                                 name='confirmNewPassword'
-                                                type='password'
+                                                type={showPasswords ? 'text' : 'password'}
                                                 placeholder={PASSWORD.CONFIRM_NEW_PASSWORD}
                                                 isInvalid={isConfirmPasswordInvalid(newPassword, confirmNewPassword)}
                                                 value={confirmNewPassword}

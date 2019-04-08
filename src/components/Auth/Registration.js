@@ -19,7 +19,8 @@ type State = {
     username: string,
     email: string,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
+    showPassword: boolean
 };
 
 class Login extends React.Component<Props, State> {
@@ -28,7 +29,8 @@ class Login extends React.Component<Props, State> {
         username: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        showPassword: false
     };
 
     handleChange = (event: Object) => {
@@ -52,7 +54,7 @@ class Login extends React.Component<Props, State> {
     };
 
     render() {
-        const {username, email, password, confirmPassword} = this.state;
+        const {username, email, password, confirmPassword, showPassword} = this.state;
         const {translation} = this.props;
         return (
             <Container className='auth-container'>
@@ -92,11 +94,11 @@ class Login extends React.Component<Props, State> {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
-                            <Form.Group controlId='password'>
+                            <Form.Group controlId='password' className='mb-1'>
                                 <Form.Label>{translation.AUTH.PASSWORD}</Form.Label>
                                 <Form.Control
                                     name='password'
-                                    type='password'
+                                    type={showPassword ? 'text' : 'password'}
                                     placeholder='Password'
                                     isInvalid={isPasswordInvalid(password)}
                                     value={password}
@@ -107,11 +109,18 @@ class Login extends React.Component<Props, State> {
                                 </Form.Control.Feedback>
                             </Form.Group>
 
+                            <Form.Group controlId='showPassword' style={{fontSize: '90%', color: 'grey'}}>
+                                <div className='cursor' onClick={() => this.setState({showPassword: !showPassword})}>
+                                    <i className={`${showPassword ? 'far fa-eye-slash' : 'far fa-eye'} pr-1`} />
+                                    {showPassword ? this.props.translation.AUTH.HIDE_PASSWORD : this.props.translation.AUTH.SHOW_PASSWORD}
+                                </div>
+                            </Form.Group>
+
                             <Form.Group controlId='confirm-password'>
                                 <Form.Label>{translation.AUTH.CONFIRM_PASSWORD}</Form.Label>
                                 <Form.Control
                                     name='confirmPassword'
-                                    type='password'
+                                    type={showPassword ? 'text' : 'password'}
                                     placeholder='Confirm password'
                                     isInvalid={isConfirmPasswordInvalid(password, confirmPassword)}
                                     value={confirmPassword}

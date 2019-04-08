@@ -84,6 +84,7 @@ class Login extends React.Component<Props, State> {
                                     onChange={this.handleChange}
                                 />
                             </Form.Group>
+
                             <Form.Group controlId='formHorizontalPassword' className='mb-1'>
                                 <Form.Label>{this.props.translation.AUTH.PASSWORD}</Form.Label>
                                 <Form.Control
@@ -94,12 +95,14 @@ class Login extends React.Component<Props, State> {
                                     onChange={this.handleChange}
                                 />
                             </Form.Group>
+
                             <Form.Group controlId='showPassword' style={{fontSize: '90%', color: 'grey'}}>
                                 <div className='cursor' onClick={() => this.setState({showPassword: !showPassword})}>
                                     <i className={`${showPassword ? 'far fa-eye-slash' : 'far fa-eye'} pr-1`} />
                                     {showPassword ? this.props.translation.AUTH.HIDE_PASSWORD : this.props.translation.AUTH.SHOW_PASSWORD}
                                 </div>
                             </Form.Group>
+
                             <Form.Group>
                                 <Button
                                     type='submit'
