@@ -70,6 +70,7 @@ export type TranslationType = {
         SIGN_UP_WITH: string,
         LOG_IN: string,
         LOG_OUT: string,
+        ABOUT_DEVELOPER: string,
         EDIT_PROFILE: string,
         EDIT_PROFILE_ERROR: string,
         PROFILE_UPDATED: string,
@@ -104,6 +105,10 @@ export type TranslationType = {
         },
         DELETE_PROFILE: string,
         DELETE_PROFILE_CONFIRMATION: string,
+    },
+    CV: {
+        NAME: string,
+        ADDRESS: string,
     },
     DATE: {
         TODAY: string,
@@ -185,6 +190,7 @@ const translation: TranslationType = {
         SIGN_UP_WITH: 'Sign up with',
         LOG_IN: 'Log in',
         LOG_OUT: 'Log out',
+        ABOUT_DEVELOPER: 'About developer',
         EDIT_PROFILE: 'Edit profile',
         EDIT_PROFILE_ERROR: 'Error on update profile:',
         PROFILE_UPDATED: 'Your profile has been updated',
@@ -219,6 +225,10 @@ const translation: TranslationType = {
         },
         DELETE_PROFILE: 'Delete Profile',
         DELETE_PROFILE_CONFIRMATION: 'Are you sure you want to delete your profile?',
+    },
+    CV: {
+        NAME: 'Alexander Lebed',
+        ADDRESS: 'Odessa, Ukraine',
     },
     DATE: {
         TODAY: 'today',

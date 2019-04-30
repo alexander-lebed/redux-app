@@ -70,6 +70,7 @@ const translation: Translation = {
         SIGN_UP_WITH: 'Войдите через',
         LOG_IN: 'Войти',
         LOG_OUT: 'Выйти',
+        ABOUT_DEVELOPER: 'О разработчике',
         EDIT_PROFILE: 'Изменить профиль',
         EDIT_PROFILE_ERROR: 'Ошибка при изменении профиля:',
         PROFILE_UPDATED: 'Твой профиль был обновлен',
@@ -104,6 +105,10 @@ const translation: Translation = {
         },
         DELETE_PROFILE: 'Удалить профиль',
         DELETE_PROFILE_CONFIRMATION: 'Вы действительно хотите удалить свой профиль?',
+    },
+    CV: {
+        NAME: 'Александр Лебедь',
+        ADDRESS: 'Одесса, Украина',
     },
     DATE: {
         TODAY: 'сегодня',

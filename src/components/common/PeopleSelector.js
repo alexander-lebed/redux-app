@@ -115,7 +115,7 @@ export class PeopleSelector extends React.Component<Props, State> {
                                                             roundedCircle
                                                             style={user.online ? ONLINE_STYLE : {}}
                                                             className='profile-picture'
-                                                            src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                                                            src={user.pictureUrl ? user.pictureUrl : '/images/default-profile.png'}
                                                         />
                                                     </div>
                                                     <div style={{fontSize: 13}}>

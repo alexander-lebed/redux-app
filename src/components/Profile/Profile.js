@@ -145,14 +145,13 @@ class Profile extends React.Component<Props, State> {
                     <Col md={{span: 8, offset: 2}} lg={{span: 6, offset: 3}}>
                         <Form>
                             {user.oauth ? null :
-                                <React.Fragment>
-
+                                <>
                                     <MyJumbotron header={PROFILE_PICTURE.PICTURE}>
                                         <Image
                                             thumbnail
                                             className='user-picture'
                                             style={this.state.pictureUploading ? {opacity: 0.4} : {}}
-                                            src={pictureUrl ? pictureUrl : '/default-profile.png'}
+                                            src={pictureUrl ? pictureUrl : '/images/default-profile.png'}
                                         />
                                         <Form.Group controlId='pictureUrl' style={{marginBottom: 5}}>
                                             <Form.Control
@@ -313,8 +312,7 @@ class Profile extends React.Component<Props, State> {
                                             </Button>
                                         </div>
                                     </MyJumbotron>
-
-                                </React.Fragment>
+                                </>
                             }
 
                             <div className='text-center' style={{marginBottom: 10}}>
@@ -398,12 +396,12 @@ type MyJumbotronProps = {
 
 const MyJumbotron = (props: MyJumbotronProps) => {
     const header = (
-        <React.Fragment>
+        <>
             <h5 className='text-center text-dark'>
                 {props.header}
             </h5>
             <hr style={{margin: '0 0 10px 0'}} />
-        </React.Fragment>
+        </>
     );
     return (
         <Jumbotron className='my-jumbotron'>

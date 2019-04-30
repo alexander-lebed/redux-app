@@ -245,7 +245,7 @@ class Conversation extends React.Component<Props, State> {
                         roundedCircle
                         style={messageUser.online ? ONLINE_STYLE : {}}
                         className='profile-picture'
-                        src={messageUser.pictureUrl ? messageUser.pictureUrl : '/default-profile.png'}
+                        src={messageUser.pictureUrl ? messageUser.pictureUrl : '/images/default-profile.png'}
                     />
                 </div>
                 <div className='message-top'>

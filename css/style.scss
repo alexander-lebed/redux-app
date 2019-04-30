@@ -6,9 +6,12 @@ html, body, input, button {
   font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
 }
 
-//::-webkit-scrollbar-track {
-//  background: red;
-//}
+a {
+  color: $primary-color;
+}
+a:hover {
+  color: $primary-opposite-color;
+}
 
 .navbar-nav > li {
   position: relative;

@@ -54,7 +54,7 @@ class NavigationBar extends React.Component<Props, State> {
                         roundedCircle
                         className='account-menu d-none d-sm-block pull-right'
                         style={this.state.accountClicked ? {boxShadow: `0 0 2pt 2pt ${MAIN_COLOR}`} : {}}
-                        src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                        src={user.pictureUrl ? user.pictureUrl : '/images/default-profile.png'}
                         title={user.username}
                     />
                     <div className='d-block d-sm-none'>{user.username}</div>
@@ -78,6 +78,19 @@ class NavigationBar extends React.Component<Props, State> {
                             }}>
                             <div className='dropdown-item'>
                                 {translation.ACCOUNT.EDIT_PROFILE}
+                            </div>
+                        </LinkContainer>
+                    </NavDropdown.Item>
+                    <NavDropdown.Item eventKey='/cv'>
+                        <LinkContainer
+                            key='cv'
+                            to='/cv'
+                            onClick={() => {
+                                this.expand(false);
+                                this.setState({accountClicked: false})
+                            }}>
+                            <div className='dropdown-item'>
+                                {translation.ACCOUNT.ABOUT_DEVELOPER}
                             </div>
                         </LinkContainer>
                     </NavDropdown.Item>
@@ -113,7 +126,7 @@ class NavigationBar extends React.Component<Props, State> {
                     <LinkContainer key='home' to='/'>
                         <Image
                             className='brand-logo'
-                            src='/brand-logo.png'
+                            src='/images/brand-logo.png'
                             title={'WTalk Messenger'}
                             alt={'WTalk Messenger'}
                         />
@@ -139,7 +152,7 @@ class NavigationBar extends React.Component<Props, State> {
                     </Nav>
                     <Nav>
                         {user &&
-                        <React.Fragment>
+                        <>
                             {
                                 accountDropdown
                             }
@@ -161,11 +174,11 @@ class NavigationBar extends React.Component<Props, State> {
                                 </LinkContainer>
                             </Nav.Item>
                             */}
-                        </React.Fragment>
+                        </>
                         }
                         {!user &&
                         <Nav.Link eventKey='/login' style={{paddingTop: 10, paddingBottom: 9}}>
-                            <LinkContainer key='login' to='/login'>
+                            <LinkContainer key='login' to='/login' onClick={() => this.expand(false)}>
                                 <div>
                                     <Button variant='outline-success' size='sm' className='mobile-btn'>
                                         <i className='fas fa-sign-in-alt' style={{marginRight: 5}} /> {translation.ACCOUNT.LOG_IN}

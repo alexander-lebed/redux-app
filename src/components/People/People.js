@@ -110,7 +110,7 @@ export class People extends React.Component<Props, State> {
                             <Modal.Body style={{textAlign: 'center'}}>
                                 <Image
                                     className='profile-modal-picture'
-                                    src={this.state.clickedUser.pictureUrl ? this.state.clickedUser.pictureUrl : '/default-profile.png'}
+                                    src={this.state.clickedUser.pictureUrl ? this.state.clickedUser.pictureUrl : '/images/default-profile.png'}
                                 />
                             </Modal.Body>
                         </Modal>
@@ -179,7 +179,7 @@ const UserRow = connect(
                                 roundedCircle
                                 style={imageStyle}
                                 className='profile-picture'
-                                src={user.pictureUrl ? user.pictureUrl : '/default-profile.png'}
+                                src={user.pictureUrl ? user.pictureUrl : '/images/default-profile.png'}
                             />
                         </div>
                         <div>
@@ -192,7 +192,7 @@ const UserRow = connect(
                     <Col xs={12} sm={6}>
                         <div className='pull-right pt-1 pt-sm-2'>
                             {isAdmin &&
-                            <React.Fragment>
+                            <>
                                 <Button
                                     size='sm'
                                     variant='outline-danger'
@@ -201,7 +201,7 @@ const UserRow = connect(
                                     <i className='far fa-trash-alt' style={{marginRight: 5}} /> {translation.COMMON.DELETE}
                                 </Button>
                                 {' '}
-                            </React.Fragment>
+                            </>
                             }
                             <Button
                                 size='sm'

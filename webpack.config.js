@@ -36,7 +36,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env', 'react', 'flow']
+                        presets: ['@babel/env', '@babel/react']
                     }
                 }
             },

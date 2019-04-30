@@ -29,7 +29,7 @@ const PageNotFound = (props: Props) => {
             <Row noGutters style={{marginTop: 50}}>
                 <Col sm={{span: 6, offset: 3}} style={{textAlign: 'center'}}>
                     <Image
-                        src={'/robot-heart.png'}
+                        src={'/images/robot-heart.png'}
                         style={{backgroundImage: 'radial-gradient(ellipse, white 20%, transparent 68%)'}}
                     />
                     <Jumbotron>

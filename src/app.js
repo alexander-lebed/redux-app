@@ -17,6 +17,7 @@ import Conversation from './components/Messages/Conversation';
 import CreateConversation from './components/Messages/CreateConversation';
 import People from './components/People/People';
 import Profile from './components/Profile/Profile';
+import CV from './components/CV/CV';
 import PageNotFound from './components/PageNotFound';
 import Alerts from './components/Alerts';
 import './app.scss';
@@ -44,6 +45,7 @@ async function init() {
                                     <PrivateRoute path="/create-conversation" component={CreateConversation} />
                                     <PrivateRoute exact path="/people" component={People} />
                                     <PrivateRoute path="/profile" component={Profile} />
+                                    <PrivateRoute path="/cv" component={CV} />
                                     <Route exact path="/redirect" component={Spinner} />
                                     <Route component={PageNotFound} />
                                 </Switch>
