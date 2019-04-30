@@ -49,6 +49,7 @@ const translation: Translation = {
         MANAGE_MEMBERS: 'Изменить участников',
         WRITE_MESSAGE: 'Напишите сообщение...',
         WRITE_MESSAGE_INFO: <span>Зажмите <strong>Shift+Enter</strong> для перехода на след. линию, <strong>Enter</strong> для отправки сообщения</span>,
+        SENDING: 'отправляется...',
         PICK_EMOJI: 'выберите смайлик…',
         DELETE: 'Удалить сообщение',
         NEW_MESSAGE: (messagesCount: number) => `${messagesCount} ${messagesCount > 1 ? 'новых сообщений' : 'новое сообщение'}`,

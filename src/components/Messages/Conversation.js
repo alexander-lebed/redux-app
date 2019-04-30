@@ -212,21 +212,35 @@ class Conversation extends React.Component<Props, State> {
 
     renderMessages = () => {
         const messages = this.props.conversation.messages || [];
-        const orderedMessages = orderBy(messages.filter(e => !e.deleted), 'timestamp');
-        return ( // className='messages-table custom-scrollbar'
+        const notDeleted = (messages.filter(e => !e.deleted));
+        let synced = [];
+        let notSynced = [];
+        notDeleted.forEach(message => {
+            if (message.timestamp) {
+                synced.push(message);
+            } else {
+                notSynced.push(message);
+            }
+        });
+        const orderedSynced = orderBy(synced, 'timestamp');
+        const renderRows = (messageArr: Array<Message>) => {
+            return messageArr.map((message, index) => {
+                const rowClass = !message.read ? 'unread-message' : '';
+                return (
+                    <tr key={index} className={rowClass}>
+                        <td style={{padding: 8}}>
+                            {this.renderMessage(message)}
+                        </td>
+                    </tr>
+                )
+            })
+        };
+        return (
             <div className='messages-table' ref={(e) => {this.scrollableTable = e}}>
                 <Table>
                     <tbody>
-                        {orderedMessages.map((message, index) => {
-                            const rowClass = !message.read ? 'unread-message' : '';
-                            return (
-                                <tr key={index} className={rowClass}>
-                                    <td style={{padding: 8}}>
-                                        {this.renderMessage(message)}
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                        {renderRows(orderedSynced)}
+                        {renderRows(notSynced)}
                     </tbody>
                 </Table>
             </div>
@@ -253,7 +267,7 @@ class Conversation extends React.Component<Props, State> {
                             {message.from.username}
                         </span>
                         <span className='message-time'>
-                            {timestampToHumanDate(message.timestamp, true, translation)}
+                            {message.timestamp ? timestampToHumanDate(message.timestamp, true, translation) : translation.MESSAGES.SENDING}
                         </span>
                         <Linkify properties={{target: '_blank'}}>
                             <div className='message-text'>
