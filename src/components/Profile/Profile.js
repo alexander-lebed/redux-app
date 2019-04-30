@@ -196,6 +196,7 @@ class Profile extends React.Component<Props, State> {
                                         <div className='pt-1 d-inline-block'>
                                             <Button
                                                 variant={user.pictureUrl === pictureUrl ? 'outline-success' : 'success'}
+                                                size='sm'
                                                 disabled={user.pictureUrl === pictureUrl}
                                                 onClick={() => this.savePicture()}
                                             >
@@ -240,6 +241,7 @@ class Profile extends React.Component<Props, State> {
                                         <div className='pt-1 d-inline-block'>
                                             <Button
                                                 variant={this.isBasicFormInvalid() ? 'outline-success' : 'success'}
+                                                size='sm'
                                                 disabled={this.isBasicFormInvalid()}
                                                 onClick={() => this.saveBasic()}
                                             >
@@ -305,6 +307,7 @@ class Profile extends React.Component<Props, State> {
                                         <div className='pt-1 d-inline-block'>
                                             <Button
                                                 variant={this.isPasswordFormInvalid() ? 'outline-success' : 'success'}
+                                                size='sm'
                                                 disabled={this.isPasswordFormInvalid()}
                                                 onClick={() => this.savePassword()}
                                             >
@@ -317,7 +320,10 @@ class Profile extends React.Component<Props, State> {
 
                             <div className='text-center' style={{marginBottom: 10}}>
                                 <Button
-                                    variant='outline-danger'
+                                    variant='danger'
+                                    size='sm'
+                                    block
+                                    className='mb-4'
                                     onClick={() => this.showDeleteConfirmation()}
                                 >
                                     <i className='fas fa-trash' style={{marginRight: 5}} /> {translation.ACCOUNT.DELETE_PROFILE}

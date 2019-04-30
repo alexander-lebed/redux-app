@@ -5,7 +5,6 @@ export type TranslationType = {
     NAVIGATION: {
         MESSAGES: string,
         PEOPLE: string,
-        CHOOSE_THEME: string
     },
     COMMON: {
         SUBMIT: string,
@@ -125,8 +124,7 @@ export type TranslationType = {
 const translation: TranslationType = {
     NAVIGATION: {
         MESSAGES: 'Messages',
-        PEOPLE: 'People',
-        CHOOSE_THEME: 'Choose theme'
+        PEOPLE: 'People'
     },
     COMMON: {
         SUBMIT: 'Submit',

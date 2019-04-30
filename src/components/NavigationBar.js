@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 import Image from 'react-bootstrap/Image';
 import { LinkContainer } from 'react-router-bootstrap';
-// import { ThemeChooser } from 'react-bootstrap-theme-switcher';
 import { translate } from '../redux/reducers/translation';
 import { logout } from '../redux/reducers/authentication';
 import { MAIN_COLOR } from '../constants';
@@ -156,24 +155,6 @@ class NavigationBar extends React.Component<Props, State> {
                             {
                                 accountDropdown
                             }
-                            {/*
-                            <Nav.Item
-                                title={translation.NAVIGATION.CHOOSE_THEME}
-                                className='hidden-xs theme-menu'
-                            >
-                                <Nav.Link eventKey='theme-desktop'>
-                                    <ThemeChooser />
-                                </Nav.Link>
-                            </Nav.Item>
-                            ------
-                            <Nav.Item className='hidden-sm hidden-md hidden-lg theme-menu' style={{border: 'none', height: 50}}>
-                                <LinkContainer key='theme' to='#' >
-                                    <Nav.Link eventKey='theme-mobile'>
-                                        <ThemeChooser />
-                                    </Nav.Link>
-                                </LinkContainer>
-                            </Nav.Item>
-                            */}
                         </>
                         }
                         {!user &&

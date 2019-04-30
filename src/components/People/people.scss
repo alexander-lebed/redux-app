@@ -1,0 +1,18 @@
+@import '../../../css/variables';
+
+.search-container {
+  padding-bottom: 5px;
+  align-items: baseline;
+  color: $secondary-color;
+}
+
+.search-input {
+  font-size: 16px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.last-seen {
+  color: $secondary-color;
+  font-size: 13px;
+}

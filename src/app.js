@@ -3,7 +3,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-// import { ThemeSwitcher } from 'react-bootstrap-theme-switcher';
 import 'font-awesome/css/font-awesome.min.css';
 import Startup from './components/Startup';
 import PrivateRoute from './components/PrivateRoute';
@@ -29,7 +28,6 @@ async function init() {
     if (app) {
         render(
             <Provider store={store}>
-                {/*<ThemeSwitcher themePath='themes' storeThemeKey='ui-theme' themes={['light', 'dark', 'paper']}>*/}
                 <Startup>
                     <Router>
                         <div>
@@ -53,7 +51,6 @@ async function init() {
                         </div>
                     </Router>
                 </Startup>
-                {/*</ThemeSwitcher>*/}
             </Provider>,
             app
         );

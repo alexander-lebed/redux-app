@@ -5,8 +5,7 @@ import type { Translation } from '../types';
 const translation: Translation = {
     NAVIGATION: {
         MESSAGES: 'Сообщения',
-        PEOPLE: 'Люди',
-        CHOOSE_THEME: 'Выберите тему'
+        PEOPLE: 'Люди'
     },
     COMMON: {
         SUBMIT: 'Применить',

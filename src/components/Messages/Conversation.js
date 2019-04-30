@@ -160,8 +160,7 @@ class Conversation extends React.Component<Props, State> {
                     <Col md={{span: 10, offset: 1}} lg={{span: 8, offset: 2}}>
                         <div className='header'>
                             <div style={{color: 'grey'}}>
-                                <i className='fas fa-search' style={{marginRight: 8}} />
-                                {translation.CONVERSATIONS.SEARCH_IN_MESSAGES}
+                                {/* {translation.CONVERSATIONS.SEARCH_IN_MESSAGES} */}
                             </div>
                             <Button
                                 variant='outline-dark'

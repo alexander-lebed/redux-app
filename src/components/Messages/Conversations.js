@@ -109,20 +109,19 @@ class Conversations extends React.Component<Props, State> {
                     <Col md={{span: 10, offset: 1}} lg={{span: 8, offset: 2}}>
                         <div className='header'>
                             <div style={{color: 'grey'}}>
-                                <i className='fas fa-search' style={{marginRight: 8}} />
-                                {translation.CONVERSATIONS.SEARCH_IN_CONVERSATIONS}
+                                {/* {translation.CONVERSATIONS.SEARCH_IN_CONVERSATIONS} */}
                             </div>
                             <Button
-                                variant='outline-success'
-                                className='d-none d-sm-block'
+                                variant='outline-dark'
                                 size='sm'
+                                className='d-none d-sm-block'
                                 onClick={() => this.createConversation()}
                             >
                                 <i className='fa fa-comments fa-lg' style={{marginRight: 8}} />
                                 {translation.CONVERSATIONS.NEW_CONVERSATION}
                             </Button>
                             <Button
-                                variant='outline-success'
+                                variant='outline-dark'
                                 className='d-block d-sm-none btn-mobile-icon'
                                 title={translation.CONVERSATIONS.NEW_CONVERSATION}
                                 onClick={() => this.createConversation()}

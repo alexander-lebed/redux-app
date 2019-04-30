@@ -68,14 +68,15 @@ export class People extends React.Component<Props, State> {
                     <Col md={{span: 10, offset: 1}} lg={{span: 8, offset: 2}}>
                         <Row>
                             <Col xs={12} sm={6}>
-                                <InputGroup size='sm' style={{paddingBottom: 5}}>
+                                <InputGroup size='sm' className='search-container'>
                                     <InputGroup.Prepend>
-                                        <InputGroup.Text id='search'><i className='fas fa-search' /></InputGroup.Text>
+                                        <i className='fas fa-search' />
                                     </InputGroup.Prepend>
                                     <Form.Control
                                         placeholder={PEOPLE.SEARCH_PEOPLE}
                                         aria-label='Search people'
                                         aria-describedby='search'
+                                        className='search-input'
                                         value={this.state.searchText}
                                         onChange={e => this.setState({searchText: e.target.value})}
                                     />
@@ -171,8 +172,7 @@ const UserRow = connect(
                 <Row>
                     <Col xs={12} sm={6}>
                         <div
-                            className='profile-picture-wrapper'
-                            style={{cursor: 'pointer'}}
+                            className='profile-picture-wrapper cursor'
                             onClick={() => showUserProfile(user)}
                         >
                             <Image
@@ -184,7 +184,7 @@ const UserRow = connect(
                         </div>
                         <div>
                             {user.username}
-                            <div style={{color: 'grey', fontSize: 13}}>
+                            <div className='last-seen'>
                                 {!user.online && `${translation.PEOPLE.LAST_SEEN} ${timestampToHumanDate(user.lastTime, false, translation)}`}
                             </div>
                         </div>
