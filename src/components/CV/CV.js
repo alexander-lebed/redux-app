@@ -65,6 +65,11 @@ class CV extends React.Component<Props, void>{
                         url='mailto:lebed.alexander90@gmail.com'
                     />
                     <ListItem
+                        title='alexander1234'
+                        faIcon='fab fa-linkedin'
+                        url='https://www.linkedin.com/in/alexander1234/'
+                    />
+                    <ListItem
                         title='alexander-lebed'
                         faIcon='fab fa-skype'
                         url='skype:alexander-lebed?chat'

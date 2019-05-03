@@ -21,7 +21,7 @@ const Section = (props: Props) => {
 
     if (rows === 1) {
         if (props.children.length > 3) {
-            console.log(`--- You should specify number of rows for ${title} section`);
+            console.log(`--- You should specify number of rows for ${String(title)} section`);
         }
 
         let left, middle, right;
@@ -47,29 +47,19 @@ const Section = (props: Props) => {
         if (rows >= 2 && elements.length > 1) {
             let left, middle, right;
             if (elements.length === 2) {
-                for (let i = 0; i <= elements.length; i++) {
+                for (let i = 0; elements.length !== 0; i++) {
                     [ middle ] = elements;
                     sectionRows[i] = {middle};
                     elements = elements.splice(1);
                 }
             } else if (cols === 2 && elements.length >= 4) {
-
-                if (title === 'Experience') {
-                    console.log(`--- left, middle `)
-                }
-                for (let i = 0; i <= elements.length / 2; i++) {
+                for (let i = 0; elements.length !== 0; i++) {
                     [ left, middle ] = elements;
                     sectionRows[i] = {left, middle};
                     elements = elements.splice(2);
                 }
             } else if (cols === 3 && elements.length >= 6) {
-                if (title === 'Experience') {
-                    console.log(`--- left, middle, right. Length ${elements.length}`)
-                }
-                for (let i = 0; i <= elements.length / 3; i++) {
-                    if (title === 'Experience') {
-                        console.log(`--- ${i}, Length ${elements.length} `);
-                    }
+                for (let i = 0; elements.length !== 0; i++) {
                     [ left, middle, right ] = elements;
                     sectionRows[i] = {left, middle, right};
                     elements = elements.splice(3);

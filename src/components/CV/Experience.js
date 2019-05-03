@@ -41,8 +41,8 @@ export default () => {
                     <a href='https://ab-soft.net/' target='_blank' rel='noopener noreferrer'>AB Soft</a>
                 </div>
                 <div className='mobile-text'>
-                    Built and maintained a template manager for email/SMS/Glip notifications.
-                    Completely redesigned an application to use common React components.
+                    Built and maintained a template manager for email, SMS, Glip notifications. Completely redesigned an
+                    application to use common React components.
                 </div>
                 <div>
                     <div className='tech-font'>STACK:</div>
@@ -69,7 +69,8 @@ export default () => {
                     {' '}
                     <a href='https://ukraine.intersog.com/' target='_blank' rel='noopener noreferrer'>Intersog</a>
                 </div>
-                <div><a href='https://www.home.neustar/resources/videos/platformone-marketing-technology-video' target='_blank' rel='noopener noreferrer'>Neustar PlatformOne</a> (personalized marketing solutions). Mostly worked on UI features and web services.</div>
+                <div><a href='https://www.home.neustar/resources/videos/platformone-marketing-technology-video' target='_blank' rel='noopener noreferrer'>Neustar PlatformOne</a> (personalized marketing solutions).
+                    Mostly I worked on UI features and web services.</div>
                 <div>
                     <div className='tech-font'>STACK:</div>
                     {renderStack([
@@ -96,7 +97,8 @@ export default () => {
                     <a href='https://www.lohika.com.ua/' target='_blank' rel='noopener noreferrer'>Lohika</a>
                 </div>
                 <div className='mobile-text'>
-                    HP SiteScope (agentless monitoring software). Implementing enhancement request, bug fixing, dealing with customers issues.
+                    HP SiteScope (agentless monitoring software). I improved the functionality of some monitors and solved many
+                    customer issues. Interacted directly with customer.
                 </div>
                 <div>
                     <div className='tech-font'>STACK:</div>
@@ -122,7 +124,7 @@ export default () => {
                 </div>
                 <div className='mobile-text'>
                     Participated in development of Electronic Payment Solutions and have developed the following:
-                    <ul>
+                    <ul style={{margin: 0}}>
                         <li>web simulator of credit card Terminal and Cash Register machine which are communicated via Payment Management System (PMS).</li>
                         <li>ability to view the Terminals on the world map and it’s communication with PMS in real time.</li>
                     </ul>
