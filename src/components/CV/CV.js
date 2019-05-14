@@ -19,11 +19,6 @@ type Props = {
 
 class CV extends React.Component<Props, void>{
 
-    goto = (url: string) => {
-        const win = window.open(url, '_blank');
-        win.focus();
-    };
-
     render() {
         return (
             <Container fluid id='cv' className='cv-container'>
@@ -48,12 +43,11 @@ class CV extends React.Component<Props, void>{
     }
 
     renderBasicInfo = () => <BasicInfo/>;
-
     renderExperience = () => <Experience />;
 
     renderContacts = () => {
         return (
-            <Section title={'Contacts'} opened={false}>
+            <Section title={this.props.translation.CV.CONTACTS} opened={false}>
                 <ListGroup variant='flush'>
                     <ListItem
                         title='+38 096 926 9048'
@@ -61,7 +55,7 @@ class CV extends React.Component<Props, void>{
                     />
                     <ListItem
                         title='lebed.alexander90@gmail.com'
-                        faIcon='far fa-paper-plane'
+                        faIcon='fas fa-at'
                         url='mailto:lebed.alexander90@gmail.com'
                     />
                     <ListItem
@@ -86,7 +80,7 @@ class CV extends React.Component<Props, void>{
 
     renderSkills = () => {
         return (
-            <Section title={'Skills'}>
+            <Section title={this.props.translation.CV.SKILLS}>
                 <div className='skills-container'>
                     <Skill title='JavaScript' />
                     <Skill title='HTML5' />

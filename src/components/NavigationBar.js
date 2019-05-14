@@ -177,13 +177,19 @@ class NavigationBar extends React.Component<Props, State> {
                             }
                         >
                             <NavDropdown.Item eventKey='en' onSelect={() => {translate('en')}}>
-                                <div className={`dropdown-item ${locale === 'en' ? 'active' : ''}`}>
-                                    EN
+                                <div className={`dropdown-item lang-item ${locale === 'en' ? 'active' : ''}`}>
+                                    <Image
+                                        className='lang-flag'
+                                        src='/images/flags/united_states.png'
+                                    />EN
                                 </div>
                             </NavDropdown.Item>
                             <NavDropdown.Item eventKey='en' onSelect={() => {translate('ru')}}>
                                 <div className={`dropdown-item ${locale === 'ru' ? 'active' : ''}`}>
-                                    РУС
+                                    <Image
+                                        className='lang-flag'
+                                        src='/images/flags/russian.png'
+                                    />РУС
                                 </div>
                             </NavDropdown.Item>
                         </NavDropdown>

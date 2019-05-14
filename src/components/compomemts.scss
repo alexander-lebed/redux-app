@@ -44,6 +44,15 @@
   font-size: 24px;
   padding-top: 4px;
 }
+.lang-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lang-flag {
+  max-height: 18px;
+  margin-right: 5px;
+}
 
 .my-alert {
   border-radius: 0;

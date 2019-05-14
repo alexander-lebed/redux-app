@@ -1,10 +1,16 @@
 // @flow
 import React from 'react';
+import { connect } from 'react-redux';
 import Section, { Left, Middle } from './Section';
 import Badge from 'react-bootstrap/Badge';
 
 
-export default () => {
+export default connect(
+    (state) => ({
+        translation: state.translation
+    })
+)((props: Props) => {
+    const EXPERIENCE = props.translation.CV.EXPERIENCE;
     const TECH = (props: {children: React.Node}) => (
         <Badge
             variant='success'
@@ -23,7 +29,7 @@ export default () => {
         )
     };
     return (
-        <Section title='Experience' rows={4} cols={2}>
+        <Section title={EXPERIENCE.EXPERIENCE} rows={4} cols={2}>
             <Left>
                 <div className='timeline-container'>
                     <div className='timeline'>
@@ -139,6 +145,4 @@ export default () => {
             </Middle>
         </Section>
     )
-}
-
-
+});

@@ -1,12 +1,12 @@
 // @flow
 import React, { useState } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import moment from 'moment/moment';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import Section from './Section';
+import Section, {Left, Middle, Right} from './Section';
 import type {Translation} from '../../types';
 
 type Props = {
@@ -18,7 +18,7 @@ export default connect(
         translation: state.translation
     })
 )((props: Props) => {
-    const { translation } = props;
+    const BASIC_INFO = props.translation.CV.BASIC_INFO;
     const [ageClicked, ageClick] = useState(false);
     const birthday = 648950400000; // 26 July 1990
 
@@ -36,7 +36,7 @@ export default connect(
     };
     return (
         <Section>
-            <>
+            <Left>
                 <Image
                     className='user-picture'
                     src='https://i.imgur.com/1Eo3q13.jpg'
@@ -45,7 +45,7 @@ export default connect(
                     placement='left'
                     trigger='hover'
                     overlay={
-                        <Tooltip>Show birthday</Tooltip>
+                        <Tooltip>{BASIC_INFO.SHOW_BIRTHDAY}</Tooltip>
                     }
                 >
                     <Button
@@ -57,7 +57,7 @@ export default connect(
                     >
                         {ageClicked ?
                             moment(birthday).format('D MMM YYYY') :
-                            `${moment().diff(birthday, 'years')} years`
+                            `${moment().diff(birthday, 'years')} ${BASIC_INFO.YEARS}`
                         }
                     </Button>
                 </OverlayTrigger>
@@ -65,7 +65,7 @@ export default connect(
                     placement='left'
                     trigger='hover'
                     overlay={
-                        <Tooltip>Show on map</Tooltip>
+                        <Tooltip>{BASIC_INFO.SHOW_ON_MAP}</Tooltip>
                     }
                 >
                     <Button
@@ -75,24 +75,24 @@ export default connect(
                         className='cv-btn mt-1'
                         onClick={() => goto('https://www.google.com.ua/maps/@46.4751149,30.7362336,14z')}
                     >
-                        {translation.CV.ADDRESS}
+                        {BASIC_INFO.ADDRESS}
                     </Button>
                 </OverlayTrigger>
-            </>
+            </Left>
 
-            <>
-                <h1 className='cv-username text-center text-md-left'>{translation.CV.NAME}</h1>
-                <h3 className='cv-title text-center text-md-left'>Web Developer</h3>
+            <Middle>
+                <h1 className='cv-username text-center text-md-left'>{BASIC_INFO.NAME}</h1>
+                <h3 className='cv-title text-center text-md-left'>{BASIC_INFO.POSITION}</h3>
                 <p className='mobile-text'>
-                    Proactive, eye-for-details software developer with over five years of professional experience in coding.
+                    {BASIC_INFO.ABOUT_ME}
                 </p>
                 <p className='mobile-text'>
-                    Some story and goals go here. Some story and goals go here. Some story and goals go here. Some story and goals go here...
-                    {/*Willing to relocate to Barcelona or Valencia to ...*/}
+                    {/*{BASIC_INFO.MY_GOALS}*/}
+                    Some story goes here...
                 </p>
-            </>
+            </Middle>
 
-            <>
+            <Right>
                 <Button
                     block
                     variant='outline-secondary'
@@ -100,9 +100,9 @@ export default connect(
                     className='cv-btn'
                     onClick={printCV}
                 >
-                    Print CV
+                    {BASIC_INFO.PRINT}
                 </Button>
-            </>
+            </Right>
         </Section>
     )
 });

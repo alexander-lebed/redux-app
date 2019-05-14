@@ -227,8 +227,22 @@ const translation: TranslationType = {
         DELETE_PROFILE_CONFIRMATION: 'Are you sure you want to delete your profile?',
     },
     CV: {
-        NAME: 'Alexander Lebed',
-        ADDRESS: 'Odessa, Ukraine',
+        BASIC_INFO: {
+            NAME: 'Alexander Lebed',
+            YEARS: 'years',
+            ADDRESS: 'Odessa, Ukraine',
+            SHOW_BIRTHDAY: 'Show birthday',
+            SHOW_ON_MAP: 'Show on map',
+            POSITION: 'Frontend Developer',
+            ABOUT_ME: 'Proactive software developer with over five years of professional experience in coding.',
+            MY_GOALS: 'Willing to relocate to Spain (Valencia/Barcelona).',
+            PRINT: 'Print CV',
+        },
+        CONTACTS: 'Contacts',
+        SKILLS: 'Skills',
+        EXPERIENCE: {
+            EXPERIENCE: 'Experience',
+        },
     },
     DATE: {
         TODAY: 'today',

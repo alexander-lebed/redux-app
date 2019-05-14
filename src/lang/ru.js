@@ -107,8 +107,22 @@ const translation: Translation = {
         DELETE_PROFILE_CONFIRMATION: 'Вы действительно хотите удалить свой профиль?',
     },
     CV: {
-        NAME: 'Александр Лебедь',
-        ADDRESS: 'Одесса, Украина',
+        BASIC_INFO: {
+            NAME: 'Александр Лебедь',
+            YEARS: 'лет',
+            ADDRESS: 'Одесса, Украина',
+            SHOW_BIRTHDAY: 'Показать день рождения',
+            SHOW_ON_MAP: 'Показать на карте',
+            POSITION: 'Frontend разработчик',
+            ABOUT_ME: 'Проактивный разработчик ПО с более чем пятилетним профессиональным опытом.',
+            MY_GOALS: 'Готов переехать в Испанию (Валенсия/Барселона).',
+            PRINT: 'Распечатать',
+        },
+        CONTACTS: 'Контакты',
+        SKILLS: 'Навыки',
+        EXPERIENCE: {
+            EXPERIENCE: 'Опыт',
+        },
     },
     DATE: {
         TODAY: 'сегодня',
