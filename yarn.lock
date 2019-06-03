@@ -6407,10 +6407,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-bootstrap-theme-switcher@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/react-bootstrap-theme-switcher/-/react-bootstrap-theme-switcher-1.0.7.tgz#0a9ad339d67c70d8a928b8a205359406a99f1f5e"
-
 react-bootstrap@^1.0.0-beta.6:
   version "1.0.0-beta.6"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.0.0-beta.6.tgz#b9b8b01a0fee668ebc2b6148b30fc57e3aa140dc"

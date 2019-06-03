@@ -132,6 +132,7 @@ export class PeopleSelector extends React.Component<Props, State> {
                                                         <input
                                                             type='checkbox'
                                                             checked={selected}
+                                                            onChange={() => {}}
                                                         />
                                                         <label className='label-success' />
                                                     </div>
