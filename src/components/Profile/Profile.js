@@ -151,7 +151,7 @@ class Profile extends React.Component<Props, State> {
                                             thumbnail
                                             className='user-picture'
                                             style={this.state.pictureUploading ? {opacity: 0.4} : {}}
-                                            src={pictureUrl ? pictureUrl : '/images/default-profile.png'}
+                                            src={pictureUrl ? pictureUrl : '/images/default-profile.jpg'}
                                         />
                                         <Form.Group controlId='pictureUrl' style={{marginBottom: 5}}>
                                             <Form.Control

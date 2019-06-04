@@ -74,7 +74,7 @@ exports[`<People/> should match snapshot 1`] = `
                 >
                   <img
                     className="profile-picture img-circle"
-                    src="/images/default-profile.png"
+                    src="/images/default-profile.jpg"
                     style={
                       Object {
                         "boxShadow": "0px 0px 1pt 2pt #00b386",
@@ -141,7 +141,7 @@ exports[`<People/> should match snapshot 1`] = `
                 >
                   <img
                     className="profile-picture img-circle"
-                    src="/images/default-profile.png"
+                    src="/images/default-profile.jpg"
                     style={
                       Object {
                         "boxShadow": "0px 0px 1pt 2pt #00b386",
@@ -208,7 +208,7 @@ exports[`<People/> should match snapshot 1`] = `
                 >
                   <img
                     className="profile-picture img-circle"
-                    src="/images/default-profile.png"
+                    src="/images/default-profile.jpg"
                     style={
                       Object {
                         "boxShadow": "0px 0px 1pt 2pt #00b386",

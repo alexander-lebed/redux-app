@@ -1,10 +1,9 @@
 @import '../css/bootstrap.min.css';
 @import '../css/comfortaa-font';
-@import '../css/react-select';
-@import '../css/emoji-mart';
+@import '../css/emoji-mart'; // Messages
 @import '../css/style';
 @import './components/compomemts';
-@import './components/Messages/conversations';
-@import './components/People/people';
-@import './components/Profile/profile';
-@import './components/CV/cv';
+@import './components/Messages/conversations'; // Messages
+@import './components/People/people'; // People
+@import './components/Profile/profile'; // Profile
+@import './components/CV/cv'; // CV

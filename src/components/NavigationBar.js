@@ -53,7 +53,7 @@ class NavigationBar extends React.Component<Props, State> {
                         roundedCircle
                         className='account-menu d-none d-sm-block pull-right'
                         style={this.state.accountClicked ? {boxShadow: `0 0 2pt 2pt ${MAIN_COLOR}`} : {}}
-                        src={user.pictureUrl ? user.pictureUrl : '/images/default-profile.png'}
+                        src={user.pictureUrl ? user.pictureUrl : '/images/default-profile.jpg'}
                         title={user.username}
                     />
                     <div className='d-block d-sm-none'>{user.username}</div>

@@ -8,7 +8,7 @@ type Props = {
 
 export default (props: Props) => {
     const {title} = props;
-    const imageSrc = `/images/skills/${title.toLowerCase()}.png`.replace(' ', '_');
+    const imageSrc = `/images/skills/${title.toLowerCase()}.jpg`.replace(' ', '_');
     return (
         <div className='skill-item'>
             <div>

@@ -111,7 +111,7 @@ export class People extends React.Component<Props, State> {
                             <Modal.Body style={{textAlign: 'center'}}>
                                 <Image
                                     className='profile-modal-picture'
-                                    src={this.state.clickedUser.pictureUrl ? this.state.clickedUser.pictureUrl : '/images/default-profile.png'}
+                                    src={this.state.clickedUser.pictureUrl ? this.state.clickedUser.pictureUrl : '/images/default-profile.jpg'}
                                 />
                             </Modal.Body>
                         </Modal>
@@ -179,7 +179,7 @@ const UserRow = connect(
                                 roundedCircle
                                 style={imageStyle}
                                 className='profile-picture'
-                                src={user.pictureUrl ? user.pictureUrl : '/images/default-profile.png'}
+                                src={user.pictureUrl ? user.pictureUrl : '/images/default-profile.jpg'}
                             />
                         </div>
                         <div>

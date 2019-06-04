@@ -206,9 +206,9 @@ const ConversationPreview = connect(
     const lastSender = senders[0];
     let pictureUrl;
     if (senders.length === 1) {
-        pictureUrl = lastSender.pictureUrl ? lastSender.pictureUrl : '/images/default-profile.png';
+        pictureUrl = lastSender.pictureUrl ? lastSender.pictureUrl : '/images/default-profile.jpg';
     } else {
-        pictureUrl = '/images/conversation-group.png';
+        pictureUrl = '/images/conversation-group.jpg';
     }
 
     const goToConversation = (convId: string) => {
