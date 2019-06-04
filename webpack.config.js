@@ -12,7 +12,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: "[name].js"
+        filename: "[name].js",
+        chunkFilename: "[name].js"
     },
     devtool: 'eval-source-map',
     plugins: [
