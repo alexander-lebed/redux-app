@@ -4,12 +4,12 @@ import { render } from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import 'font-awesome/css/font-awesome.min.css';
+import configureStore from './redux/configureStore';
 import Startup from './components/Startup';
 import PrivateRoute from './components/PrivateRoute';
-import configureStore from './redux/configureStore';
-import Spinner from './components/common/Spinner';
 import NavigationBar from './components/NavigationBar';
 import Alerts from './components/Alerts';
+import Spinner from './components/common/Spinner';
 import './app.scss';
 
 
