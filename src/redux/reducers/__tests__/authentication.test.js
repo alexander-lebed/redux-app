@@ -10,7 +10,7 @@ const mockStore = configureMockStore(middlewares);
 
 describe('Authentication reducer', () => {
 
-    process.env.WS_ADDRESS = 'ws://localhost:3000';
+    //process.env.WS_ADDRESS = 'ws://localhost:3000';
     const mockAdapter = new MockAdapter($http);
 
     const testUser = {
