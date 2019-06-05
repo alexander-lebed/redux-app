@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const packageJson = require("./package.json");
 
 module.exports = {
     context: __dirname,
@@ -11,9 +12,9 @@ module.exports = {
     },
     output: {
         filename: "[name].js",
-        chunkFilename: "[name].js",
+        chunkFilename: `[name].chunk.${packageJson.version}.js`,
         path: path.join(__dirname, 'dist'),
-        publicPath: '/'
+        publicPath: '/dist/'
     },
     devtool: 'source-map',
     plugins: [
@@ -36,7 +37,8 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/env', '@babel/react']
+                        presets: ['@babel/env', '@babel/react'],
+                        plugins: ['@babel/syntax-dynamic-import']
                     }
                 }
             },
