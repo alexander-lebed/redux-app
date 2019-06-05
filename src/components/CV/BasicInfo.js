@@ -83,13 +83,9 @@ export default connect(
             <Middle>
                 <h1 className='cv-username text-center text-md-left'>{BASIC_INFO.NAME}</h1>
                 <h3 className='cv-title text-center text-md-left'>{BASIC_INFO.POSITION}</h3>
-                <p className='mobile-text'>
+                <div className='cv-about-me mobile-text'>
                     {BASIC_INFO.ABOUT_ME}
-                </p>
-                <p className='mobile-text'>
-                    {/*{BASIC_INFO.MY_GOALS}*/}
-                    Some story goes here...
-                </p>
+                </div>
             </Middle>
 
             <Right>

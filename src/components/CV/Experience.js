@@ -10,7 +10,6 @@ export default connect(
         translation: state.translation
     })
 )((props: Props) => {
-    const EXPERIENCE = props.translation.CV.EXPERIENCE;
     const TECH = (props: {children: React.Node}) => (
         <Badge
             variant='success'
@@ -29,7 +28,7 @@ export default connect(
         )
     };
     return (
-        <Section title={EXPERIENCE.EXPERIENCE} rows={4} cols={2}>
+        <Section title={props.translation.CV.EXPERIENCE} rows={4} cols={2}>
             <Left>
                 <div className='timeline-container'>
                     <div className='timeline'>
