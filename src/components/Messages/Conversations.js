@@ -5,6 +5,8 @@ import queryString from 'query-string';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Table from 'react-bootstrap/Table';
@@ -30,6 +32,8 @@ type Props = {
 }
 
 type State = {
+    conversations: Array<ConversationType>,
+    filteredConversations: Array<ConversationType>,
     clickedPicture: string,
     deleteConversationId: string
 }
@@ -40,6 +44,8 @@ class Conversations extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            conversations: [],
+            filteredConversations: [],
             clickedPicture: '',
             deleteConversationId: ''
         }
@@ -48,6 +54,36 @@ class Conversations extends React.Component<Props, State> {
     componentDidMount() {
         this.props.getConversationsByUser(this.props.user._id);
     }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.conversations !== state.conversations) {
+            return {
+                conversations: props.conversations,
+                filteredConversations: props.conversations
+            }
+        }
+        return null;
+    }
+
+    onSearch = (value) => {
+        if (value === '') {
+            this.setState({
+                filteredConversations: this.props.conversations // back to original list
+            });
+        } else {
+            const result = this.props.conversations.filter(conv => {
+                const matchedUsers = conv.users.filter(u => u.username.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+                if (matchedUsers.length > 0) {
+                    return true;
+                }
+                const convMessagesStr = `${conv.messages.map(e => e.text).join(' ')}`.toLowerCase();
+                return convMessagesStr.indexOf(value.toLowerCase()) !== -1;
+            });
+            this.setState({
+                filteredConversations: result
+            });
+        }
+    };
 
     createConversation = () => this.props.history.push('/create-conversation');
 
@@ -70,7 +106,8 @@ class Conversations extends React.Component<Props, State> {
     };
 
     render() {
-        const {user, conversations, isConversationsLoaded, translation, history} = this.props;
+        const {user, isConversationsLoaded, translation, history} = this.props;
+        const conversations = this.state.filteredConversations;
 
         let content = [];
         if (!isConversationsLoaded) {
@@ -109,7 +146,18 @@ class Conversations extends React.Component<Props, State> {
                     <Col md={{span: 10, offset: 1}} lg={{span: 8, offset: 2}}>
                         <div className='header'>
                             <div style={{color: 'grey'}}>
-                                {/* {translation.CONVERSATIONS.SEARCH_IN_CONVERSATIONS} */}
+                                <InputGroup size='sm' className='search-container'>
+                                    <InputGroup.Prepend>
+                                        <i className='fas fa-search' />
+                                    </InputGroup.Prepend>
+                                    <Form.Control
+                                        placeholder={translation.CONVERSATIONS.SEARCH_IN_CONVERSATIONS}
+                                        aria-label='Search conversations'
+                                        aria-describedby='search'
+                                        className='search-input'
+                                        onChange={e => this.onSearch(e.target.value)}
+                                    />
+                                </InputGroup>
                             </div>
                             <Button
                                 variant='outline-dark'

@@ -32,8 +32,8 @@ const translation: Translation = {
         OAUTH_ERROR: (service) => <span>Ошибка при входе с помощью {service}</span>
     },
     CONVERSATIONS: {
-        SEARCH_IN_CONVERSATIONS: 'Поиск по перепискам...',
-        SEARCH_IN_MESSAGES: 'Поиск по сообщениям...',
+        SEARCH_IN_CONVERSATIONS: 'Поиск по перепискам',
+        SEARCH_IN_MESSAGES: 'Поиск по сообщениям',
         NEW_CONVERSATION: 'Новая переписка',
         NO_CONVERSATIONS: 'У Вас пока нет сообщений',
         CREATE: 'Создать переписку',
@@ -47,7 +47,7 @@ const translation: Translation = {
         MESSAGES: 'Переписка',
         MESSAGE_FROM: (senders) => `Сообщение от ${senders}`,
         MANAGE_MEMBERS: 'Изменить участников',
-        WRITE_MESSAGE: 'Напишите сообщение...',
+        WRITE_MESSAGE: 'Напишите сообщение',
         WRITE_MESSAGE_INFO: <span>Зажмите <strong>Shift+Enter</strong> для перехода на след. линию, <strong>Enter</strong> для отправки сообщения</span>,
         SENDING: 'отправляется...',
         PICK_EMOJI: 'выберите смайлик…',
@@ -58,7 +58,7 @@ const translation: Translation = {
         YOU_NOT_MEMBER: 'Вы были удалены из этой переписке'
     },
     PEOPLE: {
-        SEARCH_PEOPLE: 'Поиск людей...',
+        SEARCH_PEOPLE: 'Поиск людей',
         WRITE_MESSAGE: 'Написать сообщение',
         LAST_SEEN: 'заходил(а)',
         DELETE_CONFIRMATION: 'Вы действительно хотите удалить этого пользователя?',

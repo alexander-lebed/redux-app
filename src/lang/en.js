@@ -164,8 +164,8 @@ const translation: TranslationType = {
         OAUTH_ERROR: (service) => <span>Error on login with {service}</span>
     },
     CONVERSATIONS: {
-        SEARCH_IN_CONVERSATIONS: 'Search in conversations...',
-        SEARCH_IN_MESSAGES: 'Search in messages...',
+        SEARCH_IN_CONVERSATIONS: 'Search conversations',
+        SEARCH_IN_MESSAGES: 'Search messages',
         NEW_CONVERSATION: 'New conversation',
         NO_CONVERSATIONS: 'You don\'t have any conversations yet',
         CREATE: 'Create conversation',
@@ -179,7 +179,7 @@ const translation: TranslationType = {
         MESSAGES: 'Messages',
         MESSAGE_FROM: (senders) => `Message from ${senders}`,
         MANAGE_MEMBERS: 'Manage members',
-        WRITE_MESSAGE: 'Write a message...',
+        WRITE_MESSAGE: 'Write a message',
         WRITE_MESSAGE_INFO: <span>Press <strong>Shift+Enter</strong> for next line, <strong>Enter</strong> to send message</span>,
         SENDING: 'sending...',
         PICK_EMOJI: 'pick your emoji…',
@@ -190,7 +190,7 @@ const translation: TranslationType = {
         YOU_NOT_MEMBER: 'You have been removed from this conversation'
     },
     PEOPLE: {
-        SEARCH_PEOPLE: 'Search people...',
+        SEARCH_PEOPLE: 'Search people',
         WRITE_MESSAGE: 'Write a message',
         LAST_SEEN: 'last seen',
         DELETE_CONFIRMATION: 'Are you sure you want to delete this user?',
