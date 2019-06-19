@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import Linkify from 'react-linkify';
 import queryString from 'query-string';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,16 +10,15 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
-import Image from 'react-bootstrap/Image';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import { alertSuccess } from '../../redux/reducers/alerts';
 import { getConversationsByUser, getConversation, getConversationWithUsers, markAsRead, deleteMessage, saveConversation, conversationCleanup } from '../../redux/reducers/conversations';
-import { orderBy, timestampToHumanDate } from '../../utils';
-import { ONLINE_STYLE } from '../../constants';
+import { orderBy } from '../../utils';
 import Spinner from '../common/Spinner';
 import PeopleSelector from '../common/PeopleSelector';
+import Message from './Message';
 import MessageForm from './MessageForm';
-import type { User, Conversation as ConversationType, Message, Translation } from '../../types';
+import type { User, Conversation as ConversationType, Message as MessageType, Translation } from '../../types';
 
 
 type Props = {
@@ -44,8 +42,8 @@ type Props = {
 
 type State = {
     showModal: boolean,
-    messages: Array<Message>,
-    filteredMessages: Array<Message>,
+    messages: Array<MessageType>,
+    filteredMessages: Array<MessageType>,
 };
 
 class Conversation extends React.Component<Props, State> {
@@ -267,13 +265,13 @@ class Conversation extends React.Component<Props, State> {
             }
         });
         const orderedSynced = orderBy(synced, 'timestamp');
-        const renderRows = (messageArr: Array<Message>) => {
+        const renderRows = (messageArr: Array<MessageType>) => {
             return messageArr.map((message, index) => {
                 const rowClass = !message.read ? 'unread-message' : '';
                 return (
-                    <tr key={index} className={rowClass}>
+                    <tr key={message._id || index} className={rowClass}>
                         <td style={{padding: 8}}>
-                            {this.renderMessage(message)}
+                            <Message message={message} />
                         </td>
                     </tr>
                 )
@@ -287,50 +285,6 @@ class Conversation extends React.Component<Props, State> {
                         {renderRows(notSynced)}
                     </tbody>
                 </Table>
-            </div>
-        )
-    };
-
-    renderMessage = (message: Message) => {
-        const {user, users, deleteMessage, translation} = this.props;
-        const isMessageFromCurrentUser = message.from._id === user._id;
-        const messageUser: User = users.find(e => e._id === message.from._id);
-        return (
-            <div>
-                <div className='profile-picture-wrapper'>
-                    <Image
-                        roundedCircle
-                        style={messageUser.online ? ONLINE_STYLE : {}}
-                        className='profile-picture'
-                        src={messageUser.pictureUrl ? messageUser.pictureUrl : '/images/default-profile.jpg'}
-                    />
-                </div>
-                <div className='message-top'>
-                    <div>
-                        <span className='message-from'>
-                            {message.from.username}
-                        </span>
-                        <span className='message-time'>
-                            {message.timestamp ? timestampToHumanDate(message.timestamp, true, translation) : translation.MESSAGES.SENDING}
-                        </span>
-                        <Linkify properties={{target: '_blank'}}>
-                            <div className='message-text'>
-                                {message.text}
-                            </div>
-                        </Linkify>
-                    </div>
-                    {isMessageFromCurrentUser &&
-                    <div>
-                        <i
-                            id='delete'
-                            className='far fa-trash-alt pull-right cursor'
-                            title={translation.MESSAGES.DELETE}
-                            style={{color: 'grey'}}
-                            onClick={() => deleteMessage(message._id)}
-                        />
-                    </div>
-                    }
-                </div>
             </div>
         )
     };

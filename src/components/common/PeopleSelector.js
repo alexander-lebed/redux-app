@@ -28,7 +28,7 @@ type State = {
     people: Array<User>
 }
 
-export class PeopleSelector extends React.Component<Props, State> {
+export class PeopleSelector extends React.PureComponent<Props, State> {
     state: State;
     static defaultProps = {
         excludedUserIds: [],
