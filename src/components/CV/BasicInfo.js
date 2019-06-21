@@ -83,8 +83,11 @@ export default connect(
             <Middle>
                 <h1 className='cv-username text-center text-md-left'>{BASIC_INFO.NAME}</h1>
                 <h3 className='cv-title text-center text-md-left'>{BASIC_INFO.POSITION}</h3>
-                <div className='cv-about-me mobile-text'>
+                <p className='cv-about-me mobile-text'>
                     {BASIC_INFO.ABOUT_ME}
+                </p>
+                <div className='cv-about-me mobile-text'>
+                    {BASIC_INFO.PERSONAL_SKILLS}
                 </div>
             </Middle>
 
