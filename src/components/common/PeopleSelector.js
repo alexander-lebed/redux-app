@@ -75,12 +75,13 @@ export class PeopleSelector extends React.PureComponent<Props, State> {
                 <div className='people-select-header'>
                     <InputGroup size='sm' className='search'>
                         <InputGroup.Prepend>
-                            <InputGroup.Text id='search'><i className='fas fa-search' /></InputGroup.Text>
+                            <i className='fas fa-search' />
                         </InputGroup.Prepend>
                         <Form.Control
                             placeholder={translation.PEOPLE.SEARCH_PEOPLE}
                             aria-label='Search people'
                             aria-describedby='search'
+                            className='search-input'
                             value={searchText}
                             onChange={e => this.setState({searchText: e.target.value})}
                         />

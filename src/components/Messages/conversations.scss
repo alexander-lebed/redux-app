@@ -1,3 +1,5 @@
+@import '../../../css/variables';
+
 .unread-message {
   background-color: #edf0f5;
 }
@@ -107,6 +109,12 @@ People Selector
 }
 .people-select-header > .search {
   grid-column: span 6;
+  align-items: baseline;
+  color: $secondary-color;
+}
+.search-input {
+  border: none !important;
+  box-shadow: none !important;
 }
 .people-select-header > .actions {
   grid-column: span 6;
