@@ -23,7 +23,7 @@ const users = (state = initUsers, action: Action) => {
             return users;
         }
         case actions.SET_USERS: {
-            return Object.assign([], action.payload);
+            return [...action.payload];
         }
         default:
             return state;

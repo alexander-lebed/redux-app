@@ -12,7 +12,7 @@ const actions = {
 const strings = (state: Translation = enStrings, action: Action) => {
     switch (action.type) {
         case actions.SET_STRINGS: {
-            return Object.assign({}, action.payload);
+            return {...action.payload};
         }
         default:
             return state;

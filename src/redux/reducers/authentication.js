@@ -15,7 +15,7 @@ const actions = {
 const user = (state = null, action: Action) => {
     switch (action.type) {
         case actions.SET_USER: {
-            return action.payload === null ? null : Object.assign({}, action.payload)
+            return action.payload === null ? null : {...action.payload}
         }
         default:
             return state;
@@ -102,7 +102,7 @@ export function logout() {
         const user = getState().authentication.user;
         if (user) {
             if (user.oauth) {
-                await hello(user.oauth).logout();
+                await hello.use(user.oauth).logout();
             }
             user.online = false;
             user.lastTime = null; // to set the time on server side

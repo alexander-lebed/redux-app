@@ -3,33 +3,47 @@ import thunk from 'redux-thunk';
 import $http from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { USERS_URL } from '../../../constants';
-import { login, online, logout } from '../authentication';
+import reducer, { login, online, logout } from '../authentication';
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+jest.mock('hellojs', () => ({
+    use: () => ({
+        api: () => ({
+            id: '12345',
+            first_name: 'FirstName',
+            email: 'newname@email.com',
+            thumbnail: '/images/default-profile.jpg'
+        }),
+        login: () => Promise.resolve(true),
+        logout: () => Promise.resolve(true),
+    })
+}));
+
+const middleware = [thunk];
+const mockStore = configureMockStore(middleware);
 
 describe('Authentication reducer', () => {
 
-    //process.env.WS_ADDRESS = 'ws://localhost:3000';
-    const mockAdapter = new MockAdapter($http);
-
-    const testUser = {
-        _id: '111',
-        username:'Current User',
-        email: 'user@mail.com',
-        password: 'user-password',
-        online: true,
-        lastTime: 1519294933743,
-        oauth: ''
+    process.env.WS_ADDRESS = 'ws://localhost:3000';
+    const getOfflineUser = () => {
+        return {
+            _id: '111',
+            username:'Current User',
+            email: 'user@mail.com',
+            password: 'user-password',
+            online: false,
+            lastTime: 1519294933743,
+            oauth: ''
+        }
     };
-    const store = mockStore({
+    const getOnlineUser = () => ({...getOfflineUser(), ...{online: true}});
+    const USERS_PUT_API = `${USERS_URL}/${getOfflineUser()._id}`;
+    const initialState = {
         authentication: {
-            user: testUser
+            user: null
         },
-        user: testUser,
         users: {
             users: [
-                testUser,
+                getOfflineUser(),
                 {
                     _id: '222',
                     username:'Alice',
@@ -46,44 +60,109 @@ describe('Authentication reducer', () => {
                     password: 'bob-password',
                     online: true,
                     lastTime: 1518346740388,
-                    oauth: ''
+                    oauth: 'facebook'
                 }
             ]
         }
-    });
-    const USERS_PUT_API = `${USERS_URL}/${testUser._id}`;
+    };
+    const mockAdapter = new MockAdapter($http);
+    let store = mockStore(initialState);
 
     afterEach(() => {
         store.clearActions();
     });
 
-    test('should successfully login user', async () => {
-        mockAdapter.onPut(USERS_PUT_API).reply(200, testUser);
-        const expectedActions = [
-            {type: 'SET_USER', payload: testUser}
-        ];
-        const isLoggedIn = await store.dispatch(login({email: 'user@mail.com', password: 'user-password', oauth: ''}));
-        expect(isLoggedIn).toBe(true);
-        expect(store.getActions()).toEqual(expectedActions);
+    test('check initial state', async () => {
+        expect(reducer(undefined, {})).toEqual(initialState.authentication)
     });
 
-    test('should successfully logout user', async () => {
-        mockAdapter.onPut(USERS_PUT_API).reply(200, testUser);
-        const expectedActions = [
-            {type: 'SET_USER', payload: null}
-        ];
-        await store.dispatch(logout());
+    test('should login existing user', async () => {
+        mockAdapter.onPut(USERS_PUT_API).reply(200, getOnlineUser());
+        // TEST ACTION
+        const setUserAction = {type: 'SET_USER', payload: getOnlineUser()};
+        const expectedActions = [setUserAction];
+        const isLoggedIn = await store.dispatch(login({email: getOnlineUser().email, password: getOnlineUser().password, oauth: getOnlineUser().oauth}));
+        expect(isLoggedIn).toBe(true);
         expect(store.getActions()).toEqual(expectedActions);
+        // TEST REDUCER
+        expect(reducer({}, setUserAction)).toEqual({user: getOnlineUser()});
+    });
+
+    test('should login new OAUTH user', async () => {
+        const oauthUser = {
+            _id: '3132333435xxxxxxxxxxxxxx',
+            username: 'New Name',
+            email: 'newname@email.com',
+            password: '',
+            online: true,
+            pictureUrl: '/images/default-profile.jpg',
+            lastTime: null,
+            oauth: 'google'
+        };
+        mockAdapter.onPut(`${USERS_URL}/${oauthUser._id}`).reply(200, oauthUser);
+        // TEST ACTION
+        const setUserAction = {type: 'SET_USER', payload: oauthUser};
+        const expectedActions = [setUserAction];
+        const isLoggedIn = await store.dispatch(login({oauth: oauthUser.oauth}));
+        expect(isLoggedIn).toBe(true);
+        expect(store.getActions()).toEqual(expectedActions);
+        // TEST REDUCER
+        expect(reducer({}, setUserAction)).toEqual({user: oauthUser});
+    });
+
+    test('should login existing OAUTH user', async () => {
+        const getOauthUser = () => initialState.users.users[2];
+        mockAdapter.onPut(`${USERS_URL}/${getOauthUser()._id}`).reply(200, getOauthUser());
+        // TEST ACTION
+        const setUserAction = {type: 'SET_USER', payload: getOauthUser()};
+        const expectedActions = [setUserAction];
+        const isLoggedIn = await store.dispatch(login(getOauthUser()));
+        expect(isLoggedIn).toBe(true);
+        expect(store.getActions()).toEqual(expectedActions);
+        // TEST REDUCER
+        expect(reducer({}, setUserAction)).toEqual({user: getOauthUser()});
     });
 
     test('should go user offline', async () => {
-        const response = {...testUser, online: false};
-        mockAdapter.onPut(USERS_PUT_API).reply(200, response);
-        const expectedActions = [
-            {type: 'SET_USER', payload: response}
-        ];
+        store = mockStore({
+            ...initialState,
+            ...{authentication: {user: getOnlineUser()}} // mock logged-in user
+        });
+        mockAdapter.onPut(USERS_PUT_API).reply(200, getOfflineUser());
+        // TEST ACTION
+        const setUserAction = {type: 'SET_USER', payload: getOfflineUser()};
+        const expectedActions = [setUserAction];
         await store.dispatch(online(false));
         expect(store.getActions()).toEqual(expectedActions);
+        // TEST REDUCER
+        expect(reducer({}, setUserAction)).toEqual({user: getOfflineUser()});
+    });
+
+    test('should logout user', async () => {
+        mockAdapter.onPut(USERS_PUT_API).reply(200, getOfflineUser());
+        // TEST ACTION
+        const setUserAction = {type: 'SET_USER', payload: null};
+        const expectedActions = [setUserAction];
+        await store.dispatch(logout());
+        expect(store.getActions()).toEqual(expectedActions);
+        // TEST REDUCER
+        expect(reducer({}, setUserAction)).toEqual({user: null});
+    });
+
+    test('should logout OAUTH user', async () => {
+        const getOauthUser = () => initialState.users.users[2];
+        store = mockStore({
+            ...initialState,
+            ...{authentication: {user: getOauthUser()}} // mock logged-in user
+        });
+        mockAdapter.onPut(`${USERS_URL}/${getOauthUser()._id}`).reply(200, getOauthUser());
+        // TEST ACTION
+        const setUserAction = {type: 'SET_USER', payload: null};
+        const expectedActions = [setUserAction];
+        await store.dispatch(logout());
+        expect(store.getActions()).toEqual(expectedActions);
+        // TEST REDUCER
+        expect(reducer({}, setUserAction)).toEqual({user: null});
     });
 });
 

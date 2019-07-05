@@ -21,6 +21,17 @@ Run app in production mode:
 ```
 yarn start
 ```
+
+### Unit tests
+#### Redux test example:
+```
+src\redux\reducers\__tests__\authentication.test.js
+```
+#### Component test example:
+```
+src\components\People\__tests__\People.test.js
+```
+
 <br />
 
 #### To upgrade all project dependencies:

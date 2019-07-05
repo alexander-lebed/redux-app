@@ -22,7 +22,7 @@ const conversations = (state = [], action: Action) => {
             return state.concat(action.payload);
         }
         case actions.SET_CONVERSATIONS: {
-            return Object.assign([], action.payload);
+            return [...action.payload];
         }
         default:
             return state;
@@ -32,7 +32,7 @@ const conversations = (state = [], action: Action) => {
 const conversation = (state = {}, action: Action) => {
     switch (action.type) {
         case actions.SET_CONVERSATION: {
-            return Object.assign({}, action.payload);
+            return {...action.payload};
         }
         default:
             return state;

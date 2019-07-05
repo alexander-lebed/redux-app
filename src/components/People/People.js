@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import queryString from 'query-string';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,7 +12,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import { ONLINE_STYLE } from '../../constants';
+import { ONLINE_STYLE, adminEmail } from '../../constants';
 import { timestampToHumanDate } from '../../utils';
 import { deleteUser } from '../../redux/reducers/users';
 import ConfirmationModal from '../common/ConfirmationModal';
@@ -145,21 +145,17 @@ type UserRowProps = {
     history: Object,
     user: User,
     showUserProfile: Function,
-    showDeleteConfirmation: Function,
-    loggedUser: User,
-    translation: Translation,
+    showDeleteConfirmation: Function
 }
-
-const UserRow = connect(
-    state => ({
+export const UserRow = ((props: UserRowProps) => {
+    const {user, showUserProfile, showDeleteConfirmation, history} = props;
+    const {loggedUser, translation} = useSelector(state => ({
         loggedUser: state.authentication.user,
         translation: state.translation
-    })
-)((props: UserRowProps) => {
+    }));
 
-    const {user, loggedUser, showUserProfile, showDeleteConfirmation, history, translation} = props;
+    const isAdmin = loggedUser.email === adminEmail;
 
-    const isAdmin = loggedUser.email === 'alexanderlebed999@gmail.com';
     const imageStyle = user.online ? ONLINE_STYLE : {};
 
     const goToConversationWith = (userIds: Array<string>) => {
@@ -176,6 +172,7 @@ const UserRow = connect(
                             onClick={() => showUserProfile(user)}
                         >
                             <Image
+                                id={`user-picture-${user._id}`}
                                 roundedCircle
                                 style={imageStyle}
                                 className='profile-picture'
@@ -194,6 +191,7 @@ const UserRow = connect(
                             {isAdmin &&
                             <>
                                 <Button
+                                    id={`delete-user-${user._id}`}
                                     size='sm'
                                     variant='outline-danger'
                                     onClick={() => showDeleteConfirmation(user._id)}
@@ -204,6 +202,7 @@ const UserRow = connect(
                             </>
                             }
                             <Button
+                                id={`write-user-${user._id}`}
                                 size='sm'
                                 variant='outline-dark'
                                 onClick={() => goToConversationWith([user._id])}

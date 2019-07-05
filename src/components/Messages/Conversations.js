@@ -159,7 +159,7 @@ class Conversations extends React.PureComponent<Props, State> {
                             <Button
                                 variant='outline-dark'
                                 size='sm'
-                                className='d-none d-sm-block'
+                                className='create-btn d-none d-sm-block'
                                 onClick={() => this.createConversation()}
                             >
                                 <i className='fa fa-comments fa-lg' style={{marginRight: 8}} />
