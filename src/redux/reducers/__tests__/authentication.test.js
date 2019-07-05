@@ -23,7 +23,10 @@ const mockStore = configureMockStore(middleware);
 
 describe('Authentication reducer', () => {
 
-    process.env.WS_ADDRESS = 'ws://localhost:3000';
+    beforeEach(() => {
+        process.env.WS_ADDRESS = 'ws://localhost:3000';
+    });
+
     const getOfflineUser = () => {
         return {
             _id: '111',

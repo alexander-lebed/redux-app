@@ -23,6 +23,10 @@ yarn start
 ```
 
 ### Unit tests
+Run:
+```
+yarn test
+```
 #### Redux test example:
 ```
 src\redux\reducers\__tests__\authentication.test.js
