@@ -1,9 +1,12 @@
 import configureMockStore from 'redux-mock-store';
+import { WebSocket } from 'mock-socket';
 import thunk from 'redux-thunk';
 import $http from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { USERS_URL } from '../../../constants';
 import reducer, { login, online, logout } from '../authentication';
+
+global.WebSocket = WebSocket;
 
 jest.mock('hellojs', () => ({
     use: () => ({
@@ -22,10 +25,6 @@ const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 
 describe('Authentication reducer', () => {
-
-    beforeEach(() => {
-        process.env.WS_ADDRESS = 'ws://localhost:3000';
-    });
 
     const getOfflineUser = () => {
         return {

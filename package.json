@@ -14,7 +14,7 @@
     "heroku-postbuild": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
     "start": "node server.js",
     "dev": "concurrently \"webpack --progress --colors --watch\" \"nf start -j Procfile.dev\"",
-    "test": "jest --coverage",
+    "test": "SET WS_ADDRESS=ws://localhost:3000 && jest --coverage",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix --cache",
     "flow": "flow"
@@ -29,7 +29,9 @@
     "testMatch": [
       "**/__tests__/?(*.)test.js"
     ],
-    "setupFilesAfterEnv": ["<rootDir>/src/helpers/configureEnzyme.js"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/helpers/configureEnzyme.js"
+    ]
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -78,6 +80,7 @@
     "hellojs": "^2.0.0-4",
     "history": "^4.7.2",
     "jest": "^24.8.0",
+    "mock-socket": "^8.0.5",
     "moment": "^2.22.1",
     "moment-locales-webpack-plugin": "^1.0.7",
     "node-sass": "^4.9.3",

@@ -4,34 +4,31 @@ MERN (MongoDB, Express, React, Node.js)
 
 
 
-### To run the app:
-
 Install project dependencies:
 ```
 yarn install
 ```
 
-Build and run app in development mode + watch code changes:
+Build and run app (development mode + watch code changes):
 ```
 yarn dev
 ```
-<sup>Go to http://localhost:8082/</sup>
+<sup>Then go to http://localhost:8082/</sup>
 
-Run app in production mode:
+Run (production mode):
 ```
 yarn start
 ```
 
 ### Unit tests
-Run:
 ```
 yarn test
 ```
-#### Redux test example:
+Redux test example:
 ```
 src\redux\reducers\__tests__\authentication.test.js
 ```
-#### Component test example:
+Component test example:
 ```
 src\components\People\__tests__\People.test.js
 ```
