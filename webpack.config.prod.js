@@ -7,7 +7,7 @@ module.exports = {
     context: __dirname,
     mode: 'production',
     entry: {
-        javascript: './src/app.js',
+        javascript: './src/index.js',
         html: './index.html'
     },
     output: {

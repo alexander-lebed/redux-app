@@ -8,7 +8,7 @@ module.exports = {
     context: __dirname,
     mode: 'development',
     entry: {
-        javascript: './src/app.js',
+        javascript: './src/index.js',
         html: './index.html'
     },
     output: {

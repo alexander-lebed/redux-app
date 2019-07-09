@@ -27,8 +27,12 @@
     ],
     "testURL": "http://localhost/",
     "testMatch": [
-      "**/__tests__/?(*.)test.js"
+      "**/__tests__/?(*.)@(spec|test).js"
     ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
+      "\\.(css|scss)$": "<rootDir>/assetsTransformer.js"
+    },
     "setupFilesAfterEnv": [
       "<rootDir>/src/helpers/configureEnzyme.js"
     ]
@@ -60,6 +64,7 @@
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
     "bootstrap": "^4.3.1",
     "concurrently": "^4.1.0",
     "crypto-js": "^3.1.9-1",

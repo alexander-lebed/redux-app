@@ -8,5 +8,12 @@
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-transform-async-to-generator"
   ],
+  "env": {
+    "test": {
+      "plugins": [
+        "dynamic-import-node"
+      ]
+    }
+  },
   "ignore": ["node_modules/**/*"]
 }

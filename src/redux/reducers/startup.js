@@ -6,7 +6,7 @@ import { initTranslation } from './translation';
 import { getUsers } from './users';
 import { Alert } from './alerts';
 import receiveMessageDataURI from '../../../audio';
-import { IMGUR_CLIENT_ID } from '../../constants';
+import { IMGUR_AUTH_GET_API } from '../../constants';
 
 const actions = {
     WINDOW_ACTIVE: 'UPDATE_USER_ACTIVE',
@@ -108,7 +108,7 @@ function initSocialMediaOAuth() {
 }
 
 function initImageHostOAuth() {
-    $http.get(`https://api.imgur.com/oauth2/authorize?response_type=token&client_id=${IMGUR_CLIENT_ID}`)
+    $http.get(IMGUR_AUTH_GET_API)
         .catch(err => {
             console.log(`--- Imgur OAuth error: ${err}`);
         })
