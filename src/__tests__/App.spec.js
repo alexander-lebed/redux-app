@@ -6,7 +6,6 @@ import MockAdapter from 'axios-mock-adapter';
 import { WebSocket } from 'mock-socket';
 import configureStore from '../redux/configureStore';
 import App from '../App';
-import Login from '../components/Auth/Login';
 import { IMGUR_AUTH_GET_API, USERS_URL } from '../constants';
 
 const localStorageMock = {
@@ -46,7 +45,7 @@ describe('App integration test', () => {
         );
         setTimeout(() => {
             wrapper.update();
-            const LoginPage = wrapper.find(Login);
+            const LoginPage = wrapper.find('Login');
             expect(LoginPage.exists()).toEqual(true);
             done();
         }, 500);

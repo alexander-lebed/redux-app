@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'font-awesome/css/font-awesome.min.css';
 import Startup from './components/Startup';
@@ -10,21 +10,27 @@ import Spinner from './components/common/Spinner';
 import './app.scss';
 
 
-class DynamicImport extends React.Component<{load: Function}, {component: any}> {
-    state = {
-        component: null
-    };
-    componentDidMount() {
-        this.props.load().then(mod => this.setState({component: mod.default}));
-    }
-    render() {
-        const Component = this.state.component;
-        return this.state.component === null ? <Spinner /> : <Component {...this.props} />
-    }
-}
+// class DynamicImport extends React.Component<{load: Function}, {component: any}> {
+//     state = {
+//         component: null
+//     };
+//     componentDidMount() {
+//         this.props.load().then(mod => this.setState({component: mod.default}));
+//     }
+//     render() {
+//         const Component = this.state.component;
+//         return this.state.component === null ? <Spinner /> : <Component {...this.props} />
+//     }
+// }
 
 const getComponent = (componentPath: string) => {
-    return (props) => <DynamicImport load={() => import('' + componentPath)} {...props} />
+    const Component = React.lazy(() => import('' + componentPath));
+    // return (props) => <DynamicImport load={() => import('' + componentPath)} {...props} />
+    return (props) => (
+        <Suspense fallback={<Spinner />}>
+            <Component {...props} />
+        </Suspense>
+    )
 };
 
 const Login = getComponent('./components/Auth/Login');
