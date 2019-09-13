@@ -23,6 +23,7 @@ type State = {
 export class MessageForm extends React.Component<Props, State> {
 
     state: State;
+    textAreaRef = React.createRef();
 
     constructor(params: Props) {
         super(params);
@@ -57,6 +58,15 @@ export class MessageForm extends React.Component<Props, State> {
 
     onEmojiClick = () => this.setState({showEmoji: !this.state.showEmoji});
 
+    onEmojiSelect = (emoji) => {
+        const input = this.textAreaRef.current;
+        const {selectionStart, selectionEnd, value} = input;
+        const updatedText = value.substring(0, selectionStart) + emoji + value.substring(selectionEnd);
+        input.focus();
+        input.selectionEnd= selectionEnd + 7;
+        this.setState({messageText: updatedText});
+    };
+
     render () {
         const { translation } = this.props;
         const { messageText, showEmoji } = this.state;
@@ -69,12 +79,14 @@ export class MessageForm extends React.Component<Props, State> {
                         <Form.Group controlId='message-form' className='message-form' style={{display: 'flex', marginBottom: 2}}>
                             <div style={{flex: 1}}>
                                 <Form.Control
+                                    id="message-textarea"
+                                    ref={this.textAreaRef}
                                     as='textarea'
                                     autoFocus={true}
                                     className='text-area'
                                     rows={4}
                                     placeholder={this.props.translation.MESSAGES.WRITE_MESSAGE}
-                                    value={this.state.messageText}
+                                    value={messageText}
                                     onKeyPress={this.handleKeyPress}
                                     onChange={e => this.setState({messageText: e.target.value})}
                                 />
@@ -99,10 +111,7 @@ export class MessageForm extends React.Component<Props, State> {
                         title={translation.MESSAGES.PICK_EMOJI}
                         emoji='monkey'
                         native={true}
-                        onClick={emoji => {
-                            const text = messageText ? messageText + ` ${emoji.native}` : emoji.native;
-                            this.setState({messageText: text});
-                        }}
+                        onClick={emoji => this.onEmojiSelect(emoji.native)}
                     />
                     }
                 </Col>
