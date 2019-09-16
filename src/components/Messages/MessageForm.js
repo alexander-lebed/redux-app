@@ -58,10 +58,10 @@ export class MessageForm extends React.Component<Props, State> {
 
     onEmojiClick = () => this.setState({showEmoji: !this.state.showEmoji});
 
-    onEmojiSelect = (emoji) => {
+    setText = (text) => {
         const input = this.textAreaRef.current;
         const {selectionStart, selectionEnd, value} = input;
-        const updatedText = value.substring(0, selectionStart) + emoji + value.substring(selectionEnd);
+        const updatedText = `${value.substring(0, selectionStart)}${text}${value.substring(selectionEnd)}`;
         input.focus();
         input.selectionEnd= selectionEnd + 7;
         this.setState({messageText: updatedText});
@@ -111,7 +111,7 @@ export class MessageForm extends React.Component<Props, State> {
                         title={translation.MESSAGES.PICK_EMOJI}
                         emoji='monkey'
                         native={true}
-                        onClick={emoji => this.onEmojiSelect(emoji.native)}
+                        onClick={emoji => this.setText(emoji.native)}
                     />
                     }
                 </Col>
