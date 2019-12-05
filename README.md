@@ -2,6 +2,9 @@
 
 MERN (MongoDB, Express, React, Node.js)
 
+##TODO:
+* PWA
+* GitHub Pages
 
 Install dependencies:
 ```
