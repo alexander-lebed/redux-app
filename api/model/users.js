@@ -1,9 +1,6 @@
-'use strict';
+import mongoose from 'mongoose';
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
     username: String,
     email: String,
     password: String,
@@ -15,4 +12,4 @@ const UserSchema = new Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);

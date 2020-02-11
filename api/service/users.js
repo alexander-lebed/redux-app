@@ -1,8 +1,9 @@
-const express = require("express");
+import express from 'express';
+import WebSocket from 'ws';
+import nodemailer from 'nodemailer';
+import User from '../model/users';
+
 const router = express.Router();
-const WebSocket = require('ws');
-const nodemailer = require('nodemailer');
-const User = require('../model/users');
 
 // SMTP transport
 const transporter = nodemailer.createTransport({
@@ -123,13 +124,6 @@ router.delete('/', (req, res, next) => {
     });
 });
 
-
-module.exports = {
-    ws: wss,
-    router: router
-};
-
-
 const broadcastAllUsers = () => {
     User.find((err, users) => {
         if (err) {
@@ -219,4 +213,9 @@ const getSignUpHTML = (username) => {
 	</tbody>
 </table>
 </div>`
+};
+
+export default {
+    ws: wss,
+    router: router
 };

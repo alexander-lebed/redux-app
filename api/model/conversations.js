@@ -1,9 +1,6 @@
-'use strict';
+import mongoose from 'mongoose';
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const ConversationSchema = new Schema({
+const ConversationSchema = new mongoose.Schema({
     users: [{
         _id: String,
         username: String
@@ -23,4 +20,4 @@ const ConversationSchema = new Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model('Conversation', ConversationSchema);
+export default mongoose.model('Conversation', ConversationSchema);

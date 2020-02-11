@@ -1,2 +1,2 @@
 web: webpack-dev-server
-api: node --inspect server.js
+api: node --inspect start.js

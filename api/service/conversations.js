@@ -1,7 +1,8 @@
-const express = require("express");
+import express from 'express';
+import WebSocket from 'ws';
+import Conversation from '../model/conversations';
+
 const router = express.Router();
-const WebSocket = require('ws');
-const Conversation = require('../model/conversations');
 
 /*
 WebSocket note:
@@ -201,7 +202,7 @@ router.delete('/', (req, res, next) => {
 });
 
 
-module.exports = {
+export default {
     ws: wss,
     router: router
 };

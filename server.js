@@ -1,12 +1,10 @@
-'use strict';
-
-const path = require('path');
-const express = require('express');
-const url = require('url');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const userApi = require('./api/service/users');
-const conversationApi = require('./api/service/conversations');
+import path from 'path';
+import express from 'express';
+import url from 'url';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import userApi from './api/service/users';
+import conversationApi from './api/service/conversations';
 
 const app           = express();
 const router        = express.Router();
