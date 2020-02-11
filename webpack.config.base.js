@@ -1,5 +1,6 @@
 const path = require('path');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const globImporter = require('node-sass-glob-importer');
 const packageJson = require("./package.json");
 
 module.exports = {
@@ -49,7 +50,12 @@ module.exports = {
                 use: [
                     {loader: "style-loader"},
                     {loader: "css-loader"},
-                    {loader: "sass-loader"}
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            importer: globImporter()
+                        }
+                    }
                 ]
             },
             {
