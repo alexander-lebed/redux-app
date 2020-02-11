@@ -13,30 +13,12 @@
     "build": "webpack --progress --colors --config webpack.config.dev.js",
     "build-prod": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
     "heroku-postbuild": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
-    "start": "yarn build-prod && node start.js",
+    "start": "node start.js",
     "dev": "nf start -j Procfile.dev",
     "test": "cross-env WS_ADDRESS=ws://localhost:3000 jest --coverage",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix --cache",
     "flow": "flow"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/components/**/*.js",
-      "src/redux/**/*.js"
-    ],
-    "testURL": "http://localhost/",
-    "testMatch": [
-      "**/__tests__/?(*.)@(spec|test).js"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
-      "\\.(css|scss)$": "<rootDir>/assetsTransformer.js"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/helpers/configureEnzyme.js"
-    ]
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -47,13 +29,14 @@
     "ws": "^6.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-flow": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
     "@babel/register": "^7.8.3",
-    "@babel/runtime": "^7.4.3",
+    "@babel/runtime": "^7.8.4",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.15.0",
     "babel": "^6.23.0",
