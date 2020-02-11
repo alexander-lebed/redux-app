@@ -1,12 +1,9 @@
 const path = require('path');
-const webpack = require('webpack');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const packageJson = require("./package.json");
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     context: __dirname,
-    mode: 'development',
     entry: {
         javascript: './src/index.js',
         html: './index.html'
@@ -17,37 +14,24 @@ module.exports = {
         path: path.join(__dirname, 'dist'),
         publicPath: '/dist/'
     },
-    devtool: 'eval-source-map',
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development'),
-                API_HOST: JSON.stringify('http://localhost:3000/api'),
-                WS_ADDRESS: JSON.stringify('ws://localhost:3000'),
-            }
-        }),
         new MomentLocalesPlugin({
             localesToKeep: ['es', 'ru'],
         }),
-        // new BundleAnalyzerPlugin()
     ],
     module: {
         rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/env', '@babel/react'],
-                        plugins: ['@babel/syntax-dynamic-import']
-                    }
-                }
-            },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/, // add 'eslint-loader' to lint on build
-                use: 'babel-loader'
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            cacheDirectory: true,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.html$/,
@@ -74,13 +58,4 @@ module.exports = {
             }
         ]
     },
-    devServer: {
-        port: 8082,
-        historyApiFallback: true,
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-        }
-    }
 };

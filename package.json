@@ -10,11 +10,12 @@
     "yarn": ">=1.3.2"
   },
   "scripts": {
-    "build": "webpack --progress --colors",
+    "build": "webpack --progress --colors --config webpack.config.dev.js",
+    "build-prod": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
     "heroku-postbuild": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
-    "start": "node start.js",
-    "dev": "concurrently \"webpack --progress --colors --watch\" \"nf start -j Procfile.dev\"",
-    "test": "SET WS_ADDRESS=ws://localhost:3000 && jest --coverage",
+    "start": "yarn build-prod && node start.js",
+    "dev": "nf start -j Procfile.dev",
+    "test": "cross-env WS_ADDRESS=ws://localhost:3000 jest --coverage",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix --cache",
     "flow": "flow"
@@ -48,11 +49,6 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/plugin-transform-async-to-generator": "^7.4.0",
-    "@babel/plugin-transform-destructuring": "^7.4.3",
-    "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
@@ -68,6 +64,7 @@
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "bootstrap": "^4.3.1",
     "concurrently": "^4.1.0",
+    "cross-env": "^7.0.0",
     "crypto-js": "^3.1.9-1",
     "css-loader": "^1.0.1",
     "emoji-mart": "2.11.1",
@@ -112,6 +109,7 @@
     "url-loader": "^1.0.1",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.3.5",
-    "webpack-dev-server": "3.7.2"
+    "webpack-dev-server": "3.7.2",
+    "webpack-merge": "^4.2.2"
   }
 }

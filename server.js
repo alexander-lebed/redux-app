@@ -54,11 +54,9 @@ const server = app.listen(port, () => {
     console.log(`--- API running on port ${port}`);
 });
 
-// apply web sockets with different paths
+// apply WebSockets with different paths
 server.on('upgrade', (request, socket, head) => {
-
     const pathname = url.parse(request.url).pathname;
-
     if (pathname === '/users') {
         userApi.ws.handleUpgrade(request, socket, head, (ws) => {
             userApi.ws.emit('connection', ws, request);
@@ -71,3 +69,14 @@ server.on('upgrade', (request, socket, head) => {
         socket.destroy();
     }
 });
+
+
+const stopHandler = (signal) => {
+    console.error(`\nGracefully shutting down from ${signal}`);
+    server.close();
+    process.exit(1);
+};
+
+process.on('SIGTERM', stopHandler, 'SIGTERM');
+process.on('SIGINT', stopHandler, 'SIGINT');
+process.on('SIGHUP', stopHandler, 'SIGINT');

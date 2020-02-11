@@ -1,2 +1,3 @@
-web: webpack-dev-server
+build: webpack --progress --colors --watch --config webpack.config.dev.js
+web: webpack-dev-server --config webpack.config.dev.js
 api: node --inspect start.js
