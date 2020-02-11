@@ -30,7 +30,7 @@ const getComponent = (componentPath: string) => {
         <Suspense fallback={<Spinner />}>
             <Component {...props} />
         </Suspense>
-    )
+    );
 };
 
 const Login = getComponent('./components/Auth/Login');
@@ -49,7 +49,7 @@ const App = () => (
             <div>
                 <Alerts />
                 <NavigationBar />
-                <div className='main-content'>
+                <div className="main-content">
                     <Switch>
                         <Route exact path='/login' component={Login} />
                         <Route exact path='/register' component={Registration} />

@@ -35,7 +35,7 @@ type AlertProps = AlertType & {
 export class Alert extends React.Component<AlertProps, void> {
     _timeout: TimeoutID;
 
-    componentDidMount () {
+    componentDidMount() {
         if (this.props.timeout) {
             this._timeout = setTimeout(this.hideNotification, this.props.timeout)
         }

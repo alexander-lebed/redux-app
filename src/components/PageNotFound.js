@@ -34,7 +34,7 @@ const PageNotFound = (props: Props) => {
                     />
                     <Jumbotron>
                         <h1>404</h1>
-                        <hr/>
+                        <hr />
                         <p>{props.translation.OTHER.PAGE_NOT_FOUND(homeLink)}</p>
                     </Jumbotron>
                 </Col>

@@ -34,5 +34,9 @@
     "comma-dangle": "off",
     "indent": [2, 4, {"SwitchCase": 1}]
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:flowtype/recommended"]
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended"
+  ]
 }

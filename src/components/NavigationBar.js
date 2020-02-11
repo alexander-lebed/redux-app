@@ -150,24 +150,24 @@ class NavigationBar extends React.Component<Props, State> {
                         </Nav.Link>
                     </Nav>
                     <Nav>
-                        {user &&
-                        <>
-                            {
-                                accountDropdown
-                            }
-                        </>
-                        }
-                        {!user &&
-                        <Nav.Link eventKey='/login' style={{paddingTop: 10, paddingBottom: 9}}>
-                            <LinkContainer key='login' to='/login' onClick={() => this.expand(false)}>
-                                <div>
-                                    <Button variant='outline-success' size='sm' className='mobile-btn'>
-                                        <i className='fas fa-sign-in-alt' style={{marginRight: 5}} /> {translation.ACCOUNT.LOG_IN}
-                                    </Button>
-                                </div>
-                            </LinkContainer>
-                        </Nav.Link>
-                        }
+                        {user && (
+                            <>
+                                {
+                                    accountDropdown
+                                }
+                            </>
+                        )}
+                        {!user && (
+                            <Nav.Link eventKey='/login' style={{paddingTop: 10, paddingBottom: 9}}>
+                                <LinkContainer key='login' to='/login' onClick={() => this.expand(false)}>
+                                    <div>
+                                        <Button variant='outline-success' size='sm' className='mobile-btn'>
+                                            <i className='fas fa-sign-in-alt' style={{marginRight: 5}} /> {translation.ACCOUNT.LOG_IN}
+                                        </Button>
+                                    </div>
+                                </LinkContainer>
+                            </Nav.Link>
+                        )}
                         <NavDropdown
                             className='navbar-dropdown'
                             style={{textAlign: 'center', paddingLeft: 5}}

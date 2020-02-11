@@ -12,7 +12,7 @@ type Props = Route & {
 const PrivateRoute = (props: Props) => {
     const {user} = props;
     if (user) {
-        return <Route {...props} />
+        return <Route {...props} />;
     } else {
         return <Redirect to={{pathname: '/login', state: {from: props.location}}} />;
     }

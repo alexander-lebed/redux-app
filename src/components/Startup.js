@@ -3,11 +3,9 @@ import React from 'react';
 import type { Node } from 'react';
 import { connect } from 'react-redux';
 import { initApp } from '../redux/reducers/startup';
-import type { Translation } from '../types';
 
 type Props = {
     children?: Node,
-    translation: Translation,
     initApp: Function
 }
 
@@ -26,9 +24,13 @@ class Startup extends React.Component<Props, void> {
             <div>
                 {this.props.children}
             </div>
-        )
+        );
     }
 }
+
+Startup.defaultProps = {
+    children: []
+};
 
 export default connect(
     (state) => ({
