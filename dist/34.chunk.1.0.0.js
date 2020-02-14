@@ -1,1 +1,15 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[34],{149:function(e,n,a){"use strict";a.r(n);var t=a(0),l=a.n(t),r=a(29),c=a(328),o=a.n(c),i=a(86),s=a.n(i);n.default=function(e){var n=Object(r.c)(function(e){return e.translation});return l.a.createElement(o.a,{show:!0,onHide:e.onCancel},l.a.createElement(o.a.Header,null,l.a.createElement(o.a.Title,null,e.title)),l.a.createElement(o.a.Body,null,e.body),l.a.createElement(o.a.Footer,null,l.a.createElement(s.a,{variant:"success",size:"sm",onClick:e.onConfirm},n.COMMON.YES),l.a.createElement(s.a,{variant:"outline-dark",size:"sm",onClick:e.onCancel},n.COMMON.CANCEL)))}}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[34],{
+
+/***/ "./src/components/CV/Skill.js":
+/*!************************************!*\
+  !*** ./src/components/CV/Skill.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_bootstrap_Image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap/Image */ \"./node_modules/react-bootstrap/Image.js\");\n/* harmony import */ var react_bootstrap_Image__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_Image__WEBPACK_IMPORTED_MODULE_1__);\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (function (props) {\n  var title = props.title;\n  var imageSrc = \"/images/skills/\".concat(title.toLowerCase(), \".jpg\").replace(' ', '_');\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: \"skill-item\"\n  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_Image__WEBPACK_IMPORTED_MODULE_1___default.a, {\n    className: \"skill-image\",\n    src: imageSrc\n  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: \"skill-title\"\n  }, title));\n});\n\n//# sourceURL=webpack:///./src/components/CV/Skill.js?");
+
+/***/ })
+
+}]);

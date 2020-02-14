@@ -21,6 +21,11 @@
     "lint-fix": "eslint src --fix --cache",
     "flow": "flow"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn build-prod"
+    }
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
@@ -66,6 +71,7 @@
     "font-awesome": "^4.7.0",
     "hellojs": "^2.0.0-4",
     "history": "^4.7.2",
+    "husky": "^4.2.3",
     "jest": "^24.8.0",
     "mock-socket": "^8.0.5",
     "moment": "^2.22.1",

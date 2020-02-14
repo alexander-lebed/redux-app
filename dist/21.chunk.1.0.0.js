@@ -1,1 +1,59 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[21],{180:function(e,t,n){"use strict";n.r(t),function(e){var t=n(9),o=n.n(t),r=n(21),a=n.n(r),c=n(0),s=n.n(c),i=n(357),u=n(29),f=n(18),p=n.n(f),l=n(527),m=n.n(l),d=n(529),w=n(78),j=n(76),b=n(10),h={getItem:jest.fn(),setItem:jest.fn(),removeItem:jest.fn(),clear:jest.fn()},v={requestPermission:jest.fn()};e.localStorage=h,e.WebSocket=d.WebSocket,e.Notification=v,jest.mock("hellojs",function(){return{init:function(){}}}),describe("App integration test",function(){var e,t;beforeEach(a()(o.a.mark(function n(){return o.a.wrap(function(n){for(;;)switch(n.prev=n.next){case 0:return e=new m.a(p.a),n.next=3,Object(w.default)();case 3:t=n.sent;case 4:case"end":return n.stop()}},n)}))),test("should land on Login page",function(){var n=a()(o.a.mark(function n(r){var a;return o.a.wrap(function(n){for(;;)switch(n.prev=n.next){case 0:return e.onGet(b.IMGUR_AUTH_GET_API).reply(200),e.onGet(b.USERS_URL).reply(200,[]),n.next=4,Object(i.mount)(s.a.createElement(u.a,{store:t},s.a.createElement(j.default,null)));case 4:a=n.sent,setTimeout(function(){a.update();var e=a.find("Login");expect(e.exists()).toEqual(!0),r()},500);case 6:case"end":return n.stop()}},n)}));return function(e){return n.apply(this,arguments)}}())})}.call(this,n(31))},391:function(e,t){},397:function(e,t){},398:function(e,t){},428:function(e,t){}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[21],{
+
+/***/ "./src/helpers/configureEnzyme.js":
+/*!****************************************!*\
+  !*** ./src/helpers/configureEnzyme.js ***!
+  \****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var enzyme__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! enzyme */ \"./node_modules/enzyme/build/index.js\");\n/* harmony import */ var enzyme__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(enzyme__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var enzyme_adapter_react_16__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! enzyme-adapter-react-16 */ \"./node_modules/enzyme-adapter-react-16/build/index.js\");\n/* harmony import */ var enzyme_adapter_react_16__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(enzyme_adapter_react_16__WEBPACK_IMPORTED_MODULE_1__);\n\n\nenzyme__WEBPACK_IMPORTED_MODULE_0___default.a.configure({\n  adapter: new enzyme_adapter_react_16__WEBPACK_IMPORTED_MODULE_1___default.a()\n});\n\n//# sourceURL=webpack:///./src/helpers/configureEnzyme.js?");
+
+/***/ }),
+
+/***/ 0:
+/*!*********************************!*\
+  !*** readable-stream (ignored) ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) */\n\n//# sourceURL=webpack:///readable-stream_(ignored)?");
+
+/***/ }),
+
+/***/ 1:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) */\n\n//# sourceURL=webpack:///util_(ignored)?");
+
+/***/ }),
+
+/***/ 2:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) */\n\n//# sourceURL=webpack:///util_(ignored)?");
+
+/***/ }),
+
+/***/ 3:
+/*!********************************!*\
+  !*** ./util.inspect (ignored) ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/* (ignored) */\n\n//# sourceURL=webpack:///./util.inspect_(ignored)?");
+
+/***/ })
+
+}]);
