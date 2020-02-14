@@ -1,1 +1,1 @@
-api: node start.js
+web: node start.js
