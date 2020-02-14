@@ -11,10 +11,11 @@
   },
   "scripts": {
     "build": "webpack --progress --colors --config webpack.config.dev.js",
-    "build-prod": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
-    "heroku-postbuild": "webpack --progress --optimize-minimize --config webpack.config.prod.js",
+    "build-prod": "webpack --progress --optimize-minimize -p --config ./webpack.config.prod.js",
+    "heroku-postbuild": "webpack --progress --optimize-minimize -p --config ./webpack.config.prod.js",
     "start": "node start.js",
     "dev": "nf start -j Procfile.dev",
+    "prod": "nf start -j Procfile",
     "test": "cross-env WS_ADDRESS=ws://localhost:3000 jest --coverage",
     "lint": "eslint src",
     "lint-fix": "eslint src --fix --cache",

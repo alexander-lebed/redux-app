@@ -12,7 +12,7 @@ const mongoDB       = 'mongodb://gorodovoy:gorodovoy@ds229388.mlab.com:29388/mes
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const port          = isDevelopment ? process.env.API_PORT || 3000 : process.env.PORT || 3000;
 
-console.log(`--- ${isDevelopment ? 'development' : 'production'} mode`);
+console.log(`--- mode: ${process.env.NODE_ENV}`);
 
 mongoose.connect(mongoDB, { // reconnect if internet connection was interrupted
     reconnectTries: Number.MAX_VALUE,
