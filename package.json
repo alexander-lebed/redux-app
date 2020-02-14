@@ -13,6 +13,7 @@
     "build": "webpack --progress --colors --config webpack.config.dev.js",
     "build-prod": "webpack --progress --optimize-minimize -p --config ./webpack.config.prod.js",
     "heroku-postbuild": "webpack --progress --optimize-minimize -p --config ./webpack.config.prod.js",
+    "precommit": "yarn build-prod && git add .",
     "start": "node start.js",
     "dev": "nf start -j Procfile.dev",
     "prod": "nf start -j Procfile",
@@ -23,7 +24,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn build-prod"
+      "pre-commit": "precommit"
     }
   },
   "dependencies": {
