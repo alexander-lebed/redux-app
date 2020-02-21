@@ -46,14 +46,13 @@ export default connect(
                     <a href='https://ab-soft.net/' target='_blank' rel='noopener noreferrer'>AB Soft</a>
                 </div>
                 <div className='mobile-text'>
-                    Built and maintained a template manager for email, SMS, Glip notifications. Completely redesigned an
-                    application to use common React components.
+                    RingCentral (cloud-based communications solutions). Built and maintained a template manager for different
+                    notification types. Completely redesigned the application to use common React components.
                 </div>
                 <div>
                     <div className='tech-font'>STACK:</div>
                     {renderStack([
-                        'JavaScript', 'React', 'Redux', 'Flow', 'Bootstrap', 'Handlebars',
-                        'ESLint', 'Lodash', 'Git', 'Mercurial',
+                        'JavaScript', 'React', 'Redux', 'HTML', 'SASS', 'Flow', 'TypeScript', 'Jest', 'Bootstrap'
                     ])}
                 </div>
             </Middle>
@@ -79,8 +78,7 @@ export default connect(
                 <div>
                     <div className='tech-font'>STACK:</div>
                     {renderStack([
-                        'Java', 'PostgreSQL', 'Angular 1.x', 'React', 'Flow', 'Redux', 'Jest', 'Lodash', 'Immutable.js',
-                        'Bootstrap', 'Git'
+                        'JavaScript', 'React', 'Redux' ,'Angular 1.x', 'HTML', 'SASS', 'Flow', 'Jest', 'Bootstrap', 'Java', 'PostgreSQL'
                     ])}
                 </div>
             </Middle>
@@ -108,7 +106,7 @@ export default connect(
                 <div>
                     <div className='tech-font'>STACK:</div>
                     {renderStack([
-                        'Java', 'REST', 'JUnit', 'JConsole', 'SVN'
+                        'Java', 'REST API', 'JUnit', 'JConsole', 'SVN'
                     ])}
                 </div>
             </Middle>
@@ -137,8 +135,8 @@ export default connect(
                 <div>
                     <div className='tech-font'>STACK:</div>
                     {renderStack([
-                        'Java', 'PostgreSQL', 'Spring MVC', 'Hibernate', 'JMX', 'HTML', 'JavaScript',
-                        'jQuery', 'Google Maps API v3', 'Bootstrap', 'SVN',
+                        'Java', 'PostgreSQL', 'Spring MVC', 'JMX', 'HTML', 'JavaScript',
+                        'jQuery', 'Google Maps API v3', 'Bootstrap',
                     ])}
                 </div>
             </Middle>
